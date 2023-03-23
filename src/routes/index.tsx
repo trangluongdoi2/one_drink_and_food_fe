@@ -7,8 +7,6 @@ import ProtectedRoute from './protectedRoute'
 import AuthLayout from '@/layout/authLayout'
 import RegisterPage from '@/pages/register'
 import RegisterLayout from '@/layout/registerLayout'
-import NoteList from '@/components/noteList'
-import Note from '@/components/noteList/note'
 
 export const router = createBrowserRouter([
   {
@@ -27,11 +25,11 @@ export const router = createBrowserRouter([
             path: HOME_PATH,
             children: [
               {
-                element: <NoteList />,
+                element: <></>,
                 path: `${FOLDERS_PATH}/:folderId`,
                 children: [
                   {
-                    element: <Note />,
+                    element: <></>,
                     path: 'note/:noteId'
                   }
                 ]

@@ -20,10 +20,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             '#0E99AC',
             '#128797',
             '#147885'
-          ]
+          ],
+          dark: ['#f5f5f5', '#D9D9D9']
         },
-        fontFamily: 'Montserrat, sans-serif'
+        fontFamily: 'Montserrat, sans-serif',
+        fontFamilyMonospace: 'Montserrat, Courier, monospace',
+        headings: { fontFamily: 'Montserrat, sans-serif' }
       }}
+      withNormalizeCSS
+      withGlobalStyles
     >
       <App />
     </MantineProvider>
