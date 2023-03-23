@@ -1,24 +1,28 @@
-import { Button, Group } from '@mantine/core'
+import { Button, Flex, Grid, Group, Stack, Text, ActionIcon } from '@mantine/core'
 import { useStyles } from './index.style'
-import UserAvatar from './userAvatar'
+import { LogOutIcon } from '@/assets/icon/LogOutIcon'
+import { logout } from '@/firebase/authenticate'
+import { useAuthContext } from '@/context/AuthContext/AuthContext'
 
 const UserMenu = () => {
   const isAuthenticated = localStorage.getItem('accessToken')
-  const handleLoginButton = () => console.log('uioafhiad', isAuthenticated)
   const { classes } = useStyles()
+  const { user } = useAuthContext()
 
-  return !isAuthenticated ? (
-    <Group position='center' grow pb='xl' px='md'>
-      <Button variant='default' onClick={handleLoginButton}>
-        Log in
-      </Button>
-      <Button>Sign up</Button>
-    </Group>
-  ) : (
+  const handleLogOut = () => logout(user)
+
+  return isAuthenticated ? (
     <Group className={classes.hiddenMobile}>
-      <UserAvatar />
+      <Flex gap={20} align='center'>
+        <Text variant='h4' size='sm' fw={700}>
+          Chào Admin!
+        </Text>
+        <ActionIcon onClick={handleLogOut}>
+          <LogOutIcon />
+        </ActionIcon>
+      </Flex>
     </Group>
-  )
+  ) : null
 }
 
 export default UserMenu

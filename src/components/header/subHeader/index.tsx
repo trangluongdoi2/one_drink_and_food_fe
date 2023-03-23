@@ -1,5 +1,4 @@
 import { Group, Button, UnstyledButton, Text, SimpleGrid, ThemeIcon, Anchor, Divider, rem } from '@mantine/core'
-import { mockdata } from '@/constants/data'
 import { useStyles } from '../index.style'
 import { Fragment } from 'react'
 
@@ -34,35 +33,7 @@ export const SubHeaderItem = ({ title, description, icon: MenuIcon }: SubHeaderI
 const SubHeaderList = () => {
   const { classes, theme } = useStyles()
 
-  return (
-    <Fragment>
-      <Group position='apart' px='md'>
-        <Text fw={500}>Features</Text>
-        <Anchor href='#' fz='xs'>
-          View all
-        </Anchor>
-      </Group>
-      <Divider my='sm' mx='-md' color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
-      <SimpleGrid cols={2} spacing={0}>
-        {mockdata.map((item) => (
-          <SubHeaderItem key={item.id} {...item} />
-        ))}
-      </SimpleGrid>
-      <div className={classes.dropdownFooter}>
-        <Group position='apart'>
-          <div>
-            <Text fw={500} fz='sm'>
-              Get started
-            </Text>
-            <Text size='xs' color='dimmed'>
-              Their food sources have decreased, and their numbers
-            </Text>
-          </div>
-          <Button variant='default'>Get started</Button>
-        </Group>
-      </div>
-    </Fragment>
-  )
+  return <Fragment></Fragment>
 }
 
 export default SubHeaderList

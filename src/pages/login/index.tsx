@@ -5,16 +5,15 @@ import { Fragment, useState } from 'react'
 import { debounce } from 'lodash'
 import background from '@/assets/image/logo-background.png'
 import { OneLogo, UnVisibilityIcon, VisibilityIcon } from '@/assets/icon'
+import GoogleIcon from '@/assets/icon/googleIcon'
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [submit, setSubmit] = useState<boolean>(false)
 
   const handleLoginWithGoogle = () => loginGoogle()
   const handleLoginWithEmail = () => {
-    setSubmit(true)
     login({ email: userEmail, password: userPassword, setErrorMessage: setErrorMessage })
     console.log(localStorage.getItem('accessToken'))
   }
@@ -76,7 +75,6 @@ const LoginPage = () => {
             variant='filled'
             radius={10}
             color='dark.1'
-            rightSection={<>akldfakl</>}
             sx={(theme) => ({
               input: {
                 backgroundColor: theme.colors.dark[0]
@@ -94,9 +92,9 @@ const LoginPage = () => {
             <Button fullWidth mt='xl' onClick={handleLoginWithEmail} color='dark.1'>
               Đăng nhập
             </Button>
-            {/* <Button fullWidth leftIcon={<GoogleIcon />} variant='outline' onClick={handleLoginWithGoogle}>
+            <Button fullWidth leftIcon={<GoogleIcon />} variant='outline' onClick={handleLoginWithGoogle}>
               Countinue with Google
-            </Button> */}
+            </Button>
           </Stack>
         </Paper>
       </Container>

@@ -16,7 +16,6 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { IconChevronDown } from '@tabler/icons-react'
 import { useStyles } from './index.style'
-import { mockdata } from '@/constants/data'
 import Logo from '@/assets/note-logo.png'
 import UserMenu from '../userMenu'
 import { LogoutButton } from '../button'
@@ -31,18 +30,9 @@ const HeaderMenu = () => {
 
   return (
     <Box>
-      <Header height={60} px='md'>
-        <Group position='apart' sx={{ height: '100%' }}>
-          <Image src={Logo} width={140} />
-
-          <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
-            {menuItem.map((item) => (
-              <MenuItem {...item} key={item.id} />
-            ))}
-          </Group>
-
+      <Header height={60} px={60}>
+        <Group position='right' sx={{ height: '100%' }}>
           <UserMenu />
-
           <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
         </Group>
       </Header>
@@ -69,11 +59,11 @@ const HeaderMenu = () => {
               <IconChevronDown size={16} color={theme.fn.primaryColor()} />
             </Center>
           </UnstyledButton>
-          <Collapse in={linksOpened}>
+          {/* <Collapse in={linksOpened}>
             {mockdata.map((item) => (
               <SubHeaderItem key={item.id} {...item} />
             ))}
-          </Collapse>
+          </Collapse> */}
           <Anchor href='#' className={classes.link}>
             Learn
           </Anchor>
