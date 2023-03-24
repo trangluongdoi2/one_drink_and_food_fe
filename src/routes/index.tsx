@@ -55,6 +55,22 @@ export const router = createBrowserRouter([
               {
                 path: '/users/list',
                 element: <MarketAnalytic />
+              },
+              {
+                path: '/users/silver',
+                element: <MarketAnalytic />
+              },
+              {
+                path: '/users/gold',
+                element: <MarketAnalytic />
+              },
+              {
+                path: '/users/ruby',
+                element: <MarketAnalytic />
+              },
+              {
+                path: '/users/register',
+                element: <MarketAnalytic />
               }
             ]
           },

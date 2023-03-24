@@ -13,8 +13,14 @@ export const navConfig = [
   {
     label: 'Khách hàng',
     icon: UserIcon,
-    initiallyOpened: true,
-    links: [{ label: 'Danh sách khách hàng', link: '/users/list' }]
+    initiallyOpened: false,
+    links: [
+      { label: 'Danh sách khách hàng', link: '/users/list' },
+      { label: 'Thành viên bạc', link: '/users/silver' },
+      { label: 'Thành viên vàng', link: '/users/gold' },
+      { label: 'Thành viên ruby', link: '/users/ruby' },
+      { label: 'Thông tin đăng ký', link: '/users/register' }
+    ]
   },
   {
     label: 'Đơn hàng',
