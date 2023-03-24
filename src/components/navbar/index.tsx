@@ -1,4 +1,4 @@
-import { Navbar, Group, Code, ScrollArea, createStyles, ActionIcon } from '@mantine/core'
+import { Navbar, Group, ScrollArea, createStyles, ActionIcon } from '@mantine/core'
 import LinksGroup from './LinkGroup.tsx'
 import { OneLogo } from '@/assets'
 import { CloseButton } from '@/assets/icon/CloseButton'

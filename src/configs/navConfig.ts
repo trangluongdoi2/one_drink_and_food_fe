@@ -4,7 +4,6 @@ export const navConfig = [
   {
     label: 'Tổng quan',
     icon: OverviewIcon,
-
     links: [
       { label: 'Phân tích thị trường', link: '/overview/market' },
       { label: 'Dữ liệu sản phẩm', link: '/overview/product' }
@@ -52,7 +51,11 @@ export const navConfig = [
     icon: NewsIcon,
     links: [{ label: 'Danh sách tin tức', link: '/news/list' }]
   },
-  { label: 'Mã khuyến mãi', icon: CouponIcon, links: [{ label: 'Danh sách khuyến mãi', link: '/coupons/list' }] },
+  {
+    label: 'Mã khuyến mãi',
+    icon: CouponIcon,
+    links: [{ label: 'Danh sách khuyến mãi', link: '/coupons/list' }]
+  },
   {
     label: 'Quà tặng',
     icon: GiftIcon,

@@ -22,6 +22,7 @@ import { LogoutButton } from '../button'
 import { menuItem } from '@/constants/menu'
 import { SubHeaderItem } from './subHeader'
 import MenuItem from './menuItem'
+import SearchField from '../searchField'
 
 const HeaderMenu = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false)
@@ -30,14 +31,15 @@ const HeaderMenu = () => {
 
   return (
     <Box>
-      <Header height={60} px={60}>
-        <Group position='right' sx={{ height: '100%' }}>
+      <Header height={60} px={40}>
+        <Group position='apart' sx={{ height: '100%' }}>
+          <SearchField />
           <UserMenu />
           <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
         </Group>
       </Header>
 
-      <Drawer
+      {/* <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
         size='100%'
@@ -59,11 +61,11 @@ const HeaderMenu = () => {
               <IconChevronDown size={16} color={theme.fn.primaryColor()} />
             </Center>
           </UnstyledButton>
-          {/* <Collapse in={linksOpened}>
+          <Collapse in={linksOpened}>
             {mockdata.map((item) => (
               <SubHeaderItem key={item.id} {...item} />
             ))}
-          </Collapse> */}
+          </Collapse>
           <Anchor href='#' className={classes.link}>
             Learn
           </Anchor>
@@ -75,7 +77,7 @@ const HeaderMenu = () => {
 
           <LogoutButton color='red' fullWidth />
         </ScrollArea>
-      </Drawer>
+      </Drawer> */}
     </Box>
   )
 }
