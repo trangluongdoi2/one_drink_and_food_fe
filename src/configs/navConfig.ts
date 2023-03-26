@@ -1,4 +1,4 @@
-import { OverviewIcon, UserIcon, OrderIcon, ProductIcon, NewsIcon, CouponIcon, GiftIcon } from '@/assets'
+import { OverviewIcon, UserIcon, OrderIcon, ProductIcon, NewsIcon, CouponIcon, GiftIcon } from '@/assets/icon'
 
 export const navConfig = [
   {

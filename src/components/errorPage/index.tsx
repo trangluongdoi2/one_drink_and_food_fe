@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, Container, Title, Text, Button, SimpleGrid } from '@mantine/core'
-import image from '@/assets/404-image.svg'
+import image from '@/assets/svg/404-image.svg'
 import { useStyles } from './index.style'
 import { useNavigate } from 'react-router-dom'
 

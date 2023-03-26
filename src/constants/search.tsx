@@ -1,4 +1,4 @@
-import { CouponIcon, GiftIcon, NewsIcon, OrderIcon, OverviewIcon, ProductIcon, UserIcon } from '@/assets'
+import { CouponIcon, GiftIcon, NewsIcon, OrderIcon, OverviewIcon, ProductIcon, UserIcon } from '@/assets/icon'
 
 export const dataSearch = [
   {

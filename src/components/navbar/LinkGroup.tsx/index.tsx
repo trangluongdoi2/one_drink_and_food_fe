@@ -5,7 +5,7 @@ import { useStyles } from './index.style'
 import { Link } from 'react-router-dom'
 
 interface LinksGroupProps {
-  icon: React.FC<any>
+  icon: React.FC<any> | string
   label: string
   initiallyOpened?: boolean
   links?: { label: string; link: string }[]

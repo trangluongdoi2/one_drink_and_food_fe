@@ -1,11 +1,11 @@
 import { TextInput, PasswordInput, Paper, Title, Container, Button, Stack, Image, Box, Center } from '@mantine/core'
 import { Navigate } from 'react-router-dom'
 import { login, loginGoogle } from '@/firebase/authenticate'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { debounce } from 'lodash'
 import background from '@/assets/image/logo-background.png'
-import { OneLogo, UnVisibilityIcon, VisibilityIcon } from '@/assets/icon'
-import GoogleIcon from '@/assets/icon/googleIcon'
+import { OneLogo, UnvisibilityIcon, VisibilityIcon } from '@/assets/icon'
+import { GoogleIcon } from '@/assets/icon'
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>('')
@@ -33,7 +33,7 @@ const LoginPage = () => {
   }
 
   return (
-    <Box height='100%'>
+    <Box sx={{ height: '100%' }}>
       <Center sx={{ height: 70 }}>
         <OneLogo />
       </Center>
@@ -85,7 +85,7 @@ const LoginPage = () => {
                 }
               }
             })}
-            visibilityToggleIcon={({ reveal }) => (reveal ? <VisibilityIcon /> : <UnVisibilityIcon />)}
+            visibilityToggleIcon={({ reveal }) => (reveal ? <VisibilityIcon /> : <UnvisibilityIcon />)}
           />
 
           <Stack spacing={10}>

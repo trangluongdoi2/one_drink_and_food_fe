@@ -7,6 +7,7 @@ import AuthLayout from '@/layout/authLayout'
 import RegisterPage from '@/pages/register'
 import RegisterLayout from '@/layout/registerLayout'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
+import UsersList from '@/pages/users/listUsers'
 
 export const router = createBrowserRouter([
   {
@@ -54,7 +55,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/users/list',
-                element: <MarketAnalytic />
+                element: <UsersList />
               },
               {
                 path: '/users/silver',

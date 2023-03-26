@@ -1,6 +1,6 @@
 import { Button, Flex, Grid, Group, Stack, Text, ActionIcon } from '@mantine/core'
 import { useStyles } from './index.style'
-import { LogOutIcon } from '@/assets/icon/LogOutIcon'
+import { LogOutIcon } from '@/assets/icon'
 import { logout } from '@/firebase/authenticate'
 import { useAuthContext } from '@/context/AuthContext/AuthContext'
 

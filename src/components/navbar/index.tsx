@@ -1,7 +1,7 @@
 import { Navbar, Group, ScrollArea, createStyles, ActionIcon } from '@mantine/core'
 import LinksGroup from './LinkGroup.tsx'
-import { OneLogo } from '@/assets'
-import { CloseButton } from '@/assets/icon/CloseButton'
+import { OneLogo } from '@/assets/icon'
+import { CloseButton } from '@/assets/icon'
 import { navConfig } from '@/configs/navConfig'
 
 const useStyles = createStyles((theme) => ({

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import { Group, Text, Select, Button, MantineTheme } from '@mantine/core'
-import { SearchIcon } from '@/assets/icon/SearchIcon'
+import { SearchIcon } from '@/assets/icon'
 import { dataSearch } from '@/constants/search'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -36,7 +36,7 @@ const SelectItem = forwardRef<HTMLDivElement, CustomItemProps>(
   }
 )
 
-function SearchField() {
+function SearchField({ ...props }) {
   const navigate = useNavigate()
 
   return (
@@ -53,7 +53,6 @@ function SearchField() {
       rightSection={
         <Button
           color='dark.2'
-          position='right'
           fullWidth
           sx={(theme: MantineTheme) => ({
             input: {
@@ -82,6 +81,7 @@ function SearchField() {
         },
         width: 766
       })}
+      {...props}
       icon={<SearchIcon />}
       onChange={(link: string) => navigate(link)}
     />
