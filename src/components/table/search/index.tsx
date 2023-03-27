@@ -15,7 +15,7 @@ const SearchTable = ({ search, handleSearchChange }: SearchTableProps) => {
         <Checkbox color='dark' size='lg' radius={10} />
 
         <TextInput
-          placeholder='Search by any field'
+          placeholder='Tìm kiếm thông tin khách hàng'
           value={search}
           onChange={handleSearchChange}
           label=''

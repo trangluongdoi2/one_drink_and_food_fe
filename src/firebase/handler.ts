@@ -1,11 +1,18 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, query, where } from 'firebase/firestore'
 import { FIREBASE_COLLECTION } from './collection'
 import { db } from './config'
 
-export async function getAll(itemType: FIREBASE_COLLECTION) {
+interface GetAllProps {
+  itemType: FIREBASE_COLLECTION
+  query: string
+}
+
+export async function getAll(itemType: FIREBASE_COLLECTION, params?: string) {
   const data: any = []
+  const queryData = params ? query(collection(db, itemType), where('member', '==', params)) : collection(db, itemType)
   try {
-    const querySnapshot = await getDocs(collection(db, itemType))
+    // const querySnapshot = await getDocs(collection(db, itemType))
+    const querySnapshot = await getDocs(queryData)
     querySnapshot.forEach((doc) => {
       const dataObject = {
         ...doc.data(),

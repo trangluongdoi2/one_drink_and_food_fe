@@ -5,15 +5,15 @@ import { RubyMember, SilverMember, GoldenMember } from '@/assets/icon'
 export const getMemberShip = (type: string) => {
   switch (type) {
     case SILVER:
-      return SilverMember
+      return <SilverMember />
 
     case GOLD:
-      return GoldenMember
+      return <GoldenMember />
 
     case RUBY:
-      return RubyMember
+      return <RubyMember />
 
     default:
-      return ''
+      return null
   }
 }

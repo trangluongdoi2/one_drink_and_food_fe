@@ -16,8 +16,10 @@ const CustomTable = ({ data }: CustomTableProps) => {
   const [sortedData, setSortedData] = useState(data)
   const [sortBy, setSortBy] = useState<keyof UserProps | null>(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
+  const [selectedRow, setSelectedRow] = useState<string[]>([])
   const totalItems = Math.floor(data.length / 10) > 0 ? Math.floor(data.length / 10) : 1
-  console.log(totalItems)
+  console.log('sorted', sortedData)
+  console.log('selected', selectedRow)
 
   const setSorting = (field: keyof UserProps) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
@@ -40,7 +42,9 @@ const CustomTable = ({ data }: CustomTableProps) => {
         <TableHeader sortBy={sortBy} reverseSortDirection setSorting={setSorting} header={headerContent} />
         <tbody>
           {sortedData && sortedData.length > 0 ? (
-            sortedData.map((row) => <TableRow row={row} key={row.id} />)
+            sortedData.map((row) => (
+              <TableRow row={row} key={row.fireBaseId} setSelectedRow={setSelectedRow} selectedRow={selectedRow} />
+            ))
           ) : (
             <tr>
               <td colSpan={Object.keys(data[0]).length}>

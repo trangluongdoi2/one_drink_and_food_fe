@@ -6,7 +6,7 @@ export enum MEMBERSHIP {
 }
 
 export interface UserProps {
-  id: string
+  fireBaseId: string
   avatar: string
   firstName: string
   lastName: string

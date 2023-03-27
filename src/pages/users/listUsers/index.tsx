@@ -6,7 +6,6 @@ import { MEMBERSHIP, UserProps } from '@/types/user'
 import avatar from '@/assets/image/avatart.png'
 import { getAll } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
-import { FirebaseUserProps } from '@/types/fireStore'
 
 const mock = [
   {
@@ -15,7 +14,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.GOLD
@@ -26,7 +25,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Nam',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1999',
     member: MEMBERSHIP.SILVER
@@ -37,7 +36,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.RUBY
@@ -48,7 +47,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'tai.nguy@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.GOLD
@@ -59,7 +58,7 @@ const mock = [
     firstName: 'Lê ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.SILVER
@@ -70,7 +69,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.GOLD
@@ -81,7 +80,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.SILVER
@@ -92,7 +91,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.SILVER
@@ -103,7 +102,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.SILVER
@@ -114,7 +113,7 @@ const mock = [
     firstName: 'Nguyễn ',
     lastName: 'Tín',
     email: 'dennisnguyen1011@gmail.com',
-    phone: '0909090103',
+    txtPhone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.SILVER
