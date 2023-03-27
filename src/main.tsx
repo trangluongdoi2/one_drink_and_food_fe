@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             '#128797',
             '#147885'
           ],
-          dark: ['#f5f5f5', '#D9D9D9', '#E5E5E5', '#000']
+          dark: ['#f5f5f5', '#D9D9D9', '#E5E5E5']
         },
         fontFamily: 'Montserrat, sans-serif',
         fontFamilyMonospace: 'Montserrat, Courier, monospace',

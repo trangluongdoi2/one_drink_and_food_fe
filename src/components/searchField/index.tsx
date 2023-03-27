@@ -16,7 +16,6 @@ const SelectItem = forwardRef<HTMLDivElement, CustomItemProps>(
   ({ label, icon: Icon, detail, link, ...others }: CustomItemProps, ref) => {
     const navigate = useNavigate()
     const handleClick = () => {
-      console.log('klajfklajdfkajdlfja')
       navigate(link)
     }
     return (

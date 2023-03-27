@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import HeaderMenu from '@/components/header'
 import NavbarHeader from '@/components/navbar'

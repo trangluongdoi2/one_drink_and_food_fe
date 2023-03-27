@@ -1,14 +1,16 @@
-import { Checkbox, Flex, Paper, Stack, Title, Avatar } from '@mantine/core'
-import React from 'react'
+import { ActionIcon, Flex, Paper, Stack, Title } from '@mantine/core'
+import React, { useEffect, useState } from 'react'
 import { DeleteIcon, MailIcon } from '@/assets/icon'
-import SearchField from '@/components/searchField'
 import CustomTable from '@/components/table'
 import { MEMBERSHIP, UserProps } from '@/types/user'
-import avatar from '@/assets/image/avatar.png'
+import avatar from '@/assets/image/avatart.png'
+import { getAll } from '@/firebase/handler'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
+import { FirebaseUserProps } from '@/types/fireStore'
 
-const mock: UserProps[] = [
+const mock = [
   {
-    id: 'adkjajf',
+    id: 'adkjaadafadfjf',
     avatar: avatar,
     firstName: 'Nguyễn ',
     lastName: 'Tín',
@@ -41,18 +43,18 @@ const mock: UserProps[] = [
     member: MEMBERSHIP.RUBY
   },
   {
-    id: 'adkjajf',
+    id: 'adkjadadadjf',
     avatar: 'dajdaljdf',
     firstName: 'Nguyễn ',
     lastName: 'Tín',
-    email: 'dennisnguyen1011@gmail.com',
+    email: 'tai.nguy@gmail.com',
     phone: '0909090103',
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.GOLD
   },
   {
-    id: 'adkjafdfajf',
+    id: 'adkjafdadfafajf',
     avatar: 'dajdaljdf',
     firstName: 'Lê ',
     lastName: 'Tín',
@@ -83,11 +85,54 @@ const mock: UserProps[] = [
     gender: 'Nam',
     dob: '10/11/1998',
     member: MEMBERSHIP.SILVER
+  },
+  {
+    id: 'adkj33141fajf',
+    avatar: 'dajdaljdf',
+    firstName: 'Nguyễn ',
+    lastName: 'Tín',
+    email: 'dennisnguyen1011@gmail.com',
+    phone: '0909090103',
+    gender: 'Nam',
+    dob: '10/11/1998',
+    member: MEMBERSHIP.SILVER
+  },
+  {
+    id: 'adkj3ag1q31fajf',
+    avatar: 'dajdaljdf',
+    firstName: 'Nguyễn ',
+    lastName: 'Tín',
+    email: 'dennisnguyen1011@gmail.com',
+    phone: '0909090103',
+    gender: 'Nam',
+    dob: '10/11/1998',
+    member: MEMBERSHIP.SILVER
+  },
+  {
+    id: 'adkj362462351fajf',
+    avatar: 'dajdaljdf',
+    firstName: 'Nguyễn ',
+    lastName: 'Tín',
+    email: 'dennisnguyen1011@gmail.com',
+    phone: '0909090103',
+    gender: 'Nam',
+    dob: '10/11/1998',
+    member: MEMBERSHIP.SILVER
   }
 ]
 
 const UsersList = () => {
-  console.log(DeleteIcon)
+  const [userData, setUserData] = useState<UserProps[]>()
+  console.log('userData', userData)
+
+  useEffect(() => {
+    const fetchDiscountData = async () => {
+      const data = await getAll(FIREBASE_COLLECTION.USERS)
+      setUserData(data)
+    }
+    fetchDiscountData().catch(console.error)
+  }, [])
+
   return (
     <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
       <Stack spacing={20}>
@@ -96,20 +141,17 @@ const UsersList = () => {
             Danh sách khách hàng
           </Title>
           <Flex gap={20}>
-            <MailIcon />
-            <DeleteIcon />
+            <ActionIcon>
+              <MailIcon />
+            </ActionIcon>
+            <ActionIcon>
+              <DeleteIcon />
+            </ActionIcon>
           </Flex>
         </Flex>
 
         <Paper p={40} radius={10} shadow='md'>
-          <Stack>
-            <Flex gap={20} sx={{ width: '100%' }} align='center'>
-              <Checkbox color='dark' size='lg' radius={10} />
-
-              <SearchField sx={{ width: '100%' }} />
-            </Flex>
-            <CustomTable data={mock} />
-          </Stack>
+          {userData && userData.length > 0 ? <CustomTable data={userData} /> : null}
         </Paper>
       </Stack>
     </Paper>
