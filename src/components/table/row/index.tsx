@@ -2,7 +2,7 @@ import { EditIcon } from '@/assets/icon'
 import { UserProps } from '@/types/user'
 import { getDateFirebase } from '@/utils/convertDate'
 import { getMemberShip } from '@/utils/getMembership'
-import { Avatar, Checkbox, ActionIcon } from '@mantine/core'
+import { Avatar, Checkbox, ActionIcon, Text } from '@mantine/core'
 import { Dispatch, SetStateAction, useState } from 'react'
 
 interface ITableRow {
@@ -13,11 +13,13 @@ interface ITableRow {
 
 export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
   const dateFormat = getDateFirebase(row.dob)
-  const [checked, setChecked] = useState<boolean>(false)
+  // const [checked, setChecked] = useState<boolean>(false)
   const { fireBaseId: id } = row
 
+  const isSelected = selectedRow.includes(id)
+
   const handleSelectedRow = () => {
-    setChecked(!checked)
+    // setChecked(!checked)
     if (!selectedRow.includes(id)) {
       setSelectedRow([...selectedRow, id])
     } else {
@@ -42,7 +44,7 @@ export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
           color='gray.8'
           size='lg'
           radius={10}
-          checked={checked}
+          checked={isSelected}
           onChange={handleSelectedRow}
         />
       </td>
@@ -54,8 +56,16 @@ export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
       >
         <Avatar src={row.avatar} />
       </td>
-      <td>{row.firstName}</td>
-      <td>{row.lastName}</td>
+      <td>
+        <Text tt='uppercase' fw='bolder' lh={1.4}>
+          {row.firstName}
+        </Text>
+      </td>
+      <td>
+        <Text tt='uppercase' fw='bolder' lh={1.4}>
+          {row.lastName}
+        </Text>
+      </td>
       <td>{row.email}</td>
       <td>{row.txtPhone}</td>
       <td>{row.gender === 'Male' ? 'Nam' : 'Nữ'}</td>

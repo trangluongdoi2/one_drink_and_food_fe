@@ -2,7 +2,7 @@ import { UserListHeaderProps } from '@/types/user'
 
 export const headerContent: UserListHeaderProps['header'] = [
   {
-    id: 'checkbox',
+    id: 'avatar',
     title: '',
     width: 35
   },
@@ -20,7 +20,7 @@ export const headerContent: UserListHeaderProps['header'] = [
   {
     id: 'lastName',
     title: 'Tên',
-    width: 60
+    width: 120
   },
   {
     id: 'email',
@@ -28,7 +28,7 @@ export const headerContent: UserListHeaderProps['header'] = [
     width: 150
   },
   {
-    id: 'phone',
+    id: 'txtPhone',
     title: 'Số điện thoại',
     width: 100
   },
@@ -49,7 +49,7 @@ export const headerContent: UserListHeaderProps['header'] = [
     position: 'center'
   },
   {
-    id: 'tool',
+    id: 'avatar',
     title: 'Công cụ',
     width: 30
   }
