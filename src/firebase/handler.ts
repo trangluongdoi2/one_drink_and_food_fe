@@ -42,9 +42,9 @@ export async function getOne(itemType: FIREBASE_COLLECTION, id: string) {
   }
 }
 
-export function addItem(itemType: FIREBASE_COLLECTION, data: any) {
+export async function addItem(itemType: FIREBASE_COLLECTION, data: any) {
   const docRef = collection(db, itemType)
-  addDoc(docRef, data)
+  await addDoc(docRef, data)
     .then(() => {
       console.log('Product has been added successfully')
     })
@@ -53,9 +53,9 @@ export function addItem(itemType: FIREBASE_COLLECTION, data: any) {
     })
 }
 
-export function deleteItem(itemType: FIREBASE_COLLECTION, id: any) {
+export async function deleteItem(itemType: FIREBASE_COLLECTION, id: string) {
   const docRef = doc(db, itemType, id)
-  deleteDoc(docRef)
+  await deleteDoc(docRef)
     .then(() => {
       console.log(`${itemType} has been deleted successfully`)
     })

@@ -26,18 +26,18 @@ function Th({ width, children, onSort, position = 'left' }: ThProps) {
   )
 }
 
-const TableHeader = ({ sortBy, reverseSortDirection, setSorting, header }: UserListHeaderProps) => {
+const TableHeader = ({ reverseSortDirection, setSorting, header }: UserListHeaderProps) => {
   return (
     <>
       <thead style={{ fontSize: 12 }}>
         <tr>
-          {header.map(({ id, width, title, position }) => (
+          {header.map(({ id, width, title, position, value }) => (
             <Th
               // sorted={sortBy === id}
               key={id}
               reversed={reverseSortDirection}
               width={width}
-              onSort={() => setSorting(id)}
+              onSort={() => setSorting(value)}
               position={position}
             >
               {title}

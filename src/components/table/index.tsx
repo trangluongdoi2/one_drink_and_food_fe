@@ -5,7 +5,7 @@ import TableHeader from './header'
 import { TableRow } from './row'
 import SearchTable from './search'
 import { sortData } from '@/utils/sortData'
-import { UserProps } from '@/types/user'
+import { SortUserProps, UserProps } from '@/types/user'
 import { TablePagination } from './pagination'
 import { useUserContext } from '@/context/UserContext/UserContext'
 interface CustomTableProps {
@@ -15,10 +15,10 @@ interface CustomTableProps {
 const CustomTable = ({ data }: CustomTableProps) => {
   const [search, setSearch] = useState('')
   const [sortedData, setSortedData] = useState(data)
-  const [sortBy, setSortBy] = useState<keyof UserProps | null>(null)
+  const [sortBy, setSortBy] = useState<keyof SortUserProps | null>(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
-  const [selectedRow, setSelectedRow] = useState<string[]>([])
-  // const { selectedRow, setSelectedRow } = useUserContext()
+  // const [selectedRow, setSelectedRow] = useState<string[]>([])
+  const { selectedRow, setSelectedRow } = useUserContext()
 
   console.log('selectedRow: ', selectedRow)
 
@@ -26,11 +26,12 @@ const CustomTable = ({ data }: CustomTableProps) => {
   const isSelectedAll = selectedRow.length === data.length
   const allId = data.map((item) => item.fireBaseId)
 
-  const setSorting = (field: keyof UserProps) => {
+  const setSorting = (field: keyof SortUserProps) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
+    const sortedArray = sortData(data, { sortBy: field, reversed, search })
     setReverseSortDirection(reversed)
     setSortBy(field)
-    setSortedData(sortData(data, { sortBy: field, reversed, search }))
+    setSortedData(sortedArray)
   }
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +51,7 @@ const CustomTable = ({ data }: CustomTableProps) => {
       />
 
       <table style={{ width: '100%', borderSpacing: '0 15px' }}>
-        <TableHeader sortBy={sortBy} reverseSortDirection setSorting={setSorting} header={headerContent} />
+        <TableHeader reverseSortDirection setSorting={setSorting} header={headerContent} />
         <tbody>
           {sortedData && sortedData.length > 0 ? (
             sortedData.map((row) => (

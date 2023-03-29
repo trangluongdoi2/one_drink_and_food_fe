@@ -20,6 +20,14 @@ export interface UserProps {
   member: MEMBERSHIP
 }
 
+export interface SortUserProps {
+  firstName: string
+  lastName: string
+  email: string
+  txtPhone: string
+  gender: string
+}
+
 export interface UserHeaderProps extends UserProps {
   checkbox: string
   tool: string
@@ -27,9 +35,10 @@ export interface UserHeaderProps extends UserProps {
 
 export interface UserListHeaderProps extends SortingProps {
   header: {
-    id: keyof UserProps
+    id: keyof UserProps | ''
     title: string
     width: number
+    value: keyof SortUserProps
     position?: 'left' | 'center' | 'right'
   }[]
 }

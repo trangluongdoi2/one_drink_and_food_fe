@@ -8,6 +8,7 @@ import RegisterPage from '@/pages/register'
 import RegisterLayout from '@/layout/registerLayout'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
 import UsersList from '@/pages/users/listUsers'
+import UserContextProvider from '@/context/UserContext/UserContext'
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +56,11 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/users/list',
-                element: <UsersList />
+                element: (
+                  <UserContextProvider>
+                    <UsersList />
+                  </UserContextProvider>
+                )
               },
               {
                 path: '/users/silver',

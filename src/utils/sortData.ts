@@ -1,14 +1,13 @@
-import { HeaderProps } from '@/types/table'
 import { filterData } from './filterData'
-import { UserProps } from '@/types/user'
+import { UserProps, SortUserProps } from '@/types/user'
 
 export const sortData = (
   data: UserProps[],
-  payload: { sortBy: keyof UserProps | null; reversed: boolean; search: string }
+  payload: { sortBy: keyof SortUserProps | null; reversed: boolean; search: string }
 ) => {
   const { sortBy } = payload
 
-  console.log('sortBy', !sortBy)
+  console.log('sort by', sortBy)
 
   if (!sortBy) {
     return filterData(data, payload.search)

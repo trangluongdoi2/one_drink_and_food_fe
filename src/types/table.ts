@@ -1,4 +1,4 @@
-import { UserHeaderProps, UserProps } from './user'
+import { UserHeaderProps, UserProps, SortUserProps } from './user'
 
 export interface TableActionProps {
   checkbox: string
@@ -8,9 +8,8 @@ export interface TableActionProps {
 export type HeaderProps = UserHeaderProps
 
 export interface SortingProps {
-  sortBy: keyof UserProps | null
   reverseSortDirection: boolean
-  setSorting: (field: keyof UserProps) => void
+  setSorting: (field: keyof SortUserProps) => void
 }
 
 export type RowData = UserProps
