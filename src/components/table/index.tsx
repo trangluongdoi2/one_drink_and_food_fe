@@ -7,6 +7,7 @@ import SearchTable from './search'
 import { sortData } from '@/utils/sortData'
 import { UserProps } from '@/types/user'
 import { TablePagination } from './pagination'
+import { useUserContext } from '@/context/UserContext/UserContext'
 interface CustomTableProps {
   data: UserProps[]
 }
@@ -17,6 +18,9 @@ const CustomTable = ({ data }: CustomTableProps) => {
   const [sortBy, setSortBy] = useState<keyof UserProps | null>(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
   const [selectedRow, setSelectedRow] = useState<string[]>([])
+  // const { selectedRow, setSelectedRow } = useUserContext()
+
+  console.log('selectedRow: ', selectedRow)
 
   const totalItems = Math.floor(data.length / 10) > 0 ? Math.floor(data.length / 10) : 1
   const isSelectedAll = selectedRow.length === data.length
@@ -32,7 +36,7 @@ const CustomTable = ({ data }: CustomTableProps) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     setSearch(value)
-    setSortedData(sortData(data, { sortBy: sortBy, reversed: reverseSortDirection, search: value }))
+    setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }))
   }
 
   return (
@@ -47,7 +51,7 @@ const CustomTable = ({ data }: CustomTableProps) => {
 
       <table style={{ width: '100%', borderSpacing: '0 15px' }}>
         <TableHeader sortBy={sortBy} reverseSortDirection setSorting={setSorting} header={headerContent} />
-        <tbody >
+        <tbody>
           {sortedData && sortedData.length > 0 ? (
             sortedData.map((row) => (
               <TableRow row={row} key={row.fireBaseId} setSelectedRow={setSelectedRow} selectedRow={selectedRow} />

@@ -1,27 +1,7 @@
-import {
-  Header,
-  Group,
-  UnstyledButton,
-  Anchor,
-  Divider,
-  Center,
-  Box,
-  Burger,
-  Image,
-  Drawer,
-  Collapse,
-  ScrollArea,
-  rem
-} from '@mantine/core'
+import { Header, Group, Box, Burger } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconChevronDown } from '@tabler/icons-react'
 import { useStyles } from './index.style'
-import Logo from '@/assets/note-logo.png'
 import UserMenu from '../userMenu'
-import { LogoutButton } from '../button'
-import { menuItem } from '@/constants/menu'
-import { SubHeaderItem } from './subHeader'
-import MenuItem from './menuItem'
 import SearchField from '../searchField'
 
 const HeaderMenu = () => {
