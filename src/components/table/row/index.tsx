@@ -1,9 +1,10 @@
-import { EditIcon } from '@/assets/icon'
-import { UserProps } from '@/types/user'
+import { EditIcon, ActiveEditIcon } from '@/assets/icon'
+import { MEMBERSHIP, UserProps } from '@/types/user'
 import { getDateFirebase } from '@/utils/convertDate'
 import { getMemberShip } from '@/utils/getMembership'
-import { Avatar, Checkbox, ActionIcon, Text } from '@mantine/core'
+import { Avatar, Checkbox, ActionIcon, Text, TextInput, Select, MantineTheme } from '@mantine/core'
 import { Dispatch, SetStateAction, useState } from 'react'
+import styled from '@emotion/styled'
 
 interface ITableRow {
   row: UserProps
@@ -13,7 +14,7 @@ interface ITableRow {
 
 export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
   const dateFormat = getDateFirebase(row.dob)
-  // const [checked, setChecked] = useState<boolean>(false)
+  const [edit, setEdit] = useState<boolean>(false)
   const { fireBaseId: id } = row
 
   const isSelected = selectedRow.includes(id)
@@ -56,32 +57,133 @@ export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
       >
         <Avatar src={row.avatar} />
       </td>
-      <td>
-        <Text tt='uppercase' fw='bolder' lh={1.4}>
-          {row.firstName}
-        </Text>
-      </td>
-      <td>
-        <Text tt='uppercase' fw='bolder' lh={1.4}>
-          {row.lastName}
-        </Text>
-      </td>
-      <td>{row.email}</td>
-      <td>{row.txtPhone}</td>
-      <td>{row.gender === 'Male' ? 'Nam' : 'Nữ'}</td>
-      <td>{dateFormat ? JSON.parse(dateFormat) : ''}</td>
-      <td style={{ textAlign: 'center' }}>{getMemberShip(row.member)}</td>
-      <td
-        style={{
-          padding: '10px',
-          textAlign: 'right',
-          borderRadius: '0 10px 10px 0'
-        }}
-      >
-        <ActionIcon>
-          <EditIcon />
-        </ActionIcon>
-      </td>
+
+      {edit ? (
+        <>
+          <td>
+            <TextInput
+              sx={(theme: MantineTheme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[3],
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray
+                  }
+                }
+              })}
+            ></TextInput>
+          </td>
+          <td>
+            <TextInput
+              sx={(theme: MantineTheme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[3],
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray
+                  }
+                }
+              })}
+            ></TextInput>
+          </td>
+          <td>
+            <TextInput
+              sx={(theme: MantineTheme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[3],
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray
+                  }
+                }
+              })}
+            ></TextInput>
+          </td>
+          <td>
+            <TextInput
+              sx={(theme: MantineTheme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[3],
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray
+                  }
+                }
+              })}
+            ></TextInput>
+          </td>
+          <td>
+            <Select
+              label=''
+              nothingFound='No options'
+              placeholder={row.gender === 'male' ? 'Nam' : 'Nữ'}
+              data={[
+                {
+                  value: 'female',
+                  label: 'Nữ'
+                },
+                {
+                  value: 'male',
+                  label: 'Nam'
+                }
+              ]}
+            ></Select>
+          </td>
+          <td>
+            <TextInput
+              sx={(theme: MantineTheme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[3],
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray
+                  }
+                }
+              })}
+            ></TextInput>
+          </td>
+          <td style={{ textAlign: 'center' }}>{getMemberShip(MEMBERSHIP.SILVER)}</td>
+          <td
+            style={{
+              padding: '10px',
+              textAlign: 'right',
+              borderRadius: '0 10px 10px 0'
+            }}
+          >
+            <ActionIcon onClick={() => setEdit(!edit)}>
+              <ActiveEditIcon />
+            </ActionIcon>
+          </td>
+        </>
+      ) : (
+        <>
+          <td>
+            <Text tt='uppercase' fw='bolder' lh={1.4}>
+              {row.firstName}
+            </Text>
+          </td>
+          <td>
+            <Text tt='uppercase' fw='bolder' lh={1.4}>
+              {row.lastName}
+            </Text>
+          </td>
+          <td>
+            <Text>{row.email}</Text>
+          </td>
+          <td>{row.txtPhone}</td>
+          <td>
+            <Text>{row.gender === 'male' ? 'Nam' : 'Nữ'}</Text>
+          </td>
+          <td>{dateFormat ? JSON.parse(dateFormat) : ''}</td>
+          <td style={{ textAlign: 'center' }}>{getMemberShip(row.member)}</td>
+          <td
+            style={{
+              padding: '10px',
+              textAlign: 'right',
+              borderRadius: '0 10px 10px 0'
+            }}
+          >
+            <ActionIcon onClick={() => setEdit(!edit)}>
+              <EditIcon />
+            </ActionIcon>
+          </td>
+        </>
+      )}
     </tr>
   )
 }

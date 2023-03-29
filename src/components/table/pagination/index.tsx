@@ -1,4 +1,4 @@
-import { Center, Pagination } from '@mantine/core'
+import { Box, Center, Flex, Pagination, Text } from '@mantine/core'
 import { useStyles } from './index.style'
 
 interface TablePaginationProps {
@@ -8,8 +8,12 @@ interface TablePaginationProps {
 export const TablePagination = ({ total }: TablePaginationProps) => {
   const { classes } = useStyles()
   return (
-    <Center>
+    <Flex justify='space-between'>
+      <Box></Box>
       <Pagination total={total} color='dark.1' radius={10} className={classes.pagination} />
-    </Center>
+      <Text fw={500} size={12}>
+        Trang 1/10
+      </Text>
+    </Flex>
   )
 }
