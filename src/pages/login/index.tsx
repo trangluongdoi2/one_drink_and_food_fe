@@ -15,7 +15,6 @@ const LoginPage = () => {
   const handleLoginWithGoogle = () => loginGoogle()
   const handleLoginWithEmail = () => {
     login({ email: userEmail, password: userPassword, setErrorMessage: setErrorMessage })
-    console.log(localStorage.getItem('accessToken'))
   }
 
   const handleEmailChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {

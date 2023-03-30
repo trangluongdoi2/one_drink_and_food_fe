@@ -79,8 +79,6 @@ export const SaleChart = () => {
   }
 
   const data: DataChartProps = { ...label, ...getChartData(select) }
-  console.log('data', { data })
-
   return (
     <Paper p={40} radius={10} shadow='md'>
       <Stack spacing={20}>

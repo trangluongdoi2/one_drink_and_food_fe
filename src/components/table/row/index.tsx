@@ -2,18 +2,22 @@ import { EditIcon, ActiveEditIcon } from '@/assets/icon'
 import { MEMBERSHIP, UserProps } from '@/types/user'
 import { getDateFirebase } from '@/utils/convertDate'
 import { getMemberShip } from '@/utils/getMembership'
-import { Avatar, Checkbox, ActionIcon, Text, TextInput, Select, MantineTheme } from '@mantine/core'
-import { Dispatch, SetStateAction, useState } from 'react'
-import styled from '@emotion/styled'
+import { Avatar, Checkbox, ActionIcon, Text, TextInput, Select } from '@mantine/core'
+import { useState } from 'react'
+import { useStyles } from './index.style'
+import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
+import { setSelectedRow } from '@/reducer/customer/action'
+import { IconChevronDown } from '@tabler/icons-react'
 
 interface ITableRow {
   row: UserProps
   selectedRow: string[]
-  setSelectedRow: Dispatch<SetStateAction<string[]>>
 }
 
-export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
+export const TableRow = ({ row, selectedRow }: ITableRow) => {
+  const { classes } = useStyles()
   const dateFormat = getDateFirebase(row.dob)
+  const { dispatch } = useCustomerContext()
   const [edit, setEdit] = useState<boolean>(false)
   const { fireBaseId: id } = row
 
@@ -22,9 +26,9 @@ export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
   const handleSelectedRow = () => {
     // setChecked(!checked)
     if (!selectedRow.includes(id)) {
-      setSelectedRow([...selectedRow, id])
+      dispatch(setSelectedRow([...selectedRow, id]))
     } else {
-      setSelectedRow(selectedRow.filter((row) => row !== id))
+      dispatch(setSelectedRow(selectedRow.filter((row) => row !== id)))
     }
   }
 
@@ -61,52 +65,16 @@ export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
       {edit ? (
         <>
           <td>
-            <TextInput
-              sx={(theme: MantineTheme) => ({
-                input: {
-                  backgroundColor: theme.colors.dark[3],
-                  '&:focus-within': {
-                    borderColor: theme.colors.gray
-                  }
-                }
-              })}
-            ></TextInput>
+            <TextInput className={classes.td}></TextInput>
           </td>
           <td>
-            <TextInput
-              sx={(theme: MantineTheme) => ({
-                input: {
-                  backgroundColor: theme.colors.dark[3],
-                  '&:focus-within': {
-                    borderColor: theme.colors.gray
-                  }
-                }
-              })}
-            ></TextInput>
+            <TextInput className={classes.td}></TextInput>
           </td>
           <td>
-            <TextInput
-              sx={(theme: MantineTheme) => ({
-                input: {
-                  backgroundColor: theme.colors.dark[3],
-                  '&:focus-within': {
-                    borderColor: theme.colors.gray
-                  }
-                }
-              })}
-            ></TextInput>
+            <TextInput className={classes.td}></TextInput>
           </td>
           <td>
-            <TextInput
-              sx={(theme: MantineTheme) => ({
-                input: {
-                  backgroundColor: theme.colors.dark[3],
-                  '&:focus-within': {
-                    borderColor: theme.colors.gray
-                  }
-                }
-              })}
-            ></TextInput>
+            <TextInput className={classes.td}></TextInput>
           </td>
           <td>
             <Select
@@ -123,19 +91,12 @@ export const TableRow = ({ row, setSelectedRow, selectedRow }: ITableRow) => {
                   label: 'Nam'
                 }
               ]}
-            ></Select>
+              rightSection={<IconChevronDown color='gray' size={14} />}
+              rightSectionWidth={30}
+            />
           </td>
           <td>
-            <TextInput
-              sx={(theme: MantineTheme) => ({
-                input: {
-                  backgroundColor: theme.colors.dark[3],
-                  '&:focus-within': {
-                    borderColor: theme.colors.gray
-                  }
-                }
-              })}
-            ></TextInput>
+            <TextInput className={classes.td}></TextInput>
           </td>
           <td style={{ textAlign: 'center' }}>{getMemberShip(MEMBERSHIP.SILVER)}</td>
           <td

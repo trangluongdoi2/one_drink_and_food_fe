@@ -30,7 +30,6 @@ export const register = async ({ email, password }: UserAccountProps, setErrorMe
   const auth = getAuth()
   try {
     await createUserWithEmailAndPassword(auth, email, password)
-    console.log('auth', auth)
     setErrorMessage('')
   } catch (err: any) {
     console.log('message', { err })

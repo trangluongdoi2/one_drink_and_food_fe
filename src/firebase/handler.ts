@@ -51,6 +51,8 @@ export async function addItem(itemType: FIREBASE_COLLECTION, data: any) {
     .catch((error) => {
       console.log(error)
     })
+
+  await location.reload()
 }
 
 export async function deleteItem(itemType: FIREBASE_COLLECTION, id: string) {

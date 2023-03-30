@@ -1,23 +1,25 @@
 import { SearchIcon } from '@/assets/icon'
 import { Button, Checkbox, Flex, TextInput, Text } from '@mantine/core'
 import { useStyles } from './index.style'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
+import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
+import { setSelectedRow } from '@/reducer/customer/action'
 
 interface SearchTableProps {
   search: string
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   selectedAll: boolean
   allId: string[]
-  setSelectedRow: Dispatch<SetStateAction<string[]>>
 }
 
-const SearchTable = ({ search, handleSearchChange, selectedAll, allId, setSelectedRow }: SearchTableProps) => {
+export const SearchTable = ({ search, handleSearchChange, selectedAll, allId }: SearchTableProps) => {
   const { classes } = useStyles()
   const [checked, setChecked] = useState<boolean>(false)
+  const { dispatch } = useCustomerContext()
 
   const handleSelectAll = () => {
     setChecked(!checked)
-    !selectedAll ? setSelectedRow(allId) : setSelectedRow([])
+    !selectedAll ? dispatch(setSelectedRow(allId)) : dispatch(setSelectedRow([]))
   }
 
   return (
@@ -49,5 +51,3 @@ const SearchTable = ({ search, handleSearchChange, selectedAll, allId, setSelect
     </Flex>
   )
 }
-
-export default SearchTable

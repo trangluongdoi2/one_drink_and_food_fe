@@ -26,7 +26,7 @@ function Th({ width, children, onSort, position = 'left' }: ThProps) {
   )
 }
 
-const TableHeader = ({ reverseSortDirection, setSorting, header }: UserListHeaderProps) => {
+export const TableHeader = ({ reverseSortDirection, setSorting, header }: UserListHeaderProps) => {
   return (
     <>
       <thead style={{ fontSize: 12 }}>
@@ -48,5 +48,3 @@ const TableHeader = ({ reverseSortDirection, setSorting, header }: UserListHeade
     </>
   )
 }
-
-export default TableHeader

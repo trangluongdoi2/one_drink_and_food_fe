@@ -7,8 +7,9 @@ import AuthLayout from '@/layout/authLayout'
 import RegisterPage from '@/pages/register'
 import RegisterLayout from '@/layout/registerLayout'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
-import UsersList from '@/pages/users/listUsers'
-import UserContextProvider from '@/context/UserContext/UserContext'
+import UsersList from '@/pages/users/customerList'
+import UserContextProvider from '@/context/CustomerContext/CustomerContext'
+import { MEMBERSHIP } from '@/types/user'
 
 export const router = createBrowserRouter([
   {
@@ -58,21 +59,33 @@ export const router = createBrowserRouter([
                 path: '/users/list',
                 element: (
                   <UserContextProvider>
-                    <UsersList />
+                    <UsersList membership='all' />
                   </UserContextProvider>
                 )
               },
               {
                 path: '/users/silver',
-                element: <MarketAnalytic />
+                element: (
+                  <UserContextProvider>
+                    <UsersList membership={MEMBERSHIP.SILVER} />
+                  </UserContextProvider>
+                )
               },
               {
                 path: '/users/gold',
-                element: <MarketAnalytic />
+                element: (
+                  <UserContextProvider>
+                    <UsersList membership={MEMBERSHIP.GOLD} />
+                  </UserContextProvider>
+                )
               },
               {
                 path: '/users/ruby',
-                element: <MarketAnalytic />
+                element: (
+                  <UserContextProvider>
+                    <UsersList membership={MEMBERSHIP.RUBY} />
+                  </UserContextProvider>
+                )
               },
               {
                 path: '/users/register',

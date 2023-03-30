@@ -8,7 +8,6 @@ const ErrorPage = () => {
   const { classes } = useStyles()
   const navigate = useNavigate()
   const handleBackHome = () => {
-    console.log('click')
     navigate('/')
   }
 

@@ -26,7 +26,6 @@ const RegisterPage = () => {
 
       // eslint-disable-next-line no-extra-boolean-cast
       if (auth.currentUser) {
-        console.log('register successfully')
         setErrorMessage('Registered successfully')
         setOpened(true)
         navigate(LOGIN_PATH)
@@ -48,10 +47,6 @@ const RegisterPage = () => {
     const { value } = event.target
     setUserConfirmPassword(value)
   }, 500)
-
-  console.log('error', errorMessage)
-  console.log('user', userPassword)
-  console.log('user', userConfirmPassword)
 
   return (
     <Container size={420} my={40}>

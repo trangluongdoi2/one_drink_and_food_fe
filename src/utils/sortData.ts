@@ -7,8 +7,6 @@ export const sortData = (
 ) => {
   const { sortBy } = payload
 
-  console.log('sort by', sortBy)
-
   if (!sortBy) {
     return filterData(data, payload.search)
   }

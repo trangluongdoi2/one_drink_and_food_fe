@@ -2,7 +2,6 @@ import { Paper, Stack, Title } from '@mantine/core'
 import { GridCard, AnalysisChart, SaleChart } from './components'
 
 export const MarketAnalytic = () => {
-  console.log('adjflka')
   return (
     <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
       <Stack spacing={20} mr={10}>

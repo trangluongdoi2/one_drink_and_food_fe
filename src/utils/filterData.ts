@@ -1,8 +1,7 @@
-import { UserProps, SortUserProps } from '@/types/user'
+import { UserProps } from '@/types/user'
 import { keys } from '@mantine/utils'
 
 export const filterData = (data: UserProps[], search: string) => {
-  console.log('search', data)
   const newData = data.map((item) => ({
     firstName: item.firstName,
     lastName: item.lastName
