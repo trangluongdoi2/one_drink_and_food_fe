@@ -37,7 +37,7 @@ export interface UserListHeaderProps extends SortingProps {
   header: {
     id: keyof UserProps | ''
     title: string
-    width: number
+    width: string
     value: keyof SortUserProps
     position?: 'left' | 'center' | 'right'
   }[]

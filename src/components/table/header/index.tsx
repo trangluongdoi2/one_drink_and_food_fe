@@ -1,50 +1,54 @@
 import { UnstyledButton, Group, Text } from '@mantine/core'
-import { useStyles } from './index.style'
-import { UserListHeaderProps } from '@/types/user'
+import { headerContent } from '@/constants/user/header'
+import { SortingProps } from '@/types/table'
 
 interface ThProps {
   children?: React.ReactNode
   reversed: boolean
-  // sorted: boolean
+  width: string | number
+  colNumber?: number
   onSort(): void
-  width: number
   position?: 'left' | 'right' | 'center'
 }
 
-function Th({ width, children, onSort, position = 'left' }: ThProps) {
-  const { classes } = useStyles()
+const HeaderColumn = ({ children, onSort, position = 'left', width }: ThProps) => {
   return (
-    <th className={classes.th} style={{ width: width }}>
-      <UnstyledButton onClick={onSort} className={classes.control}>
+    <li style={{ float: 'left', width: width }}>
+      <UnstyledButton onClick={onSort}>
         <Group position={position}>
           <Text fw={300} fz={12}>
             {children}
           </Text>
         </Group>
       </UnstyledButton>
-    </th>
+    </li>
   )
 }
 
-export const TableHeader = ({ reverseSortDirection, setSorting, header }: UserListHeaderProps) => {
+export const TableHeader = ({ reverseSortDirection, setSorting }: SortingProps) => {
   return (
-    <>
-      <thead style={{ fontSize: 12 }}>
-        <tr>
-          {header.map(({ id, width, title, position, value }) => (
-            <Th
-              // sorted={sortBy === id}
-              key={id}
-              reversed={reverseSortDirection}
-              width={width}
-              onSort={() => setSorting(value)}
-              position={position}
-            >
-              {title}
-            </Th>
-          ))}
-        </tr>
-      </thead>
-    </>
+    <ul
+      style={{
+        textDecoration: 'none',
+        listStyle: 'none',
+        display: 'flex',
+        width: '100%',
+        fontSize: 12,
+        padding: '0px 20px',
+        marginLeft: 50
+      }}
+    >
+      {headerContent.map(({ id, title, position, value, width }) => (
+        <HeaderColumn
+          key={id}
+          reversed={reverseSortDirection}
+          onSort={() => setSorting(value)}
+          position={position}
+          width={width}
+        >
+          {title}
+        </HeaderColumn>
+      ))}
+    </ul>
   )
 }

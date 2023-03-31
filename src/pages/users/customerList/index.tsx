@@ -11,6 +11,7 @@ import CustomModal from '@/components/modal'
 import { useLocation } from 'react-router-dom'
 import { getMemberName } from '@/utils/getMemberName'
 import { addItem } from '@/firebase/handler'
+import CustomerTable2 from '../components/customerTable'
 
 interface UserListProps {
   membership: MEMBERSHIP | 'all'
@@ -113,7 +114,7 @@ const UsersList = ({ membership }: UserListProps) => {
         ) : (
           <Paper p={40} radius={10} shadow='md'>
             {userData && userData.length > 0 ? (
-              <CustomerTable data={userData} />
+              <CustomerTable2 data={userData} />
             ) : (
               <Center>
                 <Text>Danh sách khách hàng trống</Text>

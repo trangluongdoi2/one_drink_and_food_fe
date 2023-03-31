@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Text } from '@mantine/core'
-import { headerContent } from '@/constants/user/header'
+import { Center, Stack, Text } from '@mantine/core'
 import { sortData } from '@/utils/sortData'
 import { SortUserProps, UserProps } from '@/types/user'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
@@ -37,7 +36,7 @@ const CustomerTable = ({ data }: CustomTableProps) => {
   if (!data.length)
     return (
       <table style={{ width: '100%', borderSpacing: '0 15px' }}>
-        <TableHeader reverseSortDirection setSorting={setSorting} header={headerContent} />
+        <TableHeader reverseSortDirection setSorting={setSorting} />
         <tbody>
           <tr>
             <td colSpan={Object.keys(data[0]).length}>
@@ -54,22 +53,22 @@ const CustomerTable = ({ data }: CustomTableProps) => {
     <>
       <SearchTable search={search} handleSearchChange={handleSearchChange} selectedAll={isSelectedAll} allId={allId} />
 
-      <table style={{ width: '100%', borderSpacing: '0 15px' }}>
-        <TableHeader reverseSortDirection setSorting={setSorting} header={headerContent} />
-        <tbody>
+      <Stack spacing={0} mt={15}>
+        <TableHeader reverseSortDirection setSorting={setSorting} />
+        <Stack spacing={15}>
           {sortedData && sortedData.length > 0 ? (
             sortedData.map((row) => <TableRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)
           ) : (
-            <tr>
+            <Center sx={{ height: 200 }}>
               <td colSpan={Object.keys(data[0]).length}>
                 <Text weight={500} align='center'>
                   Danh sách khách hàng trống
                 </Text>
               </td>
-            </tr>
+            </Center>
           )}
-        </tbody>
-      </table>
+        </Stack>
+      </Stack>
 
       <TablePagination total={totalItems} />
     </>

@@ -2,65 +2,59 @@ import { UserListHeaderProps } from '@/types/user'
 
 export const headerContent: UserListHeaderProps['header'] = [
   {
-    id: 'fireBaseId',
-    title: '',
-    width: 35,
-    value: 'firstName'
-  },
-  {
     id: 'avatar',
     title: 'Avatar',
-    width: 60,
+    width: '7%',
     position: 'center',
     value: 'firstName'
   },
   {
     id: 'firstName',
     title: 'Họ',
-    width: 60,
+    width: '10%',
     value: 'firstName'
   },
   {
     id: 'lastName',
     title: 'Tên',
-    width: 120,
+    width: '15%',
     value: 'firstName'
   },
   {
     id: 'email',
     title: 'Email',
-    width: 150,
+    width: '25%',
     value: 'firstName'
   },
   {
     id: 'txtPhone',
     title: 'Số điện thoại',
-    width: 100,
+    width: '15%',
     value: 'firstName'
   },
   {
     id: 'gender',
     title: 'Giới tính',
-    width: 60,
+    width: '10%',
     value: 'firstName'
   },
   {
     id: 'dob',
     title: 'Ngày sinh',
-    width: 60,
+    width: '15%',
     value: 'firstName'
   },
   {
     id: 'member',
     title: 'Thành viên',
-    width: 60,
+    width: '10%',
     position: 'center',
     value: 'firstName'
   },
   {
     id: '',
     title: 'Công cụ',
-    width: 30,
+    width: '10%',
     value: 'firstName'
   }
 ]

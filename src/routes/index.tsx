@@ -10,6 +10,7 @@ import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
 import UsersList from '@/pages/users/customerList'
 import UserContextProvider from '@/context/CustomerContext/CustomerContext'
 import { MEMBERSHIP } from '@/types/user'
+import OrderList from '@/pages/order/orderList'
 
 export const router = createBrowserRouter([
   {
@@ -98,7 +99,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/orders/all',
-                element: <MarketAnalytic />
+                element: <OrderList />
               },
               {
                 path: '/orders/waiting',

@@ -11,7 +11,7 @@ const CardItem = (content: ICardItemProps) => {
   const { title1, title2, content1, content2 } = content
 
   return (
-    <Paper p={40} radius={10} shadow='md' sx={{ width: 354 }}>
+    <Paper p={40} radius={10} shadow='md' sx={{ minWidth: 354 }}>
       <Stack spacing={15}>
         <Stack spacing={10}>
           <Text size='sm'>{title1}</Text>

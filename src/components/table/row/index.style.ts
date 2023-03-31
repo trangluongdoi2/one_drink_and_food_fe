@@ -1,4 +1,4 @@
-import { createStyles, rem } from '@mantine/core'
+import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles((theme) => ({
   td: {
@@ -6,7 +6,8 @@ export const useStyles = createStyles((theme) => ({
       backgroundColor: theme.colors.dark[3],
       '&:focus-within': {
         borderColor: theme.colors.gray
-      }
+      },
+      width: '90%'
     }
   }
 }))
