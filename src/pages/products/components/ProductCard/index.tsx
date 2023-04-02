@@ -4,11 +4,17 @@ import { AddFillIcon } from '@/assets/icon'
 
 export const ProductCard = ({forNewProduct = false}: any) => {
   const { classes } = useStyles()
+  const onCreateNewProduct = () => {
+    if (forNewProduct) {
+      console.log('onCreateNewProduct')
+      return
+    }
+  }
   return (
-    <Paper className={classes.container}>
+    <Paper className={classes.container} onClick={onCreateNewProduct}>
       {forNewProduct ? (
         <>
-          <Stack>
+          <Stack >
             <ActionIcon size={52.5} className={classes.icon}>
               <AddFillIcon />
             </ActionIcon>
