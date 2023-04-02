@@ -1,6 +1,6 @@
 import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
 import { useStyles } from './index.styles'
-import { TableRows, EditIconLight, DeleteIcon } from '@/assets/icon'
+import { TableRowsIcon, EditIconLight, DeleteIcon } from '@/assets/icon'
 
 export const ProductPortfolio = ({ title, isBasePortfolio = false }: any) => {
   const { classes } = useStyles()
@@ -22,7 +22,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: any) => {
         <Flex className={classes.child} align={'center'} justify={'space-between'}>
           <Flex align={'center'} justify={'space-between'} gap={10}>
             <ActionIcon>
-              <TableRows />
+              <TableRowsIcon />
             </ActionIcon>
             <Text fz={18} tt='uppercase' fw={700}>
               DANH MỤC | {title}

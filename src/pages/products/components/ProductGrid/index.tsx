@@ -7,7 +7,7 @@ export const ProductGrid = ({ type }: ProductGridProps) => {
   const { classes } = useStyles()
   return (
     <Paper className={classes.container}>
-      <ProductCard />
+      <ProductCard forNewProduct={true} />
       <ProductCard />
       <ProductCard />
     </Paper>
