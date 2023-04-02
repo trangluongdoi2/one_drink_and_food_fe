@@ -1,10 +1,9 @@
-import { ActionIcon, Button, Flex, Paper, Text } from '@mantine/core'
+import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { TableRows, EditIconLight, DeleteIcon } from '@/assets/icon'
 
 export const ProductPortfolio = ({ title, isBasePortfolio = false }: any) => {
   const { classes } = useStyles()
-  console.log(isBasePortfolio, 'isBasePortfolio')
   const onDeletePorfolio = () => {
     console.log('onDeletePorfolio')
   }
