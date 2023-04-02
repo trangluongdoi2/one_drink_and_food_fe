@@ -10,6 +10,10 @@ export const ProductGrid = ({ type }: ProductGridProps) => {
       <ProductCard forNewProduct={true} />
       <ProductCard />
       <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
     </Paper>
   )
 }
