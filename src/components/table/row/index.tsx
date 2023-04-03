@@ -1,9 +1,11 @@
 import { UserProps } from '@/types/user'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { setSelectedRow } from '@/reducer/customer/action'
 import { ViewedRow } from './ViewedRow'
 import { EditableRow } from './EditableRow'
+import { updateItem } from '@/firebase/handler'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
 
 interface ITableRow {
   row: UserProps
@@ -148,18 +150,24 @@ interface ITableRow {
 export const TableRow = ({ row, selectedRow }: ITableRow) => {
   const { dispatch } = useCustomerContext()
   const [edit, setEdit] = useState<boolean>(false)
+  const [rowData, setRowData] = useState(row)
   const { fireBaseId: id } = row
 
   const isSelected = selectedRow.includes(id)
 
   const handleSelectedRow = () => {
-    // setChecked(!checked)
     if (!selectedRow.includes(id)) {
       dispatch(setSelectedRow([...selectedRow, id]))
     } else {
       dispatch(setSelectedRow(selectedRow.filter((row) => row !== id)))
     }
   }
+
+  useEffect(() => {
+    const changed = rowData !== row
+    console.log('change', changed)
+    if (rowData !== row) console.log('row', rowData)
+  }, [rowData])
 
   return (
     <Fragment>
@@ -168,7 +176,8 @@ export const TableRow = ({ row, selectedRow }: ITableRow) => {
           edit={edit}
           setEdit={setEdit}
           isSelected={isSelected}
-          row={row}
+          row={rowData}
+          setRowData={setRowData}
           handleSelectedRow={handleSelectedRow}
         />
       ) : (
@@ -176,7 +185,7 @@ export const TableRow = ({ row, selectedRow }: ITableRow) => {
           edit={edit}
           setEdit={setEdit}
           isSelected={isSelected}
-          row={row}
+          row={rowData}
           handleSelectedRow={handleSelectedRow}
         />
       )}

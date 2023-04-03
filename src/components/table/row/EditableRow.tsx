@@ -5,6 +5,7 @@ import { Avatar, Checkbox, ActionIcon, TextInput, Select } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
 import { Dispatch, SetStateAction } from 'react'
 import { useStyles } from './index.style'
+import { getDateFirebase } from '@/utils/convertDate'
 
 interface EditableRowProps {
   row: UserProps
@@ -12,10 +13,17 @@ interface EditableRowProps {
   handleSelectedRow: () => void
   edit: boolean
   setEdit: Dispatch<SetStateAction<boolean>>
+  setRowData: Dispatch<SetStateAction<UserProps>>
 }
 
-export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }: EditableRowProps) => {
+export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit, setRowData }: EditableRowProps) => {
   const { classes } = useStyles()
+  const dateFormat = getDateFirebase(row.dob)
+  console.log(row)
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target
+    setRowData({ ...row, [name]: value.toUpperCase() })
+  }
 
   return (
     <ul
@@ -71,28 +79,45 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit 
               width: '10%'
             }}
           >
-            <TextInput className={classes.td}></TextInput>
+            <TextInput
+              className={classes.td}
+              value={row.firstName}
+              sx={{ input: { fontWeight: 700 } }}
+              name='firstName'
+              onChange={handleInputChange}
+            ></TextInput>
           </li>
           <li
             style={{
               width: '15%'
             }}
           >
-            <TextInput className={classes.td}></TextInput>
+            <TextInput
+              className={classes.td}
+              value={row.lastName}
+              sx={{ input: { fontWeight: 700 } }}
+              name='lastName'
+              onChange={handleInputChange}
+            ></TextInput>
           </li>
           <li
             style={{
               width: '25%'
             }}
           >
-            <TextInput className={classes.td}></TextInput>
+            <TextInput className={classes.td} value={row.email} name='email' onChange={handleInputChange}></TextInput>
           </li>
           <li
             style={{
               width: '15%'
             }}
           >
-            <TextInput className={classes.td}></TextInput>
+            <TextInput
+              className={classes.td}
+              value={row.txtPhone}
+              name='txtPhone'
+              onChange={handleInputChange}
+            ></TextInput>
           </li>
           <li
             style={{
@@ -115,6 +140,7 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit 
               ]}
               rightSection={<IconChevronDown color='gray' size={14} />}
               rightSectionWidth={30}
+              sx={{ width: '90%' }}
             />
           </li>
           <li
@@ -122,7 +148,12 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit 
               width: '15%'
             }}
           >
-            <TextInput className={classes.td}></TextInput>
+            <TextInput
+              className={classes.td}
+              value={dateFormat ? JSON.parse(dateFormat) : ''}
+              name='dob'
+              onChange={handleInputChange}
+            ></TextInput>
           </li>
           <li
             style={{

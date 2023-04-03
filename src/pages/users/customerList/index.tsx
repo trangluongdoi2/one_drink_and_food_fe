@@ -1,17 +1,15 @@
 import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
-import { useEffect, useState } from 'react'
 import { DeleteIcon, MailIcon } from '@/assets/icon'
-import { MEMBERSHIP, UserProps } from '@/types/user'
-import { deleteItem, getAll } from '@/firebase/handler'
+import { MEMBERSHIP } from '@/types/user'
+import { deleteItem } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { setSelectedRow } from '@/reducer/customer/action'
-import CustomerTable from '../components/customerTable'
 import CustomModal from '@/components/modal'
-import { useLocation } from 'react-router-dom'
 import { getMemberName } from '@/utils/getMemberName'
 import { addItem } from '@/firebase/handler'
-import CustomerTable2 from '../components/customerTable'
+import CustomerTable from '../components/customerTable'
+import { useFetchUser } from '@/hook/useFetchUser'
 
 interface UserListProps {
   membership: MEMBERSHIP | 'all'
@@ -37,11 +35,10 @@ const handleAddItem = async () => {
 }
 
 const UsersList = ({ membership }: UserListProps) => {
-  const [userData, setUserData] = useState<UserProps[]>()
-  const [loading, setLoading] = useState<boolean>(false)
   const { selectedRow, dispatch } = useCustomerContext()
-  const { pathname } = useLocation()
   const title = getMemberName(membership)
+
+  const { loading, userData } = useFetchUser(membership)
 
   const openDeleteModal = () =>
     CustomModal({
@@ -64,19 +61,6 @@ const UsersList = ({ membership }: UserListProps) => {
     dispatch(setSelectedRow([]))
     location.reload()
   }
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      setLoading(true)
-      const data =
-        membership !== 'all'
-          ? await getAll(FIREBASE_COLLECTION.USERS, membership)
-          : await getAll(FIREBASE_COLLECTION.USERS)
-      setUserData(data)
-      setLoading(false)
-    }
-    fetchUserData().catch(console.error)
-  }, [membership, pathname])
 
   return (
     <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
@@ -114,7 +98,7 @@ const UsersList = ({ membership }: UserListProps) => {
         ) : (
           <Paper p={40} radius={10} shadow='md'>
             {userData && userData.length > 0 ? (
-              <CustomerTable2 data={userData} />
+              <CustomerTable data={userData} />
             ) : (
               <Center>
                 <Text>Danh sách khách hàng trống</Text>

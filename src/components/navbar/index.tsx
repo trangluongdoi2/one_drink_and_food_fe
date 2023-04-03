@@ -3,6 +3,7 @@ import LinksGroup from './LinkGroup.tsx'
 import { OneLogo } from '@/assets/icon'
 import { CloseButton } from '@/assets/icon'
 import { navConfig } from '@/configs/navConfig'
+import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -24,7 +25,10 @@ const useStyles = createStyles((theme) => ({
 
 const NavbarHeader = () => {
   const { classes } = useStyles()
-  const links = navConfig.map((item) => <LinksGroup {...item} key={item.label} />)
+  const [selected, setSelected] = useState<string>('')
+  const links = navConfig.map((item) => (
+    <LinksGroup {...item} key={item.label} selected={selected} setSelected={setSelected} />
+  ))
 
   return (
     <Navbar height='100vh' width={{ sm: 240 }} p='md' className={classes.navbar}>
