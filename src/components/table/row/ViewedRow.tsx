@@ -1,4 +1,5 @@
 import { EditIcon } from '@/assets/icon'
+import { useUserFormContext } from '@/context/form-context'
 import { UserProps } from '@/types/user'
 import { getDateFirebase } from '@/utils/convertDate'
 import { getMemberShip } from '@/utils/getMembership'
@@ -14,7 +15,8 @@ interface ViewedRowProps {
 }
 
 export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }: ViewedRowProps) => {
-  const dateFormat = getDateFirebase(row.dob)
+  const form = useUserFormContext()
+  const dateFormat = getDateFirebase(form.getInputProps('dob').value)
 
   return (
     <ul
@@ -25,7 +27,7 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
         width: '100%',
         fontSize: 12
       }}
-      key={row.fireBaseId}
+      key={form.getInputProps('fireBaseId').value}
     >
       <li style={{ float: 'left', marginRight: 20, alignItems: 'center', display: 'flex' }}>
         <Checkbox
@@ -63,7 +65,7 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
               width: '7%'
             }}
           >
-            <Avatar src={row.avatar} />
+            <Avatar src={form.getInputProps('avatar').value} />
           </li>
           <li
             style={{
@@ -71,7 +73,7 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
             }}
           >
             <Text tt='uppercase' fw='bolder' lh={1.4}>
-              {row.firstName}
+              {form.getInputProps('firstName').value}
             </Text>
           </li>
           <li
@@ -80,7 +82,7 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
             }}
           >
             <Text tt='uppercase' fw='bolder' lh={1.4}>
-              {row.lastName}
+              {form.getInputProps('lastName').value}
             </Text>
           </li>
           <li
@@ -88,21 +90,21 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
               width: '25%'
             }}
           >
-            <Text>{row.email}</Text>
+            <Text> {form.getInputProps('email').value}</Text>
           </li>
           <li
             style={{
               width: '15%'
             }}
           >
-            <Text>{row.txtPhone}</Text>
+            <Text>{form.getInputProps('txtPhone').value}</Text>
           </li>
           <li
             style={{
               width: '10%'
             }}
           >
-            <Text>{row.gender === 'male' ? 'Nam' : 'Nữ'}</Text>
+            <Text>{form.getInputProps('gender').value === 'male' ? 'Nam' : 'Nữ'}</Text>
           </li>
           <li
             style={{
@@ -116,7 +118,7 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
               width: '10%'
             }}
           >
-            {getMemberShip(row.member)}
+            {getMemberShip(form.getInputProps('member').value)}
           </li>
           <li
             style={{

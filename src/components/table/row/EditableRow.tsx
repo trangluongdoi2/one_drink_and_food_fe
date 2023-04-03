@@ -6,24 +6,26 @@ import { IconChevronDown } from '@tabler/icons-react'
 import { Dispatch, SetStateAction } from 'react'
 import { useStyles } from './index.style'
 import { getDateFirebase } from '@/utils/convertDate'
+import { useUserFormContext } from '@/context/form-context'
 
 interface EditableRowProps {
-  row: UserProps
+  // row: UserProps
   isSelected: boolean
   handleSelectedRow: () => void
   edit: boolean
   setEdit: Dispatch<SetStateAction<boolean>>
-  setRowData: Dispatch<SetStateAction<UserProps>>
+  // setRowData: Dispatch<SetStateAction<UserProps>>
 }
 
-export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit, setRowData }: EditableRowProps) => {
+export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditableRowProps) => {
   const { classes } = useStyles()
-  const dateFormat = getDateFirebase(row.dob)
-  console.log(row)
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target
-    setRowData({ ...row, [name]: value.toUpperCase() })
-  }
+  const form = useUserFormContext()
+  const dateFormat = getDateFirebase(form.getInputProps('dob').value)
+
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { value, name } = e.target
+  //   setRowData({ ...row, [name]: value.toUpperCase() })
+  // }
 
   return (
     <ul
@@ -34,7 +36,7 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
         width: '100%',
         fontSize: 12
       }}
-      key={row.fireBaseId}
+      key={form.getInputProps('fireBaseId').value}
     >
       <li style={{ float: 'left', marginRight: 20, alignItems: 'center', display: 'flex' }}>
         <Checkbox
@@ -52,8 +54,8 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
           height: 60,
           alignItems: 'center',
           display: 'flex',
-          backgroundColor: isSelected ? '#fff' : '#f5f5f5',
-          boxShadow: isSelected ? '2px 2px 10px 1px #ccc' : '',
+          backgroundColor: isSelected || edit ? '#fff' : '#f5f5f5',
+          boxShadow: isSelected || edit ? '2px 2px 10px 2px #f5f5f5' : '',
           borderRadius: 10
         }}
       >
@@ -72,7 +74,7 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
               width: '7%'
             }}
           >
-            <Avatar src={row.avatar} />
+            <Avatar src={form.getInputProps('avatar').value} />
           </li>
           <li
             style={{
@@ -81,10 +83,11 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
           >
             <TextInput
               className={classes.td}
-              value={row.firstName}
+              // value={row.firstName}
               sx={{ input: { fontWeight: 700 } }}
               name='firstName'
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
+              {...form.getInputProps('firstName')}
             ></TextInput>
           </li>
           <li
@@ -94,10 +97,11 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
           >
             <TextInput
               className={classes.td}
-              value={row.lastName}
+              // value={row.lastName}
               sx={{ input: { fontWeight: 700 } }}
               name='lastName'
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
+              {...form.getInputProps('lastName')}
             ></TextInput>
           </li>
           <li
@@ -105,7 +109,13 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
               width: '25%'
             }}
           >
-            <TextInput className={classes.td} value={row.email} name='email' onChange={handleInputChange}></TextInput>
+            <TextInput
+              className={classes.td}
+              // value={row.email}
+              name='email'
+              // onChange={handleInputChange}
+              {...form.getInputProps('email')}
+            ></TextInput>
           </li>
           <li
             style={{
@@ -114,9 +124,10 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
           >
             <TextInput
               className={classes.td}
-              value={row.txtPhone}
+              // value={row.txtPhone}
               name='txtPhone'
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
+              {...form.getInputProps('txtPhone')}
             ></TextInput>
           </li>
           <li
@@ -127,7 +138,7 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
             <Select
               label=''
               nothingFound='No options'
-              placeholder={row.gender === 'male' ? 'Nam' : 'Nữ'}
+              placeholder={form.getInputProps('gender').value === 'male' ? 'Nam' : 'Nữ'}
               data={[
                 {
                   value: 'female',
@@ -150,9 +161,10 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
           >
             <TextInput
               className={classes.td}
-              value={dateFormat ? JSON.parse(dateFormat) : ''}
+              // value={dateFormat ? JSON.parse(dateFormat) : ''}
               name='dob'
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
+              {...form.getInputProps('dob')}
             ></TextInput>
           </li>
           <li
@@ -160,7 +172,7 @@ export const EditableRow = ({ row, handleSelectedRow, isSelected, edit, setEdit,
               width: '10%'
             }}
           >
-            {getMemberShip(row.member)}
+            {getMemberShip(form.getInputProps('member').value)}
           </li>
           <li
             style={{

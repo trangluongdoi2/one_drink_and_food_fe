@@ -4,6 +4,8 @@ import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { setSelectedRow } from '@/reducer/customer/action'
 import { ViewedRow } from './ViewedRow'
 import { EditableRow } from './EditableRow'
+import { useForm, createFormContext } from '@mantine/form'
+import { UserFormProvider, useUserForm } from '@/context/form-context'
 import { updateItem } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 
@@ -150,10 +152,18 @@ interface ITableRow {
 export const TableRow = ({ row, selectedRow }: ITableRow) => {
   const { dispatch } = useCustomerContext()
   const [edit, setEdit] = useState<boolean>(false)
-  const [rowData, setRowData] = useState(row)
+  // const [rowData, setRowData] = useState(row)
   const { fireBaseId: id } = row
+  const form = useUserForm({
+    initialValues: row,
+
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email')
+    }
+  })
 
   const isSelected = selectedRow.includes(id)
+  const isChanged = form.isTouched() && form.isDirty() && !edit
 
   const handleSelectedRow = () => {
     if (!selectedRow.includes(id)) {
@@ -163,32 +173,33 @@ export const TableRow = ({ row, selectedRow }: ITableRow) => {
     }
   }
 
+  console.log('data', form.values)
+  console.log('touch', form.isTouched())
+  console.log('dirty', form.isDirty())
+  console.log('change', isChanged)
+
   useEffect(() => {
-    const changed = rowData !== row
-    console.log('change', changed)
-    if (rowData !== row) console.log('row', rowData)
-  }, [rowData])
+    // isChanged ? updateItem(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value) : ''
+    isChanged && console.log('update')
+  }, [isChanged])
 
   return (
     <Fragment>
-      {edit ? (
-        <EditableRow
-          edit={edit}
-          setEdit={setEdit}
-          isSelected={isSelected}
-          row={rowData}
-          setRowData={setRowData}
-          handleSelectedRow={handleSelectedRow}
-        />
-      ) : (
-        <ViewedRow
-          edit={edit}
-          setEdit={setEdit}
-          isSelected={isSelected}
-          row={rowData}
-          handleSelectedRow={handleSelectedRow}
-        />
-      )}
+      <UserFormProvider form={form}>
+        {edit ? (
+          <form>
+            <EditableRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
+          </form>
+        ) : (
+          <ViewedRow
+            edit={edit}
+            setEdit={setEdit}
+            isSelected={isSelected}
+            row={row}
+            handleSelectedRow={handleSelectedRow}
+          />
+        )}
+      </UserFormProvider>
     </Fragment>
   )
 }
