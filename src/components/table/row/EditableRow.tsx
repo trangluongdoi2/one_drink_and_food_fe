@@ -1,31 +1,32 @@
 import { ActiveEditIcon, EditIcon } from '@/assets/icon'
-import { UserProps } from '@/types/user'
 import { getMemberShip } from '@/utils/getMembership'
 import { Avatar, Checkbox, ActionIcon, TextInput, Select } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
-import { getDateFirebase } from '@/utils/convertDate'
+import { getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
 import { useUserFormContext } from '@/context/form-context'
 
 interface EditableRowProps {
-  // row: UserProps
   isSelected: boolean
   handleSelectedRow: () => void
   edit: boolean
   setEdit: Dispatch<SetStateAction<boolean>>
-  // setRowData: Dispatch<SetStateAction<UserProps>>
 }
 
 export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditableRowProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
+  const [newDate, setNewDate] = useState(dateFormat ? JSON.parse(dateFormat) : '')
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value, name } = e.target
-  //   setRowData({ ...row, [name]: value.toUpperCase() })
-  // }
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setNewDate(value)
+    form.setValues({
+      dob: parseDateFirebase(value)
+    })
+  }
 
   return (
     <ul
@@ -139,6 +140,11 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
               label=''
               nothingFound='No options'
               placeholder={form.getInputProps('gender').value === 'male' ? 'Nam' : 'Nữ'}
+              onChange={(value) =>
+                form.setValues({
+                  gender: value ?? 'male'
+                })
+              }
               data={[
                 {
                   value: 'female',
@@ -159,13 +165,7 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
               width: '15%'
             }}
           >
-            <TextInput
-              className={classes.td}
-              // value={dateFormat ? JSON.parse(dateFormat) : ''}
-              name='dob'
-              // onChange={handleInputChange}
-              {...form.getInputProps('dob')}
-            ></TextInput>
+            <TextInput className={classes.td} value={newDate} name='dob' onChange={handleDateChange}></TextInput>
           </li>
           <li
             style={{
@@ -179,7 +179,9 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
               width: 'auto'
             }}
           >
-            <ActionIcon onClick={() => setEdit(!edit)}>{edit ? <ActiveEditIcon /> : <EditIcon />}</ActionIcon>
+            <ActionIcon onClick={() => setEdit(!edit)} type='submit'>
+              {edit ? <ActiveEditIcon /> : <EditIcon />}
+            </ActionIcon>
           </li>
         </ul>
       </li>

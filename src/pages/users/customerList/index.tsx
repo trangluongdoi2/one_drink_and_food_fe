@@ -10,6 +10,7 @@ import { getMemberName } from '@/utils/getMemberName'
 import { addItem } from '@/firebase/handler'
 import CustomerTable from '../components/customerTable'
 import { useFetchUser } from '@/hook/useFetchUser'
+import { notifications } from '@mantine/notifications'
 
 interface UserListProps {
   membership: MEMBERSHIP | 'all'
@@ -57,7 +58,7 @@ const UsersList = ({ membership }: UserListProps) => {
     })
 
   const handleDeleteUser = (list: string[]) => {
-    list.map((item) => deleteItem(FIREBASE_COLLECTION.USERS, item))
+    list.forEach((item) => deleteItem(FIREBASE_COLLECTION.USERS, item))
     dispatch(setSelectedRow([]))
     location.reload()
   }
@@ -71,15 +72,14 @@ const UsersList = ({ membership }: UserListProps) => {
           </Title>
           <Flex gap={20}>
             <ActionIcon
-            // onClick={() =>
-            //   CustomModal({
-            //     title: 'Xoá thông tin',
-            //     content: 'Bạn có muốn xoá thông tin các khách hàng được chọn không ?',
-            //     onConfirm: () => {
-            //       handleAddItem()
-            //     }
-            //   })
-            // }
+              onClick={() => {
+                console.log('click')
+                notifications.show({
+                  title: 'Chỉnh sửa thành công',
+                  message: 'Thông tin khách hàng đã được cập nhật',
+                  autoClose: 3000
+                })
+              }}
             >
               <MailIcon />
             </ActionIcon>
