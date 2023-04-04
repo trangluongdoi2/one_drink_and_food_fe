@@ -21,4 +21,6 @@ export { default as ActiveEditIcon } from '@/assets/svg/edit-dark.svg'
 export { default as SilverMember } from '@/assets/svg/silver-member.svg'
 export { default as GoldenMember } from '@/assets/svg/golden-member.svg'
 export { default as RubyMember } from '@/assets/svg/ruby-member.svg'
-export {}
+export { default as PhoneIcon } from '@/assets/svg/phone.svg'
+export { default as PersonIcon } from '@/assets/svg/user.svg'
+export { default as EmailIcon } from '@/assets/svg/mail.svg'

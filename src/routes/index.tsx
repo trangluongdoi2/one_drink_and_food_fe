@@ -11,6 +11,7 @@ import UsersList from '@/pages/users/customerList'
 import UserContextProvider from '@/context/CustomerContext/CustomerContext'
 import { MEMBERSHIP } from '@/types/user'
 import OrderList from '@/pages/order/orderList'
+import AddCustomerPage from '@/pages/users/addCustomer'
 
 export const router = createBrowserRouter([
   {
@@ -90,7 +91,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: '/users/register',
-                element: <MarketAnalytic />
+                element: <AddCustomerPage />
               }
             ]
           },
@@ -99,27 +100,27 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/orders/all',
-                element: <OrderList />
+                element: <OrderList title='Tất cả đơn hàng' />
               },
               {
                 path: '/orders/waiting',
-                element: <ProductAnalytic />
+                element: <OrderList title='Chờ thanh toán' />
               },
               {
                 path: '/orders/processing',
-                element: <ProductAnalytic />
+                element: <OrderList title='Đang thực hiện' />
               },
               {
                 path: '/orders/delivering',
-                element: <ProductAnalytic />
+                element: <OrderList title='Đang giao' />
               },
               {
                 path: '/orders/done',
-                element: <ProductAnalytic />
+                element: <OrderList title='Đã hoàn tất' />
               },
               {
                 path: '/orders/cancel',
-                element: <ProductAnalytic />
+                element: <OrderList title='Đã hủy' />
               }
             ]
           },

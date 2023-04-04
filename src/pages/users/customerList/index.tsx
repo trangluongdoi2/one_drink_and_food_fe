@@ -82,7 +82,6 @@ const UsersList = ({ membership }: UserListProps) => {
             </ActionIcon> */}
             <ActionIcon
               onClick={() => {
-                console.log('click')
                 notifications.show({
                   title: 'Chỉnh sửa thành công',
                   message: 'Thông tin khách hàng đã được cập nhật',

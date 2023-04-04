@@ -1,6 +1,6 @@
 import { UnstyledButton, Group, Text } from '@mantine/core'
-import { headerContent } from '@/constants/user/header'
-import { SortingProps } from '@/types/table'
+
+import { SortUserProps, UserProps } from '@/types/user'
 
 interface ThProps {
   children?: React.ReactNode
@@ -25,7 +25,19 @@ const HeaderColumn = ({ children, onSort, position = 'left', width }: ThProps) =
   )
 }
 
-export const TableHeader = ({ reverseSortDirection, setSorting }: SortingProps) => {
+interface TableHeaderProps {
+  reverseSortDirection: boolean
+  setSorting: (field: keyof SortUserProps) => void
+  headerContent: {
+    id: keyof UserProps | ''
+    title: string
+    width: string
+    value: keyof SortUserProps
+    position?: 'left' | 'center' | 'right'
+  }[]
+}
+
+export const TableHeader = ({ reverseSortDirection, setSorting, headerContent }: TableHeaderProps) => {
   return (
     <ul
       style={{
