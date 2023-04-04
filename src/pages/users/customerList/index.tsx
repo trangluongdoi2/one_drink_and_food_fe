@@ -23,12 +23,15 @@ const date = new Date(second / 1000 + nanoSecond / 1000000)
 const mockData = {
   avatar: '',
   firstName: 'NGUYỄN',
-  lastName: 'KIỆT 123',
+  lastName: 'KIỆT 1',
   email: 'BDuyen1011@gmail.com',
-  txtPhone: '(+84)933220078',
-  gender: 'female',
-  dob: date,
-  member: MEMBERSHIP.SILVER
+  txtPhone: '(+84)93322333',
+  gender: 'male',
+  dob: {
+    nanoseconds: 180000000,
+    seconds: 1679333334
+  },
+  member: MEMBERSHIP.GOLD
 }
 
 const handleAddItem = async () => {
@@ -38,7 +41,6 @@ const handleAddItem = async () => {
 const UsersList = ({ membership }: UserListProps) => {
   const { selectedRow, dispatch } = useCustomerContext()
   const title = getMemberName(membership)
-
   const { loading, userData } = useFetchUser(membership)
 
   const openDeleteModal = () =>
@@ -71,6 +73,13 @@ const UsersList = ({ membership }: UserListProps) => {
             {title}
           </Title>
           <Flex gap={20}>
+            {/* <ActionIcon
+              onClick={() => {
+                handleAddItem()
+              }}
+            >
+              <MailIcon />
+            </ActionIcon> */}
             <ActionIcon
               onClick={() => {
                 console.log('click')

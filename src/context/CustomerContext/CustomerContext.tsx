@@ -14,7 +14,6 @@ const initialCustomerContext: CustomerContextDefault = {
 export const CustomerContext = createContext<CustomerContextDefault>(initialCustomerContext)
 
 const CustomerContextProvider = ({ children }: IContextProviderProps) => {
-  // const [selectedRow, setSelectedRow] = useState<string[]>([])
   const [state, dispatch] = useReducer(customerReducer, initialCustomerState)
 
   const value = useMemo(() => ({ ...state, dispatch }), [state])

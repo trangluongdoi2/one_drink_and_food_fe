@@ -4,7 +4,7 @@ import { Avatar, Checkbox, ActionIcon, TextInput, Select } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
-import { getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
+import { convertDateFireBase, getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
 import { useUserFormContext } from '@/context/form-context'
 
 interface EditableRowProps {
@@ -27,6 +27,8 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
       dob: parseDateFirebase(value)
     })
   }
+
+  console.log('newDate', convertDateFireBase(newDate))
 
   return (
     <ul

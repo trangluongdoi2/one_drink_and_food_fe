@@ -1,27 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Center, Stack, Text } from '@mantine/core'
 import { sortData } from '@/utils/sortData'
 import { SortUserProps, UserProps } from '@/types/user'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { SearchTable, TableHeader, TablePagination, TableRow } from '@/components/table'
+import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 interface CustomTableProps {
   data: UserProps[]
 }
 
+const ROW_PER_PAGE = 10
+
 const CustomerTable = ({ data }: CustomTableProps) => {
   const [search, setSearch] = useState('')
-  const [sortedData, setSortedData] = useState(data)
+  const { totalItems, active, onChange, slicedData } = useGetRowPerPage({ data, rowPerPage: ROW_PER_PAGE })
+
+  const [sortedData, setSortedData] = useState(slicedData)
   const [sortBy, setSortBy] = useState<keyof SortUserProps | null>(null)
   const [reverseSortDirection, setReverseSortDirection] = useState(false)
   const { selectedRow } = useCustomerContext()
 
-  const totalItems = Math.floor(data.length / 10) > 0 ? Math.floor(data.length / 10) : 1
   const isSelectedAll = selectedRow.length === data.length
   const allId = data.map((item) => item.fireBaseId)
 
   const setSorting = (field: keyof SortUserProps) => {
     const reversed = field === sortBy ? !reverseSortDirection : false
-    const sortedArray = sortData(data, { sortBy: field, reversed, search })
+    const sortedArray = sortData(slicedData, { sortBy: field, reversed, search })
     setReverseSortDirection(reversed)
     setSortBy(field)
     setSortedData(sortedArray)
@@ -32,6 +36,10 @@ const CustomerTable = ({ data }: CustomTableProps) => {
     setSearch(value)
     setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }))
   }
+
+  useEffect(() => {
+    setSortedData(sortData(slicedData, { sortBy, reversed: reverseSortDirection, search }))
+  }, [reverseSortDirection, search, slicedData, sortBy])
 
   if (!data.length)
     return (
@@ -70,7 +78,7 @@ const CustomerTable = ({ data }: CustomTableProps) => {
         </Stack>
       </Stack>
 
-      <TablePagination total={totalItems} />
+      <TablePagination total={totalItems} onChange={onChange} active={active} />
     </>
   )
 }
