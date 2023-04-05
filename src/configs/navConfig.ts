@@ -1,9 +1,25 @@
-import { OverviewIcon, UserIcon, OrderIcon, ProductIcon, NewsIcon, CouponIcon, GiftIcon } from '@/assets/icon'
+import {
+  OverviewIcon,
+  UserIcon,
+  OrderIcon,
+  ProductIcon,
+  NewsIcon,
+  CouponIcon,
+  GiftIcon,
+  ActiveOverviewIcon,
+  ActiveUserIcon,
+  ActiveOrderIcon,
+  ActiveProductIcon,
+  ActiveNewsIcon,
+  ActiveGiftIcon,
+  ActiveCouponIcon
+} from '@/assets/icon'
 
 export const navConfig = [
   {
     label: 'Tổng quan',
     icon: OverviewIcon,
+    active: ActiveOverviewIcon,
     links: [
       { label: 'Phân tích thị trường', link: '/overview/market' },
       { label: 'Dữ liệu sản phẩm', link: '/overview/product' }
@@ -12,6 +28,7 @@ export const navConfig = [
   {
     label: 'Khách hàng',
     icon: UserIcon,
+    active: ActiveUserIcon,
     initiallyOpened: false,
     links: [
       { label: 'Danh sách khách hàng', link: '/users/list' },
@@ -24,6 +41,7 @@ export const navConfig = [
   {
     label: 'Đơn hàng',
     icon: OrderIcon,
+    active: ActiveOrderIcon,
     links: [
       { label: 'Tất cả đơn hàng', link: '/orders/all' },
       { label: 'Chờ thanh toán', link: '/orders/waiting' },
@@ -36,6 +54,7 @@ export const navConfig = [
   {
     label: 'Sản phẩm',
     icon: ProductIcon,
+    active: ActiveProductIcon,
     links: [
       { label: 'Danh sách sản phẩm', link: '/products/all' },
       { label: 'Nước ép', link: '/products/juice' },
@@ -49,16 +68,19 @@ export const navConfig = [
   {
     label: 'Tin tức',
     icon: NewsIcon,
+    active: ActiveNewsIcon,
     links: [{ label: 'Danh sách tin tức', link: '/news/list' }]
   },
   {
     label: 'Mã khuyến mãi',
     icon: CouponIcon,
+    active: ActiveCouponIcon,
     links: [{ label: 'Danh sách khuyến mãi', link: '/coupons/list' }]
   },
   {
     label: 'Quà tặng',
     icon: GiftIcon,
+    active: ActiveGiftIcon,
     links: [
       { label: 'Danh sách quà tặng', link: '/gifts/list' },
       { label: 'Thông tin quà đã đổi', link: '/gifts/infor' }

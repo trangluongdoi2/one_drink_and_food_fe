@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 interface LinksGroupProps {
   icon: React.FC<any> | string
+  active: React.FC<any> | string
   label: string
   initiallyOpened?: boolean
   links?: { label: string; link: string }[]
@@ -13,11 +14,21 @@ interface LinksGroupProps {
   setSelected: Dispatch<SetStateAction<string>>
 }
 
-function LinksGroup({ icon: Icon, label, initiallyOpened, links, selected, setSelected }: LinksGroupProps) {
+function LinksGroup({
+  icon: Icon,
+  active: ActiveIcon,
+  label,
+  initiallyOpened,
+  links,
+  selected,
+  setSelected
+}: LinksGroupProps) {
   const { classes, theme } = useStyles()
   const hasLinks = Array.isArray(links)
   const [opened, setOpened] = useState(initiallyOpened || false)
+  const [hover, setHover] = useState<boolean>(false)
   const ChevronIcon = theme.dir === 'ltr' ? IconChevronDown : IconChevronUp
+
   const items = (hasLinks ? links : []).map((link, index) => {
     const handleOnClick = () => setSelected(link.label)
     const isSelected = selected === link.label
@@ -37,9 +48,9 @@ function LinksGroup({ icon: Icon, label, initiallyOpened, links, selected, setSe
   return (
     <>
       <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control} px={30}>
-        <Group position='apart' spacing={0}>
+        <Group position='apart' spacing={0} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
           <Box sx={{ display: 'flex', alignItems: 'center', height: 40 }}>
-            <Icon size={20} />
+            {hover || opened ? <ActiveIcon size={20} /> : <Icon size={20} />}
             <Box ml='md'>{label}</Box>
           </Box>
           {hasLinks && (

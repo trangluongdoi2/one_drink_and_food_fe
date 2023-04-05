@@ -96,7 +96,7 @@ export const SaleChart = () => {
                   width: 60,
                   height: 30
                 }}
-                color={select === index ? 'red' : 'dark.5'}
+                color={select === index ? 'dark.5' : 'dark.3'}
                 radius={10}
                 onClick={() => setSelect(id)}
                 p={2}

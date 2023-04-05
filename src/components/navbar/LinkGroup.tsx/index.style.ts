@@ -10,7 +10,7 @@ export const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.sm,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.dark[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.dark[3],
       color: theme.colorScheme === 'dark' ? theme.white : theme.black
     }
   },
@@ -29,12 +29,16 @@ export const useStyles = createStyles((theme) => ({
     borderLeft: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]}`,
 
     '&:hover': {
-      backgroundColor: theme.colors.gray,
+      backgroundColor: theme.colors.dark[3],
       color: 'white'
     }
   },
 
   chevron: {
     transition: 'transform 200ms ease'
+  },
+
+  navbar: {
+    transition: 'all 0.4s ease-in-out'
   }
 }))
