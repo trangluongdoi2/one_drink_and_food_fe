@@ -24,7 +24,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: any) => {
             <ActionIcon>
               <TableRowsIcon />
             </ActionIcon>
-            <Text fz={18} tt='uppercase' fw={700}>
+            <Text fz={18} fw={700}>
               DANH MỤC | {title}
             </Text>
             <ActionIcon onClick={onEditPorfolio}>

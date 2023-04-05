@@ -1,4 +1,4 @@
-import { Flex, Paper, Text } from '@mantine/core'
+import { Flex, Paper, Stack, Text } from '@mantine/core'
 import { ProductPortfolio } from '../ProductPortfolio'
 import { ProductGrid } from '../ProductGrid'
 import { useStyles } from './index.styles'
@@ -8,13 +8,16 @@ export const ProductJuiceGrid = () => {
   const { classes } = useStyles()
   return (
     <Paper className={classes.container}>
-      <Text fz={18} fw={700}>
+      <Text fz={18} fw={700} className={classes.containerText}>
         {ProductType.JUICE}
       </Text>
-      <Flex direction={'column'} gap={20}>
-        <ProductPortfolio title='Nước trái cây' />
-        <ProductGrid />
-      </Flex>
+      <Stack spacing={20}>
+        <ProductPortfolio isBasePortfolio={true}/>
+        <Flex direction={'column'} gap={20}>
+          <ProductGrid title='Nước ép ly' />
+          <ProductGrid title='Nước ép đóng chai' />
+        </Flex>
+      </Stack>
     </Paper>
   )
 }

@@ -1,5 +1,6 @@
 export interface ProductGridProps {
   type?: string
+  title?: string
 }
 
 export interface ProductOverview {
