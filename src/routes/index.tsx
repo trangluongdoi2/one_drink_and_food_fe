@@ -12,6 +12,7 @@ import UserContextProvider from '@/context/CustomerContext/CustomerContext'
 import { MEMBERSHIP } from '@/types/user'
 import OrderList from '@/pages/order/orderList'
 import AddCustomerPage from '@/pages/users/addCustomer'
+import { ProductCreateNewForm, ProductJuiceGrid } from '@/pages/products'
 
 export const router = createBrowserRouter([
   {
@@ -133,7 +134,13 @@ export const router = createBrowserRouter([
               },
               {
                 path: '/products/juice',
-                element: <ProductAnalytic />
+                element: <ProductJuiceGrid />,
+                children: [
+                  {
+                    path: '/products/juice/new',
+                    element: <ProductCreateNewForm />
+                  }
+                ]
               },
               {
                 path: '/products/smoothy',
