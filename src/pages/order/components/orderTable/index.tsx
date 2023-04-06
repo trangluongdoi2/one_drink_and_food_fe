@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Center, Stack, Text } from '@mantine/core'
-import { SearchTable, TablePagination } from '@/components/table'
+import { TablePagination } from '@/components/table'
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 import { OrderProps } from '@/types/order'
 import { orderContent } from '@/constants/order/header'
 import { OrderHeader } from '../orderHeader'
 import { OrderRow } from '../orderRow'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
+import { OrderSearchTable } from '../orderSearch'
+import { setSelectedRow } from '@/reducer/order/action'
 
 interface OrderTableProps {
   data: OrderProps[]
@@ -16,6 +18,8 @@ const ROW_PER_PAGE = 10
 
 const OrderTable = ({ data }: OrderTableProps) => {
   const [search, setSearch] = useState('')
+  const { dispatch } = useOrderContext()
+
   const { totalItems, active, onChange, slicedData } = useGetRowPerPage<OrderProps>({
     data,
     rowPerPage: ROW_PER_PAGE
@@ -59,7 +63,12 @@ const OrderTable = ({ data }: OrderTableProps) => {
 
   return (
     <>
-      <SearchTable search={search} handleSearchChange={handleSearchChange} selectedAll={isSelectedAll} allId={allId} />
+      <OrderSearchTable
+        search={search}
+        handleSearchChange={handleSearchChange}
+        selectedAll={isSelectedAll}
+        allId={allId}
+      />
 
       <Stack spacing={0} mt={15}>
         <OrderHeader headerContent={orderContent} />

@@ -1,13 +1,7 @@
+import { ICardProps } from '@/pages/overview/components'
 import { Paper, Stack, Text } from '@mantine/core'
 
-interface ICardItemProps {
-  title1: string
-  content1: string
-  title2: string
-  content2: string
-}
-
-const CardItem = (content: ICardItemProps) => {
+const CardItem = (content: ICardProps) => {
   const { title1, title2, content1, content2 } = content
 
   return (
