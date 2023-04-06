@@ -49,7 +49,7 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Viewed
         <Flex gap={10} align='center' justify='left' p={20} sx={{ width: '100%' }}>
           {/* ---------------- ID ---------- */}
           <Stack sx={{ width: '15%' }}>
-            <Text tt='uppercase' fw='bolder' lh={1.4}>
+            <Text fw='bolder' lh={1.4}>
               {form.getInputProps('fireBaseId').value.split('-').pop()}
             </Text>
           </Stack>
@@ -65,37 +65,29 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Viewed
 
           {/* ---------------- NAME ------------- */}
           <Stack sx={{ width: '20%' }}>
-            <Text tt='uppercase' fw='bolder' lh={1.4}>
+            <Text fw='bolder' lh={1.4}>
               {form.getInputProps('recipientName').value}
             </Text>
           </Stack>
 
           {/* ---------------- ADDRESS ---------- */}
           <Stack sx={{ width: '45%', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
-            <Text tt='uppercase' lh={1.4}>
-              {form.getInputProps('address').value}
-            </Text>
+            <Text lh={1.4}>{form.getInputProps('address').value}</Text>
           </Stack>
 
           {/* ---------------- PHONE ---------- */}
           <Stack sx={{ width: '15%' }}>
-            <Text tt='uppercase' lh={1.4}>
-              {form.getInputProps('phone').value}
-            </Text>
+            <Text lh={1.4}>{form.getInputProps('phone').value}</Text>
           </Stack>
 
           {/* ---------------- DATE ---------- */}
           <Stack sx={{ width: '15%' }}>
-            <Text tt='uppercase' lh={1.4}>
-              {form.getInputProps('receivedDate').value}
-            </Text>
+            <Text lh={1.4}>{form.getInputProps('receivedDate').value}</Text>
           </Stack>
 
           {/* ---------------- STATUS ---------- */}
           <Stack sx={{ width: '10%' }}>
-            <Text tt='uppercase' lh={1.4}>
-              {getStatus(form.getInputProps('status').value)}
-            </Text>
+            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)}</Text>
           </Stack>
 
           {/* ---------------- EDIT ---------- */}

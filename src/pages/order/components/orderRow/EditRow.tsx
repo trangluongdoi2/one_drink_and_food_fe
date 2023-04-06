@@ -1,4 +1,4 @@
-import { ActiveEditIcon, DefaultAvatar, EditIcon } from '@/assets/icon'
+import { ActiveEditIcon, DefaultAvatar } from '@/assets/icon'
 import { useUserFormContext } from '@/context/form-context'
 import { getStatus } from '@/utils/getStatus'
 import { Avatar, Checkbox, ActionIcon, Text, Flex, Stack, TextInput } from '@mantine/core'
@@ -52,7 +52,7 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
       >
         <Flex gap={10} align='center' justify='left' p={20} sx={{ width: '100%', fontSize: 12 }}>
           <Stack sx={{ width: '15%' }}>
-            <Text tt='uppercase' fw='bolder' lh={1.4}>
+            <Text fw='bolder' lh={1.4}>
               {form.getInputProps('fireBaseId').value.split('-').pop()}
             </Text>
           </Stack>
@@ -65,17 +65,13 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
           </Stack>
           <Stack sx={{ width: '20%' }} className={classes.td}>
             <TextInput
-              sx={{ input: { fontWeight: 700, textTransform: 'uppercase' } }}
+              sx={{ input: { fontWeight: 700 } }}
               name='recipientName'
               {...form.getInputProps('recipientName')}
             />
           </Stack>
           <Stack className={clsx(classes.td, classes.address)} sx={{ width: '45%' }}>
-            <TextInput
-              sx={{ input: { textTransform: 'uppercase' } }}
-              name='address'
-              {...form.getInputProps('address')}
-            />
+            <TextInput name='address' {...form.getInputProps('address')} />
           </Stack>
           <Stack sx={{ width: '15%' }}>
             <TextInput className={classes.td} name='phone' {...form.getInputProps('phone')} />
@@ -84,9 +80,7 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
             <TextInput className={classes.td} name='receivedDate' {...form.getInputProps('receivedDate')} />
           </Stack>
           <Stack sx={{ width: '10%' }}>
-            <Text tt='uppercase' lh={1.4}>
-              {getStatus(form.getInputProps('status').value)}
-            </Text>
+            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)}</Text>
           </Stack>
 
           <Stack sx={{ width: '6%' }}>

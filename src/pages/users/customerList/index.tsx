@@ -15,10 +15,6 @@ import { notifications } from '@mantine/notifications'
 interface UserListProps {
   membership: MEMBERSHIP | 'all'
 }
-const second = 1679333334
-const nanoSecond = 180000000
-
-const date = new Date(second / 1000 + nanoSecond / 1000000)
 
 const mockData = {
   avatar: '',
@@ -62,7 +58,6 @@ const UsersList = ({ membership }: UserListProps) => {
   const handleDeleteUser = (list: string[]) => {
     list.forEach((item) => deleteItem(FIREBASE_COLLECTION.USERS, item))
     dispatch(setSelectedRow([]))
-    location.reload()
   }
 
   return (

@@ -24,8 +24,6 @@ const OrderTable = ({ data }: OrderTableProps) => {
   const [sortedData, setSortedData] = useState<OrderProps[]>(slicedData)
   const { selectedRow } = useOrderContext()
 
-  console.log('selectedRow: ', selectedRow)
-
   const isSelectedAll = selectedRow.length === data.length
   const allId = data.map((item) => item.fireBaseId)
 
