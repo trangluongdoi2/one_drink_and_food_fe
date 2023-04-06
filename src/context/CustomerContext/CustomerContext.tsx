@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useReducer, useState } from 'react'
+import { createContext, useContext, useMemo, useReducer } from 'react'
 import { IContextProviderProps } from '@/types/context'
 import { customerReducer, initialState as initialCustomerState } from '@/reducer/customer'
 import { CustomerState, CustomerTypeAction } from '@/reducer/customer/type'

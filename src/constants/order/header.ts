@@ -1,51 +1,61 @@
-export const orderContent = [
+import { OrderProps } from '@/types/order'
+
+interface OrderHeaderProps {
+  id: keyof OrderProps | ''
+  title: string
+  width: string
+  value: 'recipientName' | ''
+  position?: 'left' | 'center' | 'right'
+}
+
+export const orderContent: OrderHeaderProps[] = [
   {
     id: 'fireBaseId',
     title: 'Mã đơn',
-    width: '7%',
+    width: '11%',
     position: 'center',
     value: 'recipientName'
   },
   {
     id: 'avatar',
     title: 'Avatar',
-    width: '10%',
+    width: '6%',
     value: ''
   },
   {
     id: 'recipientName',
     title: 'Người nhận',
-    width: '15%',
+    width: '14%',
     value: 'recipientName'
   },
   {
     id: 'address',
     title: 'Địa chỉ giao hàng',
-    width: '25%',
+    width: '31%',
     value: 'recipientName'
   },
   {
     id: 'phone',
     title: 'Số điện thoại',
-    width: '15%',
+    width: '11%',
     value: 'recipientName'
   },
   {
-    id: 'receivedTime',
+    id: 'receivedDate',
     title: 'Thời gian',
-    width: '10%',
+    width: '9%',
     value: 'recipientName'
   },
   {
     id: 'status',
     title: 'Trạng thái',
-    width: '15%',
+    width: '8%',
     value: 'recipientName'
   },
   {
     id: '',
     title: 'Công cụ',
-    width: '10%',
+    width: '7%',
     value: 'recipientName'
   }
 ]

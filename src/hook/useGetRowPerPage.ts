@@ -3,8 +3,8 @@ import { UserProps } from '@/types/user'
 import { usePagination } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
 
-interface UseGetRowPerPageProps {
-  data: UserProps[] | OrderProps[] | any
+interface UseGetRowPerPageProps<T> {
+  data: T[]
   rowPerPage: number
   total?: number
 }
@@ -22,7 +22,7 @@ const getPageTotal = ({ total, rowPerPage }: { total: number; rowPerPage: number
   return 1
 }
 
-export const useGetRowPerPage = ({ data, rowPerPage }: UseGetRowPerPageProps) => {
+export const useGetRowPerPage = <T>({ data, rowPerPage }: UseGetRowPerPageProps<T>) => {
   const [page, onChange] = useState(1)
   const [slicedData, setSlicedData] = useState(data.slice(0, rowPerPage))
   const totalItems = getPageTotal({ total: data.length, rowPerPage: rowPerPage })

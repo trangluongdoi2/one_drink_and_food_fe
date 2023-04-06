@@ -4,7 +4,7 @@ import { Avatar, Checkbox, ActionIcon, TextInput, Select } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
-import { convertDateFireBase, getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
+import { getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
 import { useUserFormContext } from '@/context/form-context'
 
 interface EditableRowProps {
@@ -27,8 +27,6 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
       dob: parseDateFirebase(value)
     })
   }
-
-  console.log('newDate', convertDateFireBase(newDate))
 
   return (
     <ul
@@ -86,10 +84,8 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
           >
             <TextInput
               className={classes.td}
-              // value={row.firstName}
               sx={{ input: { fontWeight: 700 } }}
               name='firstName'
-              // onChange={handleInputChange}
               {...form.getInputProps('firstName')}
             ></TextInput>
           </li>
@@ -100,10 +96,8 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
           >
             <TextInput
               className={classes.td}
-              // value={row.lastName}
               sx={{ input: { fontWeight: 700 } }}
               name='lastName'
-              // onChange={handleInputChange}
               {...form.getInputProps('lastName')}
             ></TextInput>
           </li>
@@ -112,26 +106,14 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
               width: '25%'
             }}
           >
-            <TextInput
-              className={classes.td}
-              // value={row.email}
-              name='email'
-              // onChange={handleInputChange}
-              {...form.getInputProps('email')}
-            ></TextInput>
+            <TextInput className={classes.td} name='email' {...form.getInputProps('email')}></TextInput>
           </li>
           <li
             style={{
               width: '15%'
             }}
           >
-            <TextInput
-              className={classes.td}
-              // value={row.txtPhone}
-              name='txtPhone'
-              // onChange={handleInputChange}
-              {...form.getInputProps('txtPhone')}
-            ></TextInput>
+            <TextInput className={classes.td} name='txtPhone' {...form.getInputProps('txtPhone')}></TextInput>
           </li>
           <li
             style={{

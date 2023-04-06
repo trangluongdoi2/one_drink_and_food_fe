@@ -13,7 +13,9 @@ export const useFetchOrder = (query: string) => {
     const fetchUserData = async () => {
       setLoading(true)
       const data =
-        query !== 'all' ? await getAll(FIREBASE_COLLECTION.ORDERS, query) : await getAll(FIREBASE_COLLECTION.ORDERS)
+        query !== 'all'
+          ? await getAll(FIREBASE_COLLECTION.ORDERS, query, 'status')
+          : await getAll(FIREBASE_COLLECTION.ORDERS)
       setOrderData(data)
       setLoading(false)
     }

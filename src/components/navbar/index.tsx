@@ -10,7 +10,8 @@ const useStyles = createStyles((theme) => ({
   navbar: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     paddingBottom: 0,
-    boxShadow: '1px 0px 10px #ccc'
+    boxShadow: '1px 0px 10px #ccc',
+    zIndex: 1
   },
 
   links: {

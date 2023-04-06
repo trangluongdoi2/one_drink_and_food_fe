@@ -13,6 +13,8 @@ import { MEMBERSHIP } from '@/types/user'
 import OrderList from '@/pages/order/orderList'
 import AddCustomerPage from '@/pages/users/addCustomer'
 import { ProductCreateNewForm, ProductJuiceGrid } from '@/pages/products'
+import { ORDER_STATUS } from '@/types/order'
+import OrderContextProvider from '@/context/OrderContext/OrderContext'
 
 export const router = createBrowserRouter([
   {
@@ -101,27 +103,51 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/orders/all',
-                element: <OrderList title='Tất cả đơn hàng' />
+                element: (
+                  <OrderContextProvider>
+                    <OrderList title='Tất cả đơn hàng' query='all' />
+                  </OrderContextProvider>
+                )
               },
               {
                 path: '/orders/waiting',
-                element: <OrderList title='Chờ thanh toán' />
+                element: (
+                  <OrderContextProvider>
+                    <OrderList title='Chờ thanh toán' query={ORDER_STATUS.PAYMENTING} />
+                  </OrderContextProvider>
+                )
               },
               {
                 path: '/orders/processing',
-                element: <OrderList title='Đang thực hiện' />
+                element: (
+                  <OrderContextProvider>
+                    <OrderList title='Đang thực hiện' query={ORDER_STATUS.PREPARING} />
+                  </OrderContextProvider>
+                )
               },
               {
                 path: '/orders/delivering',
-                element: <OrderList title='Đang giao' />
+                element: (
+                  <OrderContextProvider>
+                    <OrderList title='Đang giao' query={ORDER_STATUS.SHIPPING} />
+                  </OrderContextProvider>
+                )
               },
               {
                 path: '/orders/done',
-                element: <OrderList title='Đã hoàn tất' />
+                element: (
+                  <OrderContextProvider>
+                    <OrderList title='Đã hoàn tất' query={ORDER_STATUS.PAID} />
+                  </OrderContextProvider>
+                )
               },
               {
                 path: '/orders/cancel',
-                element: <OrderList title='Đã hủy' />
+                element: (
+                  <OrderContextProvider>
+                    <OrderList title='Đã hủy' query={ORDER_STATUS.CANCEL} />
+                  </OrderContextProvider>
+                )
               }
             ]
           },

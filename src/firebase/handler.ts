@@ -2,14 +2,10 @@ import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, query, 
 import { FIREBASE_COLLECTION } from './collection'
 import { db } from './config'
 
-interface GetAllProps {
-  itemType: FIREBASE_COLLECTION
-  query: string
-}
-
-export async function getAll(itemType: FIREBASE_COLLECTION, params?: string) {
+export async function getAll(itemType: FIREBASE_COLLECTION, params?: string, queryKey?: string) {
   const data: any = []
-  const queryData = params ? query(collection(db, itemType), where('member', '==', params)) : collection(db, itemType)
+  const queryData =
+    params && queryKey ? query(collection(db, itemType), where(queryKey, '==', params)) : collection(db, itemType)
   try {
     // const querySnapshot = await getDocs(collection(db, itemType))
     const querySnapshot = await getDocs(queryData)

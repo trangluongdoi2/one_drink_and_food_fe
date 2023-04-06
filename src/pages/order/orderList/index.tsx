@@ -1,10 +1,10 @@
 import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
 import { DeleteIcon } from '@/assets/icon'
 import { useFetchOrder } from '@/hook/useFetchOrder'
+import OrderTable from '../components/orderTable'
 
-const OrderList = ({ title }: { title: string }) => {
-  const { loading, orderData } = useFetchOrder('all')
-  console.log('order', orderData)
+const OrderList = ({ title, query }: { title: string; query: string }) => {
+  const { loading, orderData } = useFetchOrder(query)
 
   return (
     <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
@@ -20,7 +20,7 @@ const OrderList = ({ title }: { title: string }) => {
           </Flex>
         </Flex>
 
-        {/* {loading ? (
+        {loading ? (
           <Paper p={40} radius={10} shadow='md'>
             <Center>
               <Loader variant='dots' />
@@ -32,11 +32,13 @@ const OrderList = ({ title }: { title: string }) => {
               <OrderTable data={orderData} />
             ) : (
               <Center>
-                <Text>Danh sách khách hàng trống</Text>
+                <Stack justify='center'>
+                  <Text align='center'>Danh sách khách hàng trống</Text>
+                </Stack>
               </Center>
             )}
           </Paper>
-        )} */}
+        )}
       </Stack>
     </Paper>
   )

@@ -13,7 +13,9 @@ export const useFetchUser = (query: string) => {
     const fetchUserData = async () => {
       setLoading(true)
       const data =
-        query !== 'all' ? await getAll(FIREBASE_COLLECTION.USERS, query) : await getAll(FIREBASE_COLLECTION.USERS)
+        query !== 'all'
+          ? await getAll(FIREBASE_COLLECTION.USERS, query, 'member')
+          : await getAll(FIREBASE_COLLECTION.USERS)
       setUserData(data)
       setLoading(false)
     }

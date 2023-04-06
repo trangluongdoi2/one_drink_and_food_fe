@@ -14,7 +14,7 @@ const ROW_PER_PAGE = 10
 
 const CustomerTable = ({ data }: CustomTableProps) => {
   const [search, setSearch] = useState('')
-  const { totalItems, active, onChange, slicedData } = useGetRowPerPage({ data, rowPerPage: ROW_PER_PAGE })
+  const { totalItems, active, onChange, slicedData } = useGetRowPerPage<UserProps>({ data, rowPerPage: ROW_PER_PAGE })
 
   const [sortedData, setSortedData] = useState(slicedData)
   const [sortBy, setSortBy] = useState<keyof SortUserProps | null>(null)
