@@ -1,6 +1,6 @@
 import { Paper, Rating, Stack, Title, Text, Flex } from '@mantine/core'
-import { GridCard } from './components'
-import { ProductList } from './components/ProductList'
+import { GridCard } from '../../components'
+import { ProductList } from '../../components/ProductList'
 
 const data = [
   {

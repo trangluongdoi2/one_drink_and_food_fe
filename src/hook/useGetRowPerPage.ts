@@ -1,5 +1,3 @@
-import { OrderProps } from '@/types/order'
-import { UserProps } from '@/types/user'
 import { usePagination } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
 

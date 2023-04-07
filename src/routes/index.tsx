@@ -7,11 +7,11 @@ import AuthLayout from '@/layout/authLayout'
 import RegisterPage from '@/pages/register'
 import RegisterLayout from '@/layout/registerLayout'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
-import UsersList from '@/pages/users/customerList'
+import ListCustomer from '@/pages/users/features/listCustomer'
 import UserContextProvider from '@/context/CustomerContext/CustomerContext'
 import { MEMBERSHIP } from '@/types/user'
-import OrderList from '@/pages/order/orderList'
-import AddCustomerPage from '@/pages/users/addCustomer'
+import OrderList from '@/pages/order/features/orderList'
+import AddCustomer from '@/pages/users/features/addCustomer'
 import { ProductCreateNewForm, ProductJuiceGrid } from '@/pages/products'
 import { ORDER_STATUS } from '@/types/order'
 import OrderContextProvider from '@/context/OrderContext/OrderContext'
@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
                 path: '/users/list',
                 element: (
                   <UserContextProvider>
-                    <UsersList membership='all' />
+                    <ListCustomer membership='all' />
                   </UserContextProvider>
                 )
               },
@@ -72,7 +72,7 @@ export const router = createBrowserRouter([
                 path: '/users/silver',
                 element: (
                   <UserContextProvider>
-                    <UsersList membership={MEMBERSHIP.SILVER} />
+                    <ListCustomer membership={MEMBERSHIP.SILVER} />
                   </UserContextProvider>
                 )
               },
@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
                 path: '/users/gold',
                 element: (
                   <UserContextProvider>
-                    <UsersList membership={MEMBERSHIP.GOLD} />
+                    <ListCustomer membership={MEMBERSHIP.GOLD} />
                   </UserContextProvider>
                 )
               },
@@ -88,13 +88,13 @@ export const router = createBrowserRouter([
                 path: '/users/ruby',
                 element: (
                   <UserContextProvider>
-                    <UsersList membership={MEMBERSHIP.RUBY} />
+                    <ListCustomer membership={MEMBERSHIP.RUBY} />
                   </UserContextProvider>
                 )
               },
               {
                 path: '/users/register',
-                element: <AddCustomerPage />
+                element: <AddCustomer />
               }
             ]
           },

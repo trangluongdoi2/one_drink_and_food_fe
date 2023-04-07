@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { setSelectedRow } from '@/reducer/order/action'
 import { UserFormProvider, useUserForm } from '@/context/form-context'
-import { updateItem } from '@/firebase/handler'
+import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
 import { EditRow } from './EditRow'
@@ -49,7 +49,7 @@ export const OrderRow = ({ row, selectedRow }: IOrderRow) => {
 
   useEffect(() => {
     if (isChanged) {
-      updateItem(FIREBASE_COLLECTION.ORDERS, form.values, form.getInputProps('fireBaseId').value)
+      FirebaseService.updateById(FIREBASE_COLLECTION.ORDERS, form.values, form.getInputProps('fireBaseId').value)
       console.log('update')
       form.resetDirty()
       form.resetTouched()

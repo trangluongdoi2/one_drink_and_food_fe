@@ -1,9 +1,9 @@
 import { Flex, Paper, Stack, Title, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import RegisterModal from '../components/registerModal'
+import RegisterModal from '../../components/registerModal'
 import { useEffect } from 'react'
 
-const AddCustomerPage = () => {
+const AddCustomer = () => {
   const [opened, { open, close }] = useDisclosure(false)
 
   useEffect(() => {
@@ -38,4 +38,4 @@ const AddCustomerPage = () => {
   )
 }
 
-export default AddCustomerPage
+export default AddCustomer

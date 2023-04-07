@@ -1,15 +1,14 @@
 import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
 import { DeleteIcon, MailIcon } from '@/assets/icon'
 import { MEMBERSHIP } from '@/types/user'
-import { deleteItem } from '@/firebase/handler'
+import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { setSelectedRow } from '@/reducer/customer/action'
 import CustomModal from '@/components/modal'
 import { getMemberName } from '@/utils/getMemberName'
-import { addItem } from '@/firebase/handler'
-import CustomerTable from '../components/customerTable'
-import { useFetchUser } from '@/hook/useFetchUser'
+import CustomerTable from '../../components/customerTable'
+import { useFetchUser } from '@/pages/users/services/useFetchUser'
 import { notifications } from '@mantine/notifications'
 
 interface UserListProps {
@@ -30,15 +29,15 @@ const mockData = {
   member: MEMBERSHIP.GOLD
 }
 
-const handleAddItem = async () => {
-  addItem(FIREBASE_COLLECTION.USERS, mockData)
-}
-
-const UsersList = ({ membership }: UserListProps) => {
+const ListCustomer = ({ membership }: UserListProps) => {
   const { selectedRow, dispatch } = useCustomerContext()
   const title = getMemberName(membership)
-  const { loading, userData } = useFetchUser(membership)
+  const { loading, userData } = useFetchUser({ key: 'member', params: membership })
+  const { create, deleteById } = FirebaseService
 
+  const handleAddItem = async () => {
+    create(FIREBASE_COLLECTION.USERS, mockData)
+  }
   const openDeleteModal = () =>
     CustomModal({
       title: 'Xoá thông tin',
@@ -56,7 +55,7 @@ const UsersList = ({ membership }: UserListProps) => {
     })
 
   const handleDeleteUser = (list: string[]) => {
-    list.forEach((item) => deleteItem(FIREBASE_COLLECTION.USERS, item))
+    list.forEach((item) => deleteById(FIREBASE_COLLECTION.USERS, item))
     dispatch(setSelectedRow([]))
   }
 
@@ -114,4 +113,4 @@ const UsersList = ({ membership }: UserListProps) => {
   )
 }
 
-export default UsersList
+export default ListCustomer

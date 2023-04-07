@@ -1,4 +1,4 @@
-import { EditIcon } from '@/assets/icon'
+import { DefaultAvatar, EditIcon } from '@/assets/icon'
 import { useUserFormContext } from '@/context/form-context'
 import { UserProps } from '@/types/user'
 import { getDateFirebase } from '@/utils/convertDate'
@@ -6,7 +6,7 @@ import { getMemberShip } from '@/utils/getMembership'
 import { Avatar, Checkbox, ActionIcon, Text } from '@mantine/core'
 import { Dispatch, SetStateAction } from 'react'
 
-interface ViewedRowProps {
+interface ViewRowProps {
   row: UserProps
   isSelected: boolean
   handleSelectedRow: () => void
@@ -14,7 +14,7 @@ interface ViewedRowProps {
   setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }: ViewedRowProps) => {
+export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: ViewRowProps) => {
   const form = useUserFormContext()
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
 
@@ -65,7 +65,11 @@ export const ViewedRow = ({ row, handleSelectedRow, isSelected, edit, setEdit }:
               width: '7%'
             }}
           >
-            <Avatar src={form.getInputProps('avatar').value} />
+            {!form.getInputProps('avatar').value ? (
+              <DefaultAvatar />
+            ) : (
+              <Avatar src={form.getInputProps('avatar').value} radius='lg' />
+            )}{' '}
           </li>
           <li
             style={{

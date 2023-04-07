@@ -1,10 +1,10 @@
 import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
-import { DeleteIcon } from '@/assets/icon'
-import { useFetchOrder } from '@/hook/useFetchOrder'
-import OrderTable from '../components/orderTable'
+import { DeleteIcon, ActiveDeleteIcon } from '@/assets/icon'
+import { useFetchOrder } from '@/pages/order/services/useFetchOrder'
+import OrderTable from '../../components/orderTable'
 import CustomModal from '@/components/modal'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
-import { deleteItem, setItem } from '@/firebase/handler'
+import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { v4 as uuidv4 } from 'uuid'
@@ -75,19 +75,26 @@ const mockData = {
   termsOfService: true
 }
 
-const OrderList = ({ title, query }: { title: string; query: string }) => {
-  const { loading, orderData } = useFetchOrder(query)
+interface OrderListProps {
+  title: string
+  query: string
+}
+
+const OrderList = ({ title, query }: OrderListProps) => {
+  const { loading, orderData } = useFetchOrder({ key: 'status', params: query })
+  const { createWithCustomKey, deleteById } = FirebaseService
 
   const { selectedRow, dispatch } = useOrderContext()
+  const isEmpty = selectedRow.length === 0
 
   const handleAddItem = async () => {
-    setItem(FIREBASE_COLLECTION.ORDERS, mockData, id)
+    createWithCustomKey(FIREBASE_COLLECTION.ORDERS, mockData, id)
   }
 
   const openDeleteModal = () =>
     CustomModal({
       title: 'Xoá thông tin',
-      content: 'Bạn có muốn xoá thông tin các đơn hàng được chọn không ?',
+      content: 'Bạn có muốn xoá thông tin đã được chọn không ?',
       onConfirm: () => {
         handleDeleteOrder(selectedRow)
       }
@@ -102,7 +109,7 @@ const OrderList = ({ title, query }: { title: string; query: string }) => {
     })
 
   const handleDeleteOrder = (list: string[]) => {
-    list.forEach((item) => deleteItem(FIREBASE_COLLECTION.ORDERS, item))
+    list.forEach((item) => deleteById(FIREBASE_COLLECTION.ORDERS, item))
     dispatch(setSelectedRow([]))
   }
 
@@ -114,8 +121,8 @@ const OrderList = ({ title, query }: { title: string; query: string }) => {
             {title}
           </Title>
           <Flex gap={20}>
-            <ActionIcon onClick={selectedRow.length ? openDeleteModal : openNothingModal}>
-              <DeleteIcon />
+            <ActionIcon onClick={!isEmpty ? openDeleteModal : openNothingModal} disabled={isEmpty}>
+              {isEmpty ? <DeleteIcon /> : <ActiveDeleteIcon />}
             </ActionIcon>
           </Flex>
         </Flex>

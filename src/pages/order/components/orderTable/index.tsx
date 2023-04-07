@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Center, Stack, Text } from '@mantine/core'
-import { TablePagination } from '@/components/table'
+import { SearchTable, TableHeader, TablePagination } from '@/components/table'
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 import { OrderProps } from '@/types/order'
-import { orderContent } from '@/constants/order/header'
-import { OrderHeader } from '../orderHeader'
+import { orderHeader } from '@/constants/header'
 import { OrderRow } from '../orderRow'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
-import { OrderSearchTable } from '../orderSearch'
 import { setSelectedRow } from '@/reducer/order/action'
 
 interface OrderTableProps {
@@ -41,37 +39,27 @@ const OrderTable = ({ data }: OrderTableProps) => {
     !value ? setSortedData(slicedData) : setSortedData(filteredData)
   }
 
+  const handleSelectAll = () => {
+    !isSelectedAll ? dispatch(setSelectedRow(allId)) : dispatch(setSelectedRow([]))
+  }
+
   useEffect(() => {
     setSortedData(slicedData)
   }, [slicedData])
 
-  if (!data.length)
-    return (
-      <table style={{ width: '100%', borderSpacing: '0 15px' }}>
-        <OrderHeader headerContent={orderContent} />
-        <tbody>
-          <tr>
-            <td colSpan={Object.keys(data[0]).length}>
-              <Text weight={500} align='center'>
-                Danh sách khách hàng trống
-              </Text>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    )
-
   return (
     <>
-      <OrderSearchTable
+      <SearchTable
         search={search}
-        handleSearchChange={handleSearchChange}
+        onSearchChange={handleSearchChange}
+        onSelectAll={handleSelectAll}
         selectedAll={isSelectedAll}
-        allId={allId}
+        placeHolder='Tìm kiếm đơn hàng'
       />
 
       <Stack spacing={0} mt={15}>
-        <OrderHeader headerContent={orderContent} />
+        <TableHeader headerContent={orderHeader} />
+
         <Stack spacing={15}>
           {sortedData && sortedData.length > 0 ? (
             sortedData.map((row: OrderProps) => <OrderRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)

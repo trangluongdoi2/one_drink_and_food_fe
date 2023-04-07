@@ -1,26 +1,23 @@
 import { SearchIcon } from '@/assets/icon'
 import { Button, Checkbox, Flex, TextInput, Text } from '@mantine/core'
 import { useStyles } from './index.style'
-import { useState } from 'react'
-import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
-import { setSelectedRow } from '@/reducer/customer/action'
 
 interface SearchTableProps {
   search: string
-  handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   selectedAll: boolean
-  allId: string[]
+  onSelectAll: () => void
+  placeHolder?: string
 }
 
-export const SearchTable = ({ search, handleSearchChange, selectedAll, allId }: SearchTableProps) => {
+export const SearchTable = ({
+  search,
+  onSearchChange,
+  selectedAll,
+  onSelectAll,
+  placeHolder = 'Tìm kiếm thông tin'
+}: SearchTableProps) => {
   const { classes } = useStyles()
-  const [checked, setChecked] = useState<boolean>(false)
-  const { dispatch } = useCustomerContext()
-
-  const handleSelectAll = () => {
-    setChecked(!checked)
-    !selectedAll ? dispatch(setSelectedRow(allId)) : dispatch(setSelectedRow([]))
-  }
 
   return (
     <Flex>
@@ -31,13 +28,13 @@ export const SearchTable = ({ search, handleSearchChange, selectedAll, allId }: 
           checked={selectedAll}
           sx={{ input: { backgroundColor: '#f5f5f5' } }}
           color='gray.8'
-          onChange={handleSelectAll}
+          onChange={onSelectAll}
         />
 
         <TextInput
-          placeholder='Tìm kiếm thông tin khách hàng'
+          placeholder={placeHolder}
           value={search}
-          onChange={handleSearchChange}
+          onChange={onSearchChange}
           label=''
           className={classes.inputField}
           icon={<SearchIcon />}

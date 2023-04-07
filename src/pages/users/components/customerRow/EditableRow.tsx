@@ -1,4 +1,4 @@
-import { ActiveEditIcon, EditIcon } from '@/assets/icon'
+import { ActiveEditIcon, DefaultAvatar, EditIcon } from '@/assets/icon'
 import { getMemberShip } from '@/utils/getMembership'
 import { Avatar, Checkbox, ActionIcon, TextInput, Select } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
@@ -7,14 +7,14 @@ import { useStyles } from './index.style'
 import { getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
 import { useUserFormContext } from '@/context/form-context'
 
-interface EditableRowProps {
+interface EditRowProps {
   isSelected: boolean
   handleSelectedRow: () => void
   edit: boolean
   setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditableRowProps) => {
+export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRowProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
@@ -75,7 +75,11 @@ export const EditableRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Ed
               width: '7%'
             }}
           >
-            <Avatar src={form.getInputProps('avatar').value} />
+            {!form.getInputProps('avatar').value ? (
+              <DefaultAvatar />
+            ) : (
+              <Avatar src={form.getInputProps('avatar').value} radius='lg' />
+            )}
           </li>
           <li
             style={{

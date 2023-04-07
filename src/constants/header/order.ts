@@ -8,7 +8,7 @@ interface OrderHeaderProps {
   position?: 'left' | 'center' | 'right'
 }
 
-export const orderContent: OrderHeaderProps[] = [
+export const orderHeader: OrderHeaderProps[] = [
   {
     id: 'fireBaseId',
     title: 'Mã đơn',

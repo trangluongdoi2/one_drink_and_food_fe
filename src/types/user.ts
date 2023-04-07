@@ -1,4 +1,3 @@
-import { SortingProps } from './table'
 export enum MEMBERSHIP {
   SILVER = 'silver',
   GOLD = 'gold',
@@ -28,12 +27,7 @@ export interface SortUserProps {
   gender: string
 }
 
-export interface UserHeaderProps extends UserProps {
-  checkbox: string
-  tool: string
-}
-
-export interface UserListHeaderProps extends SortingProps {
+export interface UserListHeaderProps {
   header: {
     id: keyof UserProps | ''
     title: string

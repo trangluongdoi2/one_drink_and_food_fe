@@ -13,3 +13,8 @@ export interface FirebaseUserProps {
   member: MEMBERSHIP
   txtPhone: string
 }
+
+export interface QueryType {
+  key: string
+  params: string
+}

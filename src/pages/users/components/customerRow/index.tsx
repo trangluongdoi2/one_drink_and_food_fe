@@ -2,10 +2,10 @@ import { UserProps } from '@/types/user'
 import { Fragment, useEffect, useState } from 'react'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { setSelectedRow } from '@/reducer/customer/action'
-import { ViewedRow } from './ViewedRow'
-import { EditableRow } from './EditableRow'
+import { ViewRow } from './ViewedRow'
+import { EditRow } from './EditableRow'
 import { UserFormProvider, useUserForm } from '@/context/form-context'
-import { updateItem } from '@/firebase/handler'
+import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
 
@@ -14,7 +14,7 @@ interface ITableRow {
   selectedRow: string[]
 }
 
-export const TableRow = ({ row, selectedRow }: ITableRow) => {
+export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
   const { dispatch } = useCustomerContext()
   const [edit, setEdit] = useState<boolean>(false)
   const { fireBaseId: id } = row
@@ -56,7 +56,7 @@ export const TableRow = ({ row, selectedRow }: ITableRow) => {
 
   useEffect(() => {
     if (isChanged) {
-      updateItem(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value)
+      FirebaseService.updateById(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value)
       console.log('update')
       form.resetDirty()
       form.resetTouched()
@@ -69,10 +69,10 @@ export const TableRow = ({ row, selectedRow }: ITableRow) => {
       <UserFormProvider form={form}>
         {edit ? (
           <form>
-            <EditableRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
+            <EditRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
           </form>
         ) : (
-          <ViewedRow
+          <ViewRow
             edit={edit}
             setEdit={setEdit}
             isSelected={isSelected}

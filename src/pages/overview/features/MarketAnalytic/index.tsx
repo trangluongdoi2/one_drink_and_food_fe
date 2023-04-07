@@ -1,5 +1,5 @@
 import { Paper, Stack, Title } from '@mantine/core'
-import { GridCard, AnalysisChart, SaleChart } from './components'
+import { GridCard, AnalysisChart, SaleChart } from '../../components'
 const data = [
   {
     title1: 'Giao dịch trong (tháng này)',

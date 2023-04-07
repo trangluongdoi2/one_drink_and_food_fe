@@ -1,3 +1,3 @@
 /* eslint-disable import/export */
-export * from './MarketAnalytic'
-export * from './ProductAnalytic'
+export * from './features/MarketAnalytic'
+export * from './features/ProductAnalytic'

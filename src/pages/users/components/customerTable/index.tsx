@@ -3,9 +3,12 @@ import { Center, Stack, Text } from '@mantine/core'
 import { sortData } from '@/utils/sortData'
 import { SortUserProps, UserProps } from '@/types/user'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
-import { SearchTable, TableHeader, TablePagination, TableRow } from '@/components/table'
+import { SearchTable, TableHeader, TablePagination } from '@/components/table'
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
-import { headerContent } from '@/constants/user/header'
+import { orderHeader } from '@/constants/header'
+import { setSelectedRow } from '@/reducer/customer/action'
+import { CustomerRow } from '../customerRow'
+
 interface CustomTableProps {
   data: UserProps[]
 }
@@ -24,49 +27,44 @@ const CustomerTable = ({ data }: CustomTableProps) => {
   const isSelectedAll = selectedRow.length === data.length
   const allId = data.map((item) => item.fireBaseId)
 
-  const setSorting = (field: keyof SortUserProps) => {
-    const reversed = field === sortBy ? !reverseSortDirection : false
-    const sortedArray = sortData(slicedData, { sortBy: field, reversed, search })
-    setReverseSortDirection(reversed)
-    setSortBy(field)
-    setSortedData(sortedArray)
-  }
+  const { dispatch } = useCustomerContext()
+
+  // const setSorting = (field: keyof SortUserProps) => {
+  //   const reversed = field === sortBy ? !reverseSortDirection : false
+  //   const sortedArray = sortData(slicedData, { sortBy: field, reversed, search })
+  //   setReverseSortDirection(reversed)
+  //   setSortBy(field)
+  //   setSortedData(sortedArray)
+  // }
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     setSearch(value)
     setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }))
   }
+  const handleSelectAll = () => {
+    !isSelectedAll ? dispatch(setSelectedRow(allId)) : dispatch(setSelectedRow([]))
+  }
 
   useEffect(() => {
     setSortedData(sortData(slicedData, { sortBy, reversed: reverseSortDirection, search }))
   }, [reverseSortDirection, search, slicedData, sortBy])
 
-  if (!data.length)
-    return (
-      <table style={{ width: '100%', borderSpacing: '0 15px' }}>
-        <TableHeader reverseSortDirection setSorting={setSorting} headerContent={headerContent} />
-        <tbody>
-          <tr>
-            <td colSpan={Object.keys(data[0]).length}>
-              <Text weight={500} align='center'>
-                Danh sách khách hàng trống
-              </Text>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    )
-
   return (
     <>
-      <SearchTable search={search} handleSearchChange={handleSearchChange} selectedAll={isSelectedAll} allId={allId} />
+      <SearchTable
+        search={search}
+        onSelectAll={handleSelectAll}
+        onSearchChange={handleSearchChange}
+        selectedAll={isSelectedAll}
+        placeHolder='Tìm kiếm thông tin khách hàng'
+      />
 
       <Stack spacing={0} mt={15}>
-        <TableHeader reverseSortDirection setSorting={setSorting} headerContent={headerContent} />
+        <TableHeader headerContent={orderHeader} />
         <Stack spacing={15}>
           {sortedData && sortedData.length > 0 ? (
-            sortedData.map((row: UserProps) => <TableRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)
+            sortedData.map((row: UserProps) => <CustomerRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)
           ) : (
             <Center sx={{ height: 200 }}>
               <td colSpan={Object.keys(data[0]).length}>
