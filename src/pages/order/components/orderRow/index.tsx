@@ -5,7 +5,7 @@ import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
 import { EditRow } from './EditRow'
-import { ViewRow } from './ViewedRow'
+import { ViewRow } from './ViewRow'
 import { OrderProps } from '@/types/order'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
 

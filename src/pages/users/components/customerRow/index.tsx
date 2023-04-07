@@ -8,6 +8,8 @@ import { UserFormProvider, useUserForm } from '@/context/form-context'
 import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
+import DetailModal from '../detailModal'
+import { useDisclosure } from '@mantine/hooks'
 
 interface ITableRow {
   row: UserProps
@@ -16,6 +18,7 @@ interface ITableRow {
 
 export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
   const { dispatch } = useCustomerContext()
+  const [opened, { open, close }] = useDisclosure(false)
   const [edit, setEdit] = useState<boolean>(false)
   const { fireBaseId: id } = row
   const form = useUserForm({
@@ -67,6 +70,7 @@ export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
   return (
     <Fragment>
       <UserFormProvider form={form}>
+        <DetailModal opened={opened} close={close} />
         {edit ? (
           <form>
             <EditRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
@@ -78,6 +82,7 @@ export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
             isSelected={isSelected}
             row={row}
             handleSelectedRow={handleSelectedRow}
+            onOpenModal={open}
           />
         )}
       </UserFormProvider>

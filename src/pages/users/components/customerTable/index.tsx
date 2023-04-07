@@ -5,7 +5,7 @@ import { SortUserProps, UserProps } from '@/types/user'
 import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { SearchTable, TableHeader, TablePagination } from '@/components/table'
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
-import { orderHeader } from '@/constants/header'
+import { userHeader } from '@/constants/header'
 import { setSelectedRow } from '@/reducer/customer/action'
 import { CustomerRow } from '../customerRow'
 
@@ -61,7 +61,7 @@ const CustomerTable = ({ data }: CustomTableProps) => {
       />
 
       <Stack spacing={0} mt={15}>
-        <TableHeader headerContent={orderHeader} />
+        <TableHeader headerContent={userHeader} />
         <Stack spacing={15}>
           {sortedData && sortedData.length > 0 ? (
             sortedData.map((row: UserProps) => <CustomerRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)

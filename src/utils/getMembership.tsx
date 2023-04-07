@@ -14,6 +14,6 @@ export const getMemberShip = (type: string) => {
       return <RubyMember />
 
     default:
-      return null
+      return <SilverMember />
   }
 }

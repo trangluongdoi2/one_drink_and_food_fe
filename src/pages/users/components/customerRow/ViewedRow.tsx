@@ -3,7 +3,7 @@ import { useUserFormContext } from '@/context/form-context'
 import { UserProps } from '@/types/user'
 import { getDateFirebase } from '@/utils/convertDate'
 import { getMemberShip } from '@/utils/getMembership'
-import { Avatar, Checkbox, ActionIcon, Text } from '@mantine/core'
+import { Avatar, Checkbox, ActionIcon, Text, Stack, Flex } from '@mantine/core'
 import { Dispatch, SetStateAction } from 'react'
 
 interface ViewRowProps {
@@ -12,9 +12,10 @@ interface ViewRowProps {
   handleSelectedRow: () => void
   edit: boolean
   setEdit: Dispatch<SetStateAction<boolean>>
+  onOpenModal: () => void
 }
 
-export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: ViewRowProps) => {
+export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit, onOpenModal }: ViewRowProps) => {
   const form = useUserFormContext()
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
 
@@ -60,79 +61,66 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: ViewRo
             width: '100%'
           }}
         >
-          <li
-            style={{
-              width: '7%'
-            }}
+          <Flex
+            onClick={() => onOpenModal()}
+            gap={5}
+            align='center'
+            justify='left'
+            sx={{ cursor: 'pointer', width: '100%' }}
           >
-            {!form.getInputProps('avatar').value ? (
-              <DefaultAvatar />
-            ) : (
-              <Avatar src={form.getInputProps('avatar').value} radius='lg' />
-            )}{' '}
-          </li>
-          <li
-            style={{
-              width: '10%'
-            }}
-          >
-            <Text tt='uppercase' fw='bolder' lh={1.4}>
-              {form.getInputProps('firstName').value}
-            </Text>
-          </li>
-          <li
-            style={{
-              width: '15%'
-            }}
-          >
-            <Text tt='uppercase' fw='bolder' lh={1.4}>
-              {form.getInputProps('lastName').value}
-            </Text>
-          </li>
-          <li
-            style={{
-              width: '25%'
-            }}
-          >
-            <Text> {form.getInputProps('email').value}</Text>
-          </li>
-          <li
-            style={{
-              width: '15%'
-            }}
-          >
-            <Text>{form.getInputProps('txtPhone').value}</Text>
-          </li>
-          <li
-            style={{
-              width: '10%'
-            }}
-          >
-            <Text>{form.getInputProps('gender').value === 'male' ? 'Nam' : 'Nữ'}</Text>
-          </li>
-          <li
-            style={{
-              width: '15%'
-            }}
-          >
-            <Text>{dateFormat ? JSON.parse(dateFormat) : ''}</Text>
-          </li>
-          <li
-            style={{
-              width: '10%'
-            }}
-          >
-            {getMemberShip(form.getInputProps('member').value)}
-          </li>
-          <li
-            style={{
-              width: 'auto'
-            }}
-          >
-            <ActionIcon onClick={() => setEdit(!edit)}>
-              <EditIcon />
-            </ActionIcon>
-          </li>
+            <Stack sx={{ width: '7%' }}>
+              {!form.getInputProps('avatar').value ? (
+                <DefaultAvatar />
+              ) : (
+                <Avatar src={form.getInputProps('avatar').value} radius='lg' />
+              )}
+            </Stack>
+
+            <Stack sx={{ width: '10%' }}>
+              <Text fw='bolder' lh={1.4}>
+                {form.getInputProps('firstName').value}
+              </Text>
+            </Stack>
+
+            <Stack sx={{ width: '14%' }}>
+              <Text fw='bolder' lh={1.4}>
+                {form.getInputProps('lastName').value}
+              </Text>
+            </Stack>
+
+            <Stack sx={{ width: '25%' }}>
+              <Text lh={1.4}>{form.getInputProps('email').value}</Text>
+            </Stack>
+
+            <Stack sx={{ width: '15%' }}>
+              <Text lh={1.4}>{form.getInputProps('txtPhone').value}</Text>
+            </Stack>
+
+            <Stack sx={{ width: '9%' }}>
+              <Text>{form.getInputProps('gender').value === 'male' ? 'Nam' : 'Nữ'}</Text>
+            </Stack>
+
+            <Stack sx={{ width: '16%' }}>
+              <Text lh={1.4}>
+                <Text>{dateFormat ? JSON.parse(dateFormat) : ''}</Text>
+              </Text>
+            </Stack>
+
+            <Stack sx={{ width: '9%' }}>
+              <Text lh={1.4}>{getMemberShip(form.getInputProps('member').value)}</Text>
+            </Stack>
+
+            <Stack sx={{ width: 'auto' }}>
+              <ActionIcon
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setEdit(!edit)
+                }}
+              >
+                <EditIcon />
+              </ActionIcon>
+            </Stack>
+          </Flex>
         </ul>
       </li>
     </ul>
