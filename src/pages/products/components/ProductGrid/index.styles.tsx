@@ -1,8 +1,8 @@
 import { createStyles } from '@mantine/core'
 
-export const useStyles = createStyles((theme) => ({
+export const useStyles = createStyles(() => ({
   container: {
-    background: 'transparent',
+    background: 'transparent'
   },
   containerGrid: {
     display: 'grid',

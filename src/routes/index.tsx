@@ -172,10 +172,6 @@ export const router = createBrowserRouter([
               },
               {
                 path: '/products/smoothy',
-                element: <ProductCreateNew />
-              },
-              {
-                path: '/products/smoothy',
                 element: <ProductAnalytic />
               },
               {
