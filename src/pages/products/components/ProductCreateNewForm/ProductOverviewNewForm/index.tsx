@@ -5,6 +5,7 @@ import { AppInputList } from '@/components/input-list'
 import { useTranslation } from 'react-i18next'
 import { ToggleDarkLgIcon, ToggleLightLgIcon, DoneFillIcon } from '@/assets/icon'
 import { useState } from 'react'
+import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
 
 type IconToggleProps = {
   handleClick: (value: boolean) => void
@@ -55,6 +56,7 @@ export const ProductOverviewNewForm = () => {
 
   return (
     <Paper className={`${classes.container} create-new-product-card__container`}>
+      <ProductAddImageForm />
       <AppInput name={t('product_name')} isImperative={true} placeHolder={t('fill_product_name')} />
       <AppInput
         name={t('auxiliary_name')}

@@ -83,24 +83,21 @@ export const AppInputList = ({ name, isActiveInput = true, iconToggle, iconStatu
         </Flex>
       </Flex>
       <Flex direction={'column'} gap={5}>
-        {listInput.map((item: any ,index: number) => (
-          <>
-            <Flex align={'center'}>
-              {iconStatus}
-              <Input
-                placeholder={`${t('function', { index: index + 1 })}`}
-                key={index}
-                className={classes.inputWrapper}
-                classNames={{ input: `${classes.input}` }}
-                disabled={!isActiveInput}
-                value={item.value}
-                onChange={handleChangeInputFunction(index)}
-              />
-              <ActionIcon onClick={() => removeItemInListInput(index)}>
-                <CloseButton />
-              </ActionIcon>
-            </Flex>
-          </>
+        {listInput.map((item: any, index: number) => (
+          <Flex align={'center'} key={index}>
+            {iconStatus}
+            <Input
+              placeholder={`${t('function', { index: index + 1 })}`}
+              className={classes.inputWrapper}
+              classNames={{ input: `${classes.input}` }}
+              disabled={!isActiveInput}
+              value={item.value}
+              onChange={handleChangeInputFunction(index)}
+            />
+            <ActionIcon onClick={() => removeItemInListInput(index)}>
+              <CloseButton />
+            </ActionIcon>
+          </Flex>
         ))}
       </Flex>
       <Flex>
