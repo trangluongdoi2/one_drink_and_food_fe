@@ -1,4 +1,4 @@
-import { Flex, Input, Stack, Text, createStyles } from '@mantine/core'
+import { Flex, Input, Stack, Text, Textarea, createStyles } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 
 type InputProps = {
@@ -7,6 +7,7 @@ type InputProps = {
   isImperative?: boolean
   canToggleActive?: boolean
   isActiveInput?: boolean
+  isTextArea?: boolean
   children?: React.ReactElement
   iconToggle?: React.ReactNode
   moreOptions?: React.ReactNode
@@ -34,6 +35,15 @@ const useStyles = createStyles(() => ({
   input: {
     height: '40px',
     background: '#f5f5f5',
+    borderRadius: '10px',
+    '&:focus': {
+      borderColor: '#000000'
+    }
+  },
+  inputArea: {
+    minHeight: '180px',
+    background: '#f5f5f5',
+    borderRadius: '10px',
     '&:focus': {
       borderColor: '#000000'
     }
@@ -44,8 +54,9 @@ export const AppInput = ({
   name,
   placeHolder = '',
   isImperative = false,
-  iconToggle,
   isActiveInput = true,
+  isTextArea = false,
+  iconToggle,
   moreOptions
 }: InputProps) => {
   const { classes } = useStyles()
@@ -55,17 +66,15 @@ export const AppInput = ({
       <Flex justify='space-between' align={'center'}>
         <Text className={classes['.text__title']}>{name}</Text>
         <Flex align={'center'}>
-          {isImperative ? (
-            <>
-              <Text className={classes['.text--imperative']}>*{t('required_field')}</Text>
-            </>
-          ) : (
-            <></>
-          )}
+          {isImperative ? <Text className={classes['.text--imperative']}>*{t('required_field')}</Text> : <></>}
           <>{iconToggle}</>
         </Flex>
       </Flex>
-      <Input placeholder={placeHolder} classNames={{ input: `${classes.input}` }} disabled={!isActiveInput} />
+      {isTextArea ? (
+        <Textarea placeholder={placeHolder} classNames={{ input: `${classes.inputArea}` }} disabled={!isActiveInput} />
+      ) : (
+        <Input placeholder={placeHolder} classNames={{ input: `${classes.input}` }} disabled={!isActiveInput} />
+      )}
       <>{moreOptions}</>
     </Stack>
   )
