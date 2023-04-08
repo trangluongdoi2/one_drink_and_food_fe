@@ -8,5 +8,12 @@ export const useStyles = createStyles(() => ({
     '&:active': {
       transform: 'translateY(0) !important'
     }
+  },
+  textIncludesVAT: {
+    fontStyle: 'italic',
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '15px',
+    color: '#000000'
   }
 }))

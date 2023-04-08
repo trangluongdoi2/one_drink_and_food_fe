@@ -13,5 +13,6 @@
   "fill_product_introduction": "Điền nội dung giới thiệu thông tin về sản phẩm",
   "add_function": "Thêm chức năng",
   "typical_function": "Chức năng tiêu biểu",
-  "function": "Chức năng {{index}}"
+  "function": "Chức năng {{index}}",
+  "include_VAT": "Đã bao gồm VAT"
 }

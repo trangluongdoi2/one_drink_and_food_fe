@@ -1,4 +1,4 @@
-import { ActionIcon, Paper } from '@mantine/core'
+import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { AppInput } from '@/components/input'
 import { AppInputList } from '@/components/input-list'
@@ -17,6 +17,24 @@ const IconToggle = ({handleClick, isActive} : IconToggleProps) => {
     <ActionIcon size={40} className={classes.actionIcon} onClick={() => handleClick(!isActive)}>
       {isActive ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
     </ActionIcon>
+  )
+}
+
+const IncludePrices = () => {
+  const { t } = useTranslation()
+  const { classes } = useStyles()
+  const [isActive, setIsActive] = useState(true)
+  const handleClick = () => {
+    console.log('handleClick')
+    setIsActive(!isActive)
+  }
+  return (
+    <Flex align={'center'} columnGap={5}>
+      <Text className={classes.textIncludesVAT}>{t('include_VAT')}</Text>
+      <ActionIcon size={40} className={classes.actionIcon} onClick={() => handleClick()}>
+        {isActive ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
+      </ActionIcon>
+    </Flex>
   )
 }
 
@@ -44,7 +62,12 @@ export const ProductOverviewNewForm = () => {
         iconToggle={<IconToggle handleClick={toggleActiveInput} isActive={isActive} />}
         isActiveInput={isActive}
       />
-      <AppInput name={t('prices')} isImperative={true} placeHolder={t('fill_product_prices')} />
+      <AppInput
+        name={t('prices')}
+        isImperative={true}
+        placeHolder={t('fill_product_prices')}
+        moreOptions={<IncludePrices />}
+      />
       <AppInputList
         name={t('typical_function')}
         iconStatus={<DoneFillIcon />}
