@@ -1,0 +1,12 @@
+{
+  "test": "Hêhhehe",
+  "nguyen_tan_vinh": "Nguyễn Tân Vinh",
+  "product_name": "Tên sản phẩm",
+  "fill_product_name": "Điền tên sản phẩm",
+  "required_field": "Phần bắt buộc",
+  "auxiliary_name": "Tên phụ trợ",
+  "fill_product_auxiliary_name": "Điền tên phụ trợ của sản phẩm",
+  "prices": "Giá tiền",
+  "fill_product_prices": "Ghi giá tiền sản phẩm",
+  "add_product": "Thêm sản phẩm"
+}
