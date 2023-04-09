@@ -6,7 +6,7 @@ const resources = {
   vi: {
     translation: translationVI
   }
-};
+}
 
 i18n.use(initReactI18next).init({
   resources,

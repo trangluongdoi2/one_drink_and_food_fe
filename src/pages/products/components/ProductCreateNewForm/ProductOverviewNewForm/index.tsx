@@ -6,35 +6,19 @@ import { useTranslation } from 'react-i18next'
 import { ToggleDarkLgIcon, ToggleLightLgIcon, DoneFillIcon } from '@/assets/icon'
 import { useState } from 'react'
 import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
-
-type IconToggleProps = {
-  handleClick: (value: boolean) => void
-  isActive: boolean
-}
-
-const IconToggle = ({handleClick, isActive} : IconToggleProps) => {
-  const { classes } = useStyles()
-  return (
-    <ActionIcon className={classes.actionIcon} onClick={() => handleClick(!isActive)}>
-      {isActive ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
-    </ActionIcon>
-  )
-}
+import { ToggleButon } from '@/components/button/ToggleButton'
 
 const IncludePrices = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const [isActive, setIsActive] = useState(true)
-  const handleClick = () => {
-    console.log('handleClick')
-    setIsActive(!isActive)
+  const onToggleStatus = (status: boolean) => {
+    setIsActive(status)
   }
   return (
     <Flex align={'center'} columnGap={5}>
       <Text className={classes.textIncludesVAT}>{t('include_VAT')}</Text>
-      <ActionIcon className={classes.actionIcon} onClick={() => handleClick()}>
-        {isActive ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
-      </ActionIcon>
+      <ToggleButon onToggleStatus={onToggleStatus} isActive={isActive} />
     </Flex>
   )
 }
@@ -61,7 +45,7 @@ export const ProductOverviewNewForm = () => {
       <AppInput
         name={t('auxiliary_name')}
         placeHolder={t('fill_product_auxiliary_name')}
-        iconToggle={<IconToggle handleClick={toggleActiveInput} isActive={isActive} />}
+        iconToggle={<ToggleButon onToggleStatus={toggleActiveInput} isActive={isActive} />}
         isActiveInput={isActive}
       />
       <AppInput
@@ -79,7 +63,7 @@ export const ProductOverviewNewForm = () => {
         name={t('introduction')}
         placeHolder={t('fill_product_introduction')}
         isTextArea={true}
-        iconToggle={<IconToggle handleClick={toggleActiveInput} isActive={isActive} />}
+        iconToggle={<ToggleButon onToggleStatus={toggleActiveInput} isActive={isActive} />}
         isActiveInput={isActive}
       />
     </Paper>

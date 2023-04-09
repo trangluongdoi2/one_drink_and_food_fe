@@ -6,9 +6,7 @@ import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { GlobalStyles } from './GlobalStyles'
-// import i18next from './i18n'
 import './i18n'
-// i18next.t('my.key')
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

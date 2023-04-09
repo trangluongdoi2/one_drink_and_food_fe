@@ -17,5 +17,17 @@
   "include_VAT": "Đã bao gồm VAT",
   "add_image": "Thêm hình ảnh",
   "motion_images": "Hình ảnh chuyển động",
-  "fill_time_value": "Điền số thời gian"
+  "fill_time_value": "Điền số thời gian",
+  "sale_frame": "Khung bán hàng",
+  "main_ingredient": "Thành phần chính",
+  "choose_size": "Chọn size",
+  "ice_content": "Lượng đá",
+  "sugar_content": "Lượng đường",
+  "fill_selected_information": "Ghi thông tin lựa chọn",
+  "add_option": "Thêm lựa chọn",
+  "add_option_frame": "Thêm khung lựa chọn",
+  "add_content_frame": "Thêm khung nội dung",
+  "notice_production_sales_frame": "Lưu ý: Thông tin không muốn hiển thị vui lòng để trống, chọn nút ẩn hoặc xoá khung",
+  "close_multi_select_guide": "Nhấp tắt/ Chỉ được chọn 1 option trong khung",
+  "open_multi_select_guide": "Nhấp mở/ Được chọn nhiều option trong khung"
 }
