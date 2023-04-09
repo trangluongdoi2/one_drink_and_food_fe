@@ -18,7 +18,7 @@ const useStyles = createStyles(() => ({
     gap: '10px',
     margin: '10px 0'
   },
-  '.text__title': {
+  title: {
     fontWeight: 700,
     fontSize: '14px',
     lineHeight: '17px',
@@ -77,7 +77,7 @@ export const AppInputList = ({ name, isActiveInput = true, iconToggle, iconStatu
   return (
     <Stack className={classes.contanter}>
       <Flex justify={'space-between'} align={'center'}>
-        <Text className={classes['.text__title']}>{name}</Text>
+        <Text className={classes.title}>{name}</Text>
         <Flex align={'center'}>
           <>{iconToggle}</>
         </Flex>
@@ -104,7 +104,9 @@ export const AppInputList = ({ name, isActiveInput = true, iconToggle, iconStatu
         <ActionIcon onClick={() => addMoreFunction()} className={classes.actionIcon}>
           <>
             <AddFillIcon />
-            <Text>{t('add_function')}</Text>
+            <Text className={classes.title} sx={{ fontWeight: 'normal' }}>
+              {t('add_function')}
+            </Text>
           </>
         </ActionIcon>
       </Flex>

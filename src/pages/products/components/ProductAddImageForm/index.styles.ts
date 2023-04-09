@@ -38,5 +38,31 @@ export const useStyles = createStyles(() => ({
   },
   input: {
     display: 'none'
+  },
+  moreOption: {
+    marginTop: '8px'
+  },
+  inputMotionTime: {
+    background: '#f5f5f5f5',
+    borderRadius: '10px',
+    '&:focus': {
+      borderColor: '#000000'
+    }
+  },
+  rightSection: {
+    display: 'none'
+  },
+  titleMotionTime: {
+    marginBottom: '0'
+  },
+  iconToggle: {
+    width: '40px',
+    height: '20px',
+    ':hover': {
+      background: 'transparent'
+    },
+    ':active': {
+      transform: 'translateY(0)'
+    }
   }
 }))

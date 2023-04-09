@@ -15,5 +15,7 @@
   "typical_function": "Chức năng tiêu biểu",
   "function": "Chức năng {{index}}",
   "include_VAT": "Đã bao gồm VAT",
-  "add_image": "Thêm hình ảnh"
+  "add_image": "Thêm hình ảnh",
+  "motion_images": "Hình ảnh chuyển động",
+  "fill_time_value": "Điền số thời gian"
 }

@@ -15,7 +15,7 @@ type IconToggleProps = {
 const IconToggle = ({handleClick, isActive} : IconToggleProps) => {
   const { classes } = useStyles()
   return (
-    <ActionIcon size={40} className={classes.actionIcon} onClick={() => handleClick(!isActive)}>
+    <ActionIcon className={classes.actionIcon} onClick={() => handleClick(!isActive)}>
       {isActive ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
     </ActionIcon>
   )
@@ -32,7 +32,7 @@ const IncludePrices = () => {
   return (
     <Flex align={'center'} columnGap={5}>
       <Text className={classes.textIncludesVAT}>{t('include_VAT')}</Text>
-      <ActionIcon size={40} className={classes.actionIcon} onClick={() => handleClick()}>
+      <ActionIcon className={classes.actionIcon} onClick={() => handleClick()}>
         {isActive ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
       </ActionIcon>
     </Flex>

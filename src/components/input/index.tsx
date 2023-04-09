@@ -63,7 +63,7 @@ export const AppInput = ({
   const { t } = useTranslation()
   return (
     <Stack className={classes.contanter}>
-      <Flex justify='space-between' align={'center'}>
+      <Flex justify='space-between' align={'flex-end'}>
         <Text className={classes['.text__title']}>{name}</Text>
         <Flex align={'center'}>
           {isImperative ? <Text className={classes['.text--imperative']}>*{t('required_field')}</Text> : <></>}
