@@ -6,7 +6,10 @@ type InputProps = {
   placeHolder: string
   isImperative?: boolean
   canToggleActive?: boolean
+  isActiveInput?: boolean
   children?: React.ReactElement
+  iconToggle?: React.ReactNode
+  moreOptions?: React.ReactNode
 }
 
 const useStyles = createStyles(() => ({
@@ -37,36 +40,33 @@ const useStyles = createStyles(() => ({
   }
 }))
 
-// const Slot = ({ children }: any) => <div>{children}</div>
-// Slot.Icon = (props: any) => <div className='icon'>{props.children}</div>
-// Slot.MoreTitle = (props: any) => <div className='more-title'>{props.children}</div>
-
 export const AppInput = ({
   name,
   placeHolder = '',
   isImperative = false,
-  canToggleActive = false,
-  children,
+  iconToggle,
+  isActiveInput = true,
+  moreOptions
 }: InputProps) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   return (
     <Stack className={classes.contanter}>
-      <Flex justify='space-between'>
+      <Flex justify='space-between' align={'center'}>
         <Text className={classes['.text__title']}>{name}</Text>
         <Flex align={'center'}>
           {isImperative ? (
             <>
-              <Text className={classes['.text--imperative']}>*phần bắt buộc</Text>
+              <Text className={classes['.text--imperative']}>*{t('required_field')}</Text>
             </>
           ) : (
             <></>
           )}
-          <>{t('nguyen_tan_vinh')}</>
+          <>{iconToggle}</>
         </Flex>
       </Flex>
-      <Input placeholder={placeHolder} classNames={{ input: `${classes.input}` }} />
-      <>Slot more option</>
+      <Input placeholder={placeHolder} classNames={{ input: `${classes.input}` }} disabled={!isActiveInput} />
+      <>{moreOptions}</>
     </Stack>
   )
 }
