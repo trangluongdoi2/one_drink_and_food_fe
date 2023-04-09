@@ -1,11 +1,14 @@
 import { Paper, Stack } from '@mantine/core'
+import { ProductOverviewNewForm } from './ProductOverviewNewForm'
+import { ProductSalesFrameFrom } from './ProductSalesFrameForm'
 
 export const ProductCreateNewForm = () => {
   return (
-    <>
-      <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
-        <Stack>Hello Create New</Stack>
-      </Paper>
-    </>
+    <Paper>
+      <Stack>
+        <ProductOverviewNewForm />
+        <ProductSalesFrameFrom />
+      </Stack>
+    </Paper>
   )
 }

@@ -1,5 +1,6 @@
 export interface ProductGridProps {
-  type?: string
+  productType?: string
+  productSubType?: string
   title?: string
 }
 
@@ -11,11 +12,13 @@ export interface ProductOverview {
 export interface ProductCardProps {
   forNewProduct?: boolean
   productOverview?: ProductOverview
+  productType?: string
+  productSubType?: string
 }
 
 export enum JuiceType {
-  JUICE_BOTTLED = 'Nước ép đóng chai',
-  JUICE_GLASS = 'Nước ép ly'
+  JUICE_BOTTLED = 'juiceBottled',
+  JUICE_GLASS = 'juiceGlass'
 }
 
 export enum ProductType {
