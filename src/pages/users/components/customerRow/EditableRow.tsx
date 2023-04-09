@@ -10,11 +10,11 @@ import { useUserFormContext } from '@/context/form-context'
 interface EditRowProps {
   isSelected: boolean
   handleSelectedRow: () => void
-  edit: boolean
-  setEdit: Dispatch<SetStateAction<boolean>>
+  editMode: boolean
+  setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
-export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRowProps) => {
+export const EditRow = ({ handleSelectedRow, isSelected, editMode, setEditMode }: EditRowProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
@@ -55,8 +55,8 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
           height: 60,
           alignItems: 'center',
           display: 'flex',
-          backgroundColor: isSelected || edit ? '#fff' : '#f5f5f5',
-          boxShadow: isSelected || edit ? '2px 2px 10px 2px #f5f5f5' : '',
+          backgroundColor: isSelected || editMode ? '#fff' : '#f5f5f5',
+          boxShadow: isSelected || editMode ? '2px 2px 10px 2px #f5f5f5' : '',
           borderRadius: 10
         }}
       >
@@ -167,8 +167,8 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
               width: 'auto'
             }}
           >
-            <ActionIcon onClick={() => setEdit(!edit)} type='submit'>
-              {edit ? <ActiveEditIcon /> : <EditIcon />}
+            <ActionIcon onClick={() => setEditMode(!editMode)} type='submit'>
+              {editMode ? <ActiveEditIcon /> : <EditIcon />}
             </ActionIcon>
           </li>
         </ul>

@@ -10,12 +10,12 @@ interface ViewRowProps {
   row: UserProps
   isSelected: boolean
   handleSelectedRow: () => void
-  edit: boolean
-  setEdit: Dispatch<SetStateAction<boolean>>
+  editMode: boolean
+  setEditMode: Dispatch<SetStateAction<boolean>>
   onOpenModal: () => void
 }
 
-export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit, onOpenModal }: ViewRowProps) => {
+export const ViewRow = ({ handleSelectedRow, isSelected, onOpenModal, setEditMode, editMode }: ViewRowProps) => {
   const form = useUserFormContext()
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
 
@@ -114,7 +114,7 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit, onOpenMo
               <ActionIcon
                 onClick={(e) => {
                   e.stopPropagation()
-                  setEdit(!edit)
+                  setEditMode(!editMode)
                 }}
               >
                 <EditIcon />

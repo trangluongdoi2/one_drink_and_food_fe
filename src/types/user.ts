@@ -12,6 +12,10 @@ export interface UserProps {
   email: string
   txtPhone: string
   gender: string
+  address: string
+  addressName: string
+  floor: string
+  note: string
   dob: {
     seconds: number
     nanoseconds: number

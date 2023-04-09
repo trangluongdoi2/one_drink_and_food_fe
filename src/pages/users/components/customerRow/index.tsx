@@ -19,20 +19,22 @@ interface ITableRow {
 export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
   const { dispatch } = useCustomerContext()
   const [opened, { open, close }] = useDisclosure(false)
-  const [edit, setEdit] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
+
   const { fireBaseId: id } = row
+
   const form = useUserForm({
     initialValues: row,
 
     validate: {
-      // firstName: (value) => (value.length < 2 ? 'At least 2 letters' : null),
+      firstName: (value) => (value.length < 2 ? 'At least 2 letters' : null),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email')
     },
     validateInputOnBlur: true
   })
 
   const isSelected = selectedRow.includes(id)
-  const isChanged = form.isTouched() && form.isDirty() && !edit
+  const isChanged = form.isTouched() && form.isDirty() && form.isValid()
 
   const handleSelectedRow = () => {
     if (!selectedRow.includes(id)) {
@@ -41,11 +43,6 @@ export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
       dispatch(setSelectedRow(selectedRow.filter((row) => row !== id)))
     }
   }
-
-  // console.log('data', form.values)
-  // console.log('touch', form.isTouched())
-  // console.log('dirty', form.isDirty())
-  // console.log('change', isChanged)
 
   const successNotification = () => {
     notifications.show({
@@ -58,33 +55,46 @@ export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
   }
 
   useEffect(() => {
-    if (isChanged) {
-      FirebaseService.updateById(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value)
-      console.log('update')
-      form.resetDirty()
-      form.resetTouched()
-      successNotification()
+    // There are two options to change form data: quick change and detailed change
+    // 1 - Detailed change: submit when pressing submit button in the detailed modal
+    if (opened) {
+      console.log('modal mode')
     }
-  }, [form, isChanged])
+    // 2 - Quick change: submit after typing input field
+    else {
+      if (isChanged && !editMode) {
+        FirebaseService.updateById(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value)
+        console.log('update')
+        form.resetDirty()
+        form.resetTouched()
+        successNotification()
+      }
+    }
+  }, [editMode, form, isChanged, opened])
 
   return (
     <Fragment>
       <UserFormProvider form={form}>
-        <DetailModal opened={opened} close={close} />
-        {edit ? (
-          <form>
-            <EditRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
-          </form>
-        ) : (
-          <ViewRow
-            edit={edit}
-            setEdit={setEdit}
-            isSelected={isSelected}
-            row={row}
-            handleSelectedRow={handleSelectedRow}
-            onOpenModal={open}
-          />
-        )}
+        <form>
+          <DetailModal opened={opened} close={close} />
+          {editMode ? (
+            <EditRow
+              isSelected={isSelected}
+              handleSelectedRow={handleSelectedRow}
+              editMode={editMode}
+              setEditMode={setEditMode}
+            />
+          ) : (
+            <ViewRow
+              editMode={editMode}
+              setEditMode={setEditMode}
+              isSelected={isSelected}
+              row={row}
+              handleSelectedRow={handleSelectedRow}
+              onOpenModal={open}
+            />
+          )}
+        </form>
       </UserFormProvider>
     </Fragment>
   )
