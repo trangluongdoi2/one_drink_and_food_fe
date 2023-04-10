@@ -9,7 +9,7 @@ import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
 import { useDisclosure } from '@mantine/hooks'
-import DetailModal from '../DetailModal'
+import DetailModal from '../DetailModals'
 
 interface ITableRow {
   row: UserProps
