@@ -7,7 +7,7 @@ import { SearchTable, TableHeader, TablePagination } from '@/components/table'
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 import { userHeader } from '@/constants/header'
 import { setSelectedRow } from '@/reducer/customer/action'
-import { CustomerRow } from '@/pages/users/components/CustomerRow'
+import { CustomerRow } from '@/pages/users/components/CustomerRows'
 
 interface CustomTableProps {
   data: UserProps[]
