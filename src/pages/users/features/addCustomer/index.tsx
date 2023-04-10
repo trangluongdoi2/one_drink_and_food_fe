@@ -1,6 +1,6 @@
 import { Flex, Paper, Stack, Title, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import RegisterModal from '../../components/registerModal'
+import RegisterModal from '@/pages/users/components/registerModal'
 import { useEffect } from 'react'
 
 const AddCustomer = () => {

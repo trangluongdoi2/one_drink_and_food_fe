@@ -1,6 +1,6 @@
 import { Stack, Title, Image, Text, Center, ScrollArea, Grid } from '@mantine/core'
 import gradient from '@/assets/image/gradient.png'
-import GiftTag from '../GiftTag'
+import GiftTag from '@/pages/users/components/GiftTag'
 import { useUserFormContext } from '@/context/form-context'
 import empty from '@/assets/image/empty.png'
 

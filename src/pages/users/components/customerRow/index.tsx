@@ -8,7 +8,7 @@ import { UserFormProvider, useUserForm } from '@/context/form-context'
 import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
-import DetailModal from '../DetailModal'
+import DetailModal from '@/pages/users/components/DetailModal'
 import { useDisclosure } from '@mantine/hooks'
 
 interface ITableRow {
