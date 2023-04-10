@@ -69,7 +69,7 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
           {/* ---------- MEMBER ------------- */}
           <Tabs.Panel value='member'>MEMBER</Tabs.Panel>
 
-          {/* ---------- MEMBER ------------- */}
+          {/* ---------- HISTORY ------------- */}
           <Tabs.Panel value='history'>Second panel</Tabs.Panel>
 
           {/* ---------- GIFT ------------- */}

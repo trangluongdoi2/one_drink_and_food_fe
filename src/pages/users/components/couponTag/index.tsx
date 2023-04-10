@@ -21,7 +21,7 @@ const CouponTag = ({ query }: { query: string }) => {
           <Text fw='bold' lh={1.4}>
             {couponTitle ?? ''}
           </Text>
-          <Text size={14}>MÃ: {couponCode}</Text>
+          <Text size={14}>MÃ : {couponCode}</Text>
           <Text size={12}>
             {couponEndDate.date} {couponEndDate.time}
           </Text>

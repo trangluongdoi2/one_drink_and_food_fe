@@ -29,14 +29,6 @@ const CustomerTable = ({ data }: CustomTableProps) => {
 
   const { dispatch } = useCustomerContext()
 
-  // const setSorting = (field: keyof SortUserProps) => {
-  //   const reversed = field === sortBy ? !reverseSortDirection : false
-  //   const sortedArray = sortData(slicedData, { sortBy: field, reversed, search })
-  //   setReverseSortDirection(reversed)
-  //   setSortBy(field)
-  //   setSortedData(sortedArray)
-  // }
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     setSearch(value)

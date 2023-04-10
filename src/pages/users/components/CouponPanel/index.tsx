@@ -2,7 +2,7 @@ import { Stack, Title, Image, ScrollArea, Grid, Text, Center } from '@mantine/co
 import gradient from '@/assets/image/gradient.png'
 import { useUserFormContext } from '@/context/form-context'
 import empty from '@/assets/image/empty.png'
-import CouponTag from '@/pages/users/components/CouponTag'
+import CouponTag from '@/pages/users/components/CouponTag/index'
 
 const CouponPanel = () => {
   const form = useUserFormContext()

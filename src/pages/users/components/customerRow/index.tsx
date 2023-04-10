@@ -58,7 +58,7 @@ export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
     // There are two options to change form data: quick change and detailed change
     // 1 - Detailed change: submit when pressing submit button in the detailed modal
     if (opened) {
-      console.log('modal mode')
+      console.log('modal mode 123')
     }
     // 2 - Quick change: submit after typing input field
     else {
