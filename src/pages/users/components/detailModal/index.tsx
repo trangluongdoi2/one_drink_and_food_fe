@@ -1,12 +1,13 @@
-import { Text, Grid, Modal, Paper, Stack, Tabs, Title, ScrollArea, Box, Image } from '@mantine/core'
-import AvatarSection from '../avatarSection'
-import InforSection from '../inforSection'
-import AddressSection from '../addressSection'
+import { Modal, Paper, Tabs } from '@mantine/core'
 import { useUserFormContext } from '@/context/form-context'
 import CustomModal from '@/components/modal'
 import { useState } from 'react'
-import CouponTag from '../couponTag'
-import gradient from '@/assets/image/gradient.png'
+import { useStyles } from './index.style'
+import { clsx } from '@mantine/core'
+import CouponPanel from '../CouponPanel'
+import GiftPanel from '../GiftPanel'
+import AccountPanel from '../AccountPanel'
+import { tabList } from '@/constants/tabList'
 
 interface DetailModalProps {
   opened: boolean
@@ -16,6 +17,7 @@ interface DetailModalProps {
 const DetailModal = ({ opened, close }: DetailModalProps) => {
   const form = useUserFormContext()
   const [activeTab, setActiveTab] = useState<string | null>('account')
+  const { classes } = useStyles()
 
   // Modal check saved state, if not reset state and close modal
   const openNotSubmitModal = () =>
@@ -28,17 +30,6 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
         form.reset()
       }
     })
-  const tabStyle = (e: React.ChangeEvent<HTMLInputElement>, activeTab: string) => {
-    const { name } = e.target
-    if (name === activeTab)
-      return {
-        fontWeight: 'bold',
-        borderWidth: 5
-      }
-    return {
-      fontWeight: 500
-    }
-  }
 
   return (
     <Modal
@@ -58,167 +49,38 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
         {/* ---------- ACCOUNT TAB ---------- */}
         <Tabs color='dark' radius='md' defaultValue='account' value={activeTab} onTabChange={setActiveTab}>
           <Tabs.List mb={30} position='center'>
-            <Tabs.Tab
-              value='account'
-              p={20}
-              sx={activeTab === 'account' ? { fontWeight: 700, borderWidth: 5 } : { fontWeight: 500 }}
-            >
-              Tài khoản
-            </Tabs.Tab>
-            <Tabs.Tab
-              value='member'
-              sx={activeTab === 'member' ? { fontWeight: 700, borderWidth: 5 } : { fontWeight: 500 }}
-            >
-              Thành viên
-            </Tabs.Tab>
-            <Tabs.Tab
-              value='history'
-              sx={activeTab === 'history' ? { fontWeight: 700, borderWidth: 5 } : { fontWeight: 500 }}
-            >
-              Lịch sử
-            </Tabs.Tab>
-            <Tabs.Tab
-              value='gift'
-              sx={activeTab === 'gift' ? { fontWeight: 700, borderWidth: 5 } : { fontWeight: 500 }}
-            >
-              Đổi thưởng
-            </Tabs.Tab>
-            <Tabs.Tab
-              value='coupon'
-              sx={activeTab === 'coupon' ? { fontWeight: 700, borderWidth: 5 } : { fontWeight: 500 }}
-            >
-              Mã khuyến mãi
-            </Tabs.Tab>
+            {tabList.map(({ title, value }, index) => (
+              <Tabs.Tab
+                value={value}
+                p={20}
+                key={index}
+                className={clsx(classes.normal, { [classes.active]: activeTab === value })}
+              >
+                {title}
+              </Tabs.Tab>
+            ))}
           </Tabs.List>
 
+          {/* ------------ ACCOUNT ------------- */}
           <Tabs.Panel value='account'>
-            <Grid gutter={20}>
-              <Grid.Col span={6}>
-                <Stack spacing={20} sx={{ width: '100%' }}>
-                  <AvatarSection />
-                  <InforSection />
-                </Stack>
-              </Grid.Col>
-              <Grid.Col span={6}>
-                <AddressSection />
-              </Grid.Col>
-            </Grid>
+            <AccountPanel />
           </Tabs.Panel>
 
           {/* ---------- MEMBER ------------- */}
-          <Tabs.Panel value='coupon'>
-            <Stack spacing={2}>
-              <Title size={18}>Mã Đã Sử Dụng</Title>
-              <Text size={10} mb={20}>
-                Những phần quà bạn đã đổi gần đây
-              </Text>
-              <ScrollArea h={300} type='always' offsetScrollbars dir='ltr'>
-                <Grid gutter={20} sx={{ width: '95%' }}>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                </Grid>
-              </ScrollArea>
-            </Stack>
-          </Tabs.Panel>
+          <Tabs.Panel value='member'>MEMBER</Tabs.Panel>
+
+          {/* ---------- MEMBER ------------- */}
+          <Tabs.Panel value='history'>Second panel</Tabs.Panel>
 
           {/* ---------- GIFT ------------- */}
           <Tabs.Panel value='gift' sx={{ position: 'relative' }}>
-            <Stack spacing={2}>
-              <Title size={18}>Quà Đã Đổi</Title>
-              <Text size={10} mb={20}>
-                Những phần quà bạn đã đổi gần đây
-              </Text>
-              <Image
-                src={gradient}
-                height={100}
-                sx={{ width: '100%', position: 'absolute', bottom: -20, zIndex: 999 }}
-              ></Image>
-              <ScrollArea h={500} type='always' offsetScrollbars dir='ltr'>
-                <Grid gutter={20} sx={{ width: '95%' }}>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <CouponTag />
-                  </Grid.Col>
-                </Grid>
-              </ScrollArea>
-            </Stack>
+            <GiftPanel />
           </Tabs.Panel>
-          {/* ---------- HISTORY ------------- */}
-          <Tabs.Panel value='history'>Second panel</Tabs.Panel>
+
           {/* ---------- COUPON ------------- */}
-          <Tabs.Panel value='member'>Second panel</Tabs.Panel>
+          <Tabs.Panel value='coupon' sx={{ position: 'relative' }}>
+            <CouponPanel />
+          </Tabs.Panel>
         </Tabs>
       </Paper>
     </Modal>

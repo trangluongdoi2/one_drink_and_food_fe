@@ -8,7 +8,7 @@ import { UserFormProvider, useUserForm } from '@/context/form-context'
 import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
-import DetailModal from '../detailModal'
+import DetailModal from '../DetailModal'
 import { useDisclosure } from '@mantine/hooks'
 
 interface ITableRow {
@@ -64,7 +64,6 @@ export const CustomerRow = ({ row, selectedRow }: ITableRow) => {
     else {
       if (isChanged && !editMode) {
         FirebaseService.updateById(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value)
-        console.log('update')
         form.resetDirty()
         form.resetTouched()
         successNotification()

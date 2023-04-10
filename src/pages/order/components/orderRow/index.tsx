@@ -50,7 +50,6 @@ export const OrderRow = ({ row, selectedRow }: IOrderRow) => {
   useEffect(() => {
     if (isChanged) {
       FirebaseService.updateById(FIREBASE_COLLECTION.ORDERS, form.values, form.getInputProps('fireBaseId').value)
-      console.log('update')
       form.resetDirty()
       form.resetTouched()
       successNotification()

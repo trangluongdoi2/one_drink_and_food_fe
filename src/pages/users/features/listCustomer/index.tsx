@@ -7,7 +7,7 @@ import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { setSelectedRow } from '@/reducer/customer/action'
 import CustomModal from '@/components/modal'
 import { getMemberName } from '@/utils/getMemberName'
-import CustomerTable from '../../components/customerTable'
+import CustomerTable from '../../components/CustomerTable'
 import { useFetchUser } from '@/pages/users/services/useFetchUser'
 import { notifications } from '@mantine/notifications'
 

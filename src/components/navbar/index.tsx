@@ -55,7 +55,7 @@ const NavbarHeader = () => {
           sx={{
             position: 'absolute',
             top: 100,
-            backgroundColor: '#fff',
+            backgroundColor: 'white',
             borderRadius: 10,
             height: 80,
             display: 'flex',

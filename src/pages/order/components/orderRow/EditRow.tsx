@@ -31,7 +31,7 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
     >
       <li style={{ float: 'left', marginRight: 20, alignItems: 'center', display: 'flex' }}>
         <Checkbox
-          sx={{ input: { backgroundColor: '#f5f5f5' } }}
+          sx={(theme) => ({ input: { backgroundColor: theme.colors.dark[0] } })}
           checked={isSelected}
           color='gray.8'
           size='lg'

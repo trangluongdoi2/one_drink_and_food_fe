@@ -3,5 +3,6 @@ export enum FIREBASE_COLLECTION {
   USERS = 'users',
   DISCOUNT = 'discount',
   TEST = 'test',
-  PRODUCT = 'product'
+  PRODUCTS = 'products',
+  GIFTS = 'gifts'
 }

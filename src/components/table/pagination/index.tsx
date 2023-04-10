@@ -14,7 +14,7 @@ export const TablePagination = ({ total, onChange, active }: TablePaginationProp
         total={total}
         styles={(theme) => ({
           control: {
-            backgroundColor: '#f5f5f5',
+            backgroundColor: theme.colors.dark[0],
             '&[data-active]': {
               backgroundImage: theme.fn.gradient({ from: 'black', to: 'black' })
             }

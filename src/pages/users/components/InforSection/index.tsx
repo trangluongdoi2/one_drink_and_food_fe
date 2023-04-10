@@ -1,5 +1,5 @@
 import { Divider, Paper, Title, TextInput, Stack, Center, Button, Select } from '@mantine/core'
-import { useStyles } from './index.style'
+import { useStyles } from "./index.style"
 import { IconChevronDown } from '@tabler/icons-react'
 import { useUserFormContext } from '@/context/form-context'
 import { CalendarIcon } from '@/assets/icon'
@@ -49,7 +49,6 @@ const InforSection = () => {
       // 4. show error message
       onSubmit={form.onSubmit(() => {
         FirebaseService.updateById(FIREBASE_COLLECTION.USERS, form.values, form.getInputProps('fireBaseId').value)
-        console.log('update')
         form.resetDirty()
         form.resetTouched()
         successNotification()

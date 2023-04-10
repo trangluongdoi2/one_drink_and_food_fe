@@ -21,6 +21,8 @@ export interface UserProps {
     nanoseconds: number
   }
   member: MEMBERSHIP
+  usedCoupon: string[]
+  usedGift: string[]
 }
 
 export interface SortUserProps {

@@ -114,7 +114,7 @@ const OrderList = ({ title, query }: OrderListProps) => {
   }
 
   return (
-    <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
+    <Paper p={40} sx={(theme) => ({ backgroundColor: theme.colors.dark[0] })}>
       <Stack spacing={20}>
         <Flex mr={10} justify='space-between'>
           <Title variant='h3' size={24}>

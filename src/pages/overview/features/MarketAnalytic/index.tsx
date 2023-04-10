@@ -41,7 +41,7 @@ const data = [
 
 export const MarketAnalytic = () => {
   return (
-    <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
+    <Paper p={40} sx={(theme) => ({ backgroundColor: theme.colors.dark[0] })}>
       <Stack spacing={20} mr={10}>
         <Title variant='h3' size={24}>
           Phân tích thị trường
