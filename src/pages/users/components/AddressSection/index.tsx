@@ -30,7 +30,6 @@ const InputRow = ({ title, ...props }: { title: string }) => {
   )
 }
 
-
 const AddressSection = () => {
   const form = useUserFormContext()
   const [addNewAddress, setAddNewAddress] = useState<boolean>(false)
