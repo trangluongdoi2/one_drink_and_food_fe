@@ -1,6 +1,5 @@
 {
   "test": "Hêhhehe",
-  "nguyen_tan_vinh": "Nguyễn Tân Vinh",
   "product_name": "Tên sản phẩm",
   "fill_product_name": "Điền tên sản phẩm",
   "required_field": "phần bắt buộc",
@@ -29,5 +28,10 @@
   "add_content_frame": "Thêm khung nội dung",
   "notice_production_sales_frame": "Lưu ý: Thông tin không muốn hiển thị vui lòng để trống, chọn nút ẩn hoặc xoá khung",
   "close_multi_select_guide": "Nhấp tắt/ Chỉ được chọn 1 option trong khung",
-  "open_multi_select_guide": "Nhấp mở/ Được chọn nhiều option trong khung"
+  "open_multi_select_guide": "Nhấp mở/ Được chọn nhiều option trong khung",
+  "content": "Nội dung",
+  "fill_information_of_title": "Điền nội dung thông tin của phần tiêu đề",
+  "topic_name": "Tên chủ đề",
+  "add_topic": "Thêm chủ đề",
+  "create_information_category": "Tạo danh mục thông tin"
 }

@@ -35,7 +35,7 @@ export const ProductSalesFrameFrom = () => {
     }
   ]
   return (
-    <Paper className={`${classes.container} create-new-product-card__container`}>
+    <Paper className='create-new-product-card__container'>
       <Text className={classes.title}>{t('sale_frame')}</Text>
       <Divider />
       {baseSalesList.map((option: Record<string, any>, index: number) => (
@@ -46,10 +46,10 @@ export const ProductSalesFrameFrom = () => {
           defaultPlaceholder={t('fill_selected_information')}
         />
       ))}
-      <ActionIcon className={classes.titleAdd}>
+      <ActionIcon className='title-add'>
         <Text>+{t('add_option_frame')}</Text>
       </ActionIcon>
-      <ActionIcon className={classes.titleAdd}>
+      <ActionIcon className='title-add'>
         <Text>+{t('add_content_frame')}</Text>
       </ActionIcon>
       <Stack sx={{ marginTop: '20px' }}>

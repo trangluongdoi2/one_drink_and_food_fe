@@ -4,7 +4,22 @@ import { ActionIcon, Flex, NumberInput, Paper, Stack, Text } from '@mantine/core
 import { useTranslation } from 'react-i18next'
 import { AddFillIcon, TableRowsIcon, ToggleDarkLgIcon, ToggleLightLgIcon } from '@/assets/icon'
 
-export const ProductAddImageForm = () => {
+const getInitImageList = (quantity: number) => {
+  const result = [];
+  for (let i = 0; i < quantity; i++) {
+    result.push({
+      name: '1'
+    });
+  }
+  return result;
+}
+
+type Props = {
+  limitQuantity: number
+  hiddenTitle?: boolean
+  isActive?: boolean
+}
+export const ProductAddImageForm = ({limitQuantity, hiddenTitle = false, isActive = true}: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const [isActiveMotionInput, setIsActiveMotionInput] = useState(true)
@@ -12,38 +27,13 @@ export const ProductAddImageForm = () => {
   const onUploadImage = () => {
     refInput.current?.click()
   }
-  const [listImageProduct, setListImageProduct] = useState([
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    },
-    {
-      name: '1'
-    }
-  ])
+  const [listImageProduct, setListImageProduct] = useState(getInitImageList(limitQuantity))
   const toggleAttributes = () => {
     setIsActiveMotionInput(!isActiveMotionInput)
   }
   return (
-    <Paper>
-      <Text className={classes.title}>{t('add_image')}</Text>
+    <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>
+      {!hiddenTitle && <Text className={classes.title}>{t('add_image')}</Text>}
       <Paper className={classes.imageContainer}>
         {listImageProduct.map((image: Record<string, any>, index: number) => (
           <Stack className={classes.child} key={index} onClick={onUploadImage}>
