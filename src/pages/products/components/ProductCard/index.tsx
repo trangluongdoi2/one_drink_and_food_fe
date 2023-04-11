@@ -1,14 +1,16 @@
 import { ActionIcon, Button, Flex, Image, Paper, Stack, Text } from '@mantine/core'
+import { useNavigate } from 'react-router-dom'
 import { useStyles } from './index.styles'
 import { AddFillIcon, DeleteIcon } from '@/assets/icon'
-import { ProductCardProps } from '../../type'
+import { ProductCardProps } from '@/pages/products/type'
+import { camelToSnakeCase } from '@/utils/string-utils'
 
-export const ProductCard = ({ forNewProduct = false, productOverview }: ProductCardProps) => {
-  // const { name, title, img } = productOverview
+export const ProductCard = ({ forNewProduct = false, productSubType, productOverview }: ProductCardProps) => {
+  const navigation = useNavigate()
   const { classes } = useStyles()
   const onCreateNewProduct = () => {
-    if (forNewProduct) {
-      console.log('onCreateNewProduct')
+    if (forNewProduct && productSubType) {
+      navigation(`/products/juice/${camelToSnakeCase(productSubType)}/create-new`)
       return
     }
   }

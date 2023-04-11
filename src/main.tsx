@@ -5,6 +5,8 @@ import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
+import { GlobalStyles } from './GlobalStyles'
+import './i18n'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -33,6 +35,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         withNormalizeCSS
         withGlobalStyles
       >
+        <GlobalStyles />
         <Notifications />
         <App />
       </MantineProvider>

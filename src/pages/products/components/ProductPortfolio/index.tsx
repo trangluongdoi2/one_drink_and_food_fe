@@ -1,12 +1,29 @@
 import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { TableRowsIcon, EditIconLight, DeleteIcon } from '@/assets/icon'
+import { JuiceType } from '@/pages/products/type'
 
-export const ProductPortfolio = ({ title, isBasePortfolio = false }: any) => {
+type ProductPorfolioProps = {
+  title?: string
+  isBasePortfolio?: boolean
+}
+
+export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorfolioProps) => {
   const { classes } = useStyles()
+
+  const convertTitle = (title: string) => {
+    switch(title) {
+      case (JuiceType.JUICE_BOTTLED):
+        return 'Nước ép đóng chai'
+      case (JuiceType.JUICE_GLASS):
+        return 'Nước ép ly'
+    }
+  }
+
   const onDeletePorfolio = () => {
     console.log('onDeletePorfolio')
   }
+
   const onEditPorfolio = () => {
     console.log('onEditPorfolio')
   }
@@ -25,7 +42,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: any) => {
               <TableRowsIcon />
             </ActionIcon>
             <Text fz={18} fw={700}>
-              DANH MỤC | {title}
+              DANH MỤC | {convertTitle(title as string)}
             </Text>
             <ActionIcon onClick={onEditPorfolio}>
               <EditIconLight/>
