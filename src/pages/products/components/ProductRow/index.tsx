@@ -6,15 +6,15 @@ import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { notifications } from '@mantine/notifications'
 import { EditRow } from './EditRow'
 import { ViewRow } from './ViewRow'
-import { OrderProps } from '@/types/order'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
+import { ProductProps } from '@/types/product'
 
-interface IOrderRow {
-  row: OrderProps
+interface IProductRow {
+  row: ProductProps
   selectedRow: string[]
 }
 
-export const ProductRow = ({ row, selectedRow }: IOrderRow) => {
+export const ProductRow = ({ row, selectedRow }: IProductRow) => {
   const { dispatch } = useOrderContext()
   const [edit, setEdit] = useState<boolean>(false)
   const { fireBaseId: id } = row
@@ -49,7 +49,7 @@ export const ProductRow = ({ row, selectedRow }: IOrderRow) => {
 
   useEffect(() => {
     if (isChanged) {
-      FirebaseService.updateById(FIREBASE_COLLECTION.ORDERS, form.values, form.getInputProps('fireBaseId').value)
+      FirebaseService.updateById(FIREBASE_COLLECTION.PRODUCTS, form.values, form.getInputProps('fireBaseId').value)
       form.resetDirty()
       form.resetTouched()
       successNotification()

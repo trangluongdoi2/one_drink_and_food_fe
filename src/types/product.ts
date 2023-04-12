@@ -13,6 +13,7 @@ enum SizeOptions {
 }
 
 export interface ProductProps {
+  fireBaseId: string
   amount: number
   code: string
   group: ProductGroup

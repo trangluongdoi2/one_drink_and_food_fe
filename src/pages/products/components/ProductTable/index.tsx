@@ -2,28 +2,28 @@ import { useEffect, useState } from 'react'
 import { Center, Stack, Text } from '@mantine/core'
 import { SearchTable, TableHeader, TablePagination } from '@/components/table'
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
-import { OrderProps } from '@/types/order'
 import { productHeader } from '@/constants/header'
 import { ProductRow } from '../ProductRow'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
 import { setSelectedRow } from '@/reducer/order/action'
+import { ProductProps } from '@/types/product'
 
-interface OrderTableProps {
-  data: OrderProps[]
+interface ProductTableProps {
+  data: ProductProps[]
 }
 
 const ROW_PER_PAGE = 10
 
-const ProductTable = ({ data }: OrderTableProps) => {
+const ProductTable = ({ data }: ProductTableProps) => {
   const [search, setSearch] = useState('')
   const { dispatch } = useOrderContext()
 
-  const { totalItems, active, onChange, slicedData } = useGetRowPerPage<OrderProps>({
+  const { totalItems, active, onChange, slicedData } = useGetRowPerPage<ProductProps>({
     data,
     rowPerPage: ROW_PER_PAGE
   })
 
-  const [sortedData, setSortedData] = useState<OrderProps[]>(slicedData)
+  const [sortedData, setSortedData] = useState<ProductProps[]>(slicedData)
   const { selectedRow } = useOrderContext()
 
   const isSelectedAll = selectedRow.length === data.length
@@ -32,9 +32,7 @@ const ProductTable = ({ data }: OrderTableProps) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     setSearch(value)
-    const filteredData = data.filter((item) =>
-      item['recipientName'].toLocaleLowerCase().includes(value.toLocaleLowerCase())
-    )
+    const filteredData = data.filter((item) => item['name'].toLocaleLowerCase().includes(value.toLocaleLowerCase()))
 
     !value ? setSortedData(slicedData) : setSortedData(filteredData)
   }
@@ -62,7 +60,9 @@ const ProductTable = ({ data }: OrderTableProps) => {
 
         <Stack spacing={15}>
           {sortedData && sortedData.length > 0 ? (
-            sortedData.map((row: OrderProps) => <ProductRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)
+            sortedData.map((row: ProductProps) => (
+              <ProductRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />
+            ))
           ) : (
             <Center sx={{ height: 200 }}>
               <td colSpan={Object.keys(data[0]).length}>

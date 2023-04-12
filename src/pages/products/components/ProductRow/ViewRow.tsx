@@ -1,4 +1,4 @@
-import { DefaultAvatar, EditIcon } from '@/assets/icon'
+import { DefaultAvatar, EditIcon, OneActiveIcon } from '@/assets/icon'
 import { useUserFormContext } from '@/context/form-context'
 import { getStatus } from '@/utils/getStatus'
 import { Avatar, Checkbox, ActionIcon, Text, Flex, Stack } from '@mantine/core'
@@ -13,6 +13,10 @@ interface ViewedRowProps {
 
 export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: ViewedRowProps) => {
   const form = useUserFormContext()
+
+  console.log('product view', form.getInputProps('photo').value[0])
+  const importPrice = form.getInputProps('mlAndPrice').value[0]?.price.import
+  const salePrice = form.getInputProps('mlAndPrice').value[0]?.price.sale
 
   return (
     <ul
@@ -48,50 +52,69 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Viewed
       >
         <Flex gap={10} align='center' justify='left' p={20} sx={{ width: '100%' }}>
           {/* ---------------- ID ---------- */}
-          <Stack sx={{ width: '15%' }}>
+          <Stack sx={{ width: '8%' }}>
             <Text fw='bolder' lh={1.4}>
-              {form.getInputProps('fireBaseId').value.split('-').pop()}
+              {form.getInputProps('code').value}
             </Text>
           </Stack>
 
           {/* ---------------- AVATAR ---------- */}
           <Stack sx={{ width: '8%' }}>
-            {!form.getInputProps('avatar').value ? (
-              <DefaultAvatar />
+            {!form.getInputProps('photo').value[0] ? (
+              <ActionIcon
+                style={{
+                  border: '4px solid #ccc'
+                }}
+                radius={50}
+                size={36}
+              >
+                <DefaultAvatar />
+              </ActionIcon>
             ) : (
-              <Avatar src={form.getInputProps('avatar').value} radius='lg' />
+              <Avatar
+                src={form.getInputProps('photo').value[0]}
+                radius={50}
+                style={{
+                  border: '4px solid #ccc'
+                }}
+              />
             )}
           </Stack>
 
           {/* ---------------- NAME ------------- */}
-          <Stack sx={{ width: '20%' }}>
+          <Stack sx={{ width: '15%' }}>
             <Text fw='bolder' lh={1.4}>
-              {form.getInputProps('recipientName').value}
+              {form.getInputProps('name').value}
             </Text>
           </Stack>
 
           {/* ---------------- ADDRESS ---------- */}
-          <Stack sx={{ width: '45%', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
-            <Text lh={1.4}>{form.getInputProps('address').value}</Text>
+          <Stack sx={{ width: '10%', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+            <Text lh={1.4}>{importPrice}</Text>
           </Stack>
 
           {/* ---------------- PHONE ---------- */}
-          <Stack sx={{ width: '15%' }}>
-            <Text lh={1.4}>{form.getInputProps('phone').value}</Text>
+          <Stack sx={{ width: '10%' }}>
+            <Text lh={1.4}>{salePrice}</Text>
           </Stack>
 
           {/* ---------------- DATE ---------- */}
-          <Stack sx={{ width: '15%' }}>
-            <Text lh={1.4}>{form.getInputProps('receivedDate').value}</Text>
+          <Stack sx={{ width: '10%' }}>
+            <Text lh={1.4}>{form.getInputProps('amount').value}</Text>
           </Stack>
 
           {/* ---------------- STATUS ---------- */}
+          <Stack sx={{ width: '20%' }}>
+            <Text lh={1.4}>{form.getInputProps('type').value}</Text>
+          </Stack>
+
           <Stack sx={{ width: '10%' }}>
-            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)}</Text>
+            <OneActiveIcon />
+            {/* <Text lh={1.4}>{form.getInputProps('status').value}</Text> */}
           </Stack>
 
           {/* ---------------- EDIT ---------- */}
-          <Stack sx={{ width: '6%' }}>
+          <Stack sx={{ width: 'auto' }}>
             <ActionIcon onClick={() => setEdit(!edit)}>
               <EditIcon />
             </ActionIcon>

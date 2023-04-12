@@ -19,31 +19,31 @@ export const productHeader: ProductHeaderProps[] = [
   {
     id: 'photo',
     title: 'Avatar',
-    width: '6%',
+    width: '8%',
     value: ''
   },
   {
     id: 'name',
     title: 'Tên sản phẩm',
-    width: '20%',
+    width: '15%',
     value: 'recipientName'
   },
   {
     id: 'import',
     title: 'Giá vốn',
-    width: '11%',
+    width: '10%',
     value: 'recipientName'
   },
   {
     id: 'sale',
     title: 'Giá bán',
-    width: '11%',
+    width: '10%',
     value: 'recipientName'
   },
   {
     id: 'amount',
     title: 'Số lượng',
-    width: '9%',
+    width: '11%',
     value: 'recipientName'
   },
   {
@@ -55,7 +55,7 @@ export const productHeader: ProductHeaderProps[] = [
   {
     id: 'status',
     title: 'Trạng thái',
-    width: '8%',
+    width: '10%',
     value: 'recipientName'
   },
   {

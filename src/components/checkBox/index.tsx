@@ -28,7 +28,7 @@ const CustomCheckBox = ({ title, value, selectedOption, setSelectedOption }: Cus
       <Flex justify='space-between' align='center'>
         <Flex gap={10}>
           <TableRowsIcon />
-          <Text size={18} fw='bolder' tt='uppercase'>
+          <Text size={18} fw={700} tt='uppercase'>
             {title}
           </Text>
         </Flex>
