@@ -1,6 +1,5 @@
 import { DefaultAvatar, EditIcon, OneActiveIcon } from '@/assets/icon'
 import { useUserFormContext } from '@/context/form-context'
-import { getStatus } from '@/utils/getStatus'
 import { Avatar, Checkbox, ActionIcon, Text, Flex, Stack } from '@mantine/core'
 import { Dispatch, SetStateAction } from 'react'
 
@@ -14,7 +13,6 @@ interface ViewedRowProps {
 export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: ViewedRowProps) => {
   const form = useUserFormContext()
 
-  console.log('product view', form.getInputProps('photo').value[0])
   const importPrice = form.getInputProps('mlAndPrice').value[0]?.price.import
   const salePrice = form.getInputProps('mlAndPrice').value[0]?.price.sale
 

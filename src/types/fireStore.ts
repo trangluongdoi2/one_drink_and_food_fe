@@ -16,5 +16,5 @@ export interface FirebaseUserProps {
 
 export interface QueryType {
   key: string
-  params: string
+  params?: string
 }

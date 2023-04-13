@@ -2,11 +2,16 @@ import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { FirebaseService } from '@/firebase/handler'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { QueryType } from '@/types/fireStore'
 import { ProductProps } from '@/types/product'
 
-export const useFetchProduct = ({ key, params = 'all' }: QueryType) => {
-  const { getAll, getAllWithQuery } = FirebaseService
+interface QueryType {
+  key: string
+  params: string[]
+  selectedOption: string[]
+}
+
+export const useFetchProduct = ({ key, params = [''], selectedOption }: QueryType) => {
+  const { getAll, getAllWithQuery, getWithMultipleQuery } = FirebaseService
   const [productData, setProductData] = useState<ProductProps[]>()
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<any>()
@@ -17,9 +22,10 @@ export const useFetchProduct = ({ key, params = 'all' }: QueryType) => {
     setError('')
     try {
       const data =
-        params !== 'all'
-          ? await getAllWithQuery(FIREBASE_COLLECTION.PRODUCTS, key, params)
+        params.length > 0
+          ? await getWithMultipleQuery(FIREBASE_COLLECTION.PRODUCTS, key, params)
           : await getAll(FIREBASE_COLLECTION.PRODUCTS)
+
       setProductData(data)
     } catch (err) {
       setError(err)
@@ -30,7 +36,7 @@ export const useFetchProduct = ({ key, params = 'all' }: QueryType) => {
   useEffect(() => {
     fetchProductData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key, pathname])
+  }, [key, pathname, selectedOption])
 
   return { loading, productData, error }
 }

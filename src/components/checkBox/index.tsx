@@ -13,7 +13,6 @@ interface CustomCheckBoxProps {
 const CustomCheckBox = ({ title, value, selectedOption, setSelectedOption }: CustomCheckBoxProps) => {
   const [check, setCheck] = useState(selectedOption.includes(value))
   const onHandleCheck = () => {
-    console.log('click')
     setCheck(!check)
   }
 

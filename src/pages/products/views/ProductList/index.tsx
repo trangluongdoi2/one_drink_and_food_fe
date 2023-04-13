@@ -7,7 +7,7 @@ import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import CustomCheckBox from '@/components/checkBox'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ProductGroup } from '@/types/product'
 import { useFetchProduct } from '../../services/useFetchProduct'
 import { v4 as uuidv4 } from 'uuid'
@@ -40,21 +40,22 @@ const mock = {
     }
   ],
   name: 'Cà phê',
-  photo: '',
+  photo: [''],
   status: '',
   type: 'Cà phê đen'
 }
 
 const ProductList = ({ title, query }: ProductListProps) => {
-  const { loading, productData } = useFetchProduct({ key: 'juice', params: query })
-
-  console.log('product ', productData)
   const { deleteById, createWithCustomKey } = FirebaseService
 
   const { selectedRow, dispatch } = useOrderContext()
   const [selectedOption, setSelectedOption] = useState<string[]>([])
   const isEmpty = selectedRow.length === 0
-  console.log(selectedOption)
+  const { loading, productData } = useFetchProduct({
+    key: 'group',
+    params: selectedOption,
+    selectedOption: selectedOption
+  })
 
   const openDeleteModal = () =>
     CustomModal({

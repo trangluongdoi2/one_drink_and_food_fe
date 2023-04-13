@@ -72,7 +72,7 @@ export const ViewRow = ({ handleSelectedRow, isSelected, onOpenModal, setEditMod
               {!form.getInputProps('avatar').value ? (
                 <DefaultAvatar />
               ) : (
-                <Avatar src={form.getInputProps('avatar').value} radius='lg' />
+                <Avatar src={form.getInputProps('avatar').value} size='sm' />
               )}
             </Stack>
 

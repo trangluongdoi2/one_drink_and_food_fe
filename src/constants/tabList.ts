@@ -30,22 +30,22 @@ export const checkList = [
   },
   {
     title: 'Sinh tố',
-    value: ProductGroup.JUICE
+    value: ProductGroup.SMOOTHY
   },
   {
     title: 'Yogurt',
-    value: ProductGroup.JUICE
+    value: ProductGroup.YOGURT
   },
   {
     title: 'Trà',
-    value: ProductGroup.JUICE
+    value: ProductGroup.TEA
   },
   {
     title: 'Cà phê',
-    value: ProductGroup.JUICE
+    value: ProductGroup.COFFEE
   },
   {
     title: 'Vật phẩm',
-    value: ProductGroup.JUICE
+    value: ProductGroup.ITEM
   }
 ]

@@ -51,6 +51,25 @@ const getAllWithQuery = async (itemType: FIREBASE_COLLECTION, queryKey: string, 
   }
 }
 
+const getWithMultipleQuery = async (itemType: FIREBASE_COLLECTION, queryKey: string, params: string[]) => {
+  const data: any = []
+  const queryData = query(collection(db, itemType), where(queryKey, 'in', params))
+
+  try {
+    const querySnapshot = await getDocs(queryData)
+    querySnapshot.forEach((doc) => {
+      const dataObject = {
+        ...doc.data(),
+        fireBaseId: doc.id
+      }
+      data.push(dataObject)
+    })
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const uploadImage = async (file: File) => {
   const storage = getStorage()
   const path = `/images/${file.name}`
@@ -141,5 +160,6 @@ export const FirebaseService = {
   createWithCustomKey,
   deleteById,
   updateById,
-  uploadImage
+  uploadImage,
+  getWithMultipleQuery
 }

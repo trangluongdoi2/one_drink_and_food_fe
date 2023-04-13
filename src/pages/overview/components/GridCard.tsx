@@ -14,9 +14,9 @@ export interface IGridCardProps {
 
 export const GridCard = ({ data }: IGridCardProps) => {
   return (
-    <Grid grow gutter={19}>
+    <Grid grow gutter={19} columns={9}>
       {data.map((content, index) => (
-        <Grid.Col span={4} key={index}>
+        <Grid.Col span={3} key={index}>
           <CardItem {...content} />
         </Grid.Col>
       ))}
