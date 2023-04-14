@@ -1,8 +1,9 @@
 import { forwardRef } from 'react'
-import { Group, Text, Select, Button, MantineTheme, Flex, Checkbox, TextInput } from '@mantine/core'
+import { Group, Text, Select, Button } from '@mantine/core'
 import { SearchIcon } from '@/assets/icon'
 import { dataSearch } from '@/constants/search'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useStyles } from './index.style'
 
 interface CustomItemProps extends React.ComponentPropsWithoutRef<'div'> {
   label: string
@@ -37,6 +38,7 @@ const SelectItem = forwardRef<HTMLDivElement, CustomItemProps>(
 
 function SearchField({ ...props }) {
   const navigate = useNavigate()
+  const { classes } = useStyles()
 
   return (
     <Group spacing={0}>
@@ -56,31 +58,12 @@ function SearchField({ ...props }) {
               item.detail.toLowerCase().includes(value.toLowerCase().trim())
             : null
         }
-        sx={(theme: MantineTheme) => ({
-          input: {
-            backgroundColor: theme.colors.dark[0],
-            borderRadius: '10px 0 0 10px',
-            '&:focus-within': {
-              borderColor: theme.colors.gray
-            }
-          },
-          width: 590
-        })}
+        className={classes.select}
         {...props}
         icon={<SearchIcon />}
         onChange={(link: string) => navigate(link)}
       />
-      <Button
-        color='dark.2'
-        sx={(theme: MantineTheme) => ({
-          input: {
-            backgroundColor: theme.colors.dark[0]
-          },
-          borderRadius: '0 10px 10px 0',
-          height: 38,
-          width: 176
-        })}
-      >
+      <Button color='dark.2' className={classes.button}>
         <Text size={14} color='gray.8' fw={300}>
           Tìm kiếm
         </Text>

@@ -11,7 +11,7 @@ interface QueryType {
 }
 
 export const useFetchProduct = ({ key, params = [], selectedOption }: QueryType) => {
-  const { getAll, getAllWithQuery, getWithMultipleQuery } = FirebaseService
+  const { getAll, getWithMultipleQuery } = FirebaseService
   const [productData, setProductData] = useState<ProductProps[]>()
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<any>()

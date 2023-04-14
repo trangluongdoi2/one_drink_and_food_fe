@@ -1,11 +1,13 @@
 import { ActiveEditIcon, DefaultAvatar, EditIcon } from '@/assets/icon'
 import { getMemberShip } from '@/utils/getMembership'
-import { Avatar, Checkbox, ActionIcon, TextInput, Select } from '@mantine/core'
+import { Checkbox, ActionIcon, TextInput, Select, Image, Flex, Stack } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
 import { getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
 import { useUserFormContext } from '@/context/form-context'
+import { useClickOutside } from '@mantine/hooks'
+import CustomModal from '@/components/modal'
 
 interface EditRowProps {
   isSelected: boolean
@@ -20,6 +22,18 @@ export const EditRow = ({ handleSelectedRow, isSelected, editMode, setEditMode }
   const dateFormat = getDateFirebase(form.getInputProps('dob').value)
   const [newDate, setNewDate] = useState(dateFormat ? JSON.parse(dateFormat) : '')
 
+  // Modal check saved state, if not reset state and close modal
+  const openNothingModal = () =>
+    CustomModal({
+      title: 'Thông báo',
+      content: 'Không có khách hàng nào được chọn',
+      onConfirm: () => null
+    })
+
+  const ref = useClickOutside(() => {
+    setEditMode(!editMode)
+  })
+
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     setNewDate(value)
@@ -29,17 +43,8 @@ export const EditRow = ({ handleSelectedRow, isSelected, editMode, setEditMode }
   }
 
   return (
-    <ul
-      style={{
-        margin: 0,
-        padding: 0,
-        display: 'flex',
-        width: '100%',
-        fontSize: 12
-      }}
-      key={form.getInputProps('fireBaseId').value}
-    >
-      <li style={{ float: 'left', marginRight: 20, alignItems: 'center', display: 'flex' }}>
+    <Flex sx={{ margin: 0, padding: 0, fontSize: 12, width: '100%' }} key={form.getInputProps('fireBaseId').value}>
+      <Flex align='center' sx={{ float: 'left' }} mr={20}>
         <Checkbox
           sx={{ input: { backgroundColor: '#f5f5f5' } }}
           checked={isSelected}
@@ -48,91 +53,89 @@ export const EditRow = ({ handleSelectedRow, isSelected, editMode, setEditMode }
           radius={10}
           onChange={handleSelectedRow}
         />
-      </li>
-      <li
-        style={{
+      </Flex>
+      <Flex
+        sx={(theme) => ({
+          borderRadius: 10,
           width: '100%',
           height: 60,
-          alignItems: 'center',
-          display: 'flex',
-          backgroundColor: isSelected || editMode ? '#fff' : '#f5f5f5',
-          boxShadow: isSelected || editMode ? '2px 2px 10px 2px #f5f5f5' : '',
-          borderRadius: 10
-        }}
+          backgroundColor: isSelected ? 'white' : theme.colors.dark[0],
+          boxShadow: isSelected ? `0px 0px 20px rgba(0, 0, 0, 0.1)` : ''
+        })}
+        ref={ref}
       >
-        <ul
-          style={{
-            textDecoration: 'none',
-            listStyleType: 'none',
-            padding: 20,
-            display: 'flex',
-            alignItems: 'center',
-            width: '100%'
-          }}
-        >
-          <li
-            style={{
-              width: '7%'
-            }}
-          >
+        <Flex px={20} p={10} w='100%' align='center' gap={5}>
+          <Stack sx={{ width: '7%' }}>
             {!form.getInputProps('avatar').value ? (
               <DefaultAvatar />
             ) : (
-              <Avatar src={form.getInputProps('avatar').value} radius='lg' />
+              <Image
+                src={form.getInputProps('avatar').value}
+                width={30}
+                height={30}
+                radius={50}
+                styles={(theme) => ({
+                  image: {
+                    border: `2px solid ${theme.colors.dark[1]}`
+                  }
+                })}
+              />
             )}
-          </li>
-          <li
-            style={{
+          </Stack>
+          <Stack
+            sx={{
               width: '10%'
             }}
           >
             <TextInput
               className={classes.td}
-              sx={{ input: { fontWeight: 700 } }}
+              sx={{ input: { fontWeight: 700, textTransform: 'uppercase' } }}
               name='firstName'
               {...form.getInputProps('firstName')}
             ></TextInput>
-          </li>
-          <li
-            style={{
+          </Stack>
+          <Stack
+            sx={{
               width: '15%'
             }}
           >
             <TextInput
               className={classes.td}
-              sx={{ input: { fontWeight: 700 } }}
+              sx={{ input: { fontWeight: 700, textTransform: 'uppercase' } }}
               name='lastName'
               {...form.getInputProps('lastName')}
             ></TextInput>
-          </li>
-          <li
-            style={{
+          </Stack>
+          <Stack
+            sx={{
               width: '25%'
             }}
           >
-            <TextInput className={classes.td} name='email' {...form.getInputProps('email')}></TextInput>
-          </li>
-          <li
-            style={{
+            <TextInput className={classes.td} name='email' {...form.getInputProps('email')} />
+          </Stack>
+          <Stack
+            sx={{
               width: '15%'
             }}
           >
-            <TextInput className={classes.td} name='txtPhone' {...form.getInputProps('txtPhone')}></TextInput>
-          </li>
-          <li
-            style={{
-              width: '10%'
+            <TextInput className={classes.td} name='txtPhone' {...form.getInputProps('txtPhone')} />
+          </Stack>
+          <Stack
+            sx={{
+              width: '8%'
             }}
           >
             <Select
-              label=''
+              // label=''
               nothingFound='No options'
               placeholder={form.getInputProps('gender').value === 'male' ? 'Nam' : 'Nữ'}
-              onChange={(value) =>
+              {...form.getInputProps('gender')}
+              switchDirectionOnFlip
+              onChange={(value) => {
                 form.setValues({
                   gender: value ?? 'male'
                 })
-              }
+              }}
               data={[
                 {
                   value: 'female',
@@ -143,36 +146,62 @@ export const EditRow = ({ handleSelectedRow, isSelected, editMode, setEditMode }
                   label: 'Nam'
                 }
               ]}
-              rightSection={<IconChevronDown color='gray' size={14} />}
-              rightSectionWidth={30}
-              sx={{ width: '90%' }}
+              onDropdownClose={() => setEditMode(false)}
+              defaultValue={form.getInputProps('gender').value}
+              rightSection={<IconChevronDown color='gray' size={16} />}
+              rightSectionWidth={20}
+              styles={(theme) => ({
+                root: {
+                  width: '90%'
+                },
+                input: {
+                  backgroundColor: theme.colors.dark[0],
+                  border: 'none',
+                  height: 40,
+                  fontWeight: 500,
+                  fontSize: 12
+                },
+                item: {
+                  fontSize: 12,
+                  // applies styles to selected item
+                  '&[data-selected]': {
+                    '&, &:hover': {
+                      backgroundColor: theme.black,
+                      color: theme.white
+                    }
+                  },
+
+                  // applies styles to hovered item (with mouse or keyboard)
+                  '&[data-hovered]': {}
+                }
+              })}
             />
-          </li>
-          <li
-            style={{
-              width: '15%'
+          </Stack>
+          <Stack
+            sx={{
+              width: '16%'
             }}
           >
             <TextInput className={classes.td} value={newDate} name='dob' onChange={handleDateChange}></TextInput>
-          </li>
-          <li
-            style={{
-              width: '10%'
+          </Stack>
+          <Stack
+            sx={{
+              width: '9%'
             }}
           >
             {getMemberShip(form.getInputProps('member').value)}
-          </li>
-          <li
-            style={{
+          </Stack>
+          <Stack
+            sx={{
               width: 'auto'
             }}
           >
             <ActionIcon onClick={() => setEditMode(!editMode)} type='submit'>
               {editMode ? <ActiveEditIcon /> : <EditIcon />}
             </ActionIcon>
-          </li>
-        </ul>
-      </li>
-    </ul>
+          </Stack>
+        </Flex>
+      </Flex>
+    </Flex>
   )
 }

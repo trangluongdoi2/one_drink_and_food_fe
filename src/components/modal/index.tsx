@@ -31,7 +31,8 @@ const CustomModal = ({
     labels: labels,
     confirmProps: confirmColor,
     onCancel: onCancel,
-    onConfirm: onConfirm
+    onConfirm: onConfirm,
+    closeOnCancel: true
   })
 }
 

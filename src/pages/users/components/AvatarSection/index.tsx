@@ -55,9 +55,31 @@ const AvatarSection = () => {
             sx={{ position: 'relative' }}
           >
             {image === '' ? (
-              <Image src={oneAva} width={100} height={100} radius={50} />
+              <Image
+                src={oneAva}
+                width={100}
+                height={100}
+                radius={50}
+                styles={{
+                  image: {
+                    border: '4px solid #ccc'
+                  }
+                }}
+                alt='default'
+              />
             ) : (
-              <Image src={image} width={100} height={100} radius={50} />
+              <Image
+                src={image}
+                width={100}
+                height={100}
+                radius={50}
+                styles={{
+                  image: {
+                    border: '4px solid #ccc'
+                  }
+                }}
+                alt='avatar'
+              />
             )}
             {visible && (
               <Flex sx={{ position: 'absolute', top: 0, bottom: 0, left: 0 }}>

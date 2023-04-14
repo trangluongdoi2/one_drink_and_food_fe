@@ -11,7 +11,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     paddingBottom: 0,
     boxShadow: '1px 0px 10px #ccc',
-    zIndex: 1
+    zIndex: 1,
+    position: 'sticky',
+    top: 0
   },
 
   links: {
@@ -36,7 +38,7 @@ const NavbarHeader = () => {
   return (
     <>
       {!hiddenNav ? (
-        <Navbar height='100vh' width={{ sm: 240 }} p='md' className={classes.navbar}>
+        <Navbar height='100vh' width={{ sm: 240 }} p='md' className={classes.navbar} hidden>
           <Navbar.Section mt={16} mx={20}>
             <Group position='apart'>
               <OneLogo />
