@@ -6,11 +6,11 @@ import { ProductProps } from '@/types/product'
 
 interface QueryType {
   key: string
-  params: string[]
-  selectedOption: string[]
+  params?: string[]
+  selectedOption?: string[]
 }
 
-export const useFetchProduct = ({ key, params = [''], selectedOption }: QueryType) => {
+export const useFetchProduct = ({ key, params = [], selectedOption }: QueryType) => {
   const { getAll, getAllWithQuery, getWithMultipleQuery } = FirebaseService
   const [productData, setProductData] = useState<ProductProps[]>()
   const [loading, setLoading] = useState<boolean>(false)
