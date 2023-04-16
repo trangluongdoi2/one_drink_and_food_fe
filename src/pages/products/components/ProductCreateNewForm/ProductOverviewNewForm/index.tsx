@@ -3,7 +3,7 @@ import { useStyles } from './index.styles'
 import { AppInput } from '@/components/input'
 import { AppInputList } from '@/components/input-list'
 import { useTranslation } from 'react-i18next'
-import { DoneFillIcon } from '@/assets/icon'
+import { DoneOutlineIcon } from '@/assets/icon'
 import { useState } from 'react'
 import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
 import { ToggleButon } from '@/components/button/ToggleButton'
@@ -56,7 +56,7 @@ export const ProductOverviewNewForm = () => {
       />
       <AppInputList
         name={t('typical_function')}
-        iconStatus={<DoneFillIcon />}
+        iconStatus={<DoneOutlineIcon />}
         updateList={updateFunctionList}
       ></AppInputList>
       <AppInput

@@ -1,7 +1,7 @@
-import { Flex, Paper, Stack, Text } from '@mantine/core'
-import { useStyles } from './index.styles'
+import { Paper, Stack, Text } from '@mantine/core'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
-import { ProductPreView } from '../../components'
+import { ProductPreview } from '@/pages/products/components/ProductPreview'
+import { useStyles } from './index.styles'
 
 export const ProductCreateNew = () => {
   const { classes } = useStyles()
@@ -10,8 +10,12 @@ export const ProductCreateNew = () => {
       <Stack>
         <Text mb={25}>Nước ép/ Nước ép ly/ Thêm sản phẩm</Text>
         <Paper className={classes.containerGrid}>
-          <ProductCreateNewForm />
-          <ProductPreView />
+          <div className={classes.container__form}>
+            <ProductCreateNewForm />
+          </div>
+          <div className={classes.container__preview}>
+            <ProductPreview />
+          </div>
         </Paper>
       </Stack>
     </Paper>

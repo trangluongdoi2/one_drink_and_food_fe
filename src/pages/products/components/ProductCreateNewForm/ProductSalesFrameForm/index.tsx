@@ -12,26 +12,26 @@ export const ProductSalesFrameFrom = () => {
     {
       title: t('main_ingredient'),
       field: 'mainIngredient',
-      content: '',
-      hasPrice: false
+      value: '',
+      isOption: false
     },
     {
       title: t('choose_size'),
       field: 'size',
-      content: '',
-      hasPrice: true
+      value: '',
+      isOption: true
     },
     {
       title: t('ice_content'),
       field: 'iceContent',
-      content: '',
-      hasPrice: true
+      value: '',
+      isOption: true
     },
     {
       title: t('sugar_content'),
       field: 'sugarContent',
-      content: '',
-      hasPrice: true
+      value: '',
+      isOption: true
     }
   ]
   return (
@@ -42,7 +42,7 @@ export const ProductSalesFrameFrom = () => {
         <ProductOptionFrame
           key={index}
           title={option.title}
-          hasPrice={option.hasPrice}
+          isOption={option.isOption}
           defaultPlaceholder={t('fill_selected_information')}
         />
       ))}

@@ -24,7 +24,7 @@ const useStyles = createStyles(() => ({
     lineHeight: '17px',
     color: '#000000'
   },
-  '.text--imperative': {
+  'text--imperative': {
     fontStyle: 'italic',
     fontWeight: 400,
     fontSize: '12px',
@@ -66,7 +66,7 @@ export const AppInput = ({
       <Flex justify='space-between' align={'flex-end'}>
         <Text className={classes['.text__title']}>{name}</Text>
         <Flex align={'center'}>
-          {isImperative ? <Text className={classes['.text--imperative']}>*{t('required_field')}</Text> : <></>}
+          {isImperative ? <Text className={classes['text--imperative']}>*{t('required_field')}</Text> : <></>}
           <>{iconToggle}</>
         </Flex>
       </Flex>
