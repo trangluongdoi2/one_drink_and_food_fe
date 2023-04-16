@@ -1,6 +1,8 @@
-import { Paper, Rating, Stack, Title, Text, Flex } from '@mantine/core'
+import { Paper, Rating, Stack, Title, Text, Flex, Center } from '@mantine/core'
 import { GridCard } from '../../components'
 import { ProductList } from '../../components/ProductList'
+import { useFetchProduct } from '@/pages/products/services/useFetchProduct'
+import ProductTable from '@/pages/products/components/ProductTable'
 
 const data = [
   {
@@ -30,7 +32,37 @@ const data = [
   }
 ]
 
+const mock = [
+  {
+    image: '',
+    title: 'Bán chạy tháng này',
+    name: 'Sapoche',
+    group: 'Nước ép ly',
+    withRating: false,
+    totalSale: 100
+  },
+  {
+    image: '',
+    title: 'Bán chạy tháng này',
+    name: 'Sapoche',
+    group: 'Nước ép ly',
+    withRating: false,
+    totalSale: 100
+  },
+  {
+    image: '',
+    title: 'Bán chạy tháng này',
+    name: 'Bơ',
+    group: 'Nước ép ly',
+    withRating: true,
+    totalSale: 100,
+    vote: 4.9
+  }
+]
+
 export const ProductAnalytic = () => {
+  const { productData } = useFetchProduct({ key: 'juice' })
+
   return (
     <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
       <Stack spacing={20} mr={10}>
@@ -38,7 +70,19 @@ export const ProductAnalytic = () => {
           Dữ liệu sản phẩm
         </Title>
         <GridCard data={data} />
-        <ProductList />
+        <ProductList data={mock} />
+
+        <Paper p={40} radius={10} shadow='md'>
+          {productData && productData.length > 0 ? (
+            <ProductTable data={productData} />
+          ) : (
+            <Center>
+              <Stack justify='center'>
+                <Text align='center'>Danh sách sản phẩm trống</Text>
+              </Stack>
+            </Center>
+          )}
+        </Paper>
       </Stack>
     </Paper>
   )

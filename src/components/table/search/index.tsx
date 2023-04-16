@@ -41,7 +41,7 @@ export const SearchTable = ({
         />
       </Flex>
       <Button color='dark.2' fullWidth className={classes.button}>
-        <Text size={14} color='gray.8' fw={300}>
+        <Text size={14} color='gray.8' fw={400}>
           Tìm kiếm
         </Text>
       </Button>

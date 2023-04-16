@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore'
 import { FIREBASE_COLLECTION } from './collection'
 import { db } from './config'
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 
 async function getAll(itemType: FIREBASE_COLLECTION) {
   const data: any = []
@@ -47,6 +48,42 @@ const getAllWithQuery = async (itemType: FIREBASE_COLLECTION, queryKey: string, 
     return data
   } catch (error) {
     console.error(error)
+  }
+}
+
+const getWithMultipleQuery = async (itemType: FIREBASE_COLLECTION, queryKey: string, params: string[]) => {
+  const data: any = []
+  const queryData = query(collection(db, itemType), where(queryKey, 'in', params))
+
+  try {
+    const querySnapshot = await getDocs(queryData)
+    querySnapshot.forEach((doc) => {
+      const dataObject = {
+        ...doc.data(),
+        fireBaseId: doc.id
+      }
+      data.push(dataObject)
+    })
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const uploadImage = async (file: File) => {
+  const storage = getStorage()
+  const path = `/images/${file.name}`
+  const storageRef = ref(storage, path)
+
+  try {
+    await uploadBytesResumable(storageRef, file)
+    const url = await getDownloadURL(storageRef).then((downloadUrl) => {
+      return downloadUrl
+    })
+
+    return url
+  } catch (err) {
+    console.error(err)
   }
 }
 
@@ -122,5 +159,7 @@ export const FirebaseService = {
   create,
   createWithCustomKey,
   deleteById,
-  updateById
+  updateById,
+  uploadImage,
+  getWithMultipleQuery
 }

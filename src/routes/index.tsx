@@ -15,6 +15,7 @@ import AddCustomer from '@/pages/users/features/addCustomer'
 import { ProductCreateNew, ProductJuiceGrid } from '@/pages/products'
 import { ORDER_STATUS } from '@/types/order'
 import OrderContextProvider from '@/context/OrderContext/OrderContext'
+import ProductList from '@/pages/products/views/ProductList'
 
 export const router = createBrowserRouter([
   {
@@ -156,7 +157,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/products/all',
-                element: <MarketAnalytic />
+                element: <ProductList title='Danh sách sản phẩm' query='all' />
               },
               {
                 path: '/products/juice',

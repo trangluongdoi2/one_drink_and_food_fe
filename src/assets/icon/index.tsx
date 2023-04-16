@@ -59,3 +59,5 @@ export { default as AddCircleLightIcon } from '@/assets/svg/add-circle-light.svg
 export { default as DoNotDisturbLightIcon } from '@/assets/svg/do-not-disturb-light.svg'
 export { default as ExtraNoteIcon } from '@/assets/svg/extra-note.svg'
 export { default as DoneOutlineIcon } from '@/assets/svg/done-outline.svg'
+export { default as EditImageIcon } from '@/assets/svg/edit-white.svg'
+export { default as OneActiveIcon } from '@/assets/svg/one-active.svg'

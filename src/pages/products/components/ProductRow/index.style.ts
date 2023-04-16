@@ -7,9 +7,15 @@ export const useStyles = createStyles((theme) => ({
       '&:focus-within': {
         borderColor: theme.colors.gray
       },
-      width: '100%',
+      width: '90%',
       height: 40,
       fontSize: '12px'
     }
+  },
+
+  address: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   }
 }))
