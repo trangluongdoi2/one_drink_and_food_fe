@@ -1,9 +1,9 @@
-import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
+import { Flex, Paper, Text } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { AppInput } from '@/components/input'
 import { AppInputList } from '@/components/input-list'
 import { useTranslation } from 'react-i18next'
-import { ToggleDarkLgIcon, ToggleLightLgIcon, DoneFillIcon } from '@/assets/icon'
+import { DoneOutlineIcon } from '@/assets/icon'
 import { useState } from 'react'
 import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
 import { ToggleButon } from '@/components/button/ToggleButton'
@@ -27,7 +27,7 @@ export const ProductOverviewNewForm = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const [isActive, setIsActive] = useState(true)
-  const [listFunction, setListFunction] = useState<any>([])
+  const [listFunction, setListFunction] = useState([])
 
   const toggleActiveInput = (value: boolean) => {
     setIsActive(value)
@@ -35,12 +35,12 @@ export const ProductOverviewNewForm = () => {
 
   const updateFunctionList = (data: any) => {
     console.log(data, 'data parent')
-    setListFunction([...data])
+    setListFunction([...data] as any)
   }
 
   return (
     <Paper className={`${classes.container} create-new-product-card__container`}>
-      <ProductAddImageForm />
+      <ProductAddImageForm limitQuantity={8}/>
       <AppInput name={t('product_name')} isImperative={true} placeHolder={t('fill_product_name')} />
       <AppInput
         name={t('auxiliary_name')}
@@ -56,7 +56,7 @@ export const ProductOverviewNewForm = () => {
       />
       <AppInputList
         name={t('typical_function')}
-        iconStatus={<DoneFillIcon />}
+        iconStatus={<DoneOutlineIcon />}
         updateList={updateFunctionList}
       ></AppInputList>
       <AppInput

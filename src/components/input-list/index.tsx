@@ -83,7 +83,7 @@ export const AppInputList = ({ name, isActiveInput = true, iconToggle, iconStatu
         </Flex>
       </Flex>
       <Flex direction={'column'} gap={5}>
-        {listInput.map((item: any, index: number) => (
+        {listInput.map((item, index: number) => (
           <Flex align={'center'} key={index}>
             {iconStatus}
             <Input

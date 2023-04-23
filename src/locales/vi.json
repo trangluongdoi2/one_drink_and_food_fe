@@ -1,8 +1,7 @@
 {
-  "test": "Hêhhehe",
-  "nguyen_tan_vinh": "Nguyễn Tân Vinh",
   "product_name": "Tên sản phẩm",
   "fill_product_name": "Điền tên sản phẩm",
+  "edit": "Chỉnh",
   "required_field": "phần bắt buộc",
   "auxiliary_name": "Tên phụ trợ",
   "fill_product_auxiliary_name": "Điền tên phụ trợ của sản phẩm",
@@ -27,7 +26,19 @@
   "add_option": "Thêm lựa chọn",
   "add_option_frame": "Thêm khung lựa chọn",
   "add_content_frame": "Thêm khung nội dung",
+  "option_frame_name": "Tên khung lựa chọn",
+  "content_frame_name": "Tên khung nội dung",
   "notice_production_sales_frame": "Lưu ý: Thông tin không muốn hiển thị vui lòng để trống, chọn nút ẩn hoặc xoá khung",
   "close_multi_select_guide": "Nhấp tắt/ Chỉ được chọn 1 option trong khung",
-  "open_multi_select_guide": "Nhấp mở/ Được chọn nhiều option trong khung"
+  "open_multi_select_guide": "Nhấp mở/ Được chọn nhiều option trong khung",
+  "content": "Nội dung",
+  "fill_information_of_title": "Điền nội dung thông tin của phần tiêu đề",
+  "topic_name": "Tên chủ đề",
+  "add_topic": "Thêm chủ đề",
+  "create_information_category": "Tạo danh mục thông tin",
+  "information_category": "Danh mục thông tin",
+  "demo_introduction": "Nước Cam với vị chua ngọt, chứa nhiều vitamin C, khoáng chất, chất chống oxy hoá. Uống nước ép Cam mỗi ngày giúp cơ thể tràn đầy năng lượng, hệ miễn dịch khoẻ mạnh, cân bằng huyết áp.",
+  "add_to_cart": "Thêm vào giỏ hàng",
+  "extra_note": "Ghi chú thêm",
+  "fill_ingredient_product_content": "Điền nội dung thành phần sản phẩm"
 }

@@ -1,13 +1,15 @@
 import { ActionIcon, Button, Flex, Image, Paper, Stack, Text } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { useStyles } from './index.styles'
+import { useTranslation } from 'react-i18next'
 import { AddFillIcon, DeleteIcon } from '@/assets/icon'
 import { ProductCardProps } from '@/pages/products/type'
 import { camelToSnakeCase } from '@/utils/string-utils'
+import { useStyles } from './index.styles'
 
 export const ProductCard = ({ forNewProduct = false, productSubType, productOverview }: ProductCardProps) => {
   const navigation = useNavigate()
   const { classes } = useStyles()
+  const { t } = useTranslation()
   const onCreateNewProduct = () => {
     if (forNewProduct && productSubType) {
       navigation(`/products/juice/${camelToSnakeCase(productSubType)}/create-new`)
@@ -32,7 +34,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, productOver
               <AddFillIcon />
             </ActionIcon>
           </Stack>
-          <Text fz={14}>Thêm sản phẩm</Text>
+          <Text fz={14}>{t('add_product')}</Text>
         </>
       ) : (
         <>
@@ -53,7 +55,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, productOver
               <Text className={classes.price_text}>45.000đ</Text>
             </Flex>
             <Button className={classes.price_button} onClick={onEditProduct}>
-              Chỉnh
+              {t('edit')}
             </Button>
           </Stack>
         </>

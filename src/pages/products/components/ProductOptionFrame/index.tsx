@@ -19,7 +19,7 @@ export const ProductOptionFrame = ({
   title,
   defaultPlaceholder,
   canSelectMultiOptions = false,
-  hasPrice = false,
+  isOption = false,
   isActive = true
 }: ProductOptionFrameProps) => {
   const { t } = useTranslation()
@@ -62,7 +62,7 @@ export const ProductOptionFrame = ({
           </Flex>
         </Flex>
         <Flex>
-          <ActionIcon onClick={toggleSelectMulti} sx={{ marginRight: '10px'}}>
+          <ActionIcon onClick={toggleSelectMulti} sx={{ marginRight: '10px' }}>
             {canSelectMultiOptionsTest ? <SelectOptionDarkIcon /> : <SelectOptionLightIcon />}
           </ActionIcon>
           <Flex gap={12} direction={'column'} sx={{ flex: 1 }}>
@@ -75,7 +75,7 @@ export const ProductOptionFrame = ({
                 onChange={onChangeOption}
                 disabled={!isActiveTest}
               />
-              {hasPrice ? (
+              {isOption ? (
                 <NumberInput
                   value=''
                   placeholder='Giá'

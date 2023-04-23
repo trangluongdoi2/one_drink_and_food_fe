@@ -12,44 +12,44 @@ export const ProductSalesFrameFrom = () => {
     {
       title: t('main_ingredient'),
       field: 'mainIngredient',
-      content: '',
-      hasPrice: false
+      value: '',
+      isOption: false
     },
     {
       title: t('choose_size'),
       field: 'size',
-      content: '',
-      hasPrice: true
+      value: '',
+      isOption: true
     },
     {
       title: t('ice_content'),
       field: 'iceContent',
-      content: '',
-      hasPrice: true
+      value: '',
+      isOption: true
     },
     {
       title: t('sugar_content'),
       field: 'sugarContent',
-      content: '',
-      hasPrice: true
+      value: '',
+      isOption: true
     }
   ]
   return (
-    <Paper className={`${classes.container} create-new-product-card__container`}>
+    <Paper className='create-new-product-card__container'>
       <Text className={classes.title}>{t('sale_frame')}</Text>
       <Divider />
       {baseSalesList.map((option: Record<string, any>, index: number) => (
         <ProductOptionFrame
           key={index}
           title={option.title}
-          hasPrice={option.hasPrice}
+          isOption={option.isOption}
           defaultPlaceholder={t('fill_selected_information')}
         />
       ))}
-      <ActionIcon className={classes.titleAdd}>
+      <ActionIcon className='title-add'>
         <Text>+{t('add_option_frame')}</Text>
       </ActionIcon>
-      <ActionIcon className={classes.titleAdd}>
+      <ActionIcon className='title-add'>
         <Text>+{t('add_content_frame')}</Text>
       </ActionIcon>
       <Stack sx={{ marginTop: '20px' }}>

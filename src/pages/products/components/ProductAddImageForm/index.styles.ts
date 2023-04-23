@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
+  containerDisabled: {
+    opacity: '0.3',
+    pointerEvents: 'none'
+  },
   title: {
     fontWeight: 700,
     fontSize: '14px',
@@ -12,7 +16,7 @@ export const useStyles = createStyles(() => ({
     background: '#ffffff',
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, 100px)',
-    gridTemplateRows: '100px 100px',
+    gridTemplateRows: 'auto auto',
     gap: '10px'
   },
   child: {
@@ -21,7 +25,9 @@ export const useStyles = createStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
+    width: '100px',
+    height: '100px'
   },
   iconMenu: {
     position: 'absolute',

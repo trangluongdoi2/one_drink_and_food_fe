@@ -1,9 +1,6 @@
 import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
-  container: {
-    // height: '1051px'
-  },
   child: {
     flex: 1
   },
@@ -21,16 +18,6 @@ export const useStyles = createStyles(() => ({
     '&:active': {
       transform: 'translateY(0) !important'
     }
-  },
-  titleAdd: {
-    width: '100%',
-    justifyContent: 'flex-start',
-    fontWeight: 700,
-    fontSize: '14px',
-    lineHeight: '17px',
-    textTransform: 'uppercase',
-    color: '#000000',
-    marginTop: '20px'
   },
   contentNotice: {
     fontStyle: 'italic',
