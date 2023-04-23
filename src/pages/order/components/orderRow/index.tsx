@@ -8,6 +8,8 @@ import { EditRow } from './EditRow'
 import { ViewRow } from './ViewRow'
 import { OrderProps } from '@/types/order'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
+import { useDisclosure } from '@mantine/hooks'
+import OrderDetail from '../../features/orderDetail'
 
 interface IOrderRow {
   row: OrderProps
@@ -16,6 +18,8 @@ interface IOrderRow {
 
 export const OrderRow = ({ row, selectedRow }: IOrderRow) => {
   const { dispatch } = useOrderContext()
+  const [opened, { open, close }] = useDisclosure(false)
+
   const [edit, setEdit] = useState<boolean>(false)
   const { fireBaseId: id } = row
   const form = useUserForm({
@@ -59,12 +63,19 @@ export const OrderRow = ({ row, selectedRow }: IOrderRow) => {
   return (
     <Fragment>
       <UserFormProvider form={form}>
+        <OrderDetail opened={opened} close={close} />
         {edit ? (
           <form>
             <EditRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
           </form>
         ) : (
-          <ViewRow edit={edit} setEdit={setEdit} isSelected={isSelected} handleSelectedRow={handleSelectedRow} />
+          <ViewRow
+            edit={edit}
+            setEdit={setEdit}
+            isSelected={isSelected}
+            handleSelectedRow={handleSelectedRow}
+            onOpenModal={open}
+          />
         )}
       </UserFormProvider>
     </Fragment>

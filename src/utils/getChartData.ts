@@ -15,7 +15,7 @@ export const getChartData = (select: number) => {
       return {
         datasets: [
           {
-            data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
+            data: [282, 350, 411, 502, 635, 800, 647, 142, 370, 527],
             label: 'All',
             borderColor: '#3e95cd',
             fill: false
@@ -26,7 +26,7 @@ export const getChartData = (select: number) => {
       return {
         datasets: [
           {
-            data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
+            data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 800],
             label: 'All',
             borderColor: '#3e95cd',
             fill: false
@@ -37,7 +37,7 @@ export const getChartData = (select: number) => {
       return {
         datasets: [
           {
-            data: [40, 20, 100, 160, 240, 38, 574, 167, 508, 784],
+            data: [40, 20, 100, 160, 240, 38, 574, 167, 800, 784],
             label: 'All',
             borderColor: '#3e95cd',
             fill: false
@@ -48,7 +48,7 @@ export const getChartData = (select: number) => {
       return {
         datasets: [
           {
-            data: [40, 270, 10, 190, 234, 16, 240, 38, 74, 167, 508, 784],
+            data: [40, 270, 10, 190, 234, 16, 240, 38, 74, 167, 508, 800],
             label: 'All',
             borderColor: '#3e95cd',
             fill: false

@@ -6,7 +6,6 @@ import { getMemberShip } from '@/utils/getMembership'
 import { Checkbox, ActionIcon, Text, Stack, Flex, Image, TextInput, MantineTheme, Select } from '@mantine/core'
 import { Dispatch, SetStateAction } from 'react'
 import { useStyles } from './index.style'
-import { IconChevronDown } from '@tabler/icons-react'
 
 interface ViewRowProps {
   row: UserProps

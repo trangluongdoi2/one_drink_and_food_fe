@@ -9,9 +9,10 @@ interface ViewedRowProps {
   handleSelectedRow: () => void
   edit: boolean
   setEdit: Dispatch<SetStateAction<boolean>>
+  onOpenModal: () => void
 }
 
-export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: ViewedRowProps) => {
+export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit, onOpenModal }: ViewedRowProps) => {
   const form = useUserFormContext()
 
   return (
@@ -46,7 +47,14 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit }: Viewed
           borderRadius: 10
         }}
       >
-        <Flex gap={10} align='center' justify='left' p={20} sx={{ width: '100%' }}>
+        <Flex
+          gap={10}
+          align='center'
+          justify='left'
+          p={20}
+          sx={{ width: '100%', cursor: 'pointer' }}
+          onClick={() => onOpenModal()}
+        >
           {/* ---------------- ID ---------- */}
           <Stack sx={{ width: '15%' }}>
             <Text fw='bolder' lh={1.4}>
