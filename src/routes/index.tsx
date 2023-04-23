@@ -16,6 +16,7 @@ import { ProductCreateNew, ProductJuiceGrid } from '@/pages/products'
 import { ORDER_STATUS } from '@/types/order'
 import OrderContextProvider from '@/context/OrderContext/OrderContext'
 import ProductList from '@/pages/products/views/ProductList'
+import ProductContextProvider from '@/context/ProductContext/ProductContext'
 
 export const router = createBrowserRouter([
   {
@@ -165,11 +166,19 @@ export const router = createBrowserRouter([
               },
               {
                 path: '/products/juice/juice-glass/create-new',
-                element: <ProductCreateNew />
+                element: (
+                  <ProductContextProvider>
+                    <ProductCreateNew />
+                  </ProductContextProvider>
+                )
               },
               {
                 path: '/products/juice/juice-bottled/create-new',
-                element: <ProductCreateNew />
+                element: (
+                  <ProductContextProvider>
+                    <ProductCreateNew />
+                  </ProductContextProvider>
+                )
               },
               {
                 path: '/products/smoothy',

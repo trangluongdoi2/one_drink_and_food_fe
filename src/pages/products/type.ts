@@ -22,6 +22,8 @@ export interface ProductOptionFrameProps {
   title?: string
   defaultPlaceholder: string
   isOption?: boolean
+  field: string
+  updateProductOption: (data: any) => void
 }
 
 export interface ProductContentFrame {

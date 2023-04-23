@@ -42,32 +42,25 @@ export const useStyles = createStyles(() => ({
       fill: '#c4c4c4c4'
     }
   },
-  input: {
-    display: 'none'
+  add__zone: {
+    borderRadius: '50%',
+    border: 'none',
+    background: 'transparent'
   },
-  moreOption: {
-    marginTop: '8px'
+  image_preview: {
+    position: 'absolute',
+    top: 0,
+    objectFit: 'contain',
+    zIndex: 2,
+    borderRadius: '10px'
   },
-  inputMotionTime: {
-    background: '#f5f5f5f5',
-    borderRadius: '10px',
-    '&:focus': {
-      borderColor: '#000000'
-    }
-  },
-  rightSection: {
-    display: 'none'
-  },
-  titleMotionTime: {
-    marginBottom: '0'
-  },
-  iconToggle: {
-    width: '40px',
-    height: '20px',
-    ':hover': {
-      background: 'transparent'
-    },
-    ':active': {
+  icon__remove: {
+    position: 'absolute',
+    zIndex: 3,
+    right: 5,
+    top: 5,
+    background: '#ffffff',
+    '&:active': {
       transform: 'translateY(0)'
     }
   }
