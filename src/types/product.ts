@@ -14,10 +14,10 @@ enum SizeOptions {
 
 export interface ProductProps {
   fireBaseId: string
-  amount: number
-  code: string
-  group: ProductGroup
-  mlAndPrice: {
+  amount?: number
+  code?: string
+  group?: ProductGroup
+  mlAndPrice?: {
     price: {
       sale: number
       import: number
@@ -25,6 +25,14 @@ export interface ProductProps {
     ml: SizeOptions
   }[]
   name: string
-  photo: string[]
-  type: string
+  type?: string
+}
+
+export interface ProductDetailProps extends Omit<ProductProps, 'fireBaseId'> {
+  // field: string
+  prices: number
+  introduction?: string
+  auxiliaryName?: string
+  photos: string[]
+  typicalFunction?: string[]
 }

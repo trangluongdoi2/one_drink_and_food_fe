@@ -5,6 +5,10 @@ export const useStyles = createStyles(() => ({
     height: '135px',
     padding: '15px 0'
   },
+  ['container__input--deactive']: {
+    opacity: 0.5,
+    pointerEvents: 'none'
+  },
   title: {
     fontWeight: 700,
     fontSize: '14px',

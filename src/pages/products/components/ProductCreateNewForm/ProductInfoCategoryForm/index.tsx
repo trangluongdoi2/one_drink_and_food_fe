@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ActionIcon, Divider, Flex, Paper, Text } from '@mantine/core'
+import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { useTranslation } from 'react-i18next'
 import { AppInput } from '@/components/input'
@@ -14,10 +14,16 @@ export const ProductInfoCategoryForm = () => {
   const toggleActiveUpload = (value: boolean) => {
     setIsActive(value)
   }
+
+  const updateInput = (data: any) => {
+    // console.log(data, 'data')
+  }
+
+  const updateFilePaths = (data: string[]) => {
+    // console.log('updateFilePaths 1', data)
+  }
   return (
     <Paper className={`create-new-product-card__container`}>
-      <Text className={classes.title}>{t('sale_frame')}</Text>
-      <Divider />
       <Flex justify={'space-between'} align={'center'} sx={{ marginTop: '15px', marginBottom: '10px' }}>
         <Flex align={'center'} columnGap={12.5}>
           <ActionIcon size={20}>
@@ -35,8 +41,13 @@ export const ProductInfoCategoryForm = () => {
           </ActionIcon>
         </Flex>
       </Flex>
-      <ProductAddImageForm limitQuantity={4} hiddenTitle={true} isActive={isActive} />
-      <AppInput name={t('content')} placeHolder={t('fill_information_of_title')} isTextArea={true} />
+      <ProductAddImageForm updateFilePaths={updateFilePaths} limitQuantity={4} hiddenTitle={true} isActive={isActive} />
+      <AppInput
+        title={t('content') as string}
+        placeholder={t('fill_information_of_title')}
+        field='content'
+        updateInput={updateInput}
+      />
       <ActionIcon className='title-add'>
         <Text>+{t('add_topic')}</Text>
       </ActionIcon>

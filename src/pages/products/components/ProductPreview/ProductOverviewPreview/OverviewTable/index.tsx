@@ -2,10 +2,13 @@ import { Box, Button, Flex, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { useStyles } from './index.styles'
 import { ExtraNoteIcon } from '@/assets/icon'
+import { useProductContext } from '@/context/ProductContext/ProductContext'
+import { useEffect } from 'react'
 
 export const OverviewTable = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
+  const { name } = useProductContext()
   const baseSalesList = [
     {
       title: t('main_ingredient'),
@@ -44,7 +47,7 @@ export const OverviewTable = () => {
       isOption: false
     }
   ]
-  // data is get from context??
+
   return (
     <Flex gap={6} direction={'column'}>
       <Box className={classes.container}>

@@ -34,6 +34,10 @@ export const ProductSalesFrameFrom = () => {
       isOption: true
     }
   ]
+
+  const updateProductOption = () => {
+    console.log('updateProductOption')
+  }
   return (
     <Paper className='create-new-product-card__container'>
       <Text className={classes.title}>{t('sale_frame')}</Text>
@@ -41,9 +45,11 @@ export const ProductSalesFrameFrom = () => {
       {baseSalesList.map((option: Record<string, any>, index: number) => (
         <ProductOptionFrame
           key={index}
+          field={option.field}
           title={option.title}
           isOption={option.isOption}
           defaultPlaceholder={t('fill_selected_information')}
+          updateProductOption={updateProductOption}
         />
       ))}
       <ActionIcon className='title-add'>

@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react'
-import { ActionIcon, Divider, Flex, Input, NumberInput, Paper, Stack, Text } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import { ActionIcon, Flex, Paper, Stack, Text } from '@mantine/core'
 import {
   DeleteIcon,
   EditIconDark,
@@ -14,33 +14,48 @@ import { useStyles } from './index.styles'
 import { ProductOptionFrameProps } from '@/pages/products/type'
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { useTranslation } from 'react-i18next'
+import { AppInput } from '@/components/input'
 
 export const ProductOptionFrame = ({
   title,
   defaultPlaceholder,
   canSelectMultiOptions = false,
   isOption = false,
-  isActive = true
+  field
 }: ProductOptionFrameProps) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const [canSelectMultiOptionsTest, setCanSelectMultiOptionsTest] = useState(true)
-  const [isActiveTest, setIsActiveTest] = useState(true)
+  const [isActive, setIsActive] = useState(true)
+  const [optionData, setOptionData] = useState({ info: '', price: 0 })
   const toggleSelectMulti = () => {
     setCanSelectMultiOptionsTest(!canSelectMultiOptionsTest)
   }
-  const onChangeOption = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event?.target.value, 'onChangeOption')
-  }
-  const onChangePrice = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event?.target.value, 'onChangePrice')
-  }
+
   const onToggleStatus = (status: boolean) => {
-    setIsActiveTest(status)
+    setIsActive(status)
   }
   const removeOption = () => {
     console.log('removeOption')
   }
+  const updateInput = (data: { value: string | number; field: string }) => {
+    if (typeof data === 'string') {
+      setOptionData({
+        ...optionData,
+        info: data
+      })
+      return
+    } else if (typeof data === 'number') {
+      setOptionData({
+        ...optionData,
+        price: data
+      })
+    }
+  }
+
+  useEffect(() => {
+    console.log(optionData, 'optionData')
+  }, [optionData])
   return (
     <Paper className={classes.container}>
       <Stack>
@@ -55,37 +70,36 @@ export const ProductOptionFrame = ({
             </ActionIcon>
           </Flex>
           <Flex align={'center'}>
-            <ToggleButon onToggleStatus={onToggleStatus} isActive={isActiveTest} />
+            <ToggleButon onToggleStatus={onToggleStatus} isActive={isActive} />
             <ActionIcon>
               <DeleteIcon />
             </ActionIcon>
           </Flex>
         </Flex>
-        <Flex>
-          <ActionIcon onClick={toggleSelectMulti} sx={{ marginRight: '10px' }}>
+        <Flex className={isActive ? '' : `${classes['container__input--deactive']}`}>
+          <ActionIcon onClick={toggleSelectMulti} sx={{ paddingTop: '5px', marginRight: '10px' }}>
             {canSelectMultiOptionsTest ? <SelectOptionDarkIcon /> : <SelectOptionLightIcon />}
           </ActionIcon>
           <Flex gap={12} direction={'column'} sx={{ flex: 1 }}>
             <Flex gap={12} align={'center'}>
-              <Input
-                value=''
-                placeholder={defaultPlaceholder}
-                classNames={{ input: classes.input }}
-                sx={{ flex: 1 }}
-                onChange={onChangeOption}
-                disabled={!isActiveTest}
-              />
-              {isOption ? (
-                <NumberInput
-                  value=''
-                  placeholder='Giá'
-                  sx={{ width: '104px' }}
-                  classNames={{ input: classes.input, rightSection: classes.rightSection }}
-                  onChange={() => onChangePrice}
-                  disabled={!isActiveTest}
+              <div style={{ flex: '1' }}>
+                <AppInput
+                  field={field}
+                  placeholder={defaultPlaceholder}
+                  updateInput={updateInput}
+                  hiddenToggleIcon={true}
                 />
-              ) : (
-                <></>
+              </div>
+              {isOption && (
+                <div style={{ width: '104px' }}>
+                  <AppInput
+                    typeInput='number'
+                    field={field}
+                    placeholder={t('prices')}
+                    hiddenToggleIcon={true}
+                    updateInput={updateInput}
+                  />
+                </div>
               )}
               <ActionIcon onClick={removeOption}>
                 <CloseButton />

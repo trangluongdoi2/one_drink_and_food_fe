@@ -1,24 +1,35 @@
-// import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 // const { t } = useTranslation()
 
-// const baseSalesList = [
-//   {
-//     title: t('main_ingredient'),
-//     value: 'mainIngredient'
-//   },
-//   {
-//     title: t('choose_size'),
-//     value: 'size'
-//   },
-//   {
-//     title: t('ice_content'),
-//     value: 'iceContent'
-//   },
-//   {
-//     title: t('ice_content'),
-//     value: 'sugarContent'
-//   }
-// ]
+const test = [
+  {
+    title: 'Title 1',
+    field: 'mainIngredient'
+  },
+  {
+    title: 'Title 2',
+    field: 'size',
+    value: [
+      {
+        info: 'Info 1',
+        price: 1000
+      },
+      {
+        info: 'Info 2',
+        price: 2000
+      }
+    ],
+    isOption: true
+  },
+  {
+    title: 'Title 3',
+    field: 'iceContent'
+  },
+  {
+    title: 'Title 4',
+    field: 'sugarContent'
+  }
+]
 
-// export { baseSalesList }
-export {}
+export { test }
+// export {}

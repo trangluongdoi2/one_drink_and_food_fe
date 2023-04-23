@@ -3,17 +3,26 @@ import { useTranslation } from 'react-i18next'
 import { AddCircleLightIcon, DoNotDisturbLightIcon } from '@/assets/icon'
 import { useStyles } from './index.styles'
 import { OverviewTable } from './OverviewTable'
+import { useProductContext } from '@/context/ProductContext/ProductContext'
 
 export const ProductOverviewPreview = () => {
-  const { t } = useTranslation()
   const { classes } = useStyles()
+  const { t } = useTranslation()
+  const { name, auxiliaryName, prices } = useProductContext()
+
   return (
     <Stack className={classes.container} spacing={0}>
-      <Text className={classes['text__name--empty']}>{t('product_name')}</Text>
-      <Text className={classes['text__auxiliary--empty']}>{t('fill_product_auxiliary_name')}</Text>
+      <Text className={name ? classes.text__name : classes['text__name--empty']}>
+        {name ? name : t('product_name')}
+      </Text>
+      <Text className={auxiliaryName ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
+        {auxiliaryName ? auxiliaryName : t('fill_product_auxiliary_name')}
+      </Text>
       <Flex justify={'space-between'} align={'center'}>
         <Flex justify={'space-between'} align={'center'} columnGap={7}>
-          <Text className={classes['text__auxiliary--empty']}>{t('prices')}</Text>
+          <Text className={prices ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
+            {prices ? prices : t('prices')}
+          </Text>
           <Text className={classes.text__price}>({t('include_VAT')})</Text>
         </Flex>
         <Flex align={'center'} rowGap={15}>
