@@ -11,7 +11,7 @@ export const ProductOverviewPreview = () => {
   const { name, auxiliaryName, prices } = useProductContext()
 
   return (
-    <Stack className={classes.container} spacing={0}>
+    <Stack spacing={0}>
       <Text className={name ? classes.text__name : classes['text__name--empty']}>
         {name ? name : t('product_name')}
       </Text>

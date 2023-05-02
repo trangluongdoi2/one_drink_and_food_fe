@@ -40,5 +40,6 @@
   "demo_introduction": "Nước Cam với vị chua ngọt, chứa nhiều vitamin C, khoáng chất, chất chống oxy hoá. Uống nước ép Cam mỗi ngày giúp cơ thể tràn đầy năng lượng, hệ miễn dịch khoẻ mạnh, cân bằng huyết áp.",
   "add_to_cart": "Thêm vào giỏ hàng",
   "extra_note": "Ghi chú thêm",
-  "fill_ingredient_product_content": "Điền nội dung thành phần sản phẩm"
+  "fill_ingredient_product_content": "Điền nội dung thành phần sản phẩm",
+  "option": "Lựa chọn {{index}}"
 }

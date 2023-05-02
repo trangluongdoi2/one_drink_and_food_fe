@@ -47,6 +47,24 @@ export const useStyles = createStyles(() => ({
     fontSize: '8px',
     lineHeight: '10px'
   },
+  'text__content-price': {
+    fontWeight: 700,
+    fontSize: '8px',
+    lineHeight: '10px'
+  },
+  'label-wrapper': {
+    justifyContent: 'center'
+  },
+  'checkbox-input': {
+    borderRadius: '50%',
+    '&:checked': {
+      background: '#000000',
+      borderColor: '#000000'
+    }
+  },
+  'checkbox-input__label-wrapper': {
+    justifyContent: 'center'
+  },
   'text__add-cart': {
     color: '#ffffff',
     fontSize: '10px',

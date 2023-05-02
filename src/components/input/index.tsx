@@ -114,9 +114,13 @@ export const AppInput = ({
     updateInput(data)
   }
 
+  const test = (event: any) => {
+    console.log(event, 'event')
+  }
+
   return (
     <UserFormProvider form={form}>
-      <form>
+      <form onSubmit={form.onSubmit(() => test)}>
         <Box>
           {title && (
             <Flex justify='space-between' align={'flex-end'} sx={{ marginTop: '20px', marginBottom: '10px' }}>

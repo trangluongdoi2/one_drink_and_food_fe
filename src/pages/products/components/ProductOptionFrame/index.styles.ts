@@ -2,7 +2,7 @@ import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
   container: {
-    height: '135px',
+    // height: '135px',
     padding: '15px 0'
   },
   ['container__input--deactive']: {

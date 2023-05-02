@@ -1,3 +1,4 @@
+import { ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
 export interface ProductState {
   name: string
   auxiliaryName?: string
@@ -5,16 +6,21 @@ export interface ProductState {
   introduction?: string
   photos?: { filePaths: string[]; canMove: boolean; motionDelays: number | null }
   typicalFunction?: string[]
+  saleOptions: Array<ProductSaleOptionsContent>
 }
 
 export enum ProductType {
-  SET_NAME= 'SET_NAME',
+  SET_NAME = 'SET_NAME',
   SET_AUXILIARY_NAME = 'SET_AUXILIARY_NAME',
   SET_PRICES = 'SET_PRICES',
   SET_INTRODUCTION = 'SET_INTRODUCTION',
   SET_TYPICAL_FUNCTION = 'SET_TYPICAL_FUNCTION',
   SET_PHOTOS = 'SET_PHOTOS',
-  SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS'
+  SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
+  SET_SALE_OPTIONS = 'SET_SALE_OPTIONS',
+  ADD_SALE_OPTION = 'ADD_SALE_OPTION',
+  UPDATE_SALE_OPTION = 'UPDATE_SALE_OPTION',
+  SET_SELECT_MULTI_OPTIONS = 'SET_SELECT_MULTI_OPTIONS'
 }
 
 export interface SetName {
@@ -52,6 +58,35 @@ export interface SetMotionPhotos {
   payload: { canMove: boolean; motionDelays: number }
 }
 
+export interface SetSaleOptions {
+  type: ProductType.SET_SALE_OPTIONS
+  payload: {
+    data: ProductSaleOptionsContent
+    index: number
+  }
+}
+
+export interface AddSaleOption {
+  type: ProductType.ADD_SALE_OPTION
+  payload: ProductSaleOptionsContent
+}
+
+export interface UpdateSaleOption {
+  type: ProductType.UPDATE_SALE_OPTION
+  payload: {
+    data: SaleOptionValue[]
+    index: number
+  }
+}
+
+export interface SetSelectMultiOption {
+  type: ProductType.SET_SELECT_MULTI_OPTIONS
+  payload: {
+    data: boolean
+    index: number
+  }
+}
+
 export type ProductTypeAction =
   | SetName
   | SetAuxiliaryName
@@ -60,3 +95,7 @@ export type ProductTypeAction =
   | SetTypicalFunction
   | SetPhotos
   | SetMotionPhotos
+  | SetSaleOptions
+  | AddSaleOption
+  | UpdateSaleOption
+  | SetSelectMultiOption

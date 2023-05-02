@@ -1,9 +1,6 @@
 import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
-  container: {
-    // gap: '15px'
-  },
   'text__name--empty': {
     fontWeight: 700,
     fontSize: '20px',

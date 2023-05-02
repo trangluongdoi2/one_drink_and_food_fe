@@ -22,24 +22,25 @@ export interface ProductOptionFrameProps {
   title?: string
   defaultPlaceholder: string
   isOption?: boolean
-  field: string
-  updateProductOption: (data: any) => void
+  field?: string
+  multiOptions?: boolean
+  updateSelectMultiOption: (data: boolean) => void
+  updateProductOption: (data: ProductSaleOptionsContent) => void
 }
 
-export interface ProductContentFrame {
-  title: string
-  field: string
-  value?: string
-  price?: number | string
-  isOption?: boolean
+export interface ProductSaleOptionsContent {
+  title?: string
+  field?: string
+  value: Array<SaleOptionValue>
+  isOption: boolean
+  canSelectMultiOptions?: boolean
+  multiOptions?: boolean
 }
 
-// export interface ProductOption {
-//   title: string
-//   field: string
-//   value?: string
-//   price?: number | string
-// }
+export interface SaleOptionValue {
+  info: string | number
+  price?: number
+}
 
 export enum JuiceType {
   JUICE_BOTTLED = 'juiceBottled',

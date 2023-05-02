@@ -1,4 +1,6 @@
+import { ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
 import {
+  AddSaleOption,
   ProductType,
   SetAuxiliaryName,
   SetIntroductionContent,
@@ -6,7 +8,10 @@ import {
   SetName,
   SetPhotos,
   SetPrices,
-  SetTypicalFunction
+  SetSaleOptions,
+  SetSelectMultiOption,
+  SetTypicalFunction,
+  UpdateSaleOption
 } from './type'
 
 export const setName = (value: string): SetName => ({
@@ -41,5 +46,25 @@ export const setPhotos = (value: string[]): SetPhotos => ({
 
 export const setMotionPhotos = (value: { canMove: boolean; motionDelays: number }): SetMotionPhotos => ({
   type: ProductType.SET_MOTION_PHOTOS,
+  payload: value
+})
+
+export const setProductSaleOptions = (value: { data: ProductSaleOptionsContent; index: number }): SetSaleOptions => ({
+  type: ProductType.SET_SALE_OPTIONS,
+  payload: value
+})
+
+export const addProductSaleOption = (value: ProductSaleOptionsContent): AddSaleOption => ({
+  type: ProductType.ADD_SALE_OPTION,
+  payload: value
+})
+
+export const updateSaleOption = (value: { data: SaleOptionValue[]; index: number }): UpdateSaleOption => ({
+  type: ProductType.UPDATE_SALE_OPTION,
+  payload: value
+})
+
+export const setSelectMultiOption = (value: { data: boolean; index: number }): SetSelectMultiOption => ({
+  type: ProductType.SET_SELECT_MULTI_OPTIONS,
   payload: value
 })
