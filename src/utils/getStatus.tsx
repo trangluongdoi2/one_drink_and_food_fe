@@ -5,19 +5,34 @@ const { PAID, PAYMENTING, PREPARING, CANCEL, SHIPPING } = ORDER_STATUS
 export const getStatus = (type: string) => {
   switch (type) {
     case PAID:
-      return <PaidIcon />
+      return {
+        title: 'Đã hoàn tất',
+        icon: <PaidIcon />
+      }
 
     case PAYMENTING:
-      return <PaymentingIcon />
+      return {
+        title: 'Chờ thanh toán',
+        icon: <PaymentingIcon />
+      }
 
     case PREPARING:
-      return <PreparingIcon />
+      return {
+        title: 'Đang thực hiện',
+        icon: <PreparingIcon />
+      }
 
     case CANCEL:
-      return <CancelIcon />
+      return {
+        title: 'Đã huỷ',
+        icon: <CancelIcon />
+      }
 
     case SHIPPING:
-      return <ShippingIcon />
+      return {
+        title: 'Đang giao',
+        icon: <ShippingIcon />
+      }
 
     default:
       return null

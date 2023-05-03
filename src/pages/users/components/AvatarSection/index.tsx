@@ -62,7 +62,7 @@ const AvatarSection = () => {
                 radius={50}
                 styles={{
                   image: {
-                    border: '4px solid #ccc'
+                    border: '2px solid #ccc'
                   }
                 }}
                 alt='default'
@@ -75,7 +75,7 @@ const AvatarSection = () => {
                 radius={50}
                 styles={{
                   image: {
-                    border: '4px solid #ccc'
+                    border: '2px solid #ccc'
                   }
                 }}
                 alt='avatar'

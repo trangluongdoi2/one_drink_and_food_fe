@@ -80,7 +80,7 @@ export const EditRow = ({ handleSelectedRow, isSelected, edit, setEdit }: EditRo
             <TextInput className={classes.td} name='receivedDate' {...form.getInputProps('receivedDate')} />
           </Stack>
           <Stack sx={{ width: '10%' }}>
-            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)}</Text>
+            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)?.icon}</Text>
           </Stack>
 
           <Stack sx={{ width: '6%' }}>

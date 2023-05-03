@@ -95,7 +95,7 @@ export const ViewRow = ({ handleSelectedRow, isSelected, edit, setEdit, onOpenMo
 
           {/* ---------------- STATUS ---------- */}
           <Stack sx={{ width: '10%' }}>
-            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)}</Text>
+            <Text lh={1.4}>{getStatus(form.getInputProps('status').value)?.icon}</Text>
           </Stack>
 
           {/* ---------------- EDIT ---------- */}

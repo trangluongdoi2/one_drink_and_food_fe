@@ -72,7 +72,7 @@ export const navConfig = [
     links: [{ label: 'Danh sách tin tức', link: '/news/list' }]
   },
   {
-    label: 'Mã khuyến mãi',
+    label: 'Khuyến mãi',
     icon: CouponIcon,
     active: ActiveCouponIcon,
     links: [{ label: 'Danh sách khuyến mãi', link: '/coupons/list' }]

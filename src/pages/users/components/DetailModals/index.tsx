@@ -8,6 +8,7 @@ import CouponPanel from '../CouponPanel'
 import GiftPanel from '../GiftPanel'
 import AccountPanel from '../AccountPanel'
 import { tabList } from '@/constants/tabList'
+import HistoryPanel from '../HistoryPanel'
 
 interface DetailModalProps {
   opened: boolean
@@ -70,7 +71,9 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
           <Tabs.Panel value='member'>MEMBER</Tabs.Panel>
 
           {/* ---------- HISTORY ------------- */}
-          <Tabs.Panel value='history'>Second panel</Tabs.Panel>
+          <Tabs.Panel value='history'>
+            <HistoryPanel />
+          </Tabs.Panel>
 
           {/* ---------- GIFT ------------- */}
           <Tabs.Panel value='gift' sx={{ position: 'relative' }}>
