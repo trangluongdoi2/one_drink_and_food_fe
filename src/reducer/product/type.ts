@@ -1,4 +1,4 @@
-import { ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
+import { ProductInfos, ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
 export interface ProductState {
   name: string
   auxiliaryName?: string
@@ -7,6 +7,7 @@ export interface ProductState {
   photos?: { filePaths: string[]; canMove: boolean; motionDelays: number | null }
   typicalFunction?: string[]
   saleOptions: Array<ProductSaleOptionsContent>
+  infos: Array<ProductInfos>
 }
 
 export enum ProductType {
@@ -20,7 +21,13 @@ export enum ProductType {
   SET_SALE_OPTIONS = 'SET_SALE_OPTIONS',
   ADD_SALE_OPTION = 'ADD_SALE_OPTION',
   UPDATE_SALE_OPTION = 'UPDATE_SALE_OPTION',
-  SET_SELECT_MULTI_OPTIONS = 'SET_SELECT_MULTI_OPTIONS'
+  SET_SELECT_MULTI_OPTIONS = 'SET_SELECT_MULTI_OPTIONS',
+  SET_PRODUCT_INFOS = 'SET_PRODUCT_INFOS',
+  ADD_PRODUCT_INFO = 'ADD_PRODUCT_INFO',
+  REMOVE_PRODUCT_INFO = 'REMOVE_PRODUCT_INFO',
+  SET_CONTENT_PRODUCT_INFO = 'SET_CONTENT_PRODUCT_INFO',
+  SET_PHOTOS_PRODUCT_INFO = 'SET_PHOTOS_PRODUCT_INFO',
+  SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO'
 }
 
 export interface SetName {
@@ -87,6 +94,49 @@ export interface SetSelectMultiOption {
   }
 }
 
+export interface SetProductInfos {
+  type: ProductType.SET_PRODUCT_INFOS
+  payload: {
+    data: ProductInfos
+    index: number
+  }
+}
+
+export interface AddProductInfo {
+  type: ProductType.ADD_PRODUCT_INFO
+  payload: ProductInfos
+}
+
+export interface RemoveProductInfo {
+  type: ProductType.REMOVE_PRODUCT_INFO
+  payload: number
+}
+
+export interface SetContentProductInfo {
+  type: ProductType.SET_CONTENT_PRODUCT_INFO
+  payload: {
+    data: string
+    field: string
+    index: number
+  }
+}
+
+export interface SetPhotosProductInfo {
+  type: ProductType.SET_PHOTOS_PRODUCT_INFO
+  payload: {
+    data: string[]
+    index: number
+  }
+}
+
+export interface SetEnabledProductInfo {
+  type: ProductType.SET_ENABLED_PRODUCT_INFO
+  payload: {
+    data: boolean
+    index: number
+  }
+}
+
 export type ProductTypeAction =
   | SetName
   | SetAuxiliaryName
@@ -99,3 +149,9 @@ export type ProductTypeAction =
   | AddSaleOption
   | UpdateSaleOption
   | SetSelectMultiOption
+  | SetProductInfos
+  | AddProductInfo
+  | RemoveProductInfo
+  | SetContentProductInfo
+  | SetPhotosProductInfo
+  | SetEnabledProductInfo

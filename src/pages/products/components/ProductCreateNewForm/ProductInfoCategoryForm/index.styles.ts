@@ -11,7 +11,11 @@ export const useStyles = createStyles(() => ({
     fontWeight: 700,
     fontSize: '14px',
     lineHeight: '17px',
-    color: '#000000'
+    color: '#000000',
+    maxWidth: '200px',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'break-spaces'
   },
   actionIcon: {
     width: '40px',
@@ -19,5 +23,15 @@ export const useStyles = createStyles(() => ({
     '&:active': {
       transform: 'translateY(0) !important'
     }
+  },
+  input__title: {
+    height: '28px',
+    minHeight: '28px',
+    maxHeight: '28px',
+    maxWidth: '200px',
+    borderRadius: '3px',
+    textTransform: 'uppercase',
+    padding: '1px 2px',
+    fontWeight: 700
   }
 }))

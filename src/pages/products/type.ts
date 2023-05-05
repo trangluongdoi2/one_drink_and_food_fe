@@ -42,6 +42,13 @@ export interface SaleOptionValue {
   price?: number
 }
 
+export interface ProductInfos {
+  title: string
+  infoPhotos: string[]
+  content: string
+  enable: boolean
+}
+
 export enum JuiceType {
   JUICE_BOTTLED = 'juiceBottled',
   JUICE_GLASS = 'juiceGlass'

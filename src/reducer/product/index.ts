@@ -47,6 +47,14 @@ export const initinalState: ProductState = {
       canSelectMultiOptions: true,
       value: []
     }
+  ],
+  infos: [
+    {
+      title: 'Tên chủ đề',
+      infoPhotos: [],
+      content: '',
+      enable: true
+    }
   ]
 }
 
@@ -121,6 +129,56 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       return {
         ...state,
         saleOptions
+      }
+    }
+    case ProductType.SET_PRODUCT_INFOS: {
+      const { index, data } = payload
+      return {
+        ...state,
+        infos: state.infos.splice(index, 1, data)
+      }
+    }
+    case ProductType.ADD_PRODUCT_INFO: {
+      const infos = clone(state.infos)
+      infos.push(payload)
+      return {
+        ...state,
+        infos
+      }
+    }
+    case ProductType.REMOVE_PRODUCT_INFO: {
+      const infos = clone(state.infos)
+      infos.splice(payload, 1)
+      return {
+        ...state,
+        infos
+      }
+    }
+    case ProductType.SET_CONTENT_PRODUCT_INFO: {
+      const { index, data, field } = payload
+      const infos = clone(state.infos)
+      infos[index][field] = data
+      return {
+        ...state,
+        infos
+      }
+    }
+    case ProductType.SET_PHOTOS_PRODUCT_INFO: {
+      const { index, data } = payload
+      const infos = clone(state.infos)
+      infos[index].infoPhotos = [...data]
+      return {
+        ...state,
+        infos
+      }
+    }
+    case ProductType.SET_ENABLED_PRODUCT_INFO: {
+      const { index, data } = payload
+      const infos = clone(state.infos)
+      infos[index].enable = data
+      return {
+        ...state,
+        infos
       }
     }
     default:

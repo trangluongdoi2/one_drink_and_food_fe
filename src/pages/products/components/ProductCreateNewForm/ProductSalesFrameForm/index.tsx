@@ -14,7 +14,6 @@ export const ProductSalesFrameFrom = () => {
   // console.log(saleOptions, 'saleOptions')
 
   const updateProductOption = (data: ProductSaleOptionsContent, index: number) => {
-    // console.log(data, 'data')
     dispatch(setProductSaleOptions({ data, index }))
   }
 

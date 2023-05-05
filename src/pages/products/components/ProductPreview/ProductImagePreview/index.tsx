@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionIcon, Flex, Stack, Text, Image, Box } from '@mantine/core'
-import { DoneOutlineIcon } from '@/assets/icon'
-import { useStyles } from './index.styles'
-import { useProductContext } from '@/context/ProductContext/ProductContext'
-import { useEffect, useRef, useState } from 'react'
-import { AppCarousel } from '@/components/carousel'
 import { EmblaOptionsType } from 'embla-carousel-react'
+import { ActionIcon, Flex, Stack, Text, Box } from '@mantine/core'
+import { DoneOutlineIcon } from '@/assets/icon'
+import { useProductContext } from '@/context/ProductContext/ProductContext'
+import { AppCarousel } from '@/components/carousel'
+import { useStyles } from './index.styles'
 
 export const ProductImagePreview = () => {
   const { t } = useTranslation()

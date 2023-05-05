@@ -12,10 +12,10 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
   const { classes } = useStyles()
 
   const convertTitle = (title: string) => {
-    switch(title) {
-      case (JuiceType.JUICE_BOTTLED):
+    switch (title) {
+      case JuiceType.JUICE_BOTTLED:
         return 'Nước ép đóng chai'
-      case (JuiceType.JUICE_GLASS):
+      case JuiceType.JUICE_GLASS:
         return 'Nước ép ly'
     }
   }
@@ -45,7 +45,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
               DANH MỤC | {convertTitle(title as string)}
             </Text>
             <ActionIcon onClick={onEditPorfolio}>
-              <EditIconLight/>
+              <EditIconLight />
             </ActionIcon>
           </Flex>
           <ActionIcon onClick={onDeletePorfolio}>

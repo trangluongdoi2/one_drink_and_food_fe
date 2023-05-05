@@ -8,31 +8,6 @@ export const useStyles = createStyles(() => ({
   container__content: {
     padding: '9px 14px'
   },
-  container__note: {
-    height: '24px',
-    display: 'flex'
-  },
-  note__icon: {
-    height: '22px',
-    background: '#e5e5e5',
-    borderRadius: '5px 0 0 5px',
-    pointerEvents: 'none'
-  },
-  note__text: {
-    padding: '7px 10px',
-    fontSize: '8px',
-    lineHeight: '10px',
-    color: '#c4c4c4'
-  },
-  'container__add-cart': {
-    height: '30px',
-    background: '#000000',
-    borderRadius: '50px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: 'none'
-  },
   text__title: {
     fontWeight: 700,
     fontSize: '8px',
@@ -57,21 +32,40 @@ export const useStyles = createStyles(() => ({
   },
   'checkbox-input': {
     borderRadius: '50%',
+    width: '12px',
+    height: '12px',
     '&:checked': {
-      background: '#000000',
+      background: '#ffffff',
       borderColor: '#000000'
+    },
+    '&:checked+.___ref-icon': {
+      color: '#000000',
+      background: '#000000',
+      transform: 'scale(0.5)'
+    }
+  },
+  'checkbox-inner': {
+    width: '12px',
+    height: '12px',
+    borderRadius: '50%'
+  },
+  'radio-input': {
+    width: '12px',
+    height: '12px',
+    '&:checked': {
+      background: '#ffffff',
+      borderColor: '#000000'
+    },
+    '&:checked+.___ref-icon': {
+      transform: 'scale(0.75)'
+    }
+  },
+  'radio-inner': {
+    'svg > path': {
+      fill: '#000000'
     }
   },
   'checkbox-input__label-wrapper': {
     justifyContent: 'center'
-  },
-  'text__add-cart': {
-    color: '#ffffff',
-    fontSize: '10px',
-    fontWeight: 400,
-    lineHeight: '12px'
-  },
-  'text__add-cart--bold': {
-    fontWeight: 700
   }
 }))

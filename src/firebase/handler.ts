@@ -118,12 +118,14 @@ async function create(itemType: FIREBASE_COLLECTION, data: any) {
 
 async function createWithCustomKey(itemType: FIREBASE_COLLECTION, data: any, id: string) {
   const docRef = doc(db, itemType, id)
+  console.log(data, 'data firebase')
   await setDoc(docRef, data)
     .then(() => {
       console.log('Product has been added successfully')
     })
     .catch((error) => {
       console.log(error)
+      console.log('?????')
     })
 
   location.reload()

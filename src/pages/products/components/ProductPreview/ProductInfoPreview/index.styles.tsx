@@ -12,6 +12,9 @@ export const useStyles = createStyles(() => ({
       textAlign: 'right'
     }
   },
+  container__carousel: {
+    width: '225px'
+  },
   image: {
     background: '#f5f5f5',
     width: '225px',
@@ -29,12 +32,16 @@ export const useStyles = createStyles(() => ({
     fontWeight: 700,
     fontSize: '20px',
     textTransform: 'uppercase',
-    lineHeight: '24px'
+    lineHeight: '24px',
+    maxWidth: '300px',
+    wordWrap: 'break-word'
   },
   'text__category-content': {
     fontWeight: 400,
     fontSize: '8px',
     lineHeight: '10px',
-    color: '#c4c4c4'
+    color: '#c4c4c4',
+    maxWidth: '300px',
+    wordWrap: 'break-word'
   }
 }))

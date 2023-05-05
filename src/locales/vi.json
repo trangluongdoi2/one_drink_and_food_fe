@@ -41,5 +41,6 @@
   "add_to_cart": "Thêm vào giỏ hàng",
   "extra_note": "Ghi chú thêm",
   "fill_ingredient_product_content": "Điền nội dung thành phần sản phẩm",
-  "option": "Lựa chọn {{index}}"
+  "option": "Lựa chọn {{index}}",
+  "create_new_product": "Tạo sản phẩm mới"
 }

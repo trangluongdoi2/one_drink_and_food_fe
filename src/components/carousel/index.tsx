@@ -9,9 +9,10 @@ type PropType = {
   options?: EmblaOptionsType
   canMove?: boolean
   motionDelays?: number
+  hasThumbnail?: boolean
 }
 
-export const AppCarousel = ({ slides, options, canMove, motionDelays = 1000 }: PropType) => {
+export const AppCarousel = ({ slides, options, canMove, motionDelays = 1000, hasThumbnail = true }: PropType) => {
   const { classes } = useStyles()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options)
@@ -84,20 +85,22 @@ export const AppCarousel = ({ slides, options, canMove, motionDelays = 1000 }: P
           ))}
         </div>
       </div>
-      <div className={classes['embla-thumbs']}>
-        <div className={classes['embla-thumbs__viewport']} ref={emblaThumbsRef}>
-          <div className={classes['embla-thumbs__container']}>
-            {slides.map((slide: string, index: number) => (
-              <CarouselThumb
-                onClick={() => onThumbClick(index)}
-                selected={index === selectedIndex % slides.length}
-                imgSrc={imageByIndex(slides, index)}
-                key={index}
-              />
-            ))}
+      {hasThumbnail && (
+        <div className={classes['embla-thumbs']}>
+          <div className={classes['embla-thumbs__viewport']} ref={emblaThumbsRef}>
+            <div className={classes['embla-thumbs__container']}>
+              {slides.map((slide: string, index: number) => (
+                <CarouselThumb
+                  onClick={() => onThumbClick(index)}
+                  selected={index === selectedIndex % slides.length}
+                  imgSrc={imageByIndex(slides, index)}
+                  key={index}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
