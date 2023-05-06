@@ -15,6 +15,7 @@ import { ToggleButon } from '@/components/button/ToggleButton'
 import { AppInput } from '@/components/input'
 import { ProductOptionFrameProps } from '@/pages/products/type'
 import { useStyles } from './index.styles'
+import { useClickOutside } from '@mantine/hooks'
 
 type ProductOptionData = {
   info: string | number
@@ -27,8 +28,12 @@ export const ProductOptionFrame = ({
   defaultPlaceholder,
   isOption = false,
   multiOptions,
+  enable,
+  updateTitle,
+  updateEnable,
   updateSelectMultiOption,
-  updateProductOption
+  updateProductOption,
+  removeProductOptionItem
 }: ProductOptionFrameProps) => {
   const initDataOption: ProductOptionData = {
     info: '',
@@ -40,8 +45,11 @@ export const ProductOptionFrame = ({
   const { t } = useTranslation()
   const { classes } = useStyles()
   const [canSelectMultiOptions, setCanSelectMultiOptions] = useState(true)
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState<boolean>(true)
+  const [isEditable, setIsEditable] = useState<boolean>(false)
   const [optionList, setOptionList] = useState(isOption ? [initDataOption] : [initDataNotOption])
+  const [isFocused, setIsFocused] = useState<boolean>(false)
+  const ref = useClickOutside(() => setIsEditable(false))
 
   const toggleSelectMulti = () => {
     setCanSelectMultiOptions(!canSelectMultiOptions)
@@ -50,6 +58,7 @@ export const ProductOptionFrame = ({
 
   const onToggleStatus = (status: boolean) => {
     setIsActive(status)
+    updateEnable(status)
   }
 
   const removeOption = (index: number) => {
@@ -90,25 +99,39 @@ export const ProductOptionFrame = ({
   }
 
   useEffect(() => {
-    updateProductOption({ value: optionList, canSelectMultiOptions, isOption, title, field, multiOptions })
+    updateProductOption({ value: optionList, canSelectMultiOptions, isOption, title, field, multiOptions, enable })
   }, [optionList])
 
   return (
-    <Paper className={classes.container}>
+    <Paper
+      ref={ref}
+      className={isFocused ? `${classes.container} ${classes['container--focused']}` : classes.container}
+    >
       <Stack>
         <Flex justify={'space-between'} align={'center'}>
           <Flex align={'center'} columnGap={12.5}>
             <ActionIcon size={20}>
               <TableRowsIcon />
             </ActionIcon>
-            <Text className={classes.title}>{title}</Text>
-            <ActionIcon>
-              <EditIconLight />
+            {isEditable ? (
+              <AppInput
+                placeholder={t('fill_information_of_title')}
+                field='title'
+                updateInput={(event) => updateTitle(event.value as string)}
+                value={title}
+                classInput={classes.input__title}
+                checkIsFocused={setIsFocused}
+              />
+            ) : (
+              <Text className={classes.title}>{title}</Text>
+            )}
+            <ActionIcon onClick={() => setIsFocused(!isEditable)}>
+              {isEditable ? <EditIconDark /> : <EditIconLight />}
             </ActionIcon>
           </Flex>
           <Flex align={'center'}>
             <ToggleButon onToggleStatus={onToggleStatus} isActive={isActive} />
-            <ActionIcon>
+            <ActionIcon onClick={removeProductOptionItem}>
               <DeleteIcon />
             </ActionIcon>
           </Flex>
@@ -128,6 +151,7 @@ export const ProductOptionFrame = ({
                     placeholder={defaultPlaceholder}
                     updateInput={(data) => updateInput(data, index)}
                     hiddenToggleIcon={true}
+                    checkIsFocused={setIsFocused}
                   />
                 </div>
                 {isOption && (
@@ -138,6 +162,7 @@ export const ProductOptionFrame = ({
                       placeholder={t('prices')}
                       hiddenToggleIcon={true}
                       updateInput={(data) => updateInput(data, index, true)}
+                      checkIsFocused={setIsFocused}
                     />
                   </div>
                 )}

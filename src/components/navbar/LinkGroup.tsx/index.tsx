@@ -37,9 +37,6 @@ function LinksGroup({
     navigate(links ? links[0].link : '')
   }
 
-  // console.log('selected', selected)
-  // console.log('tab', tab)
-
   const items = (hasLinks ? links : []).map((link, index) => {
     const handleOnClick = () => setSelected(link.label)
 

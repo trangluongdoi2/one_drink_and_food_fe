@@ -1,4 +1,5 @@
-import { trans } from '@/i18n/useTrans'
+import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
+const { trans } = useTranslationMiddleware()
 
 const test = [
   {

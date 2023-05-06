@@ -4,6 +4,7 @@ import {
   AddSaleOption,
   ProductType,
   RemoveProductInfo,
+  RemoveSaleOption,
   SetAuxiliaryName,
   SetContentProductInfo,
   SetEnabledProductInfo,
@@ -16,6 +17,7 @@ import {
   SetProductInfos,
   SetSaleOptions,
   SetSelectMultiOption,
+  SetTitleProductInfo,
   SetTypicalFunction,
   UpdateSaleOption
 } from './type'
@@ -65,6 +67,11 @@ export const addProductSaleOption = (value: ProductSaleOptionsContent): AddSaleO
   payload: value
 })
 
+export const removeProductSaleOption = (value: number): RemoveSaleOption => ({
+  type: ProductType.REMOVE_SALE_OPTION,
+  payload: value
+})
+
 export const updateSaleOption = (value: { data: SaleOptionValue[]; index: number }): UpdateSaleOption => ({
   type: ProductType.UPDATE_SALE_OPTION,
   payload: value
@@ -102,5 +109,10 @@ export const setPhotosProductInfo = (value: { data: string[]; index: number }): 
 
 export const setEnabledProductInfo = (value: { data: boolean; index: number }): SetEnabledProductInfo => ({
   type: ProductType.SET_ENABLED_PRODUCT_INFO,
+  payload: value
+})
+
+export const setTitleProductInfo = (value: { data: string; index: number }): SetTitleProductInfo => ({
+  type: ProductType.SET_TITLE_PRODUCT_INFO,
   payload: value
 })

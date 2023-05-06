@@ -2,8 +2,11 @@ import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
   container: {
-    // height: '135px',
-    padding: '15px 0'
+    padding: '8px 40px',
+    marginBottom: '16px'
+  },
+  ['container--focused']: {
+    boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)'
   },
   ['container__input--deactive']: {
     opacity: 0.5,
@@ -22,6 +25,16 @@ export const useStyles = createStyles(() => ({
   },
   input: {
     background: '#f5f5f5f5'
+  },
+  input__title: {
+    height: '28px',
+    minHeight: '28px',
+    maxHeight: '28px',
+    maxWidth: '200px',
+    borderRadius: '3px',
+    textTransform: 'uppercase',
+    padding: '1px 2px',
+    fontWeight: 700
   },
   rightSection: {
     display: 'none'

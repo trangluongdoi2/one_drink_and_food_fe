@@ -47,5 +47,7 @@
   "extra_note": "Ghi chú thêm",
   "fill_ingredient_product_content": "Điền nội dung thành phần sản phẩm",
   "option": "Lựa chọn {{index}}",
-  "create_new_product": "Tạo sản phẩm mới"
+  "create_new_product": "Tạo sản phẩm mới",
+  "option_name": "Tên khung lựa chọn",
+  "content_name": "Tên khung nội dung"
 }

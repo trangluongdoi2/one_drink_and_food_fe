@@ -4,6 +4,7 @@ import { Box, Flex, NumberInput, Text, TextInput, Textarea, createStyles } from 
 import { ProductDetailProps } from '@/types/product'
 import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
 import { ToggleButon } from '@/components/button/ToggleButton'
+import { useFocusWithin } from '@mantine/hooks'
 
 const useStyles = createStyles(() => ({
   '.text__title': {
@@ -49,6 +50,7 @@ export interface InputProps {
   hiddenToggleIcon?: boolean
   moreOptions?: React.ReactNode
   classInput?: string
+  checkIsFocused?: (data: boolean) => void
   updateInput: (data: { value: string | number; field: string }) => void
 }
 
@@ -113,11 +115,14 @@ export const AppInput = ({
   moreOptions,
   value,
   classInput,
+  checkIsFocused,
   updateInput
 }: InputProps) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
+  const { ref, focused } = useFocusWithin();
   const [isActive, setIsActive] = useState<boolean>(true)
+
   const form = useUserForm({
     initialValues: {
       [field]: typeof field === 'string' ? value ?? '' : 0
@@ -128,10 +133,14 @@ export const AppInput = ({
     updateInput(data)
   }
 
+  useEffect(() => {
+    checkIsFocused && checkIsFocused(focused)
+  }, [focused])
+
   return (
     <UserFormProvider form={form}>
       <form>
-        <Box>
+        <Box ref={ref}>
           {title && (
             <Flex justify='space-between' align={'flex-end'} sx={{ marginTop: '20px', marginBottom: '10px' }}>
               <Text className={classes['.text__title']}>{title}</Text>

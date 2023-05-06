@@ -15,7 +15,6 @@ import {
   setEnabledProductInfo,
   setPhotosProductInfo
 } from '@/reducer/product/action'
-import { info } from 'console'
 
 export const ProductInfoCategoryForm = () => {
   const { classes } = useStyles()
@@ -33,7 +32,6 @@ export const ProductInfoCategoryForm = () => {
   )
 
   const toggleActiveUpload = (data: boolean, index: number) => {
-    console.log(data, index, 'toggleActiveUpload')
     dispatch(setEnabledProductInfo({ data, index }))
   }
 
@@ -50,7 +48,6 @@ export const ProductInfoCategoryForm = () => {
   }
 
   const onEditTitleProductInfo = (value: boolean, index: number) => {
-    // console.log(index, 'index')
     const listEditable = [...listEditableInfos]
     listEditable[index] = !value
     setListEditableInfos(listEditable)
@@ -62,10 +59,6 @@ export const ProductInfoCategoryForm = () => {
     }
     dispatch(removeProductInfo(index))
   }
-
-  useEffect(() => {
-    // console.log(infos.length, 'infos.length')
-  }, [infos])
 
   return (
     <Paper className={`create-new-product-card__container`}>

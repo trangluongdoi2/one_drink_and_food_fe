@@ -1,5 +1,7 @@
 import { clone } from '@/utils/utility'
 import { ProductState, ProductType, ProductTypeAction } from './type'
+import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
+const { trans } = useTranslationMiddleware()
 
 export const initinalState: ProductState = {
   name: '',
@@ -14,43 +16,44 @@ export const initinalState: ProductState = {
   },
   saleOptions: [
     {
-      title: 'Thành phần chính',
+      title: trans('main_ingredient'),
       field: 'mainIngredient',
       isOption: false,
       multiOptions: false,
-      value: []
+      value: [],
+      enable: true
     },
     {
-      // title: t('choose_size'),
-      title: 'Chọn size',
+      title: trans('choose_size'),
       field: 'size',
       isOption: true,
       multiOptions: true,
       canSelectMultiOptions: true,
-      value: []
+      value: [],
+      enable: true
     },
     {
-      // title: t('ice_content'),
-      title: 'Lượng đá',
+      title: trans('ice_content'),
       field: 'iceContent',
       isOption: true,
       multiOptions: true,
       canSelectMultiOptions: true,
-      value: []
+      value: [],
+      enable: true
     },
     {
-      // title: t('sugar_content'),
-      title: 'Lượng đường',
+      title: trans('sugar_content'),
       field: 'sugarContent',
       isOption: true,
       multiOptions: true,
       canSelectMultiOptions: true,
-      value: []
+      value: [],
+      enable: true
     }
   ],
   infos: [
     {
-      title: 'Tên chủ đề',
+      title: trans('topic_name'),
       infoPhotos: [],
       content: '',
       enable: true
@@ -59,6 +62,8 @@ export const initinalState: ProductState = {
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
+  const saleOptions = clone(state.saleOptions)
+  const infos = clone(state.infos)
   switch (type) {
     case ProductType.SET_NAME:
       return {
@@ -104,9 +109,9 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     case ProductType.SET_SALE_OPTIONS: {
       const index = payload.index
-      const { value, isOption, canSelectMultiOptions, title, field, multiOptions } = payload.data
-      const saleOptions = clone(state.saleOptions)
-      const saleOptionsData = { value, isOption, canSelectMultiOptions, title, field, multiOptions }
+      const { value, isOption, canSelectMultiOptions, title, field, multiOptions, enable } = payload.data
+      // const saleOptions = clone(state.saleOptions)
+      const saleOptionsData = { value, isOption, canSelectMultiOptions, title, field, multiOptions, enable }
       saleOptions[index] = saleOptionsData
       return {
         ...state,
@@ -115,8 +120,16 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.UPDATE_SALE_OPTION: {
       const { index, data } = payload
-      const saleOptions = clone(state.saleOptions)
+      // const saleOptions = clone(state.saleOptions)
       saleOptions[index].value = data
+      return {
+        ...state,
+        saleOptions
+      }
+    }
+    case ProductType.ADD_SALE_OPTION: {
+      // const saleOptions = clone(state.saleOptions)
+      saleOptions.push(payload)
       return {
         ...state,
         saleOptions
@@ -124,7 +137,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_SELECT_MULTI_OPTIONS: {
       const { index, data } = payload
-      const saleOptions = clone(state.saleOptions)
+      // const saleOptions = clone(state.saleOptions)
       saleOptions[index].canSelectMultiOptions = data
       return {
         ...state,
@@ -139,7 +152,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.ADD_PRODUCT_INFO: {
-      const infos = clone(state.infos)
+      // const infos = clone(state.infos)
       infos.push(payload)
       return {
         ...state,
@@ -147,7 +160,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.REMOVE_PRODUCT_INFO: {
-      const infos = clone(state.infos)
+      // const infos = clone(state.infos)
       infos.splice(payload, 1)
       return {
         ...state,
@@ -156,7 +169,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_CONTENT_PRODUCT_INFO: {
       const { index, data, field } = payload
-      const infos = clone(state.infos)
+      // const infos = clone(state.infos)
       infos[index][field] = data
       return {
         ...state,
@@ -165,7 +178,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_PHOTOS_PRODUCT_INFO: {
       const { index, data } = payload
-      const infos = clone(state.infos)
+      // const infos = clone(state.infos)
       infos[index].infoPhotos = [...data]
       return {
         ...state,
@@ -174,11 +187,27 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_ENABLED_PRODUCT_INFO: {
       const { index, data } = payload
-      const infos = clone(state.infos)
-      infos[index].enable = data
+      // const saleOptions = clone(state.saleOptions)
+      saleOptions[index].enable = data
       return {
         ...state,
-        infos
+        saleOptions
+      }
+    }
+    case ProductType.SET_TITLE_PRODUCT_INFO: {
+      const { index, data } = payload
+      // const saleOptions = clone(state.saleOptions)
+      saleOptions[index].title = data
+      return {
+        ...state,
+        saleOptions
+      }
+    }
+    case ProductType.REMOVE_SALE_OPTION: {
+      saleOptions.splice(payload, 1)
+      return {
+        ...state,
+        saleOptions
       }
     }
     default:

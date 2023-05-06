@@ -20,6 +20,7 @@ export enum ProductType {
   SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
   SET_SALE_OPTIONS = 'SET_SALE_OPTIONS',
   ADD_SALE_OPTION = 'ADD_SALE_OPTION',
+  REMOVE_SALE_OPTION = 'REMOVE_SALE_OPTION',
   UPDATE_SALE_OPTION = 'UPDATE_SALE_OPTION',
   SET_SELECT_MULTI_OPTIONS = 'SET_SELECT_MULTI_OPTIONS',
   SET_PRODUCT_INFOS = 'SET_PRODUCT_INFOS',
@@ -27,7 +28,8 @@ export enum ProductType {
   REMOVE_PRODUCT_INFO = 'REMOVE_PRODUCT_INFO',
   SET_CONTENT_PRODUCT_INFO = 'SET_CONTENT_PRODUCT_INFO',
   SET_PHOTOS_PRODUCT_INFO = 'SET_PHOTOS_PRODUCT_INFO',
-  SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO'
+  SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
+  SET_TITLE_PRODUCT_INFO = 'SET_TITLE_PRODUCT_INFO'
 }
 
 export interface SetName {
@@ -76,6 +78,11 @@ export interface SetSaleOptions {
 export interface AddSaleOption {
   type: ProductType.ADD_SALE_OPTION
   payload: ProductSaleOptionsContent
+}
+
+export interface RemoveSaleOption {
+  type: ProductType.REMOVE_SALE_OPTION
+  payload: number
 }
 
 export interface UpdateSaleOption {
@@ -137,6 +144,14 @@ export interface SetEnabledProductInfo {
   }
 }
 
+export interface SetTitleProductInfo {
+  type: ProductType.SET_TITLE_PRODUCT_INFO
+  payload: {
+    data: string
+    index: number
+  }
+}
+
 export type ProductTypeAction =
   | SetName
   | SetAuxiliaryName
@@ -147,6 +162,7 @@ export type ProductTypeAction =
   | SetMotionPhotos
   | SetSaleOptions
   | AddSaleOption
+  | RemoveSaleOption
   | UpdateSaleOption
   | SetSelectMultiOption
   | SetProductInfos
@@ -155,3 +171,4 @@ export type ProductTypeAction =
   | SetContentProductInfo
   | SetPhotosProductInfo
   | SetEnabledProductInfo
+  | SetTitleProductInfo

@@ -24,8 +24,12 @@ export interface ProductOptionFrameProps {
   isOption?: boolean
   field?: string
   multiOptions?: boolean
+  enable?: boolean
+  updateTitle: (data: string) => void
+  updateEnable: (data: boolean) => void
   updateSelectMultiOption: (data: boolean) => void
   updateProductOption: (data: ProductSaleOptionsContent) => void
+  removeProductOptionItem: () => void
 }
 
 export interface ProductSaleOptionsContent {
@@ -35,6 +39,7 @@ export interface ProductSaleOptionsContent {
   isOption: boolean
   canSelectMultiOptions?: boolean
   multiOptions?: boolean
+  enable?: boolean
 }
 
 export interface SaleOptionValue {

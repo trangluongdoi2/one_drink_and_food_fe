@@ -39,7 +39,7 @@ export const ProductOverviewPreview = () => {
 
   useEffect(() => {
     setSaleOptionsData(clone(saleOptions))
-  }, [])
+  }, [saleOptions])
 
   return (
     <Stack spacing={0}>
