@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionIcon, Box, Button, Flex, Stack, Text } from '@mantine/core'
+import { clone } from '@/utils/utility'
 import { ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
 import { AddCircleLightIcon, DoNotDisturbLightIcon, ExtraNoteIcon } from '@/assets/icon'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { OverviewTable } from './OverviewTable'
 import { useStyles } from './index.styles'
-import { clone } from '@/utils/utility'
 
 export const ProductOverviewPreview = () => {
   const { classes } = useStyles()
@@ -14,7 +14,7 @@ export const ProductOverviewPreview = () => {
   const { name, auxiliaryName, prices, saleOptions } = useProductContext()
   const [realPrices, setRealPrices] = useState<number>(prices)
   const [countProduct, setCountProduct] = useState<number>(1)
-  const [saleOptionsData, setSaleOptionsData] = useState<any>(saleOptions)
+  const [saleOptionsData, setSaleOptionsData] = useState<ProductSaleOptionsContent[]>(saleOptions)
 
   const caculateRealPrices = () => {
     let sum = 0
@@ -32,10 +32,6 @@ export const ProductOverviewPreview = () => {
     newSaleOptionsData[index].value = data
     setSaleOptionsData(newSaleOptionsData)
   }
-
-  // useEffect(() => {
-  //   console.log(realPrices, 'realPrices')
-  // }, [realPrices])
 
   useEffect(() => {
     caculateRealPrices()

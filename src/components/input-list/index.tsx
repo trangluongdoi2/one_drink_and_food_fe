@@ -1,8 +1,8 @@
-import { ActionIcon, Flex, Stack, Text, TextInput, createStyles } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
-import { AddFillIcon, CloseButton } from '@/assets/icon'
+import { useTranslation } from 'react-i18next'
+import { ActionIcon, Flex, Stack, Text, TextInput, createStyles } from '@mantine/core'
 import { ProductDetailProps } from '@/types/product'
+import { AddFillIcon, CloseButton } from '@/assets/icon'
 import { UserFormProvider, useUserForm } from '@/context/form-context'
 
 type InputListProps = {

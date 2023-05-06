@@ -1,5 +1,4 @@
-import { useTranslation } from 'react-i18next'
-// const { t } = useTranslation()
+import { trans } from '@/i18n/useTrans'
 
 const test = [
   {
@@ -30,6 +29,7 @@ const test = [
     field: 'sugarContent'
   }
 ]
+const testName = trans('create_new_product')
 
 const productAddTest = {
   name: 'Sinh tố lúa mạch',
@@ -115,4 +115,4 @@ const productAddTest = {
   ]
 }
 
-export { test, productAddTest }
+export { test, productAddTest, testName }

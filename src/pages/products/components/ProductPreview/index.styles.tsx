@@ -13,7 +13,6 @@ export const useStyles = createStyles(() => ({
   container: {
     display: 'grid',
     gridTemplateColumns: '225px 50%',
-    // gridTemplateColumns: '50% 50%',
     gridTemplateAreas: `
       'image overview'
       'info info'

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Flex, NumberInput, Text, TextInput, Textarea, createStyles } from '@mantine/core'
-import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
 import { ProductDetailProps } from '@/types/product'
+import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
 import { ToggleButon } from '@/components/button/ToggleButton'
 
 const useStyles = createStyles(() => ({
@@ -48,8 +48,7 @@ export interface InputProps {
   typeInput?: string
   hiddenToggleIcon?: boolean
   moreOptions?: React.ReactNode
-  className?: any
-  classInput?: any
+  classInput?: string
   updateInput: (data: { value: string | number; field: string }) => void
 }
 
@@ -58,7 +57,14 @@ type TypeInputProps = Pick<
   'typeInput' | 'placeholder' | 'field' | 'isActiveInput' | 'updateInput' | 'classInput'
 >
 
-export const TypeInput = ({ typeInput, placeholder, field, isActiveInput, classInput, updateInput }: TypeInputProps) => {
+export const TypeInput = ({
+  typeInput,
+  placeholder,
+  field,
+  isActiveInput,
+  classInput,
+  updateInput
+}: TypeInputProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
 
@@ -106,7 +112,6 @@ export const AppInput = ({
   hiddenToggleIcon = false,
   moreOptions,
   value,
-  className,
   classInput,
   updateInput
 }: InputProps) => {
@@ -121,10 +126,6 @@ export const AppInput = ({
 
   const changeParentInput = (data: { value: string | number; field: string }) => {
     updateInput(data)
-  }
-
-  const test = (event: any) => {
-    // console.log(event, 'event')
   }
 
   return (
