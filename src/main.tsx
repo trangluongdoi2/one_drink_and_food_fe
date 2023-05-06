@@ -30,7 +30,26 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           },
           fontFamily: 'Montserrat, sans-serif',
           fontFamilyMonospace: 'Montserrat, Courier',
-          headings: { fontFamily: 'Montserrat, sans-serif' }
+          headings: { fontFamily: 'Montserrat, sans-serif' },
+          components: {
+            Breadcrumbs: {
+              styles: () => ({
+                breadcrumb: {
+                  color: '#C4C4C4',
+                  textDecoration: 'unset !important',
+                  fontWeight: 700,
+                  fontSize: '20px',
+                  lineHeight: '24px',
+                  cursor: 'pointer'
+                },
+                separator: {
+                  margin: '0 1px',
+                  color: '#C4C4C4',
+                  fontSize: '20px'
+                }
+              })
+            }
+          }
         }}
         withNormalizeCSS
         withGlobalStyles

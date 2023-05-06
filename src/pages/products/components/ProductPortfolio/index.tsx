@@ -1,7 +1,7 @@
 import { ActionIcon, Flex, Paper, Text } from '@mantine/core'
-import { useStyles } from './index.styles'
+import { useTranslation } from 'react-i18next'
 import { TableRowsIcon, EditIconLight, DeleteIcon } from '@/assets/icon'
-import { JuiceType } from '@/pages/products/type'
+import { useStyles } from './index.styles'
 
 type ProductPorfolioProps = {
   title?: string
@@ -10,15 +10,7 @@ type ProductPorfolioProps = {
 
 export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorfolioProps) => {
   const { classes } = useStyles()
-
-  const convertTitle = (title: string) => {
-    switch (title) {
-      case JuiceType.JUICE_BOTTLED:
-        return 'Nước ép đóng chai'
-      case JuiceType.JUICE_GLASS:
-        return 'Nước ép ly'
-    }
-  }
+  const { t } = useTranslation()
 
   const onDeletePorfolio = () => {
     console.log('onDeletePorfolio')
@@ -32,7 +24,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
       {isBasePortfolio ? (
         <Flex className={classes.child} align={'center'} justify={'space-between'}>
           <Text fz={18} tt='uppercase' fw={700}>
-            + THÊM DANH MỤC MỚI
+            + {t('add_new_category')}
           </Text>
         </Flex>
       ) : (
@@ -42,7 +34,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
               <TableRowsIcon />
             </ActionIcon>
             <Text fz={18} fw={700}>
-              DANH MỤC | {convertTitle(title as string)}
+              {t('category')} | {t(title as string)}
             </Text>
             <ActionIcon onClick={onEditPorfolio}>
               <EditIconLight />

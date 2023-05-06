@@ -55,10 +55,10 @@ export enum JuiceType {
 }
 
 export enum ProductType {
-  JUICE = 'Nước ép',
-  VITAMIN = 'Sinh tố',
-  YOGURT = 'Yogurt',
-  TEA = 'Trà',
-  COFFEE = 'Cà phê',
-  ITEMS = 'Vật phẩm'
+  JUICE = 'juice',
+  VITAMIN = 'vitamin',
+  YOGURT = 'yogurt',
+  TEA = 'tea',
+  COFFEE = 'coffee',
+  ITEM = 'item'
 }

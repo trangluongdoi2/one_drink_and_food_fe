@@ -20,6 +20,10 @@ export const GlobalStyles = () => {
           textTransform: 'uppercase',
           color: '#000000',
           marginTop: '20px'
+        },
+        breadcumb: {
+          color: '#000000',
+          textDecoration: 'unset'
         }
       })}
     />

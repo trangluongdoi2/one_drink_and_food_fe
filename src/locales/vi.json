@@ -1,4 +1,9 @@
 {
+  "add_new_category": "THÊM DANH MỤC MỚI",
+  "category": "DANH MỤC",
+  "juice": "Nước ép",
+  "juiceGlass": "Nước ép ly",
+  "juiceBottled": "Nước ép chai",
   "product_name": "Tên sản phẩm",
   "fill_product_name": "Điền tên sản phẩm",
   "edit": "Chỉnh",
