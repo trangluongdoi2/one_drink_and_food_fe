@@ -7,12 +7,15 @@ import {
   RemoveSaleOption,
   SetAuxiliaryName,
   SetContentProductInfo,
+  SetEnableIncludeVATPrices,
   SetEnabledProductInfo,
   SetIntroductionContent,
   SetMotionPhotos,
   SetName,
   SetPhotos,
   SetPhotosProductInfo,
+  SetPhotosStore,
+  SetPhotosStoreProductInfo,
   SetPrices,
   SetProductInfos,
   SetSaleOptions,
@@ -37,6 +40,11 @@ export const setPrices = (value: number): SetPrices => ({
   payload: value
 })
 
+export const setEnableIncludeVATPrices = (value: boolean): SetEnableIncludeVATPrices => ({
+  type: ProductType.SET_ENABLE_INCLUDE_VAT_PRICES,
+  payload: value
+})
+
 export const setIntroductionContent = (value: string): SetIntroductionContent => ({
   type: ProductType.SET_INTRODUCTION,
   payload: value
@@ -49,6 +57,11 @@ export const setTypicalFunction = (value: string[]): SetTypicalFunction => ({
 
 export const setPhotos = (value: string[]): SetPhotos => ({
   type: ProductType.SET_PHOTOS,
+  payload: value
+})
+
+export const setPhotosStore = (value: File[]): SetPhotosStore => ({
+  type: ProductType.SET_PHOTOS_STORE,
   payload: value
 })
 
@@ -97,13 +110,22 @@ export const removeProductInfo = (value: number): RemoveProductInfo => ({
   payload: value
 })
 
-export const setContentProductInfo = (value: { data: string; field: string; index: number }): SetContentProductInfo => ({
+export const setContentProductInfo = (value: {
+  data: string
+  field: string
+  index: number
+}): SetContentProductInfo => ({
   type: ProductType.SET_CONTENT_PRODUCT_INFO,
   payload: value
 })
 
 export const setPhotosProductInfo = (value: { data: string[]; index: number }): SetPhotosProductInfo => ({
   type: ProductType.SET_PHOTOS_PRODUCT_INFO,
+  payload: value
+})
+
+export const setPhotosStoreProductInfo = (value: { data: File[]; index: number }): SetPhotosStoreProductInfo => ({
+  type: ProductType.SET_PHOTOS_STORE_PRODUCT_INFO,
   payload: value
 })
 

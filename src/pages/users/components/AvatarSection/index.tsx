@@ -1,4 +1,4 @@
-import { DefaultAvatar, EditImageIcon, HeartIcon } from '@/assets/icon'
+import { DefaultAvatar, EditImageIcon, HeartIcon, CopyIcon } from '@/assets/icon'
 import {
   Paper,
   Flex,
@@ -13,7 +13,6 @@ import {
   BackgroundImage
 } from '@mantine/core'
 import { IconCheck } from '@tabler/icons-react'
-import { CopyIcon } from '@/assets/icon'
 import { useUserFormContext } from '@/context/form-context'
 import { useRef, useState } from 'react'
 import overlay from '@/assets/image/overlay.png'
@@ -21,6 +20,7 @@ import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { useStyles } from './index.style'
 import { FirebaseService } from '@/firebase/handler'
 import oneAva from '@/assets/image/one-ava.png'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
 
 const AvatarSection = () => {
   const form = useUserFormContext()
@@ -32,8 +32,9 @@ const AvatarSection = () => {
   const handleOnDrop = async (files: FileWithPath[]) => {
     const imageUrl = URL.createObjectURL(files[0])
     setImage(imageUrl)
-    const url = await FirebaseService.uploadImage(files[0]).then((res) => res)
-    form.setFieldValue('avatar', url ?? '')
+    await FirebaseService.uploadImage(files[0], FIREBASE_COLLECTION.USERS, (url: string) => {
+      form.setFieldValue('avatar', url ?? '')
+    })
   }
 
   return (

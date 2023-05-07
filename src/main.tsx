@@ -48,6 +48,16 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                   fontSize: '20px'
                 }
               })
+            },
+            ActionIcon: {
+              styles: () => ({
+                root: {
+                  // transform: 'translateY(0) !important',
+                  '&:hover': {
+                    background: 'transparent'
+                  }
+                }
+              })
             }
           }
         }}

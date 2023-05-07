@@ -32,9 +32,6 @@ export const useStyles = createStyles(() => ({
     marginTop: '20px',
     '&:hover': {
       background: '#000000 !important'
-    },
-    '&:active': {
-      transform: 'translateY(0)'
     }
   }
 }))

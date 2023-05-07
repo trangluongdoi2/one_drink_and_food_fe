@@ -10,6 +10,7 @@ import { ProductPreview } from '@/pages/products/components/ProductPreview'
 import { useStyles } from './index.styles'
 import { camelToSnakeCase } from '@/utils/string-utils'
 import { useLocation } from 'react-router-dom'
+import { ProductInfos } from '../../type'
 
 type Props = {
   type: string
@@ -20,7 +21,7 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const productData = useProductContext()
-  const { createWithCustomKey } = FirebaseService
+  const { createWithCustomKey, uploadImage } = FirebaseService
   const splitPath = useLocation().pathname.split('/')
 
   const items = [
@@ -41,10 +42,31 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     </Anchor>
   ))
 
-  const onSaveProduct = () => {
+  const promiseUploadImage = (file: File, collection: FIREBASE_COLLECTION) =>
+    new Promise((resolve) => {
+      uploadImage(file, collection, (url: string) => {
+        if (url) {
+          resolve(url)
+        }
+      })
+    })
+
+  const onSaveProduct = async () => {
     const id = uuidv4()
-    createWithCustomKey(FIREBASE_COLLECTION.PRODUCTS_TEST, clone(productData), id)
-    console.log(productData, 'productData')
+    const promises: any = []
+    productData.photosStore?.forEach(async (file: File) => {
+      if (!file) {
+        return
+      }
+      promises.push(promiseUploadImage(file, FIREBASE_COLLECTION.PRODUCTS_TEST))
+    })
+    productData.infos.forEach((info: ProductInfos) => {
+      info.infoPhotosStore.forEach(async (file: File) => {
+        promises.push(promiseUploadImage(file, FIREBASE_COLLECTION.PRODUCTS_TEST))
+      })
+    })
+    await Promise.all(promises)
+    await createWithCustomKey(FIREBASE_COLLECTION.PRODUCTS_TEST, clone(productData), id)
   }
 
   return (

@@ -13,7 +13,8 @@ import {
   removeProductInfo,
   setContentProductInfo,
   setEnabledProductInfo,
-  setPhotosProductInfo
+  setPhotosProductInfo,
+  setPhotosStoreProductInfo
 } from '@/reducer/product/action'
 
 export const ProductInfoCategoryForm = () => {
@@ -23,6 +24,7 @@ export const ProductInfoCategoryForm = () => {
   const initialProductInfos: ProductInfos = {
     title: '',
     infoPhotos: [],
+    infoPhotosStore: [],
     content: '',
     enable: true
   }
@@ -41,6 +43,11 @@ export const ProductInfoCategoryForm = () => {
 
   const updateFilePaths = (data: string[], index: number) => {
     dispatch(setPhotosProductInfo({ data, index }))
+  }
+
+  const updateFileStores = (data: File[], index: number) => {
+    // console.log(data, 'updateFileStores')
+    dispatch(setPhotosStoreProductInfo({ data, index }))
   }
 
   const addProduct = () => {
@@ -94,6 +101,7 @@ export const ProductInfoCategoryForm = () => {
             </Flex>
             <ProductAddImageForm
               updateFilePaths={(event) => updateFilePaths(event, index)}
+              updateFileStores={(event) => updateFileStores(event, index)}
               limitQuantity={4}
               hiddenTitle={true}
               isActive={info.enable}

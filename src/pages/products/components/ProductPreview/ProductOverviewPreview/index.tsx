@@ -12,7 +12,7 @@ export const ProductOverviewPreview = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const { name, auxiliaryName, prices, saleOptions } = useProductContext()
-  const [realPrices, setRealPrices] = useState<number>(prices)
+  const [realPrices, setRealPrices] = useState<number>(prices.value)
   const [countProduct, setCountProduct] = useState<number>(1)
   const [saleOptionsData, setSaleOptionsData] = useState<ProductSaleOptionsContent[]>(saleOptions)
 
@@ -23,7 +23,7 @@ export const ProductOverviewPreview = () => {
         sum += option.value.reduce((a: number, b: SaleOptionValue) => a + (b?.price || 0), 0)
       }
     })
-    setRealPrices((sum + prices) * countProduct)
+    setRealPrices((sum + prices.value) * countProduct)
   }
 
   const updateSaleOption = (input: { data: SaleOptionValue[]; index: number }) => {
@@ -51,10 +51,10 @@ export const ProductOverviewPreview = () => {
       </Text>
       <Flex justify={'space-between'} align={'center'}>
         <Flex justify={'space-between'} align={'center'} columnGap={7}>
-          <Text className={prices ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
-            {prices ? prices : t('prices')}
+          <Text className={prices.value ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
+            {prices.value ? prices.value : t('prices')}
           </Text>
-          <Text className={classes.text__price}>({t('include_VAT')})</Text>
+          <Text className={classes.text__price}>({prices.includeVAT ? t('include_VAT') : t('no_include_VAT')})</Text>
         </Flex>
         <Flex align={'center'} columnGap={15}>
           <ActionIcon size={18} onClick={() => setCountProduct(countProduct - 1 > 0 ? countProduct - 1 : 1)}>

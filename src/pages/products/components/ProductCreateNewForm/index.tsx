@@ -7,7 +7,7 @@ import { ProductInfoCategoryForm } from './ProductInfoCategoryForm'
 export const ProductCreateNewForm = () => {
   const { t } = useTranslation()
   return (
-    <Paper>
+    <Paper sx={{ background: 'transparent' }}>
       <Stack>
         <ProductOverviewNewForm />
         <ProductSalesFrameFrom />

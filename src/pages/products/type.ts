@@ -50,6 +50,7 @@ export interface SaleOptionValue {
 export interface ProductInfos {
   title: string
   infoPhotos: string[]
+  infoPhotosStore: File[]
   content: string
   enable: boolean
 }

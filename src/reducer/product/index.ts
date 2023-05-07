@@ -6,7 +6,10 @@ const { trans } = useTranslationMiddleware()
 export const initinalState: ProductState = {
   name: '',
   auxiliaryName: '',
-  prices: 0,
+  prices: {
+    value: 0,
+    includeVAT: true
+  },
   introduction: '',
   typicalFunction: [],
   photos: {
@@ -14,6 +17,7 @@ export const initinalState: ProductState = {
     canMove: true,
     motionDelays: 1000
   },
+  photosStore: [],
   saleOptions: [
     {
       title: trans('main_ingredient'),
@@ -55,6 +59,7 @@ export const initinalState: ProductState = {
     {
       title: trans('topic_name'),
       infoPhotos: [],
+      infoPhotosStore: [],
       content: '',
       enable: true
     }
@@ -88,7 +93,18 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     case ProductType.SET_PRICES:
       return {
         ...state,
-        prices: payload
+        prices: {
+          ...state.prices,
+          value: payload
+        }
+      }
+    case ProductType.SET_ENABLE_INCLUDE_VAT_PRICES:
+      return {
+        ...state,
+        prices: {
+          ...state.prices,
+          includeVAT: payload
+        }
       }
     case ProductType.SET_PHOTOS:
       return {
@@ -97,6 +113,11 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
           ...state.photos,
           filePaths: payload
         }
+      }
+    case ProductType.SET_PHOTOS_STORE:
+      return {
+        ...state,
+        photosStore: payload
       }
     case ProductType.SET_MOTION_PHOTOS:
       return {
@@ -110,7 +131,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     case ProductType.SET_SALE_OPTIONS: {
       const index = payload.index
       const { value, isOption, canSelectMultiOptions, title, field, multiOptions, enable } = payload.data
-      // const saleOptions = clone(state.saleOptions)
       const saleOptionsData = { value, isOption, canSelectMultiOptions, title, field, multiOptions, enable }
       saleOptions[index] = saleOptionsData
       return {
@@ -120,7 +140,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.UPDATE_SALE_OPTION: {
       const { index, data } = payload
-      // const saleOptions = clone(state.saleOptions)
       saleOptions[index].value = data
       return {
         ...state,
@@ -128,7 +147,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.ADD_SALE_OPTION: {
-      // const saleOptions = clone(state.saleOptions)
       saleOptions.push(payload)
       return {
         ...state,
@@ -137,7 +155,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_SELECT_MULTI_OPTIONS: {
       const { index, data } = payload
-      // const saleOptions = clone(state.saleOptions)
       saleOptions[index].canSelectMultiOptions = data
       return {
         ...state,
@@ -152,7 +169,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.ADD_PRODUCT_INFO: {
-      // const infos = clone(state.infos)
       infos.push(payload)
       return {
         ...state,
@@ -160,7 +176,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.REMOVE_PRODUCT_INFO: {
-      // const infos = clone(state.infos)
       infos.splice(payload, 1)
       return {
         ...state,
@@ -169,7 +184,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_CONTENT_PRODUCT_INFO: {
       const { index, data, field } = payload
-      // const infos = clone(state.infos)
       infos[index][field] = data
       return {
         ...state,
@@ -178,8 +192,15 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_PHOTOS_PRODUCT_INFO: {
       const { index, data } = payload
-      // const infos = clone(state.infos)
       infos[index].infoPhotos = [...data]
+      return {
+        ...state,
+        infos
+      }
+    }
+    case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
+      const { index, data } = payload
+      infos[index].infoPhotosStore = [...data]
       return {
         ...state,
         infos
@@ -187,7 +208,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_ENABLED_PRODUCT_INFO: {
       const { index, data } = payload
-      // const saleOptions = clone(state.saleOptions)
       saleOptions[index].enable = data
       return {
         ...state,
@@ -196,7 +216,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_TITLE_PRODUCT_INFO: {
       const { index, data } = payload
-      // const saleOptions = clone(state.saleOptions)
       saleOptions[index].title = data
       return {
         ...state,

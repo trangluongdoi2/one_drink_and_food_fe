@@ -22,10 +22,7 @@ export const useStyles = createStyles(() => ({
   },
   actionIcon: {
     width: '40px',
-    height: '20px',
-    '&:active': {
-      transform: 'translateY(0) !important'
-    }
+    height: '20px'
   },
   contentNotice: {
     fontStyle: 'italic',

@@ -70,20 +70,22 @@ const getWithMultipleQuery = async (itemType: FIREBASE_COLLECTION, queryKey: str
   }
 }
 
-const uploadImage = async (file: File) => {
+const uploadImage = async (file: File, collection: FIREBASE_COLLECTION, callback?: any) => {
+  if (!file) {
+    return
+  }
   const storage = getStorage()
-  const path = `/images/${file.name}`
+  const path = `/images/${collection}/${file.name}`
   const storageRef = ref(storage, path)
 
   try {
     await uploadBytesResumable(storageRef, file)
-    const url = await getDownloadURL(storageRef).then((downloadUrl) => {
-      return downloadUrl
+    await getDownloadURL(storageRef).then((downloadUrl) => {
+      callback && callback(downloadUrl)
     })
-
-    return url
-  } catch (err) {
-    console.error(err)
+    console.log('uplload image successfully')
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -125,7 +127,6 @@ async function createWithCustomKey(itemType: FIREBASE_COLLECTION, data: any, id:
     })
     .catch((error) => {
       console.log(error)
-      console.log('?????')
     })
 
   location.reload()

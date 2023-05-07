@@ -11,6 +11,7 @@ type Props = {
   isActive?: boolean
   options?: Record<string, any>
   updateFilePaths: (data: string[]) => void
+  updateFileStores: (data: File[]) => void
 }
 
 type PreviewImageZoneProps = {
@@ -51,30 +52,36 @@ export const ProductAddImageForm = ({
   limitQuantity,
   hiddenTitle = false,
   isActive = true,
-  updateFilePaths
+  updateFilePaths,
+  updateFileStores
 }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const acceptType = [MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]
 
-  const [filePaths, setfilePaths] = useState<string[]>(Array.from({ length: limitQuantity }, () => ''))
+  const [filePaths, setFilePaths] = useState<string[]>(Array.from({ length: limitQuantity }, () => ''))
+  const [fileStores, setFileStores] = useState<File[] | any>(Array.from({ length: limitQuantity }, () => null))
 
   const onUploadFile = (index: number) => (event: FileWithPath[]) => {
-    const newFiles = [...filePaths]
+    const newFilesPath = [...filePaths]
+    const newFiles = [...fileStores]
     const imageUrl = URL.createObjectURL(event[0] as FileWithPath)
-    newFiles[index] = imageUrl
-    setfilePaths(newFiles)
+    newFilesPath[index] = imageUrl
+    newFiles[index] = event[0] as FileWithPath
+    setFilePaths(newFilesPath)
+    setFileStores(newFiles)
   }
 
   const removeFile = (index: number) => {
     const newFiles = [...filePaths]
     newFiles.splice(index, 1, '')
-    setfilePaths(newFiles)
+    setFilePaths(newFiles)
   }
 
   useEffect(() => {
     updateFilePaths(filePaths)
-  }, [filePaths])
+    updateFileStores(fileStores)
+  }, [filePaths, fileStores])
 
   return (
     <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>

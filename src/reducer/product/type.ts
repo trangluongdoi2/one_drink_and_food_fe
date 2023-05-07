@@ -2,9 +2,13 @@ import { ProductInfos, ProductSaleOptionsContent, SaleOptionValue } from '@/page
 export interface ProductState {
   name: string
   auxiliaryName?: string
-  prices: number
+  prices: {
+    value: number
+    includeVAT: boolean
+  }
   introduction?: string
   photos?: { filePaths: string[]; canMove: boolean; motionDelays: number | null }
+  photosStore?: File[]
   typicalFunction?: string[]
   saleOptions: Array<ProductSaleOptionsContent>
   infos: Array<ProductInfos>
@@ -14,9 +18,11 @@ export enum ProductType {
   SET_NAME = 'SET_NAME',
   SET_AUXILIARY_NAME = 'SET_AUXILIARY_NAME',
   SET_PRICES = 'SET_PRICES',
+  SET_ENABLE_INCLUDE_VAT_PRICES = 'SET_ENABLE_INCLUDE_VAT_PRICES',
   SET_INTRODUCTION = 'SET_INTRODUCTION',
   SET_TYPICAL_FUNCTION = 'SET_TYPICAL_FUNCTION',
   SET_PHOTOS = 'SET_PHOTOS',
+  SET_PHOTOS_STORE = 'SET_PHOTOS_STORE',
   SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
   SET_SALE_OPTIONS = 'SET_SALE_OPTIONS',
   ADD_SALE_OPTION = 'ADD_SALE_OPTION',
@@ -28,8 +34,9 @@ export enum ProductType {
   REMOVE_PRODUCT_INFO = 'REMOVE_PRODUCT_INFO',
   SET_CONTENT_PRODUCT_INFO = 'SET_CONTENT_PRODUCT_INFO',
   SET_PHOTOS_PRODUCT_INFO = 'SET_PHOTOS_PRODUCT_INFO',
+  SET_PHOTOS_STORE_PRODUCT_INFO = 'SET_PHOTOS_STORE_PRODUCT_INFO',
   SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
-  SET_TITLE_PRODUCT_INFO = 'SET_TITLE_PRODUCT_INFO'
+  SET_TITLE_PRODUCT_INFO = 'SET_TITLE_PRODUCT_INFO',
 }
 
 export interface SetName {
@@ -47,6 +54,11 @@ export interface SetPrices {
   payload: number
 }
 
+export interface SetEnableIncludeVATPrices {
+  type: ProductType.SET_ENABLE_INCLUDE_VAT_PRICES
+  payload: boolean
+}
+
 export interface SetIntroductionContent {
   type: ProductType.SET_INTRODUCTION
   payload: string
@@ -60,6 +72,11 @@ export interface SetTypicalFunction {
 export interface SetPhotos {
   type: ProductType.SET_PHOTOS
   payload: string[]
+}
+
+export interface SetPhotosStore {
+  type: ProductType.SET_PHOTOS_STORE
+  payload: File[]
 }
 
 export interface SetMotionPhotos {
@@ -136,6 +153,14 @@ export interface SetPhotosProductInfo {
   }
 }
 
+export interface SetPhotosStoreProductInfo {
+  type: ProductType.SET_PHOTOS_STORE_PRODUCT_INFO
+  payload: {
+    data: File[]
+    index: number
+  }
+}
+
 export interface SetEnabledProductInfo {
   type: ProductType.SET_ENABLED_PRODUCT_INFO
   payload: {
@@ -156,9 +181,11 @@ export type ProductTypeAction =
   | SetName
   | SetAuxiliaryName
   | SetPrices
+  | SetEnableIncludeVATPrices
   | SetIntroductionContent
   | SetTypicalFunction
   | SetPhotos
+  | SetPhotosStore
   | SetMotionPhotos
   | SetSaleOptions
   | AddSaleOption
@@ -170,5 +197,6 @@ export type ProductTypeAction =
   | RemoveProductInfo
   | SetContentProductInfo
   | SetPhotosProductInfo
+  | SetPhotosStoreProductInfo
   | SetEnabledProductInfo
   | SetTitleProductInfo

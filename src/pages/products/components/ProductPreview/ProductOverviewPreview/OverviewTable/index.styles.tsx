@@ -41,7 +41,7 @@ export const useStyles = createStyles(() => ({
     '&:checked+.___ref-icon': {
       color: '#000000',
       background: '#000000',
-      transform: 'scale(0.5)'
+      transform: 'scale(0.5) '
     }
   },
   'checkbox-inner': {

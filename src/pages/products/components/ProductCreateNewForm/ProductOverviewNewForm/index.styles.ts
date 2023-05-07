@@ -7,10 +7,7 @@ export const useStyles = createStyles(() => ({
   },
   actionIcon: {
     width: '40px',
-    height: '20px',
-    '&:active': {
-      transform: 'translateY(0) !important'
-    }
+    height: '20px'
   },
   textIncludesVAT: {
     fontStyle: 'italic',
@@ -47,9 +44,6 @@ export const useStyles = createStyles(() => ({
     height: '20px',
     ':hover': {
       background: 'transparent'
-    },
-    ':active': {
-      transform: 'translateY(0)'
     }
   }
 }))
