@@ -7,7 +7,6 @@ export const useStyles = createStyles(() => ({
   },
   container__carousel: {
     width: '225px'
-    // height: '225px'
   },
   'container__carousel-child': {
     width: '225px',

@@ -59,9 +59,6 @@ export const useStyles = createStyles(() => ({
     zIndex: 3,
     right: 5,
     top: 5,
-    background: '#ffffff',
-    '&:active': {
-      transform: 'translateY(0)'
-    }
+    background: '#ffffff'
   }
 }))

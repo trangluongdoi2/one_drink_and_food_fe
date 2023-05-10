@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Flex, NumberInput, Text, TextInput, Textarea, createStyles } from '@mantine/core'
-import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
 import { ProductDetailProps } from '@/types/product'
+import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
 import { ToggleButon } from '@/components/button/ToggleButton'
+import { useFocusWithin } from '@mantine/hooks'
 
 const useStyles = createStyles(() => ({
   '.text__title': {
@@ -41,18 +42,31 @@ export interface InputProps {
   title?: string
   field: keyof ProductDetailProps | any
   placeholder: string
+  value?: string | number
   isImperative?: boolean
   canToggleActive?: boolean
   isActiveInput?: boolean
   typeInput?: string
   hiddenToggleIcon?: boolean
   moreOptions?: React.ReactNode
+  classInput?: string
+  checkIsFocused?: (data: boolean) => void
   updateInput: (data: { value: string | number; field: string }) => void
 }
 
-type TypeInputProps = Pick<InputProps, 'typeInput' | 'placeholder' | 'field' | 'isActiveInput' | 'updateInput'>
+type TypeInputProps = Pick<
+  InputProps,
+  'typeInput' | 'placeholder' | 'field' | 'isActiveInput' | 'updateInput' | 'classInput'
+>
 
-export const TypeInput = ({ typeInput, placeholder, field, isActiveInput, updateInput }: TypeInputProps) => {
+export const TypeInput = ({
+  typeInput,
+  placeholder,
+  field,
+  isActiveInput,
+  classInput,
+  updateInput
+}: TypeInputProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
 
@@ -74,7 +88,7 @@ export const TypeInput = ({ typeInput, placeholder, field, isActiveInput, update
       return (
         <Textarea
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputArea}` }}
+          classNames={{ input: `${classes.input} ${classes.inputArea} ${classInput}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
         />
@@ -83,7 +97,7 @@ export const TypeInput = ({ typeInput, placeholder, field, isActiveInput, update
       return (
         <TextInput
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputText}` }}
+          classNames={{ input: `${classes.input} ${classes.inputText} ${classInput}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
         />
@@ -99,14 +113,19 @@ export const AppInput = ({
   isImperative = false,
   hiddenToggleIcon = false,
   moreOptions,
+  value,
+  classInput,
+  checkIsFocused,
   updateInput
 }: InputProps) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
+  const { ref, focused } = useFocusWithin();
   const [isActive, setIsActive] = useState<boolean>(true)
+
   const form = useUserForm({
     initialValues: {
-      [field]: typeof field === 'string' ? '' : 0
+      [field]: typeof field === 'string' ? value ?? '' : 0
     } as Partial<ProductDetailProps>
   })
 
@@ -114,10 +133,14 @@ export const AppInput = ({
     updateInput(data)
   }
 
+  useEffect(() => {
+    checkIsFocused && checkIsFocused(focused)
+  }, [focused])
+
   return (
     <UserFormProvider form={form}>
       <form>
-        <Box>
+        <Box ref={ref}>
           {title && (
             <Flex justify='space-between' align={'flex-end'} sx={{ marginTop: '20px', marginBottom: '10px' }}>
               <Text className={classes['.text__title']}>{title}</Text>
@@ -133,6 +156,7 @@ export const AppInput = ({
             field={field}
             isActiveInput={isActive}
             updateInput={changeParentInput}
+            classInput={classInput}
           />
           {moreOptions}
         </Box>

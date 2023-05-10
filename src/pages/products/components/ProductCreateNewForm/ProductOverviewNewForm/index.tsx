@@ -1,34 +1,42 @@
-import { ActionIcon, Flex, NumberInput, Paper, Text } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
-import { DoneOutlineIcon, ToggleDarkLgIcon, ToggleLightLgIcon } from '@/assets/icon'
 import { useState } from 'react'
+import { ActionIcon, Flex, NumberInput, Paper, Text } from '@mantine/core'
+import { DoneOutlineIcon, ToggleDarkLgIcon, ToggleLightLgIcon } from '@/assets/icon'
 import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import {
   setAuxiliaryName,
+  setEnableIncludeVATPrices,
   setIntroductionContent,
   setMotionPhotos,
   setName,
   setPhotos,
+  setPhotosStore,
   setPrices,
   setTypicalFunction
 } from '@/reducer/product/action'
 import { AppInput } from '@/components/input'
 import { AppInputList } from '@/components/input-list'
+import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
 import { useStyles } from './index.styles'
+
+const { trans: t } = useTranslationMiddleware()
 
 type MotionImageProps = {
   motionValue: { canMove: boolean; motionDelays: number }
   updateMotion: (data: { canMove: boolean; motionDelays: number }) => void
 }
 
-const IncludePrices = () => {
-  const { t } = useTranslation()
+type IncludePricesVATProps = {
+  enableVAT: (data: boolean) => void
+}
+
+const IncludePricesVAT = ({ enableVAT }: IncludePricesVATProps) => {
   const { classes } = useStyles()
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState<boolean>(true)
   const onToggleStatus = (status: boolean) => {
     setIsActive(status)
+    enableVAT(status)
   }
   return (
     <Flex align={'center'} columnGap={5}>
@@ -40,7 +48,6 @@ const IncludePrices = () => {
 
 const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
   const { classes } = useStyles()
-  const { t } = useTranslation()
 
   const changeMotionDelays = (event: React.FocusEvent<HTMLInputElement>) => {
     updateMotion({ canMove: true, motionDelays: Number(event.target.value) })
@@ -73,7 +80,6 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
 
 export const ProductOverviewNewForm = () => {
   const { classes } = useStyles()
-  const { t } = useTranslation()
   const { dispatch, photos } = useProductContext()
 
   const motionValue = { canMove: photos?.canMove as boolean, motionDelays: photos?.motionDelays as number }
@@ -87,6 +93,10 @@ export const ProductOverviewNewForm = () => {
 
   const updateFilePaths = (data: string[]) => {
     dispatch(setPhotos(data))
+  }
+
+  const updateFileStores = (data: any) => {
+    dispatch(setPhotosStore(data))
   }
 
   const updateInput = (data: { value: string | number; field: string }) => {
@@ -112,12 +122,21 @@ export const ProductOverviewNewForm = () => {
     dispatch(setMotionPhotos(data))
   }
 
+  const updatePrices = (data: boolean) => {
+    dispatch(setEnableIncludeVATPrices(data))
+  }
+
   return (
     <Paper className={`${classes.container} create-new-product-card__container`}>
-      <ProductAddImageForm limitQuantity={8} updateFilePaths={updateFilePaths} options={optionImageUploadForm} />
+      <ProductAddImageForm
+        limitQuantity={8}
+        updateFilePaths={updateFilePaths}
+        options={optionImageUploadForm}
+        updateFileStores={updateFileStores}
+      />
       <MotionImage motionValue={motionValue} updateMotion={updateMotions} />
       <AppInput
-        title={t('product_name') as string}
+        title={t('product_name')}
         placeholder={t('fill_product_name')}
         field='name'
         isImperative={true}
@@ -125,19 +144,19 @@ export const ProductOverviewNewForm = () => {
         updateInput={updateInput}
       />
       <AppInput
-        title={t('auxiliary_name') as string}
+        title={t('auxiliary_name')}
         placeholder={t('fill_product_auxiliary_name')}
         field='auxiliaryName'
         updateInput={updateInput}
       />
       <AppInput
-        title={t('prices') as string}
+        title={t('prices')}
         placeholder={t('fill_product_prices')}
         field='prices'
         typeInput='number'
         isImperative={true}
         hiddenToggleIcon={true}
-        moreOptions={<IncludePrices />}
+        moreOptions={<IncludePricesVAT enableVAT={updatePrices} />}
         updateInput={updateInput}
       />
       <AppInputList
@@ -147,7 +166,7 @@ export const ProductOverviewNewForm = () => {
         updateList={updateFunctionList}
       ></AppInputList>
       <AppInput
-        title={t('introduction') as string}
+        title={t('introduction')}
         placeholder={t('fill_product_introduction')}
         typeInput='area'
         field='introduction'

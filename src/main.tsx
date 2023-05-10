@@ -1,3 +1,4 @@
+import './i18n/i18n'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -6,7 +7,6 @@ import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { GlobalStyles } from './GlobalStyles'
-import './i18n'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -30,7 +30,36 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           },
           fontFamily: 'Montserrat, sans-serif',
           fontFamilyMonospace: 'Montserrat, Courier',
-          headings: { fontFamily: 'Montserrat, sans-serif' }
+          headings: { fontFamily: 'Montserrat, sans-serif' },
+          components: {
+            Breadcrumbs: {
+              styles: () => ({
+                breadcrumb: {
+                  color: '#C4C4C4',
+                  textDecoration: 'unset !important',
+                  fontWeight: 700,
+                  fontSize: '20px',
+                  lineHeight: '24px',
+                  cursor: 'pointer'
+                },
+                separator: {
+                  margin: '0 1px',
+                  color: '#C4C4C4',
+                  fontSize: '20px'
+                }
+              })
+            },
+            ActionIcon: {
+              styles: () => ({
+                root: {
+                  // transform: 'translateY(0) !important',
+                  '&:hover': {
+                    background: 'transparent'
+                  }
+                }
+              })
+            }
+          }
         }}
         withNormalizeCSS
         withGlobalStyles

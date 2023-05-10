@@ -2,14 +2,12 @@ import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
   container: {
-    height: '1006px'
+    // height: '1006px'
+    // flex: 1
   },
   actionIcon: {
     width: '40px',
-    height: '20px',
-    '&:active': {
-      transform: 'translateY(0) !important'
-    }
+    height: '20px'
   },
   textIncludesVAT: {
     fontStyle: 'italic',
@@ -46,9 +44,6 @@ export const useStyles = createStyles(() => ({
     height: '20px',
     ':hover': {
       background: 'transparent'
-    },
-    ':active': {
-      transform: 'translateY(0)'
     }
   }
 }))

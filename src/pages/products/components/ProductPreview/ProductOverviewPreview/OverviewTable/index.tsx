@@ -1,79 +1,135 @@
-import { Box, Button, Flex, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
-import { useStyles } from './index.styles'
-import { ExtraNoteIcon } from '@/assets/icon'
+import { ActionIcon, Box, Checkbox, CheckboxProps, Flex, Radio, Stack, Text } from '@mantine/core'
+import { CircleFillIcon } from '@/assets/icon'
+import { clone } from '@/utils/utility'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
-import { useEffect } from 'react'
+// import { updateSaleOption } from '@/reducer/product/action'
+import { useStyles } from './index.styles'
+import { SaleOptionValue } from '@/pages/products/type'
 
-export const OverviewTable = () => {
+type SaleOption = {
+  info: string | number
+  price?: number
+}
+
+type Props = {
+  updateSaleOption: (input: { data: SaleOption[]; index: number }) => void
+}
+
+// eslint-disable-next-line react/prop-types
+const CheckboxIcon: CheckboxProps['icon'] = ({ className }) => (
+  <ActionIcon className={className} size={6}>
+    <CircleFillIcon />
+  </ActionIcon>
+)
+
+export const OverviewTable = ({ updateSaleOption }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const { name } = useProductContext()
-  const baseSalesList = [
-    {
-      title: t('main_ingredient'),
-      field: 'mainIngredient',
-      value: 'Ổi x Mật ong',
-      isOption: false
-    },
-    {
-      title: t('choose_size'),
-      field: 'size',
-      value: '',
-      isOption: true
-    },
-    {
-      title: t('ice_content'),
-      field: 'iceContent',
-      value: '',
-      isOption: true
-    },
-    {
-      title: t('sugar_content'),
-      field: 'sugarContent',
-      value: '',
-      isOption: true
-    },
-    {
-      title: t('option_frame_name'),
-      field: '',
-      value: '',
-      isOption: true
-    },
-    {
-      title: t('content_frame_name'),
-      field: '',
-      value: t('fill_ingredient_product_content'),
-      isOption: false
-    }
-  ]
+  const { saleOptions, dispatch } = useProductContext()
+
+  const convertUpdateData = (data: string[] | string, index: number) => {
+    const cloneSaleOptions = clone(saleOptions)
+    const updateData = [...cloneSaleOptions[index].value]
+    return updateData.filter((item: SaleOption) => data.includes(item.info as string))
+  }
+
+  const changeEnableValueMultiOptions = (data: string[], index: number) => {
+    const convertedData = convertUpdateData(data, index)
+    updateSaleOption({ data: convertedData, index })
+    // dispatch(updateSaleOption({ data: convertedData, index }))
+  }
+
+  const changeEnableValueUniqueOption = (data: string, index: number) => {
+    const convertedData = convertUpdateData(data, index)
+    updateSaleOption({ data: convertedData, index })
+    // dispatch(updateSaleOption({ data: convertedData, index }))
+  }
 
   return (
     <Flex gap={6} direction={'column'}>
       <Box className={classes.container}>
-        {baseSalesList.map((item, index) => (
-          <Stack key={index} spacing={0}>
-            <Text className={classes.text__title}>{item.title}</Text>
-            <Flex className={classes.container__content}>
-              {item.isOption ? (
-                <Text className={classes.text__content}>{item.value}</Text>
-              ) : (
-                <Text className={classes.text__content}>{item.value}</Text>
-              )}
-            </Flex>
-          </Stack>
+        {saleOptions.map((item, index) => (
+          <Box key={index}>
+            {item.enable && (
+              <Stack key={index} spacing={0}>
+                <Text className={classes.text__title}>{item.title}</Text>
+                <Flex className={classes.container__content}>
+                  {item.isOption ? (
+                    <Stack sx={{ width: '100%' }}>
+                      {!item.canSelectMultiOptions ? (
+                        <Radio.Group
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            rowGap: '10px'
+                          }}
+                          onChange={(event) => changeEnableValueUniqueOption(event, index)}
+                        >
+                          {item.value.map((data: SaleOption, childIndex: number) => (
+                            <Flex key={childIndex} align={'center'} rowGap={10}>
+                              <Radio
+                                value={data.info}
+                                label={data.info || t('option', { index: childIndex + 1 })}
+                                sx={{ flex: '1' }}
+                                classNames={{
+                                  label: classes.text__content,
+                                  labelWrapper: classes['label-wrapper'],
+                                  radio: classes['radio-input'],
+                                  inner: classes['radio-inner'],
+                                  icon: classes['radio-inner']
+                                }}
+                              />
+                              <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
+                            </Flex>
+                          ))}
+                        </Radio.Group>
+                      ) : (
+                        <Checkbox.Group
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            rowGap: '10px'
+                          }}
+                          onChange={(event) => changeEnableValueMultiOptions(event, index)}
+                        >
+                          {item.value.map((data: SaleOption, childIndex: number) => (
+                            <Flex key={childIndex} align={'center'} rowGap={10}>
+                              <Checkbox
+                                value={data.info}
+                                label={data.info || t('option', { index: childIndex + 1 })}
+                                sx={{ flex: '1', alignItems: 'center' }}
+                                classNames={{
+                                  label: classes.text__content,
+                                  labelWrapper: classes['label-wrapper'],
+                                  inner: classes['checkbox-inner'],
+                                  input: classes['checkbox-input'],
+                                  icon: classes['checkbox-inner']
+                                }}
+                                icon={CheckboxIcon}
+                              />
+                              <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
+                            </Flex>
+                          ))}
+                        </Checkbox.Group>
+                      )}
+                    </Stack>
+                  ) : (
+                    <Stack>
+                      {item.value.map((data: SaleOption, childIndex: number) => (
+                        <Text key={childIndex} className={classes.text__content}>
+                          {data.info}
+                        </Text>
+                      ))}
+                    </Stack>
+                  )}
+                </Flex>
+              </Stack>
+            )}
+          </Box>
         ))}
-      </Box>
-      <Box className={`${classes.container} ${classes.container__note}`}>
-        <Button className={classes.note__icon}>
-          <ExtraNoteIcon />
-        </Button>
-        <Text className={classes.note__text}>{t('extra_note')}</Text>
-      </Box>
-      <Box className={`${classes.container} ${classes['container__add-cart']}`}>
-        <Text className={classes['text__add-cart']}>
-          <span className={classes['text__add-cart--bold']}>45.000đ</span> | {t('add_to_cart')}
-        </Text>
       </Box>
     </Flex>
   )

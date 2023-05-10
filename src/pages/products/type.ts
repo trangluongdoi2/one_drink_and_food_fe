@@ -22,24 +22,38 @@ export interface ProductOptionFrameProps {
   title?: string
   defaultPlaceholder: string
   isOption?: boolean
-  field: string
-  updateProductOption: (data: any) => void
+  field?: string
+  multiOptions?: boolean
+  enable?: boolean
+  updateTitle: (data: string) => void
+  updateEnable: (data: boolean) => void
+  updateSelectMultiOption: (data: boolean) => void
+  updateProductOption: (data: ProductSaleOptionsContent) => void
+  removeProductOptionItem: () => void
 }
 
-export interface ProductContentFrame {
+export interface ProductSaleOptionsContent {
+  title?: string
+  field?: string
+  value: Array<SaleOptionValue>
+  isOption: boolean
+  canSelectMultiOptions?: boolean
+  multiOptions?: boolean
+  enable?: boolean
+}
+
+export interface SaleOptionValue {
+  info: string | number
+  price?: number
+}
+
+export interface ProductInfos {
   title: string
-  field: string
-  value?: string
-  price?: number | string
-  isOption?: boolean
+  infoPhotos: string[]
+  infoPhotosStore: File[]
+  content: string
+  enable: boolean
 }
-
-// export interface ProductOption {
-//   title: string
-//   field: string
-//   value?: string
-//   price?: number | string
-// }
 
 export enum JuiceType {
   JUICE_BOTTLED = 'juiceBottled',
@@ -47,10 +61,10 @@ export enum JuiceType {
 }
 
 export enum ProductType {
-  JUICE = 'Nước ép',
-  VITAMIN = 'Sinh tố',
-  YOGURT = 'Yogurt',
-  TEA = 'Trà',
-  COFFEE = 'Cà phê',
-  ITEMS = 'Vật phẩm'
+  JUICE = 'juice',
+  VITAMIN = 'vitamin',
+  YOGURT = 'yogurt',
+  TEA = 'tea',
+  COFFEE = 'coffee',
+  ITEM = 'item'
 }
