@@ -50,5 +50,14 @@
   "option": "Lựa chọn {{index}}",
   "create_new_product": "Tạo sản phẩm mới",
   "option_name": "Tên khung lựa chọn",
-  "content_name": "Tên khung nội dung"
+  "content_name": "Tên khung nội dung",
+  "lastest_rate": "Đánh giá mới nhất",
+  "oldest_rate": "Đánh giá cũ nhất",
+  "highest_point": "Điểm cao nhất",
+  "lowest_point": "Điểm thấp nhất",
+  "point_evaluation": "Điểm đánh giá",
+  "shortcut": "Rút gọn",
+  "sold": "Đã bán",
+  "reviews": "lượt đánh giá",
+  "rate_and_comment": "Xếp hạng & nhận xét"
 }
