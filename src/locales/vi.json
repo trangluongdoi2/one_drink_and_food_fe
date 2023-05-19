@@ -59,5 +59,18 @@
   "shortcut": "Rút gọn",
   "sold": "Đã bán",
   "reviews": "lượt đánh giá",
-  "rate_and_comment": "Xếp hạng & nhận xét"
+  "rate_and_comment": "Xếp hạng & nhận xét",
+  "current_points": "Số điểm hiện có",
+  "total_points": "Tổng điểm đã đạt",
+  "used": "Đã sử dụng",
+  "not_enough_points": "Chưa đủ điểm đổi thưởng",
+  "accumulate_points": "Tích điểm",
+  "monday": "Thứ 2",
+  "tuesday": "Thứ 3",
+  "wednesday": "Thứ 4",
+  "thursday": "Thứ 5",
+  "friday": "Thứ 6",
+  "saturday": "Thứ 7",
+  "sunday": "Chủ Nhật"
+
 }

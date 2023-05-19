@@ -1,14 +1,14 @@
-import { Modal, Paper, Tabs } from '@mantine/core'
-import { useUserFormContext } from '@/context/form-context'
-import CustomModal from '@/components/modal'
 import { useState } from 'react'
-import { useStyles } from './index.style'
-import { clsx } from '@mantine/core'
+import { Modal, Paper, Tabs, clsx } from '@mantine/core'
+import { useUserFormContext } from '@/context/form-context'
+import { tabList } from '@/constants/tabList'
+import CustomModal from '@/components/modal'
 import CouponPanel from '../CouponPanel'
 import GiftPanel from '../GiftPanel'
 import AccountPanel from '../AccountPanel'
-import { tabList } from '@/constants/tabList'
 import HistoryPanel from '../HistoryPanel'
+import { MemberPanel } from '../MemberPanel'
+import { useStyles } from './index.style'
 
 interface DetailModalProps {
   opened: boolean
@@ -41,7 +41,7 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
       }}
       centered
       padding={0}
-      size='75%'
+      size='auto'
       withCloseButton={false}
       radius={10}
       shadow='md'
@@ -68,7 +68,9 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
           </Tabs.Panel>
 
           {/* ---------- MEMBER ------------- */}
-          <Tabs.Panel value='member'>MEMBER</Tabs.Panel>
+          <Tabs.Panel value='member'>
+            <MemberPanel />
+          </Tabs.Panel>
 
           {/* ---------- HISTORY ------------- */}
           <Tabs.Panel value='history'>
