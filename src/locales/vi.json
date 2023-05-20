@@ -50,5 +50,27 @@
   "option": "Lựa chọn {{index}}",
   "create_new_product": "Tạo sản phẩm mới",
   "option_name": "Tên khung lựa chọn",
-  "content_name": "Tên khung nội dung"
+  "content_name": "Tên khung nội dung",
+  "lastest_rate": "Đánh giá mới nhất",
+  "oldest_rate": "Đánh giá cũ nhất",
+  "highest_point": "Điểm cao nhất",
+  "lowest_point": "Điểm thấp nhất",
+  "point_evaluation": "Điểm đánh giá",
+  "shortcut": "Rút gọn",
+  "sold": "Đã bán",
+  "reviews": "lượt đánh giá",
+  "rate_and_comment": "Xếp hạng & nhận xét",
+  "current_points": "Số điểm hiện có",
+  "total_points": "Tổng điểm đã đạt",
+  "used": "Đã sử dụng",
+  "not_enough_points": "Chưa đủ điểm đổi thưởng",
+  "accumulate_points": "Tích điểm",
+  "monday": "Thứ 2",
+  "tuesday": "Thứ 3",
+  "wednesday": "Thứ 4",
+  "thursday": "Thứ 5",
+  "friday": "Thứ 6",
+  "saturday": "Thứ 7",
+  "sunday": "Chủ Nhật"
+
 }
