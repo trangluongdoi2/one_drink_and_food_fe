@@ -6,6 +6,13 @@ export enum ORDER_STATUS {
   SHIPPING = 'shipping'
 }
 
+export enum PAYMENT_METHOD {
+  CASH = 'cash',
+  MOMO = 'momo',
+  ZALO = 'zalo',
+  BANKING = 'banking'
+}
+
 export interface OrderProps {
   address: string
   phone: string

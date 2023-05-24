@@ -1,7 +1,11 @@
-import { Modal, Paper, Stack, Text, clsx } from '@mantine/core'
-import { useUserFormContext } from '@/context/form-context'
+import { PaymentIcon, StatusIcon, TruckIcon } from '@/assets/icon'
 import CustomModal from '@/components/modal'
-import { useState } from 'react'
+import { useUserFormContext } from '@/context/form-context'
+import { Flex, Modal, Paper, Stack, Title } from '@mantine/core'
+import OrderOption from '../../components/orderOption'
+import OrderTotal from '../../components/orderTotal'
+import PaymentOptions from '../../components/paymentOptions'
+import ShippingSection from '../../components/shippingSection'
 import { useStyles } from './index.style'
 
 interface DetailModalProps {
@@ -38,15 +42,42 @@ const OrderDetail = ({ opened, close }: DetailModalProps) => {
       radius={10}
       shadow='md'
     >
-      <Paper px={50} pt={7} pb={45}>
-        <Stack spacing={40}>
-          <Paper p={50}>
-            <Text>Giỏ hàng của bạn</Text>
-          </Paper>
+      <Stack spacing={40} px={50} py={45}>
+        <Paper p={50} shadow='md' radius={10}>
+          <Title size={24} mb={20}>
+            Giỏ hàng của bạn
+          </Title>
+          <Stack spacing={20}>
+            <OrderOption />
+            <OrderOption />
+          </Stack>
+          <Title size={24} mb={20} mt={10}>
+            Tổng cộng
+          </Title>
+          <OrderTotal />
+        </Paper>
 
-          <Text>Giao hàng</Text>
+        <Stack pl={50} spacing={20}>
+          <Stack spacing={10}>
+            <Flex gap={10} align='center'>
+              <TruckIcon />
+              <Title size={24}>Tổng cộng</Title>
+            </Flex>
+
+            <ShippingSection />
+          </Stack>
+          <Flex gap={10} align='center'>
+            <PaymentIcon />
+            <Title size={24}>Phương thức thanh toán</Title>
+          </Flex>
+          <PaymentOptions />
+          <Flex gap={10} align='center'>
+            <StatusIcon />
+            <Title size={24}>Trạng thái</Title>
+          </Flex>
+          Đã huỷ
         </Stack>
-      </Paper>
+      </Stack>
     </Modal>
   )
 }

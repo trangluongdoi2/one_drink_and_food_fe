@@ -1,10 +1,12 @@
-import { Flex, Paper, Stack, Title, Group } from '@mantine/core'
+import { Center, Flex, Loader, Paper, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import RegisterModal from '@/pages/users/components/registerModal'
 import { useEffect } from 'react'
+import CustomerTable from '../../components/CustomerTables'
+import { useFetchUser } from '../../services/useFetchUser'
 
 const AddCustomer = () => {
   const [opened, { open, close }] = useDisclosure(false)
+  const { loading, userData } = useFetchUser({ key: 'member', params: 'all' })
 
   useEffect(() => {
     open()
@@ -12,7 +14,7 @@ const AddCustomer = () => {
 
   return (
     <>
-      <RegisterModal opened={opened} close={close} title='ĐĂNG KÍ THÀNH VIÊN' />
+      {/* <RegisterModal opened={opened} close={close} title='ĐĂNG KÍ THÀNH VIÊN' /> */}
 
       <Paper p={40} sx={{ backgroundColor: '#f5f5f5' }}>
         <Stack spacing={20}>
@@ -20,18 +22,25 @@ const AddCustomer = () => {
             <Title variant='h3' size={24}>
               Thông tin đăng ký
             </Title>
-            {/* <Flex gap={20}>
-            <ActionIcon>
-            <DeleteIcon />
-            </ActionIcon>
-          </Flex> */}
           </Flex>
 
-          <Paper p={40} radius={10} shadow='md' sx={{ height: '100vh' }}>
-            <Stack spacing={15}>
-              <Group position='center'>{/* <Button onClick={open}>Open centered Modal</Button> */}</Group>
-            </Stack>
-          </Paper>
+          {loading ? (
+            <Paper p={40} radius={10} shadow='md'>
+              <Center>
+                <Loader variant='dots' />
+              </Center>
+            </Paper>
+          ) : (
+            <Paper p={40} radius={10} shadow='md'>
+              {userData && userData.length > 0 ? (
+                <CustomerTable data={userData} />
+              ) : (
+                <Center>
+                  <Text>Danh sách khách hàng trống</Text>
+                </Center>
+              )}
+            </Paper>
+          )}
         </Stack>
       </Paper>
     </>
