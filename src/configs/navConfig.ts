@@ -15,7 +15,17 @@ import {
   ActiveCouponIcon
 } from '@/assets/icon'
 
-export const navConfig = [
+export type TNavLink = { label: string; link: string }
+
+export type TNavConfig = {
+  label: string
+  icon: string
+  active: string
+  links: TNavLink[]
+  initiallyOpened?: boolean
+}
+
+const navConfig: TNavConfig[] = [
   {
     label: 'Tổng quan',
     icon: OverviewIcon,
@@ -87,3 +97,5 @@ export const navConfig = [
     ]
   }
 ]
+
+export { navConfig }

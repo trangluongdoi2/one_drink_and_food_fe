@@ -14,5 +14,14 @@ export const useStyles = createStyles((theme) => ({
     height: '100%',
     width: '60%',
     padding: '8px 20px'
+  },
+  image: {
+    border: '2px solid #ccc'
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0
   }
 }))

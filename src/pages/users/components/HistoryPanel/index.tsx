@@ -1,11 +1,13 @@
 import { useUserFormContext } from '@/context/form-context'
-import { Center, Divider, Flex, Grid, Paper, ScrollArea, Stack, Tabs, Text, Image } from '@mantine/core'
+import { Center, Divider, Flex, Grid, Paper, ScrollArea, Stack, Tabs, Text, Image, clsx } from '@mantine/core'
 import { tabHeader } from '@/constants/history/tab'
 import { IconChevronRight } from '@tabler/icons-react'
 import { ORDER_STATUS } from '@/types/order'
 import { useState } from 'react'
 import empty from '@/assets/image/empty.png'
 import { getStatus } from '@/utils/getStatus'
+import { HistoryRow } from './HistoryRow'
+import { useStyles } from './index.style'
 
 const { CANCEL, PAID, PAYMENTING, PREPARING, SHIPPING } = ORDER_STATUS
 
@@ -49,8 +51,8 @@ const mockData = [
 ]
 
 const HistoryPanel = () => {
-  const form = useUserFormContext()
   const [activeTab, setActiveTab] = useState<string | null>(PAYMENTING)
+  const { classes } = useStyles()
 
   return (
     <Tabs defaultValue={PAYMENTING} orientation='vertical' onTabChange={setActiveTab} color='dark'>
@@ -65,11 +67,7 @@ const HistoryPanel = () => {
                     h={60}
                     key={index}
                     rightSection={<IconChevronRight color='gray' />}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      boxShadow: activeTab === value ? `0px 0px 20px rgba(0, 0, 0, 0.1)` : ''
-                    }}
+                    className={clsx(classes.tab, { [classes.shadow]: activeTab === value })}
                   >
                     {title}
                   </Tabs.Tab>
@@ -109,34 +107,6 @@ const HistoryPanel = () => {
         </Grid.Col>
       </Grid>
     </Tabs>
-  )
-}
-
-interface IHistoryRowProps {
-  id: string
-  price: number
-  date: string
-  status: string
-}
-
-const HistoryRow = ({ id, price, date, status }: IHistoryRowProps) => {
-  const historyStatus = getStatus(status)
-  return (
-    <Stack spacing={10} px={20} py={10}>
-      <Flex justify='space-between'>
-        <Text size={14} fw={700}>
-          MÃ ĐƠN: {id}
-        </Text>
-        <Text size='xs'>{price} đ</Text>
-      </Flex>
-      <Flex justify='space-between'>
-        <Text size='xs'>{date}</Text>
-        <Text size='xs' fw='bold' color='red'>
-          {historyStatus?.title}
-        </Text>
-      </Flex>
-      <Divider />
-    </Stack>
   )
 }
 

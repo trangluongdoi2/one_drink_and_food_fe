@@ -14,7 +14,7 @@ export const ErrorFallback = () => {
       <p>Something went wrong : </p>
       <Button onClick={handleBackHome}>Back to Home</Button>
       <span>
-        Copyright &copy; {`${new Date().getFullYear()}`} <span>Goha</span>
+        Copyright &copy; {`${new Date().getFullYear()}`} <span>One Drink and Food</span>
       </span>
     </div>
   )

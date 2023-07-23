@@ -28,5 +28,7 @@ export const useStyles = createStyles((theme) => ({
     height: 80,
     display: 'flex',
     alignItems: 'center'
-  }
+  },
+  accordion: { padding: 0 },
+  control: { backgroundColor: 'white' }
 }))

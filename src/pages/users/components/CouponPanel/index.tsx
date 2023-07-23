@@ -14,7 +14,7 @@ const CouponPanel = () => {
       <Text size={10} mb={20}>
         Những phần quà bạn đã đổi gần đây
       </Text>
-      <Image src={gradient} height={100} sx={{ width: '100%', position: 'absolute', bottom: -20, zIndex: 999 }}></Image>
+      <Image src={gradient} height={100} sx={{ width: '100%', position: 'absolute', bottom: -20, zIndex: 999 }} />
       <ScrollArea h={300} type='always' offsetScrollbars dir='ltr'>
         {couponList && couponList.length > 0 ? (
           <Grid gutter={20} sx={{ width: '95%' }}>

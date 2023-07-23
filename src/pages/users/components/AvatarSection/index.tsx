@@ -1,26 +1,26 @@
-import { DefaultAvatar, EditImageIcon, HeartIcon, CopyIcon } from '@/assets/icon'
+import { CopyIcon, EditImageIcon, HeartIcon } from '@/assets/icon'
+import oneAva from '@/assets/image/one-ava.png'
+import overlay from '@/assets/image/overlay.png'
+import { useUserFormContext } from '@/context/form-context'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
+import { FirebaseService } from '@/firebase/handler'
 import {
-  Paper,
-  Flex,
-  Image,
-  Text,
-  Stack,
+  ActionIcon,
+  BackgroundImage,
   Box,
   CopyButton,
-  Tooltip,
-  ActionIcon,
+  Flex,
   Group,
-  BackgroundImage
+  Image,
+  Paper,
+  Stack,
+  Text,
+  Tooltip
 } from '@mantine/core'
-import { IconCheck } from '@tabler/icons-react'
-import { useUserFormContext } from '@/context/form-context'
-import { useRef, useState } from 'react'
-import overlay from '@/assets/image/overlay.png'
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { IconCheck } from '@tabler/icons-react'
+import { useRef, useState } from 'react'
 import { useStyles } from './index.style'
-import { FirebaseService } from '@/firebase/handler'
-import oneAva from '@/assets/image/one-ava.png'
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
 
 const AvatarSection = () => {
   const form = useUserFormContext()
@@ -61,11 +61,7 @@ const AvatarSection = () => {
                 width={100}
                 height={100}
                 radius={50}
-                styles={{
-                  image: {
-                    border: '2px solid #ccc'
-                  }
-                }}
+                classNames={{ image: classes.image }}
                 alt='default'
               />
             ) : (
@@ -74,16 +70,12 @@ const AvatarSection = () => {
                 width={100}
                 height={100}
                 radius={50}
-                styles={{
-                  image: {
-                    border: '2px solid #ccc'
-                  }
-                }}
+                classNames={{ image: classes.image }}
                 alt='avatar'
               />
             )}
             {visible && (
-              <Flex sx={{ position: 'absolute', top: 0, bottom: 0, left: 0 }}>
+              <Flex className={classes.backgroundImage}>
                 <BackgroundImage src={overlay} w={100} h={100} radius={50}>
                   <Stack sx={{ width: '100%', height: '100%' }} justify='center' align='center' spacing={0}>
                     <EditImageIcon />
@@ -109,7 +101,7 @@ const AvatarSection = () => {
         </Stack>
       </Flex>
 
-      <Flex sx={{ width: '100%' }} mt={20} align='center' gap={1}>
+      <Flex w='100%' mt={20} align='center' gap={1}>
         <Box className={classes.invite}>
           <Text fw='bolder' size={14} align='center'>
             MÃ GIỚI THIỆU

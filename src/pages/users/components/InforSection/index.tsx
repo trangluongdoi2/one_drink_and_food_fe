@@ -1,5 +1,5 @@
 import { Divider, Paper, Title, TextInput, Stack, Center, Button, Select } from '@mantine/core'
-import { useStyles } from "./index.style"
+import { useStyles } from './index.style'
 import { IconChevronDown } from '@tabler/icons-react'
 import { useUserFormContext } from '@/context/form-context'
 import { CalendarIcon } from '@/assets/icon'
@@ -8,6 +8,17 @@ import { useState } from 'react'
 import { notifications } from '@mantine/notifications'
 import { FirebaseService } from '@/firebase/handler'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
+
+const genderOption = [
+  {
+    value: 'female',
+    label: 'Nữ'
+  },
+  {
+    value: 'male',
+    label: 'Nam'
+  }
+]
 
 const InforSection = () => {
   const { classes } = useStyles()
@@ -63,23 +74,14 @@ const InforSection = () => {
         <Stack spacing={20}>
           <Divider />
           <Stack spacing={15}>
-            <TextInput className={classes.input} {...form.getInputProps('firstName')}></TextInput>
-            <TextInput className={classes.input} {...form.getInputProps('lastName')}></TextInput>
-            <TextInput className={classes.input} {...form.getInputProps('email')}></TextInput>
-            <TextInput className={classes.input} {...form.getInputProps('txtPhone')}></TextInput>
+            <TextInput className={classes.input} {...form.getInputProps('firstName')} />
+            <TextInput className={classes.input} {...form.getInputProps('lastName')} />
+            <TextInput className={classes.input} {...form.getInputProps('email')} />
+            <TextInput className={classes.input} {...form.getInputProps('txtPhone')} />
             <Select
               label=''
               nothingFound='No options'
-              data={[
-                {
-                  value: 'female',
-                  label: 'Nữ'
-                },
-                {
-                  value: 'male',
-                  label: 'Nam'
-                }
-              ]}
+              data={genderOption}
               rightSection={<IconChevronDown color='gray' size={20} />}
               rightSectionWidth={50}
               className={classes.input}
@@ -92,7 +94,7 @@ const InforSection = () => {
               onChange={handleDateChange}
               rightSection={<CalendarIcon />}
               rightSectionWidth={50}
-            ></TextInput>
+            />
             <Button
               radius={10}
               size='md'

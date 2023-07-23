@@ -15,7 +15,6 @@ interface IProductListProps {
   data: IProductCardItemProps[]
 }
 export const ProductList = ({ data }: IProductListProps) => {
-  console.log('data', data)
   return (
     <Grid grow gutter={19} columns={9}>
       {data.map((item, index) => (

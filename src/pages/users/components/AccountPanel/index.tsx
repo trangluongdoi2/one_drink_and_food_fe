@@ -7,7 +7,7 @@ const AccountPanel = () => {
   return (
     <Grid gutter={20}>
       <Grid.Col span={6}>
-        <Stack spacing={20} sx={{ width: '100%' }}>
+        <Stack spacing={20} w='100%'>
           <AvatarSection />
           <InforSection />
         </Stack>

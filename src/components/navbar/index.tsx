@@ -1,19 +1,15 @@
 import { Navbar, Group, ScrollArea, ActionIcon, Box, Center, Accordion } from '@mantine/core'
 import LinksGroup from './LinkGroup.tsx'
 import { OneLogo, HiddenIcon } from '@/assets/icon'
-import { navConfig } from '@/configs/navConfig'
+import { TNavConfig, navConfig } from '@/configs/navConfig'
 import { IconChevronRight } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useStyles } from './index.style.js'
 
 const NavbarHeader = () => {
   const { classes } = useStyles()
-  const [selected, setSelected] = useState<string>('')
-  const [tab, setTab] = useState<string>('')
   const [hiddenNav, setHiddenNav] = useState<boolean>(false)
-  const links = navConfig.map((item: any) => (
-    <LinksGroup {...item} key={item.label} selected={selected} setSelected={setSelected} tab={tab} setTab={setTab} />
-  ))
+  const links = navConfig.map((item: TNavConfig) => <LinksGroup {...item} key={item.label} />)
 
   return (
     <>
@@ -34,15 +30,7 @@ const NavbarHeader = () => {
               defaultValue='Tổng quan'
               variant='default'
               transitionDuration={300}
-              styles={(theme) => ({
-                content: { padding: 0 },
-                control: {
-                  backgroundColor: theme.white
-                },
-                item: {
-                  padding: 0
-                }
-              })}
+              classNames={{ content: classes.accordion, control: classes.control, item: classes.accordion }}
             >
               <div className={classes.linksInner}>{links}</div>
             </Accordion>

@@ -1,8 +1,7 @@
-import { ActiveEditIcon, ActiveOverviewIcon, EditIcon } from '@/assets/icon'
-import { ActionIcon, Divider, Flex, Paper, Stack, Text, TextInput, UnstyledButton } from '@mantine/core'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { PlusIcon, CompanyIcon } from '@/assets/icon'
+import { ActiveEditIcon, ActiveOverviewIcon, CompanyIcon, EditIcon, PlusIcon } from '@/assets/icon'
 import { useUserFormContext } from '@/context/form-context'
+import { ActionIcon, Divider, Flex, Paper, Stack, Text, TextInput, UnstyledButton } from '@mantine/core'
+import { useState } from 'react'
 
 const InputRow = ({ title, ...props }: { title: string }) => {
   return (
@@ -10,22 +9,7 @@ const InputRow = ({ title, ...props }: { title: string }) => {
       <Text fw='bolder' size='sm'>
         {title}
       </Text>
-      <TextInput
-        radius={10}
-        sx={(theme) => ({
-          width: '100%',
-          input: {
-            backgroundColor: '#f5f5f5',
-            '&:focus-within': {
-              borderColor: theme.colors.gray,
-              backgroundColor: theme.colors.dark[1]
-            },
-            fontSize: 12
-          }
-        })}
-        size='md'
-        {...props}
-      />
+      <TextInput radius={10} w='100%' size='md' {...props} />
     </Stack>
   )
 }
@@ -41,7 +25,7 @@ const AddressSection = () => {
       <Stack spacing={20}>
         {editMode ? (
           <Stack spacing={20}>
-            <Flex sx={{ width: '100%' }} justify='space-between'>
+            <Flex w='100%' justify='space-between'>
               <Flex gap={10}>
                 <ActiveOverviewIcon />
                 <Text fw='bold'>Thêm địa chỉ nhà</Text>
@@ -62,7 +46,7 @@ const AddressSection = () => {
           </Stack>
         ) : (
           <Stack>
-            <Flex sx={{ width: '100%' }} justify='space-between'>
+            <Flex w='100%' justify='space-between'>
               <Flex gap={10}>
                 <ActiveOverviewIcon />
                 <Stack spacing={0}>

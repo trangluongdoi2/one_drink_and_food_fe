@@ -41,7 +41,7 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
       }}
       centered
       padding={0}
-      size='auto'
+      size='75%'
       withCloseButton={false}
       radius={10}
       shadow='md'

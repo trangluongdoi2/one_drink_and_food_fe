@@ -49,6 +49,18 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 }
               })
             },
+            TextInput: {
+              styles: (theme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[0],
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray,
+                    backgroundColor: theme.colors.dark[1]
+                  },
+                  fontSize: 12
+                }
+              })
+            },
             ActionIcon: {
               styles: () => ({
                 root: {
