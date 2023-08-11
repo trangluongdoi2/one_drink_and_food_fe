@@ -12,6 +12,7 @@ import { ProductGroup } from '@/types/product'
 import { useFetchProduct } from '../../services/useFetchProduct'
 import { v4 as uuidv4 } from 'uuid'
 import { checkList } from '@/constants/tabList'
+import { useGetAllCategories } from '../../services/category/getAllCategories'
 
 interface ProductListProps {
   title: string

@@ -1,5 +1,6 @@
 import { Paper, Stack, Title } from '@mantine/core'
 import { GridCard, AnalysisChart, SaleChart } from '../../components'
+import { getAllCategories, useGetAllCategories } from '@/pages/products/services/category/getAllCategories'
 const data = [
   {
     title1: 'Giao dịch trong (tháng này)',

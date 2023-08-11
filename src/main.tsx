@@ -61,6 +61,18 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 }
               })
             },
+            PasswordInput: {
+              styles: (theme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[0]
+                },
+                '.mantine-PasswordInput-input': {
+                  '&:focus-within': {
+                    borderColor: theme.colors.gray
+                  }
+                }
+              })
+            },
             ActionIcon: {
               styles: () => ({
                 root: {

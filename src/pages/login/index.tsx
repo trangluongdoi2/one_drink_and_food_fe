@@ -4,8 +4,7 @@ import { login, loginGoogle } from '@/firebase/authenticate'
 import { useState } from 'react'
 import { debounce } from 'lodash'
 import background from '@/assets/image/logo-background.png'
-import { OneLogo, UnvisibilityIcon, VisibilityIcon } from '@/assets/icon'
-import { GoogleIcon } from '@/assets/icon'
+import { OneLogo, UnvisibilityIcon, VisibilityIcon, GoogleIcon } from '@/assets/icon'
 
 const LoginPage = () => {
   const [userEmail, setUserEmail] = useState<string>('')
@@ -54,14 +53,6 @@ const LoginPage = () => {
             name='email'
             variant='filled'
             radius={10}
-            sx={(theme) => ({
-              input: {
-                backgroundColor: theme.colors.dark[0],
-                '&:focus-within': {
-                  borderColor: theme.colors.gray
-                }
-              }
-            })}
           />
           <PasswordInput
             label=''
@@ -74,25 +65,21 @@ const LoginPage = () => {
             variant='filled'
             radius={10}
             color='dark.1'
-            sx={(theme) => ({
-              input: {
-                backgroundColor: theme.colors.dark[0]
-              },
-              '.mantine-PasswordInput-input': {
-                '&:focus-within': {
-                  borderColor: theme.colors.gray
-                }
-              }
-            })}
             visibilityToggleIcon={({ reveal }) => (reveal ? <VisibilityIcon /> : <UnvisibilityIcon />)}
           />
 
           <Stack spacing={10}>
-            <Button fullWidth mt='xl' onClick={handleLoginWithEmail} color='dark.1'>
+            <Button fullWidth mt='xl' onClick={handleLoginWithEmail} color='dark'>
               Đăng nhập
             </Button>
-            <Button fullWidth leftIcon={<GoogleIcon />} variant='outline' onClick={handleLoginWithGoogle}>
-              Countinue with Google
+            <Button
+              fullWidth
+              leftIcon={<GoogleIcon />}
+              variant='outline'
+              color='gray.8'
+              onClick={handleLoginWithGoogle}
+            >
+              Đăng nhập với Google
             </Button>
           </Stack>
         </Paper>
