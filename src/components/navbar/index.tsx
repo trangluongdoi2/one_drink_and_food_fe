@@ -9,7 +9,13 @@ import { useStyles } from './index.style.js'
 const NavbarHeader = () => {
   const { classes } = useStyles()
   const [hiddenNav, setHiddenNav] = useState<boolean>(false)
-  const links = navConfig.map((item: TNavConfig) => <LinksGroup {...item} key={item.label} />)
+  const [currentTab, setCurrentTab] = useState<string>(navConfig[0].label)
+  const getCurrentTab = (tab: string) => {
+    setCurrentTab(tab)
+  }
+  const links = navConfig.map((item: TNavConfig) => (
+    <LinksGroup getCurrentTab={getCurrentTab} isActive={currentTab === item.label} {...item} key={item.label} />
+  ))
 
   return (
     <>
