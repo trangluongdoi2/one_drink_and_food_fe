@@ -17,8 +17,7 @@ import { ORDER_STATUS } from '@/types/order'
 import OrderContextProvider from '@/context/OrderContext/OrderContext'
 import ProductList from '@/pages/products/views/ProductList'
 import ProductContextProvider from '@/context/ProductContext/ProductContext'
-import { ProductType } from '@/pages/products/type'
-import { JuiceType } from '@/pages/products/type'
+import { ProductType, JuiceType } from '@/pages/products/type'
 
 export const router = createBrowserRouter([
   {

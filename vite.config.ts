@@ -10,7 +10,8 @@ export default defineConfig({
     global: {}
   },
   server: {
-    port: 8000
+    port: 3000,
+    host: true
   },
   css: {
     devSourcemap: true

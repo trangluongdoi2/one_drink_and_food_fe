@@ -37,11 +37,14 @@ module.exports = {
     node: true
   },
   rules: {
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     // Tắt rule yêu cầu import React trong file jsx
     'react/react-in-jsx-scope': 'off',
     // Cảnh báo khi thẻ <a target='_blank'> mà không có rel="noreferrer"
     'react/jsx-no-target-blank': 'warn',
     'react-hooks/rules-of-hooks': 'off',
+    'react-hooks/exhaustive-deps': 'off',
     // Tăng cường một số rule prettier (copy từ file .prettierrc qua)
     'prettier/prettier': [
       'warn',

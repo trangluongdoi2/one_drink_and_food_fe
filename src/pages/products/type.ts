@@ -68,3 +68,20 @@ export enum ProductType {
   COFFEE = 'coffee',
   ITEM = 'item'
 }
+
+export interface ProductCreateNew {
+  productName: string
+  auxiliaryName: string
+  isVAT: string
+  productMainIngredients: string
+  motionTime: 0
+  mainFunctions: string[]
+  productDescription: string
+  productPrice: 0
+  productQuantity: 0
+  productType: string
+  productRatingsAverage: 0
+  attributes: string[]
+  listInformation: string[]
+  note: string
+}
