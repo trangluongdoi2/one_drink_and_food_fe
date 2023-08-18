@@ -1,4 +1,4 @@
-import { axios } from '@/configs/axios'
+import { customAxios } from '@/configs/axios'
 import { MutationConfig, queryClient } from '@/configs/react-query'
 import { ProductGroup } from '@/types/product'
 import { useMutation } from 'react-query'
@@ -17,7 +17,7 @@ type TCreateCategory = {
 }
 
 export const createCategory = (categoryData: TCreateCategory) => {
-  return axios.post('/category', categoryData)
+  return customAxios.post('/category', categoryData)
 }
 
 type TUseCreateCategory = {
