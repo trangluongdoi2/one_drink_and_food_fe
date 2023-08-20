@@ -4,18 +4,27 @@ import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
 const { trans } = useTranslationMiddleware()
 
 export const initinalState: ProductState = {
-  name: '',
+  productName: '',
+  productMainIngredients: '',
   auxiliaryName: '',
-  prices: {
-    value: 0,
-    includeVAT: true
-  },
+  mainFunctions: ['s', 's', 's'],
+  productDescription: 'dsadsadsadsadasd',
+  productPrice: 1000,
+  productQuantity: 0,
+  isVAT: true,
+  motionTime: 1000,
+  productType: 'juice',
+  attributes: [],
+  productRatingsAverage: 0,
+  note: '',
+  listInformation: [],
+
+  // for state
   introduction: '',
-  typicalFunction: [],
   photos: {
     filePaths: [],
-    canMove: true,
-    motionDelays: 1000
+    enabled: true,
+    motionTime: 1000
   },
   photosStore: [],
   saleOptions: [
@@ -70,41 +79,41 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
   const saleOptions = clone(state.saleOptions)
   const infos = clone(state.infos)
   switch (type) {
-    case ProductType.SET_NAME:
+    case ProductType.SET_PRODUCT_NAME:
       return {
         ...state,
-        name: payload
+        productName: payload
       }
     case ProductType.SET_AUXILIARY_NAME:
       return {
         ...state,
         auxiliaryName: payload
       }
+    case ProductType.SET_PRODUCT_PRICE:
+      return {
+        ...state,
+        productPrice: payload
+      }
+    case ProductType.SET_PRODUCT_QUANTITY: {
+      return {
+        ...state,
+        productQuantity: payload
+      }
+    }
     case ProductType.SET_INTRODUCTION:
       return {
         ...state,
         introduction: payload
       }
-    case ProductType.SET_TYPICAL_FUNCTION:
+    case ProductType.SET_MAIN_FUNCTIONS:
       return {
         ...state,
-        typicalFunction: payload
-      }
-    case ProductType.SET_PRICES:
-      return {
-        ...state,
-        prices: {
-          ...state.prices,
-          value: payload
-        }
+        mainFunctions: payload
       }
     case ProductType.SET_ENABLE_INCLUDE_VAT_PRICES:
       return {
         ...state,
-        prices: {
-          ...state.prices,
-          includeVAT: payload
-        }
+        isVAT: payload
       }
     case ProductType.SET_PHOTOS:
       return {
@@ -124,8 +133,8 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         ...state,
         photos: {
           ...state.photos,
-          canMove: payload.canMove,
-          motionDelays: payload.motionDelays
+          enabled: payload.enabled,
+          motionTime: payload.motionTime
         }
       }
     case ProductType.SET_SALE_OPTIONS: {

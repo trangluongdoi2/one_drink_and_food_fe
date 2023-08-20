@@ -11,8 +11,8 @@ import { useStyles } from './index.styles'
 export const ProductOverviewPreview = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
-  const { name, auxiliaryName, prices, saleOptions } = useProductContext()
-  const [realPrices, setRealPrices] = useState<number>(prices.value)
+  const { productName, auxiliaryName, productPrice, saleOptions, isVAT } = useProductContext()
+  const [realPrices, setRealPrices] = useState<number>(productPrice)
   const [countProduct, setCountProduct] = useState<number>(1)
   const [saleOptionsData, setSaleOptionsData] = useState<ProductSaleOptionsContent[]>(saleOptions)
 
@@ -23,7 +23,7 @@ export const ProductOverviewPreview = () => {
         sum += option.value.reduce((a: number, b: SaleOptionValue) => a + (b?.price || 0), 0)
       }
     })
-    setRealPrices((sum + prices.value) * countProduct)
+    setRealPrices((sum + productPrice) * countProduct)
   }
 
   const updateSaleOption = (input: { data: SaleOptionValue[]; index: number }) => {
@@ -35,7 +35,7 @@ export const ProductOverviewPreview = () => {
 
   useEffect(() => {
     caculateRealPrices()
-  }, [countProduct, prices, saleOptionsData])
+  }, [countProduct, productPrice, saleOptionsData])
 
   useEffect(() => {
     setSaleOptionsData(clone(saleOptions))
@@ -43,18 +43,18 @@ export const ProductOverviewPreview = () => {
 
   return (
     <Stack spacing={0}>
-      <Text className={name ? classes.text__name : classes['text__name--empty']}>
-        {name ? name : t('product_name')}
+      <Text className={productName ? classes.text__name : classes['text__name--empty']}>
+        {productName ? productName : t('product_name')}
       </Text>
       <Text className={auxiliaryName ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
         {auxiliaryName ? auxiliaryName : t('fill_product_auxiliary_name')}
       </Text>
       <Flex justify={'space-between'} align={'center'}>
         <Flex justify={'space-between'} align={'center'} columnGap={7}>
-          <Text className={prices.value ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
-            {prices.value ? prices.value : t('prices')}
+          <Text className={productPrice ? classes.text__auxiliary : classes['text__auxiliary--empty']}>
+            {productPrice ? productPrice : t('prices')}
           </Text>
-          <Text className={classes.text__price}>({prices.includeVAT ? t('include_VAT') : t('no_include_VAT')})</Text>
+          <Text className={classes.text__price}>({isVAT ? t('include_VAT') : t('no_include_VAT')})</Text>
         </Flex>
         <Flex align={'center'} columnGap={15}>
           <ActionIcon size={18} onClick={() => setCountProduct(countProduct - 1 > 0 ? countProduct - 1 : 1)}>

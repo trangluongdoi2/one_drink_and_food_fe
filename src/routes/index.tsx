@@ -17,7 +17,7 @@ import { ORDER_STATUS } from '@/types/order'
 import OrderContextProvider from '@/context/OrderContext/OrderContext'
 import ProductList from '@/pages/products/views/ProductList'
 import ProductContextProvider from '@/context/ProductContext/ProductContext'
-import { ProductType, JuiceType } from '@/pages/products/type'
+import { ProductTypeEnum, JuiceType } from '@/pages/products/type'
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
           {
             element: <HomePage />,
             path: ''
-            // children: [
+            // children: [Auth
             //   {
             //     element: <></>,
             //     path: `${FOLDERS_PATH}/:folderId`,
@@ -169,7 +169,7 @@ export const router = createBrowserRouter([
                 path: '/products/juice/juice-glass/create-new',
                 element: (
                   <ProductContextProvider>
-                    <ProductCreateNew type={ProductType.JUICE} subType={JuiceType.JUICE_GLASS} />
+                    <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
                   </ProductContextProvider>
                 )
               },
@@ -177,7 +177,7 @@ export const router = createBrowserRouter([
                 path: '/products/juice/juice-bottled/create-new',
                 element: (
                   <ProductContextProvider>
-                    <ProductCreateNew type={ProductType.JUICE} subType={JuiceType.JUICE_BOTTLED} />
+                    <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
                   </ProductContextProvider>
                 )
               },

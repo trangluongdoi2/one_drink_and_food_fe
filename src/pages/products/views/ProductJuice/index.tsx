@@ -2,7 +2,7 @@ import { Anchor, Breadcrumbs, Flex, Paper, Stack, Text } from '@mantine/core'
 import { ProductPortfolio } from '../../components/ProductPortfolio'
 import { ProductGrid } from '../../components/ProductGrid'
 import { useStyles } from './index.styles'
-import { ProductType, JuiceType } from '@/pages/products/type'
+import { ProductTypeEnum, JuiceType } from '@/pages/products/type'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 
@@ -11,7 +11,7 @@ export const ProductJuiceGrid = () => {
   const { t } = useTranslation()
   const splitPath = useLocation().pathname.split('/')
   const items = [
-    { title: t(ProductType.JUICE), href: `products/${ProductType.JUICE}`, currentPath: ProductType.JUICE }
+    { title: t(ProductTypeEnum.JUICE), href: `products/${ProductTypeEnum.JUICE}`, currentPath: ProductTypeEnum.JUICE }
   ].map((item, index) => (
     <Anchor
       href={item.href}

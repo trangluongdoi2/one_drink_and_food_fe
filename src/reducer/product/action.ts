@@ -22,11 +22,12 @@ import {
   SetSelectMultiOption,
   SetTitleProductInfo,
   SetTypicalFunction,
+  SetProductQuantity,
   UpdateSaleOption
 } from './type'
 
-export const setName = (value: string): SetName => ({
-  type: ProductType.SET_NAME,
+export const setProductName = (value: string): SetName => ({
+  type: ProductType.SET_PRODUCT_NAME,
   payload: value
 })
 
@@ -35,8 +36,8 @@ export const setAuxiliaryName = (value: string): SetAuxiliaryName => ({
   payload: value
 })
 
-export const setPrices = (value: number): SetPrices => ({
-  type: ProductType.SET_PRICES,
+export const setProductPrice = (value: number): SetPrices => ({
+  type: ProductType.SET_PRODUCT_PRICE,
   payload: value
 })
 
@@ -50,8 +51,8 @@ export const setIntroductionContent = (value: string): SetIntroductionContent =>
   payload: value
 })
 
-export const setTypicalFunction = (value: string[]): SetTypicalFunction => ({
-  type: ProductType.SET_TYPICAL_FUNCTION,
+export const setMainFunctions = (value: string[]): SetTypicalFunction => ({
+  type: ProductType.SET_MAIN_FUNCTIONS,
   payload: value
 })
 
@@ -65,7 +66,7 @@ export const setPhotosStore = (value: File[]): SetPhotosStore => ({
   payload: value
 })
 
-export const setMotionPhotos = (value: { canMove: boolean; motionDelays: number }): SetMotionPhotos => ({
+export const setMotionPhotos = (value: { enabled: boolean; motionTime: number }): SetMotionPhotos => ({
   type: ProductType.SET_MOTION_PHOTOS,
   payload: value
 })
@@ -136,5 +137,10 @@ export const setEnabledProductInfo = (value: { data: boolean; index: number }): 
 
 export const setTitleProductInfo = (value: { data: string; index: number }): SetTitleProductInfo => ({
   type: ProductType.SET_TITLE_PRODUCT_INFO,
+  payload: value
+})
+
+export const setProductQuantity = (value: number): SetProductQuantity => ({
+  type: ProductType.SET_PRODUCT_QUANTITY,
   payload: value
 })

@@ -40,8 +40,8 @@ const productAddTest = {
   typicalFunction: ['Làm khoẻ mạnh', 'Làm mạnh khoẻ'],
   photos: {
     filePaths: ['', '', '', '', '', '', '', ''],
-    canMove: true,
-    motionDelays: 1000
+    enabled: true,
+    motionTime: 1000
   },
   saleOptions: [
     {

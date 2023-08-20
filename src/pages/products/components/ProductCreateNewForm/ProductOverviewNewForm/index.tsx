@@ -9,11 +9,12 @@ import {
   setEnableIncludeVATPrices,
   setIntroductionContent,
   setMotionPhotos,
-  setName,
+  setProductName,
   setPhotos,
   setPhotosStore,
-  setPrices,
-  setTypicalFunction
+  setProductPrice,
+  setMainFunctions,
+  setProductQuantity
 } from '@/reducer/product/action'
 import { AppInput } from '@/components/input'
 import { AppInputList } from '@/components/input-list'
@@ -23,8 +24,8 @@ import { useStyles } from './index.styles'
 const { trans: t } = useTranslationMiddleware()
 
 type MotionImageProps = {
-  motionValue: { canMove: boolean; motionDelays: number }
-  updateMotion: (data: { canMove: boolean; motionDelays: number }) => void
+  motionValue: { enabled: boolean; motionTime: number | null }
+  updateMotion: (data: { enabled: boolean; motionTime: number }) => void
 }
 
 type IncludePricesVATProps = {
@@ -50,11 +51,13 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
   const { classes } = useStyles()
 
   const changeMotionDelays = (event: React.FocusEvent<HTMLInputElement>) => {
-    updateMotion({ canMove: true, motionDelays: Number(event.target.value) })
+    console.log(Number(event.target.value), ' Number(event.target.value)...');
+    // updateMotion({ enabled: true, motionTime: Number(event.target.value) })
   }
 
   const toggleActive = () => {
-    updateMotion({ canMove: !motionValue.canMove, motionDelays: motionValue.motionDelays })
+    console.log('toggleActive...')
+    // updateMotion({ enabled: !motionValue.enabled, motionTime: motionValue.motionTime })
   }
   return (
     <Flex className={classes.moreOption} justify={'space-between'}>
@@ -63,7 +66,7 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
           {t('motion_images')}
         </Text>
         <ActionIcon className={classes.iconToggle} onClick={toggleActive}>
-          {motionValue.canMove ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
+          {motionValue.enabled ? <ToggleDarkLgIcon /> : <ToggleLightLgIcon />}
         </ActionIcon>
       </Flex>
       <NumberInput
@@ -71,7 +74,7 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
         defaultValue={1000}
         classNames={{ input: classes.inputMotionTime, rightSection: classes.rightSection }}
         sx={{ flex: '1', marginLeft: '10px' }}
-        disabled={!motionValue.canMove}
+        disabled={!motionValue.enabled}
         onBlur={changeMotionDelays}
       />
     </Flex>
@@ -80,15 +83,17 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
 
 export const ProductOverviewNewForm = () => {
   const { classes } = useStyles()
-  const { dispatch, photos } = useProductContext()
+  // const { dispatch, photos } = useProductContext()
+  const { dispatch, motionTime } = useProductContext()
 
-  const motionValue = { canMove: photos?.canMove as boolean, motionDelays: photos?.motionDelays as number }
+  const motionValue = { enabled: true, motionTime: motionTime }
+
   const optionImageUploadForm = {
     hasMotion: true
   }
 
-  const updateFunctionList = (data: string[]) => {
-    dispatch(setTypicalFunction(data))
+  const updateMainFunctions = (data: string[]) => {
+    dispatch(setMainFunctions(data))
   }
 
   const updateFilePaths = (data: string[]) => {
@@ -101,14 +106,17 @@ export const ProductOverviewNewForm = () => {
 
   const updateInput = (data: { value: string | number; field: string }) => {
     switch (data.field) {
-      case 'name':
-        dispatch(setName(data.value as string))
+      case 'productName':
+        dispatch(setProductName(data.value as string))
         break
       case 'auxiliaryName':
         dispatch(setAuxiliaryName(data.value as string))
         break
-      case 'prices':
-        dispatch(setPrices(data.value as number))
+      case 'productPrice':
+        dispatch(setProductPrice(data.value as number))
+        break
+      case 'productQuantity':
+        dispatch(setProductQuantity(data.value as number))
         break
       case 'introduction':
         dispatch(setIntroductionContent(data.value as string))
@@ -118,11 +126,11 @@ export const ProductOverviewNewForm = () => {
     }
   }
 
-  const updateMotions = (data: { canMove: boolean; motionDelays: number }) => {
+  const updateMotions = (data: { enabled: boolean; motionTime: number }) => {
     dispatch(setMotionPhotos(data))
   }
 
-  const updatePrices = (data: boolean) => {
+  const toggleIsVAT = (data: boolean) => {
     dispatch(setEnableIncludeVATPrices(data))
   }
 
@@ -138,7 +146,7 @@ export const ProductOverviewNewForm = () => {
       <AppInput
         title={t('product_name')}
         placeholder={t('fill_product_name')}
-        field='name'
+        field='productName'
         isImperative={true}
         hiddenToggleIcon={true}
         updateInput={updateInput}
@@ -152,18 +160,27 @@ export const ProductOverviewNewForm = () => {
       <AppInput
         title={t('prices')}
         placeholder={t('fill_product_prices')}
-        field='prices'
+        field='productQuantity'
         typeInput='number'
         isImperative={true}
         hiddenToggleIcon={true}
-        moreOptions={<IncludePricesVAT enableVAT={updatePrices} />}
+        moreOptions={<IncludePricesVAT enableVAT={toggleIsVAT} />}
+        updateInput={updateInput}
+      />
+      <AppInput
+        title={t('product_quantity')}
+        placeholder={t('fill_product_quantity')}
+        field='productQuantity'
+        typeInput='number'
+        isImperative={true}
+        hiddenToggleIcon={true}
         updateInput={updateInput}
       />
       <AppInputList
-        title={t('typical_function')}
-        field='typicalFunction'
+        title={t('main_functions')}
+        field='mainFunctions'
         iconStatus={<DoneOutlineIcon />}
-        updateList={updateFunctionList}
+        updateList={updateMainFunctions}
       ></AppInputList>
       <AppInput
         title={t('introduction')}

@@ -7,7 +7,7 @@ import { UserFormProvider, useUserForm } from '@/context/form-context'
 
 type InputListProps = {
   title: string
-  field: keyof ProductDetailProps
+  field: string
   canToggleActive?: boolean
   isActiveInput?: boolean
   iconToggle?: React.ReactNode

@@ -60,7 +60,7 @@ export enum JuiceType {
   JUICE_GLASS = 'juiceGlass'
 }
 
-export enum ProductType {
+export enum ProductTypeEnum {
   JUICE = 'juice',
   VITAMIN = 'vitamin',
   YOGURT = 'yogurt',
@@ -69,19 +69,47 @@ export enum ProductType {
   ITEM = 'item'
 }
 
-export interface ProductCreateNew {
+export type ProductType = 'juice' | 'coffee' | 'tea' | 'smoothie' | 'yogurt'
+
+export interface TProductAttributeOption {
+  text: string
+  price: number
+}
+
+export interface TProductCreateNewAtribute {
+  value: string
+  order: number
+  manyChoices: boolean
+  atLeastOne: boolean
+  appear: boolean
+  options?: TProductAttributeOption[]
+}
+
+export interface TProductInformationContent {
+  image: string
+  text: string
+}
+export interface TProductCreateNewInformation {
+  title: string
+  order: number
+  appear: boolean
+  informationItems?: TProductInformationContent[]
+}
+
+export interface TProductCreateNew {
   productName: string
   auxiliaryName: string
-  isVAT: string
+  isVAT: string | boolean
   productMainIngredients: string
-  motionTime: 0
+  motionTime: number | null
   mainFunctions: string[]
   productDescription: string
-  productPrice: 0
-  productQuantity: 0
-  productType: string
-  productRatingsAverage: 0
-  attributes: string[]
-  listInformation: string[]
+  productPrice: number
+  productQuantity: number
+  productType: ProductType
+  productRatingsAverage: number
+  attributes: TProductCreateNewAtribute[]
+  listInformation: TProductCreateNewInformation[]
+  category?: string
   note: string
 }

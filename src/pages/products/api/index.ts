@@ -1,7 +1,6 @@
 import Api from '@/api'
-import axios from '@/configs/axios'
-import { PRODUCTS_ALL_URL, PRODUCT_ALL_PUBLISH_URL, PRODUCT_DETAIL } from '@/configs/urlConfig'
-import { ProductCreateNew } from '../type'
+import { PRODUCTS_ALL_URL, PRODUCT_ALL_PUBLISH_URL, PRODUCT_CREATE_URL, PRODUCT_DETAIL } from '@/configs/urlConfig'
+import { TProductCreateNew } from '../type'
 
 interface ProductDetail {
   id: string
@@ -28,8 +27,8 @@ export default class ProductsApi extends Api {
     return data
   }
 
-  async createProduct(input: ProductCreateNew) {
-    const data = await this.patch(PRODUCT_DETAIL, input)
+  async createProduct(input: TProductCreateNew) {
+    const data = await this.post(PRODUCT_CREATE_URL, input)
     return data
   }
 }
