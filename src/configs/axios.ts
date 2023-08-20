@@ -1,5 +1,4 @@
-import Axios, { AxiosHeaders, AxiosRequestConfig } from 'axios'
-
+import axios, { AxiosHeaders, AxiosRequestConfig } from 'axios'
 import storage from '@/utils/storage'
 import { API_URL } from './urlConfig'
 
@@ -12,12 +11,16 @@ const authRequestInterceptor = (config: AxiosRequestConfig) => {
   return config
 }
 
-export const axios = Axios.create({
+export default axios.create({
+  baseURL: API_URL
+})
+
+export const customAxios = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
-    Cookie: 'connect.sid=s%3AEtsGSTK0205yTxSfWlkjy45Fh4JCIUTn.E13oe2G4i7bgmrMp5pyX9Nlu0RH3%2B4Y6mKC2IPVUIJU'
-  }
+    'Content-Type': 'application/json'
+  },
+  withCredentials: true
 })
 
 // axios.interceptors.response.use(

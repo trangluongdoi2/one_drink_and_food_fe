@@ -1,34 +1,50 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TextInput, PasswordInput, Paper, Title, Container, Button, Stack, Image, Box, Center } from '@mantine/core'
-import { Navigate } from 'react-router-dom'
-import { login, loginGoogle } from '@/firebase/authenticate'
-import { useState } from 'react'
 import { debounce } from 'lodash'
 import background from '@/assets/image/logo-background.png'
-import { OneLogo, UnvisibilityIcon, VisibilityIcon, GoogleIcon } from '@/assets/icon'
+import { OneLogo, UnvisibilityIcon, VisibilityIcon } from '@/assets/icon'
+import AuthApi from '@/features/auth'
 
 const LoginPage = () => {
-  const [userEmail, setUserEmail] = useState<string>('')
+  const [userName, setUserName] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [validButton, setValidButton] = useState<boolean>(true)
 
-  const handleLoginWithGoogle = () => loginGoogle()
-  const handleLoginWithEmail = () => {
-    login({ email: userEmail, password: userPassword, setErrorMessage: setErrorMessage })
+  const navigate = useNavigate()
+  const authApi = new AuthApi()
+
+  const handleLoginWithEmail = async () => {
+    const loginInfo = {
+      username: userName,
+      password: userPassword
+    }
+    const data = await authApi.loginAdmin(loginInfo)
+    if (data?.adminInfo) {
+      navigate('/')
+    } else if (data?.message) {
+      setErrorMessage(data.message)
+    }
   }
 
   const handleEmailChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
-    setUserEmail(value)
-  }, 500)
+    setUserName(value)
+  }, 100)
 
   const handlePasswordChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
     setUserPassword(value)
-  }, 500)
+  }, 100)
 
-  if (localStorage.getItem('accessToken')) {
-    return <Navigate to='/' />
-  }
+  useEffect(() => {
+    if (!userName && !userPassword) {
+      setValidButton(false)
+      return
+    }
+    setValidButton(true)
+  }, [userName, userPassword])
 
   return (
     <Box sx={{ height: '100%' }}>
@@ -50,7 +66,7 @@ const LoginPage = () => {
             placeholder='Tên đăng nhập'
             required
             onChange={handleEmailChange}
-            name='email'
+            name='username'
             variant='filled'
             radius={10}
           />
@@ -69,17 +85,8 @@ const LoginPage = () => {
           />
 
           <Stack spacing={10}>
-            <Button fullWidth mt='xl' onClick={handleLoginWithEmail} color='dark'>
+            <Button fullWidth mt='xl' color='dark' onClick={handleLoginWithEmail} disabled={!validButton}>
               Đăng nhập
-            </Button>
-            <Button
-              fullWidth
-              leftIcon={<GoogleIcon />}
-              variant='outline'
-              color='gray.8'
-              onClick={handleLoginWithGoogle}
-            >
-              Đăng nhập với Google
             </Button>
           </Stack>
         </Paper>

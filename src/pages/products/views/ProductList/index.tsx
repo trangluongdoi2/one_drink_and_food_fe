@@ -97,7 +97,6 @@ const ProductList = ({ title, query }: ProductListProps) => {
             </ActionIcon>
           </Flex>
         </Flex>
-
         <Grid>
           {checkList.map(({ title, value }, index) => (
             <Grid.Col span={6} key={index}>

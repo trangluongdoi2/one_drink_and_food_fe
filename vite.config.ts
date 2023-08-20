@@ -6,11 +6,12 @@ import svgr from 'vite-plugin-svgr'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr({ exportAsDefault: true })],
-  define: {
-    global: {}
-  },
+  // define: {
+  //   global: {}
+  // },
   server: {
-    port: 8000
+    port: 3000,
+    host: true
   },
   css: {
     devSourcemap: true

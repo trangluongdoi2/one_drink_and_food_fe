@@ -10,7 +10,7 @@ export const ProductGrid = ({ title, productSubType }: ProductGridProps) => {
     <Paper className={classes.container}>
       <ProductPortfolio title={title} />
       <Paper className={classes.containerGrid}>
-        <ProductCard forNewProduct={true} productSubType={productSubType}/>
+        <ProductCard forNewProduct={true} productSubType={productSubType} />
         <ProductCard />
         <ProductCard />
         <ProductCard />
