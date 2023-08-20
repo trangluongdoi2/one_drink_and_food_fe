@@ -12,8 +12,8 @@ export const ProductImagePreview = () => {
   const { classes } = useStyles()
   const { typicalFunction, introduction } = useProductContext()
   const filePaths = useProductContext().photos?.filePaths as string[]
-  const canMove = useProductContext().photos?.canMove
-  const motionDelays = useProductContext().photos?.motionDelays as number
+  const enabled = useProductContext().photos?.enabled
+  const motionTime = useProductContext().photos?.motionTime as number
   const OPTIONS: EmblaOptionsType = {
     loop: true
   }
@@ -27,7 +27,7 @@ export const ProductImagePreview = () => {
     <Stack className={classes.container}>
       <Box className={classes.container__carousel}>
         {slides.length > 0 && (
-          <AppCarousel slides={slides} options={OPTIONS} canMove={canMove} motionDelays={motionDelays} />
+          <AppCarousel slides={slides} options={OPTIONS} enabled={enabled} motionTime={motionTime} />
         )}
       </Box>
       <Stack>

@@ -22,7 +22,7 @@ export const ProductInfoPreview = () => {
             <Flex key={index} columnGap={32} className={classes.container__category}>
               <Box className={classes.container__carousel}>
                 {item.infoPhotos.length && (
-                  <AppCarousel slides={item.infoPhotos} options={OPTIONS} canMove={true} hasThumbnail={false} />
+                  <AppCarousel slides={item.infoPhotos} options={OPTIONS} enabled={true} hasThumbnail={false} />
                 )}
               </Box>
               <Stack spacing={9} sx={{ padding: '32px', flex: '1' }}>

@@ -1,26 +1,21 @@
-import { ProductInfos, ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
-export interface ProductState {
-  name: string
-  auxiliaryName?: string
-  prices: {
-    value: number
-    includeVAT: boolean
-  }
-  introduction?: string
-  photos?: { filePaths: string[]; canMove: boolean; motionDelays: number | null }
+import { TProductCreateNew, ProductInfos, ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
+export interface ProductState extends TProductCreateNew {
+  photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
   photosStore?: File[]
   typicalFunction?: string[]
   saleOptions: Array<ProductSaleOptionsContent>
   infos: Array<ProductInfos>
+  introduction?: ''
 }
 
 export enum ProductType {
-  SET_NAME = 'SET_NAME',
+  SET_PRODUCT_NAME = 'SET_PRODUCT_NAME',
   SET_AUXILIARY_NAME = 'SET_AUXILIARY_NAME',
-  SET_PRICES = 'SET_PRICES',
+  SET_PRODUCT_PRICE = 'SET_PRODUCT_PRICE',
+  SET_PRODUCT_QUANTITY = 'SET_PRODUCT_QUANTITY',
   SET_ENABLE_INCLUDE_VAT_PRICES = 'SET_ENABLE_INCLUDE_VAT_PRICES',
   SET_INTRODUCTION = 'SET_INTRODUCTION',
-  SET_TYPICAL_FUNCTION = 'SET_TYPICAL_FUNCTION',
+  SET_MAIN_FUNCTIONS = 'SET_MAIN_FUNCTIONS',
   SET_PHOTOS = 'SET_PHOTOS',
   SET_PHOTOS_STORE = 'SET_PHOTOS_STORE',
   SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
@@ -40,7 +35,7 @@ export enum ProductType {
 }
 
 export interface SetName {
-  type: ProductType.SET_NAME
+  type: ProductType.SET_PRODUCT_NAME
   payload: string
 }
 
@@ -50,7 +45,7 @@ export interface SetAuxiliaryName {
 }
 
 export interface SetPrices {
-  type: ProductType.SET_PRICES
+  type: ProductType.SET_PRODUCT_PRICE
   payload: number
 }
 
@@ -65,7 +60,7 @@ export interface SetIntroductionContent {
 }
 
 export interface SetTypicalFunction {
-  type: ProductType.SET_TYPICAL_FUNCTION
+  type: ProductType.SET_MAIN_FUNCTIONS
   payload: string[]
 }
 
@@ -81,7 +76,7 @@ export interface SetPhotosStore {
 
 export interface SetMotionPhotos {
   type: ProductType.SET_MOTION_PHOTOS
-  payload: { canMove: boolean; motionDelays: number }
+  payload: { enabled: boolean; motionTime: number }
 }
 
 export interface SetSaleOptions {
@@ -176,6 +171,10 @@ export interface SetTitleProductInfo {
     index: number
   }
 }
+export interface SetProductQuantity {
+  type: ProductType.SET_PRODUCT_QUANTITY
+  payload: number
+}
 
 export type ProductTypeAction =
   | SetName
@@ -200,3 +199,4 @@ export type ProductTypeAction =
   | SetPhotosStoreProductInfo
   | SetEnabledProductInfo
   | SetTitleProductInfo
+  | SetProductQuantity

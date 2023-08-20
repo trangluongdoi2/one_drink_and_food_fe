@@ -7,12 +7,12 @@ import { useStyles } from './index.styles'
 type PropType = {
   slides: string[]
   options?: EmblaOptionsType
-  canMove?: boolean
-  motionDelays?: number
+  enabled?: boolean
+  motionTime?: number
   hasThumbnail?: boolean
 }
 
-export const AppCarousel = ({ slides, options, canMove, motionDelays = 1000, hasThumbnail = true }: PropType) => {
+export const AppCarousel = ({ slides, options, enabled, motionTime = 1000, hasThumbnail = true }: PropType) => {
   const { classes } = useStyles()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options)
@@ -53,17 +53,17 @@ export const AppCarousel = ({ slides, options, canMove, motionDelays = 1000, has
   }, [emblaMainApi, onSelect])
 
   useEffect(() => {
-    if (canMove) {
+    if (enabled) {
       const interval = setInterval(() => {
         const newIndex = selectedIndex + 1
         emblaMainApi && emblaMainApi.scrollTo(newIndex)
         setSelectedIndex(newIndex)
-      }, motionDelays)
+      }, motionTime)
       return () => clearInterval(interval)
     } else {
       emblaMainApi && emblaMainApi.on('reInit', onSelect)
     }
-  }, [selectedIndex, canMove, motionDelays])
+  }, [selectedIndex, enabled, motionTime])
 
   return (
     <div className={classes.embla}>
