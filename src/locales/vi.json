@@ -10,7 +10,7 @@
   "required_field": "phần bắt buộc",
   "auxiliary_name": "Tên phụ trợ",
   "fill_product_auxiliary_name": "Điền tên phụ trợ của sản phẩm",
-  "product_prices": "Giá tiền",
+  "product_price": "Giá tiền",
   "prices": "Giá tiền",
   "product_quantity": "Số lượng sản phảm",
   "fill_product_prices": "Ghi giá tiền sản phẩm",
@@ -74,6 +74,6 @@
   "thursday": "Thứ 5",
   "friday": "Thứ 6",
   "saturday": "Thứ 7",
-  "sunday": "Chủ Nhật"
-
+  "sunday": "Chủ Nhật",
+  "un_valid": "{{field}} không được trống"
 }

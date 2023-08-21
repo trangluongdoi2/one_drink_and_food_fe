@@ -5,6 +5,7 @@ import { ProductDetailProps } from '@/types/product'
 import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { useFocusWithin } from '@mantine/hooks'
+import { camelToSnakeCase, snakeCaseToUnderscore } from '@/utils/string-utils'
 
 const useStyles = createStyles(() => ({
   '.text__title': {
@@ -56,7 +57,7 @@ export interface InputProps {
 
 type TypeInputProps = Pick<
   InputProps,
-  'typeInput' | 'placeholder' | 'field' | 'isActiveInput' | 'updateInput' | 'classInput'
+  'typeInput' | 'placeholder' | 'field' | 'isActiveInput' | 'updateInput' | 'classInput' | 'isImperative'
 >
 
 export const TypeInput = ({
@@ -65,14 +66,28 @@ export const TypeInput = ({
   field,
   isActiveInput,
   classInput,
+  isImperative,
   updateInput
 }: TypeInputProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
+  const { t } = useTranslation()
 
-  useEffect(() => {
+  const useConvertField = (field: string) => {
+    return snakeCaseToUnderscore(field)
+  }
+
+  // useEffect(() => {
+  //   updateInput({ value: form.getInputProps(field)?.value, field })
+  // }, [form.values])
+
+  const onUpdateInput = () => {
+    console.log(field, form.getInputProps(field).value, 'field, form.getInputProps(field)...')
+    if (isImperative && !form.getInputProps(field).value) {
+      form.setFieldError(field, t('un_valid', { field: t(useConvertField(field)) }))
+    }
     updateInput({ value: form.getInputProps(field)?.value, field })
-  }, [form.values])
+  }
 
   switch (typeInput) {
     case 'number':
@@ -82,6 +97,7 @@ export const TypeInput = ({
           classNames={{ input: `${classes.input} ${classes.inputText}`, rightSection: `${classes.rightSection}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
+          onBlur={onUpdateInput}
         />
       )
     case 'area':
@@ -91,6 +107,7 @@ export const TypeInput = ({
           classNames={{ input: `${classes.input} ${classes.inputArea} ${classInput}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
+          onBlur={onUpdateInput}
         />
       )
     default:
@@ -100,6 +117,7 @@ export const TypeInput = ({
           classNames={{ input: `${classes.input} ${classes.inputText} ${classInput}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
+          onBlur={onUpdateInput}
         />
       )
   }
@@ -120,7 +138,7 @@ export const AppInput = ({
 }: InputProps) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
-  const { ref, focused } = useFocusWithin();
+  const { ref, focused } = useFocusWithin()
   const [isActive, setIsActive] = useState<boolean>(true)
 
   const form = useUserForm({
@@ -145,8 +163,8 @@ export const AppInput = ({
             <Flex justify='space-between' align={'flex-end'} sx={{ marginTop: '20px', marginBottom: '10px' }}>
               <Text className={classes['.text__title']}>{title}</Text>
               <Flex align={'center'}>
-                {isImperative && <Text className={classes['text--imperative']}>*{t('required_field')}</Text>}
                 {!hiddenToggleIcon && <ToggleButon isActive={isActive} onToggleStatus={() => setIsActive(!isActive)} />}
+                {isImperative && <Text className={classes['text--imperative']}>*{t('required_field')}</Text>}
               </Flex>
             </Flex>
           )}
@@ -155,8 +173,9 @@ export const AppInput = ({
             placeholder={placeholder}
             field={field}
             isActiveInput={isActive}
-            updateInput={changeParentInput}
             classInput={classInput}
+            isImperative={isImperative}
+            updateInput={changeParentInput}
           />
           {moreOptions}
         </Box>

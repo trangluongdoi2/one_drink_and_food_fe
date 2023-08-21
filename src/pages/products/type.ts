@@ -113,3 +113,9 @@ export interface TProductCreateNew {
   category?: string
   note: string
 }
+
+export interface TCategoryCreate {
+  name: string
+  order: number
+  productType: ProductType
+}

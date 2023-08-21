@@ -13,22 +13,26 @@ export default class ProductsApi extends Api {
   }
 
   async getAllProducts() {
-    const data = await this.get(PRODUCTS_ALL_URL)
-    return data
+    const res = await this.get(PRODUCTS_ALL_URL)
+    return res.data
   }
 
   async getAllProductPublish() {
-    const data = await this.get(PRODUCT_ALL_PUBLISH_URL)
-    return data
+    const res = await this.get(PRODUCT_ALL_PUBLISH_URL)
+    return res.data
   }
 
   async getProductDetails(input: ProductDetail) {
-    const data = await this.get(PRODUCT_DETAIL, input)
-    return data
+    const res = await this.get(PRODUCT_DETAIL, input)
+    return res.data
   }
 
-  async createProduct(input: TProductCreateNew) {
-    const data = await this.post(PRODUCT_CREATE_URL, input)
-    return data
+  async create(input: TProductCreateNew | any) {
+    const res = await this.post(PRODUCT_CREATE_URL, input)
+    return res.data
+  }
+
+  async getProductByCategoryId(categoryId: string) {
+    // const res = await this.get()
   }
 }

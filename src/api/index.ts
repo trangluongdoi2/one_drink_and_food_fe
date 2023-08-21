@@ -9,22 +9,22 @@ import { customAxios } from '@/configs/axios'
 // }
 
 export default class Api {
-  protected async get(url: string, input?: object) {
+  protected async get(url: string, input?: Record<string, any>) {
     const data = await customAxios.get(url)
     return data
   }
 
-  protected async post(url: string, input?: object) {
+  protected async post(url: string, input?: Record<string, any>) {
     const data = await customAxios.post(url, input)
     return data
   }
 
-  protected async patch(url: string, input?: object) {
+  protected async patch(url: string, input?: Record<string, any>) {
     const data = await customAxios.patch(url, input)
     return data
   }
 
-  protected async delete(url: string, input?: object) {
+  protected async delete(url: string, input?: Record<string, any>) {
     const data = await customAxios.delete(url)
     return data
   }
