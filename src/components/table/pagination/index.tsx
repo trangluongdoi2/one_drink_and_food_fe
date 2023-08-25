@@ -1,25 +1,21 @@
 import { Box, Flex, Pagination, Text } from '@mantine/core'
+import { useStyles } from './index.style'
+import { FC } from 'react'
 
-interface TablePaginationProps {
+type TTablePaginationProps = {
   total: number
   onChange: (value: number) => void
-  active: number
+  active?: number
 }
 
-export const TablePagination = ({ total, onChange, active }: TablePaginationProps) => {
+export const TablePagination: FC<TTablePaginationProps> = ({ total, onChange, active = 1 }) => {
+  const { classes } = useStyles()
   return (
     <Flex justify='space-between' mt={20}>
       <Box></Box>
       <Pagination
         total={total}
-        styles={(theme) => ({
-          control: {
-            backgroundColor: theme.colors.dark[0],
-            '&[data-active]': {
-              backgroundImage: theme.fn.gradient({ from: 'black', to: 'black' })
-            }
-          }
-        })}
+        classNames={{ control: classes.control }}
         position='center'
         radius={10}
         defaultValue={1}

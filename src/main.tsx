@@ -82,6 +82,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                   }
                 }
               })
+            },
+            Checkbox: {
+              styles: (theme) => ({
+                input: {
+                  backgroundColor: theme.colors.dark[0]
+                }
+              })
             }
           }
         }}

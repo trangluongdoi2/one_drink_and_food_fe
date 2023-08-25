@@ -1,23 +1,26 @@
-import { createBrowserRouter } from 'react-router-dom'
-import LoginPage from '@/pages/login'
 import ErrorPage from '@/components/errorPage'
-import HomePage from '@/pages/home'
-import ProtectedRoute from './protectedRoute'
-import AuthLayout from '@/layout/authLayout'
-import RegisterPage from '@/pages/register'
-import RegisterLayout from '@/layout/registerLayout'
-import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
-import ListCustomer from '@/pages/users/features/listCustomer'
 import UserContextProvider from '@/context/CustomerContext/CustomerContext'
-import { MEMBERSHIP } from '@/types/user'
-import OrderList from '@/pages/order/features/orderList'
-import AddCustomer from '@/pages/users/features/addCustomer'
-import { ProductCreateNew, ProductJuiceGrid } from '@/pages/products'
-import { ORDER_STATUS } from '@/types/order'
 import OrderContextProvider from '@/context/OrderContext/OrderContext'
-import ProductList from '@/pages/products/views/ProductList'
 import ProductContextProvider from '@/context/ProductContext/ProductContext'
-import { ProductTypeEnum, JuiceType } from '@/pages/products/type'
+import AuthLayout from '@/layout/authLayout'
+import RegisterLayout from '@/layout/registerLayout'
+import HomePage from '@/pages/home'
+import LoginPage from '@/pages/login'
+import OrderList from '@/pages/order/features/orderList'
+import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
+import { ProductCreateNew, ProductJuiceGrid } from '@/pages/products'
+import { JuiceType, ProductTypeEnum } from '@/pages/products/type'
+import ProductList from '@/pages/products/views/ProductList'
+import RegisterPage from '@/pages/register'
+import AddCustomer from '@/pages/users/features/addCustomer'
+import ListCustomer from '@/pages/users/features/listCustomer'
+import { ORDER_STATUS } from '@/types/order'
+import { MEMBERSHIP } from '@/types/user'
+import { createBrowserRouter } from 'react-router-dom'
+import ProtectedRoute from './protectedRoute'
+
+import AddCoupon from '@/pages/coupons/features/addCoupon'
+import CouponList from '@/pages/coupons/features/couponList'
 
 export const router = createBrowserRouter([
   {
@@ -217,7 +220,11 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/coupons/list',
-                element: <MarketAnalytic />
+                element: <CouponList />
+              },
+              {
+                path: '/coupons/create',
+                element: <AddCoupon />
               }
             ]
           },

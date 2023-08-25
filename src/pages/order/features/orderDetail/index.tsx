@@ -41,6 +41,7 @@ const OrderDetail = ({ opened, close }: DetailModalProps) => {
       withCloseButton={false}
       radius={10}
       shadow='md'
+      withinPortal
     >
       <Stack spacing={40} px={50} py={45}>
         <Paper p={50} shadow='md' radius={10}>

@@ -1,4 +1,4 @@
-export interface CouponProps {
+export type TCouponType = {
   couponCode: string
   couponTitle: string
   couponEndDate: {

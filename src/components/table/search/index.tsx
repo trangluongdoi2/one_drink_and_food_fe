@@ -2,7 +2,7 @@ import { SearchIcon } from '@/assets/icon'
 import { Button, Checkbox, Flex, TextInput, Text } from '@mantine/core'
 import { useStyles } from './index.style'
 
-interface SearchTableProps {
+type TSearchTableProps = {
   search: string
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   selectedAll: boolean
@@ -16,7 +16,7 @@ export const SearchTable = ({
   selectedAll,
   onSelectAll,
   placeHolder = 'Tìm kiếm thông tin'
-}: SearchTableProps) => {
+}: TSearchTableProps) => {
   const { classes } = useStyles()
 
   return (
@@ -35,7 +35,6 @@ export const SearchTable = ({
           placeholder={placeHolder}
           value={search}
           onChange={onSearchChange}
-          label=''
           className={classes.inputField}
           icon={<SearchIcon />}
         />
