@@ -4,73 +4,82 @@ import { SelectOptionDarkIcon, SelectOptionLightIcon } from '@/assets/icon'
 import { ProductOptionFrame } from '@/pages/products/components/ProductOptionFrame'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import {
-  addProductSaleOption,
-  removeProductSaleOption,
   setEnabledProductInfo,
-  setProductSaleOptions,
-  setSelectMultiOption,
-  setTitleProductInfo
+  setManyChoices,
+  setTitleProductInfo,
+  setProductName,
+  updateProductAttributeOption,
+  updateProductAttributeOptionName,
+  updateProductMainIngredients
 } from '@/reducer/product/action'
-import { ProductSaleOptionsContent } from '@/pages/products/type'
+import { ProductSaleOptionsContent, TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import { useStyles } from './index.styles'
+import { useEffect } from 'react'
+import { ProductOptionAttribute } from '../../ProductOptionAttribute'
 
-export const ProductSalesFrameFrom = () => {
+export const ProductSalesFrameForm = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
-  const { dispatch, saleOptions } = useProductContext()
-
-  const updateProductOption = (data: ProductSaleOptionsContent, index: number) => {
-    dispatch(setProductSaleOptions({ data, index }))
-  }
-
-  const updateSelectMultiOption = (data: boolean, index: number) => {
-    dispatch(setSelectMultiOption({ data, index }))
-  }
-
-  const updateEnable = (data: boolean, index: number) => {
-    dispatch(setEnabledProductInfo({ data, index }))
-  }
-
-  const updateTitle = (data: string, index: number) => {
-    dispatch(setTitleProductInfo({ data, index }))
-  }
+  const { dispatch, attributes } = useProductContext()
 
   const addProductOptionItem = (isOption: boolean) => {
-    const length = saleOptions.length
-    const initProductSaleOption: ProductSaleOptionsContent = {
-      title: (isOption ? t('option_name') : t('content_name')) as string,
-      field: isOption ? `option${length + 1}` : `content${length + 1}`,
-      value: [],
-      isOption,
-      canSelectMultiOptions: true,
-      multiOptions: isOption,
-      enable: true
-    }
-    dispatch(addProductSaleOption(initProductSaleOption))
+    // const length = attributes.length
+    // const initProductSaleOption: ProductSaleOptionsContent = {
+    //   title: (isOption ? t('option_name') : t('content_name')) as string,
+    //   field: isOption ? `option${length + 1}` : `content${length + 1}`,
+    //   value: [],
+    //   isOption,
+    //   canSelectMultiOptions: true,
+    //   manyChoices: isOption,
+    //   enable: true
+    // }
+    // dispatch(addProductSaleOption(initProductSaleOption))
   }
 
-  const removeProductOptionItem = (index: number) => {
-    dispatch(removeProductSaleOption(index))
+  const updateAttributeName = (data: string, index: number) => {
+    dispatch(updateProductAttributeOptionName({ data, index }))
+  }
+
+  const updateAttributeOptions = (input: { attrVal: string; options: TProductAttributeOption[] }) => {
+    dispatch(updateProductAttributeOption(input))
+  }
+
+  const updateMainIngredients = (input: { attrVal: string; data: string | number }) => {
+    dispatch(updateProductMainIngredients(input))
+  }
+
+  // const removeOption = (data: string) => {
+  //   dispatch(removeAttributeOption(data))
+  // }
+
+  const removeAttributeOption = (data: string) => {
+    console.log('removeAttributeOption')
   }
 
   return (
-    <Paper className={classes.container} >
+    <Paper className={classes.container}>
       <Text className={classes.title}>{t('sale_frame')}</Text>
-      <Divider />
-      {saleOptions.map((option: ProductSaleOptionsContent, index: number) => (
-        <ProductOptionFrame
+      <ProductOptionAttribute
+        title={'Thành phần chính'}
+        defaultPlaceholder={t('fill_ingredient_product_content')}
+        updateContentValue={(data: string | number) => updateMainIngredients({ attrVal: 'mainIngredients', data })}
+        isOption={false}
+        optionsAttribute={undefined}
+      />
+      {attributes.map((attribute: TProductCreateNewAtribute, index: number) => (
+        <ProductOptionAttribute
           key={index}
-          field={option.field}
-          title={option.title}
-          isOption={option.isOption}
-          multiOptions={option.multiOptions}
-          enable={option.enable}
+          title={attribute.value}
           defaultPlaceholder={t('fill_selected_information')}
-          updateTitle={(data) => updateTitle(data, index)}
-          updateEnable={(data) => updateEnable(data, index)}
-          updateSelectMultiOption={(data) => updateSelectMultiOption(data, index)}
-          updateProductOption={(data) => updateProductOption(data, index)}
-          removeProductOptionItem={() => removeProductOptionItem(index)}
+          atLeastOne={attribute.atLeastOne}
+          manyChoices={attribute.manyChoices}
+          optionsAttribute={attribute.options}
+          isOption={true}
+          updateAttributeOptions={(data: TProductAttributeOption[]) =>
+            updateAttributeOptions({ attrVal: attribute.value, options: data })
+          }
+          updateAttributeName={(data: string) => updateAttributeName(data, index)}
+          removeAttributeOption={removeAttributeOption}
         />
       ))}
       <ActionIcon className={`title-add ${classes['button-add']}`} onClick={() => addProductOptionItem(true)}>

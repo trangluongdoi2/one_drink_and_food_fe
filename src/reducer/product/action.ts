@@ -1,32 +1,31 @@
-import { ProductInfos, ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
+import { ProductInfos } from '@/pages/products/type'
 import {
   AddProductInfo,
-  AddSaleOption,
   ProductType,
   RemoveProductInfo,
-  RemoveSaleOption,
   SetAuxiliaryName,
   SetContentProductInfo,
   SetEnableIncludeVATPrices,
   SetEnabledProductInfo,
   SetIntroductionContent,
   SetMotionPhotos,
-  SetName,
+  SetProductName,
   SetPhotos,
   SetPhotosProductInfo,
   SetPhotosStore,
   SetPhotosStoreProductInfo,
-  SetPrices,
+  SetProductPrice,
   SetProductInfos,
-  SetSaleOptions,
   SetSelectMultiOption,
   SetTitleProductInfo,
   SetTypicalFunction,
   SetProductQuantity,
-  UpdateSaleOption
+  SetProductAttributeName,
+  SetProductMainIngredients,
+  SetProductAttributeOption
 } from './type'
 
-export const setProductName = (value: string): SetName => ({
+export const setProductName = (value: string): SetProductName => ({
   type: ProductType.SET_PRODUCT_NAME,
   payload: value
 })
@@ -36,7 +35,7 @@ export const setAuxiliaryName = (value: string): SetAuxiliaryName => ({
   payload: value
 })
 
-export const setProductPrice = (value: number): SetPrices => ({
+export const setProductPrice = (value: number): SetProductPrice => ({
   type: ProductType.SET_PRODUCT_PRICE,
   payload: value
 })
@@ -71,28 +70,8 @@ export const setMotionPhotos = (value: { enabled: boolean; motionTime: number })
   payload: value
 })
 
-export const setProductSaleOptions = (value: { data: ProductSaleOptionsContent; index: number }): SetSaleOptions => ({
-  type: ProductType.SET_SALE_OPTIONS,
-  payload: value
-})
-
-export const addProductSaleOption = (value: ProductSaleOptionsContent): AddSaleOption => ({
-  type: ProductType.ADD_SALE_OPTION,
-  payload: value
-})
-
-export const removeProductSaleOption = (value: number): RemoveSaleOption => ({
-  type: ProductType.REMOVE_SALE_OPTION,
-  payload: value
-})
-
-export const updateSaleOption = (value: { data: SaleOptionValue[]; index: number }): UpdateSaleOption => ({
-  type: ProductType.UPDATE_SALE_OPTION,
-  payload: value
-})
-
-export const setSelectMultiOption = (value: { data: boolean; index: number }): SetSelectMultiOption => ({
-  type: ProductType.SET_SELECT_MULTI_OPTIONS,
+export const setManyChoices = (value: { data: boolean; index: number }): SetSelectMultiOption => ({
+  type: ProductType.SET_MANY_CHOICES,
   payload: value
 })
 
@@ -142,5 +121,20 @@ export const setTitleProductInfo = (value: { data: string; index: number }): Set
 
 export const setProductQuantity = (value: number): SetProductQuantity => ({
   type: ProductType.SET_PRODUCT_QUANTITY,
+  payload: value
+})
+
+export const updateProductAttributeOption = (value: any): any => ({
+  type: ProductType.SET_PRODUCT_ATTRIBUTES,
+  payload: value
+})
+
+export const updateProductMainIngredients = (value: any): SetProductMainIngredients => ({
+  type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS,
+  payload: value
+})
+
+export const updateProductAttributeOptionName = (value: { data: string; index: number }): SetProductAttributeName => ({
+  type: ProductType.SET_PRODUCT_ATTRIBUTE_NAME,
   payload: value
 })

@@ -6,6 +6,7 @@ import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/for
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { useFocusWithin } from '@mantine/hooks'
 import { camelToSnakeCase, snakeCaseToUnderscore } from '@/utils/string-utils'
+import { TProductAttributeOption } from '@/pages/products/type'
 
 const useStyles = createStyles(() => ({
   '.text__title': {
@@ -52,7 +53,7 @@ export interface InputProps {
   moreOptions?: React.ReactNode
   classInput?: string
   checkIsFocused?: (data: boolean) => void
-  updateInput: (data: { value: string | number; field: string }) => void
+  updateInput: (data: { value: string | number; field: any }) => void
 }
 
 type TypeInputProps = Pick<
@@ -77,12 +78,7 @@ export const TypeInput = ({
     return snakeCaseToUnderscore(field)
   }
 
-  // useEffect(() => {
-  //   updateInput({ value: form.getInputProps(field)?.value, field })
-  // }, [form.values])
-
   const onUpdateInput = () => {
-    console.log(field, form.getInputProps(field).value, 'field, form.getInputProps(field)...')
     if (isImperative && !form.getInputProps(field).value) {
       form.setFieldError(field, t('un_valid', { field: t(useConvertField(field)) }))
     }
@@ -147,7 +143,7 @@ export const AppInput = ({
     } as Partial<ProductDetailProps>
   })
 
-  const changeParentInput = (data: { value: string | number; field: string }) => {
+  const changeParentInput = (data: { value: string | number; field: any }) => {
     updateInput(data)
   }
 

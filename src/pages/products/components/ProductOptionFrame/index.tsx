@@ -27,7 +27,7 @@ export const ProductOptionFrame = ({
   field,
   defaultPlaceholder,
   isOption = false,
-  multiOptions,
+  manyChoices,
   enable,
   updateTitle,
   updateEnable,
@@ -99,7 +99,7 @@ export const ProductOptionFrame = ({
   }
 
   useEffect(() => {
-    updateProductOption({ value: optionList, canSelectMultiOptions, isOption, title, field, multiOptions, enable })
+    updateProductOption({ value: optionList, canSelectMultiOptions, isOption, title, field, manyChoices, enable })
   }, [optionList])
 
   return (
@@ -137,7 +137,7 @@ export const ProductOptionFrame = ({
           </Flex>
         </Flex>
         <Flex className={isActive ? '' : `${classes['container__input--deactive']}`}>
-          {multiOptions && (
+          {manyChoices && (
             <ActionIcon onClick={toggleSelectMulti} sx={{ paddingTop: '5px', marginRight: '10px' }}>
               {canSelectMultiOptions ? <SelectOptionDarkIcon /> : <SelectOptionLightIcon />}
             </ActionIcon>

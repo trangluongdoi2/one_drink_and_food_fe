@@ -2,44 +2,36 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionIcon, Box, Button, Flex, Stack, Text } from '@mantine/core'
 import { clone } from '@/utils/utility'
-import { ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
 import { AddCircleLightIcon, DoNotDisturbLightIcon, ExtraNoteIcon } from '@/assets/icon'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { OverviewTable } from './OverviewTable'
 import { useStyles } from './index.styles'
+import { TProductAttributeOption } from '@/pages/products/type'
 
 export const ProductOverviewPreview = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
-  const { productName, auxiliaryName, productPrice, saleOptions, isVAT } = useProductContext()
+  const { productName, auxiliaryName, productPrice, isVAT, attributes } = useProductContext()
   const [realPrices, setRealPrices] = useState<number>(productPrice)
   const [countProduct, setCountProduct] = useState<number>(1)
-  const [saleOptionsData, setSaleOptionsData] = useState<ProductSaleOptionsContent[]>(saleOptions)
+  const [optionsPrice, setOptionsPrice] = useState<number>(0)
 
   const caculateRealPrices = () => {
-    let sum = 0
-    saleOptionsData.forEach((option: ProductSaleOptionsContent) => {
-      if (option.isOption) {
-        sum += option.value.reduce((a: number, b: SaleOptionValue) => a + (b?.price || 0), 0)
-      }
-    })
-    setRealPrices((sum + productPrice) * countProduct)
+    setRealPrices((optionsPrice + productPrice) * countProduct)
   }
 
-  const updateSaleOption = (input: { data: SaleOptionValue[]; index: number }) => {
-    const { data, index } = input
-    const newSaleOptionsData = [...saleOptionsData]
-    newSaleOptionsData[index].value = data
-    setSaleOptionsData(newSaleOptionsData)
+  const updateAttributeOptionSelected = (input: any) => {
+    const test = Array.from(input.values()) as Array<TProductAttributeOption[]>
+    let sum = 0
+    for (let i = 0; i < test.length; i++) {
+      sum += test[i].reduce((a: any, b: any) => a + (b.price || 0), 0) as number
+    }
+    setOptionsPrice(sum)
   }
 
   useEffect(() => {
     caculateRealPrices()
-  }, [countProduct, productPrice, saleOptionsData])
-
-  useEffect(() => {
-    setSaleOptionsData(clone(saleOptions))
-  }, [saleOptions])
+  }, [countProduct, productPrice, optionsPrice])
 
   return (
     <Stack spacing={0}>
@@ -66,7 +58,7 @@ export const ProductOverviewPreview = () => {
           </ActionIcon>
         </Flex>
       </Flex>
-      <OverviewTable updateSaleOption={updateSaleOption} />
+      <OverviewTable updateSaleOption={updateAttributeOptionSelected} />
       <Box className={`${classes.container} ${classes.container__note}`}>
         <Button className={classes.note__icon}>
           <ExtraNoteIcon />

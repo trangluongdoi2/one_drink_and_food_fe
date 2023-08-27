@@ -10,7 +10,7 @@ const useTranslationMiddleware = () => {
   }
 
   const convertLanguage = (langTo: string, langFrom: string) => {
-    console.log('convertLanguage')
+    // console.log('convertLanguage')
   }
 
   return { trans, convertLanguage }

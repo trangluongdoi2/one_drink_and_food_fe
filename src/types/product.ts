@@ -34,5 +34,5 @@ export interface ProductDetailProps extends Omit<ProductProps, 'fireBaseId'> {
   introduction?: string
   auxiliaryName?: string
   photos: string[]
-  typicalFunction?: string[]
+  mainFunctions?: string[]
 }

@@ -23,7 +23,7 @@ export interface ProductOptionFrameProps {
   defaultPlaceholder: string
   isOption?: boolean
   field?: string
-  multiOptions?: boolean
+  manyChoices?: boolean
   enable?: boolean
   updateTitle: (data: string) => void
   updateEnable: (data: boolean) => void
@@ -38,7 +38,7 @@ export interface ProductSaleOptionsContent {
   value: Array<SaleOptionValue>
   isOption: boolean
   canSelectMultiOptions?: boolean
-  multiOptions?: boolean
+  manyChoices?: boolean
   enable?: boolean
 }
 
@@ -72,8 +72,8 @@ export enum ProductTypeEnum {
 export type ProductType = 'juice' | 'coffee' | 'tea' | 'smoothie' | 'yogurt'
 
 export interface TProductAttributeOption {
-  text: string
-  price: number
+  text: string | number
+  price?: number
 }
 
 export interface TProductCreateNewAtribute {
