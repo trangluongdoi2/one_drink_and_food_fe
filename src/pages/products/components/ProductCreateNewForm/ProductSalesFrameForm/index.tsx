@@ -1,43 +1,36 @@
 import { useTranslation } from 'react-i18next'
-import { ActionIcon, Paper, Text, Divider, Stack, Flex } from '@mantine/core'
+import { ActionIcon, Paper, Text, Stack, Flex } from '@mantine/core'
 import { SelectOptionDarkIcon, SelectOptionLightIcon } from '@/assets/icon'
-import { ProductOptionFrame } from '@/pages/products/components/ProductOptionFrame'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import {
-  setEnabledProductInfo,
   setManyChoices,
-  setTitleProductInfo,
-  setProductName,
   updateProductAttributeOption,
   updateProductAttributeOptionName,
-  updateProductMainIngredients
+  updateProductMainIngredients,
+  addAttributeOption,
+  removeAttributeOption,
+  setAppearAttributeOption
 } from '@/reducer/product/action'
-import { ProductSaleOptionsContent, TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
-import { useStyles } from './index.styles'
-import { useEffect } from 'react'
+import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import { ProductOptionAttribute } from '../../ProductOptionAttribute'
+import { useStyles } from './index.styles'
 
 export const ProductSalesFrameForm = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const { dispatch, attributes } = useProductContext()
 
-  const addProductOptionItem = (isOption: boolean) => {
-    // const length = attributes.length
-    // const initProductSaleOption: ProductSaleOptionsContent = {
-    //   title: (isOption ? t('option_name') : t('content_name')) as string,
-    //   field: isOption ? `option${length + 1}` : `content${length + 1}`,
-    //   value: [],
-    //   isOption,
-    //   canSelectMultiOptions: true,
-    //   manyChoices: isOption,
-    //   enable: true
-    // }
-    // dispatch(addProductSaleOption(initProductSaleOption))
-  }
-
-  const updateAttributeName = (data: string, index: number) => {
-    dispatch(updateProductAttributeOptionName({ data, index }))
+  const onAddAttributeOption = (isOption = true) => {
+    const length = attributes.length
+    const pureAttributeOption: TProductCreateNewAtribute = {
+      value: isOption ? `Option ${length + 1}` : `Nội dung ${length + 1}`,
+      order: 0,
+      manyChoices: isOption ? true : false,
+      atLeastOne: false,
+      appear: true,
+      options: []
+    }
+    dispatch(addAttributeOption(pureAttributeOption))
   }
 
   const updateAttributeOptions = (input: { attrVal: string; options: TProductAttributeOption[] }) => {
@@ -46,14 +39,6 @@ export const ProductSalesFrameForm = () => {
 
   const updateMainIngredients = (input: { attrVal: string; data: string | number }) => {
     dispatch(updateProductMainIngredients(input))
-  }
-
-  // const removeOption = (data: string) => {
-  //   dispatch(removeAttributeOption(data))
-  // }
-
-  const removeAttributeOption = (data: string) => {
-    console.log('removeAttributeOption')
   }
 
   return (
@@ -65,6 +50,8 @@ export const ProductSalesFrameForm = () => {
         updateContentValue={(data: string | number) => updateMainIngredients({ attrVal: 'mainIngredients', data })}
         isOption={false}
         optionsAttribute={undefined}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        setEnabled={() => {}}
       />
       {attributes.map((attribute: TProductCreateNewAtribute, index: number) => (
         <ProductOptionAttribute
@@ -74,18 +61,20 @@ export const ProductSalesFrameForm = () => {
           atLeastOne={attribute.atLeastOne}
           manyChoices={attribute.manyChoices}
           optionsAttribute={attribute.options}
-          isOption={true}
+          isOption={attribute.atLeastOne || attribute.manyChoices}
           updateAttributeOptions={(data: TProductAttributeOption[]) =>
             updateAttributeOptions({ attrVal: attribute.value, options: data })
           }
-          updateAttributeName={(data: string) => updateAttributeName(data, index)}
-          removeAttributeOption={removeAttributeOption}
+          updateAttributeName={(data: string) => dispatch(updateProductAttributeOptionName({ data, index }))}
+          removeAttributeOption={(data: string) => dispatch(removeAttributeOption(data))}
+          setManyChoices={(data: boolean) => dispatch(setManyChoices({ data, index }))}
+          setEnabled={(data: boolean) => dispatch(setAppearAttributeOption({ data, index }))}
         />
       ))}
-      <ActionIcon className={`title-add ${classes['button-add']}`} onClick={() => addProductOptionItem(true)}>
+      <ActionIcon className={`title-add ${classes['button-add']}`} onClick={() => onAddAttributeOption(true)}>
         <Text>+{t('add_option_frame')}</Text>
       </ActionIcon>
-      <ActionIcon className={`title-add ${classes['button-add']}`} onClick={() => addProductOptionItem(false)}>
+      <ActionIcon className={`title-add ${classes['button-add']}`} onClick={() => onAddAttributeOption(false)}>
         <Text>+{t('add_content_frame')}</Text>
       </ActionIcon>
       <Stack sx={{ marginTop: '20px', padding: '0 40px 40px 40px' }}>

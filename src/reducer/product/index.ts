@@ -1,7 +1,7 @@
 import { clone } from '@/utils/utility'
 import { ProductState, ProductType, ProductTypeAction } from './type'
 import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
-import { TProductAttributeOption } from '@/pages/products/type'
+import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 const { trans } = useTranslationMiddleware()
 
 export const initinalState: ProductState = {
@@ -15,7 +15,6 @@ export const initinalState: ProductState = {
   isVAT: true,
   motionTime: 1000,
   productType: 'juice',
-  // attributes: [],
   productRatingsAverage: 0,
   note: '',
   listInformation: [],
@@ -28,43 +27,6 @@ export const initinalState: ProductState = {
     motionTime: 1000
   },
   photosStore: [],
-  saleOptions: [
-    {
-      title: trans('main_ingredient'),
-      field: 'mainIngredient',
-      isOption: false,
-      manyChoices: false,
-      value: [],
-      enable: true
-    },
-    {
-      title: trans('choose_size'),
-      field: 'size',
-      isOption: true,
-      manyChoices: true,
-      canSelectMultiOptions: true,
-      value: [],
-      enable: true
-    },
-    {
-      title: trans('ice_content'),
-      field: 'iceContent',
-      isOption: true,
-      manyChoices: true,
-      canSelectMultiOptions: true,
-      value: [],
-      enable: true
-    },
-    {
-      title: trans('sugar_content'),
-      field: 'sugarContent',
-      isOption: true,
-      manyChoices: true,
-      canSelectMultiOptions: true,
-      value: [],
-      enable: true
-    }
-  ],
   infos: [
     {
       title: trans('topic_name'),
@@ -79,7 +41,7 @@ export const initinalState: ProductState = {
       value: 'CHỌN SIZE',
       order: 0,
       manyChoices: false,
-      atLeastOne: false,
+      atLeastOne: true,
       appear: true,
       options: [
         {
@@ -167,12 +129,8 @@ export const initinalState: ProductState = {
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  window.productState = state
-  const saleOptions = clone(state.saleOptions)
   const infos = clone(state.infos)
-  const attributes = clone(state.attributes)
+  let attributes = clone(state.attributes)
   switch (type) {
     case ProductType.SET_PRODUCT_NAME:
       return {
@@ -255,12 +213,39 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     case ProductType.SET_MANY_CHOICES: {
       const { index, data } = payload
-      saleOptions[index].canSelectMultiOptions = data
+      attributes[index].manyChoices = data
+      attributes[index].atLeastOne = !data
       return {
         ...state,
-        saleOptions
+        attributes: [...attributes]
       }
     }
+    case ProductType.SET_APPREAR_ATTRIBUTE_OPTION: {
+      const { index, data } = payload
+      attributes[index].appear = data
+      return {
+        ...state,
+        attributes: [...attributes]
+      }
+    }
+    case ProductType.REMOVE_ATTRIBUTE_OPTION: {
+      attributes = attributes.filter((attr: TProductCreateNewAtribute) => attr.value !== payload)
+      return {
+        ...state,
+        attributes: [...attributes]
+      }
+    }
+    case ProductType.ADD_ATTRIBUTE_OPTION: {
+      attributes.push(payload)
+      return {
+        ...state,
+        attributes: [...attributes]
+      }
+    }
+
+    // case ProductType.
+
+    // Todo
     case ProductType.SET_PRODUCT_INFOS: {
       const { index, data } = payload
       return {

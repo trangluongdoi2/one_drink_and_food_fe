@@ -5,7 +5,3 @@ export function clone(value: any) {
     return value
   }
 }
-
-export function cloneMap(map: Map<any, any>): Map<any, any> {
-  return JSON.parse(JSON.stringify(Array.from(map)))
-}

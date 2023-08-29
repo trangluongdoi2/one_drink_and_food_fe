@@ -2,7 +2,7 @@ import { ActionIcon, Paper, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { ProductOverviewNewForm } from './ProductOverviewNewForm'
 import { ProductSalesFrameForm } from './ProductSalesFrameForm'
-import { ProductInfoCategoryForm } from './ProductInfoCategoryForm'
+import { ProductInformationForm } from './ProductInformationForm'
 
 export const ProductCreateNewForm = () => {
   const { t } = useTranslation()
@@ -11,7 +11,7 @@ export const ProductCreateNewForm = () => {
       <Stack>
         <ProductOverviewNewForm />
         <ProductSalesFrameForm />
-        <ProductInfoCategoryForm />
+        <ProductInformationForm />
         <Paper className='create-new-product-card__container'>
           <ActionIcon className='title-add' sx={{ marginTop: '0 !important' }}>
             <Text>+{t('create_information_category')}</Text>

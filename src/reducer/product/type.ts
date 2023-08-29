@@ -1,8 +1,7 @@
-import { TProductCreateNew, ProductInfos, ProductSaleOptionsContent, SaleOptionValue } from '@/pages/products/type'
+import { TProductCreateNew, ProductInfos, SaleOptionValue, TProductCreateNewAtribute } from '@/pages/products/type'
 export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
   photosStore?: File[]
-  saleOptions: Array<ProductSaleOptionsContent>
   infos: Array<ProductInfos>
   introduction?: ''
 }
@@ -18,11 +17,8 @@ export enum ProductType {
   SET_PHOTOS = 'SET_PHOTOS',
   SET_PHOTOS_STORE = 'SET_PHOTOS_STORE',
   SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
-  SET_SALE_OPTIONS = 'SET_SALE_OPTIONS',
-  ADD_SALE_OPTION = 'ADD_SALE_OPTION',
-  REMOVE_SALE_OPTION = 'REMOVE_SALE_OPTION',
-  UPDATE_SALE_OPTION = 'UPDATE_SALE_OPTION',
-  SET_MANY_CHOICES = 'SET_MANY_CHOICES',
+  ADD_ATTRIBUTE_OPTION = 'ADD_ATTRIBUTE_OPTION',
+  REMOVE_ATTRIBUTE_OPTION = 'REMOVE_ATTRIBUTE_OPTION',
   SET_PRODUCT_INFOS = 'SET_PRODUCT_INFOS',
   ADD_PRODUCT_INFO = 'ADD_PRODUCT_INFO',
   REMOVE_PRODUCT_INFO = 'REMOVE_PRODUCT_INFO',
@@ -34,7 +30,9 @@ export enum ProductType {
   SET_PRODUCT_ATTRIBUTES = 'SET_PRODUCT_ATTRIBUTES',
   SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
   SET_PRODUCT_MAIN_INGREDIENTS = 'SET_PRODUCT_MAIN_INGREDIENTS',
-  SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME'
+  SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME',
+  SET_MANY_CHOICES = 'SET_MANY_CHOICES',
+  SET_APPREAR_ATTRIBUTE_OPTION = 'SET_APPREAR_ATTRIBUTE_OPTION'
 }
 
 export interface SetProductName {
@@ -62,7 +60,7 @@ export interface SetIntroductionContent {
   payload: string
 }
 
-export interface SetTypicalFunction {
+export interface SetMainFunctions {
   type: ProductType.SET_MAIN_FUNCTIONS
   payload: string[]
 }
@@ -82,34 +80,26 @@ export interface SetMotionPhotos {
   payload: { enabled: boolean; motionTime: number }
 }
 
-export interface SetSaleOptions {
-  type: ProductType.SET_SALE_OPTIONS
-  payload: {
-    data: ProductSaleOptionsContent
-    index: number
-  }
+export interface AddAttributeOption {
+  type: ProductType.ADD_ATTRIBUTE_OPTION
+  payload: TProductCreateNewAtribute
 }
 
-export interface AddSaleOption {
-  type: ProductType.ADD_SALE_OPTION
-  payload: ProductSaleOptionsContent
+export interface RemoveAttributeOption {
+  type: ProductType.REMOVE_ATTRIBUTE_OPTION
+  payload: string
 }
 
-export interface RemoveSaleOption {
-  type: ProductType.REMOVE_SALE_OPTION
-  payload: number
-}
-
-export interface UpdateSaleOption {
-  type: ProductType.UPDATE_SALE_OPTION
-  payload: {
-    data: SaleOptionValue[]
-    index: number
-  }
-}
-
-export interface SetSelectMultiOption {
+export interface SetSelectManyChoices {
   type: ProductType.SET_MANY_CHOICES
+  payload: {
+    data: boolean
+    index: number
+  }
+}
+
+export interface SetAppearAttributeOption {
+  type: ProductType.SET_APPREAR_ATTRIBUTE_OPTION
   payload: {
     data: boolean
     index: number
@@ -175,7 +165,7 @@ export interface SetProductQuantity {
 
 export interface SetProductMainIngredients {
   type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS
-  payload: string
+  payload: any
 }
 export interface SetProductAttribues {
   type: ProductType.SET_PRODUCT_ATTRIBUTES
@@ -203,15 +193,11 @@ export type ProductTypeAction =
   | SetProductPrice
   | SetEnableIncludeVATPrices
   | SetIntroductionContent
-  | SetTypicalFunction
+  | SetMainFunctions
   | SetPhotos
   | SetPhotosStore
   | SetMotionPhotos
-  | SetSaleOptions
-  | AddSaleOption
-  | RemoveSaleOption
-  | UpdateSaleOption
-  | SetSelectMultiOption
+  | SetSelectManyChoices
   | SetProductInfos
   | AddProductInfo
   | RemoveProductInfo
@@ -225,4 +211,6 @@ export type ProductTypeAction =
   | SetProductContent
   | SetProductAttributeName
   | SetProductMainIngredients
-  | any
+  | AddAttributeOption
+  | RemoveAttributeOption
+  | SetAppearAttributeOption

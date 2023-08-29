@@ -1,12 +1,11 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { cloneDeep } from 'lodash'
 import { ActionIcon, Box, Checkbox, CheckboxProps, Flex, Radio, Stack, Text } from '@mantine/core'
 import { CircleFillIcon } from '@/assets/icon'
-import { clone, cloneMap } from '@/utils/utility'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import { useStyles } from './index.styles'
-import { useEffect, useState } from 'react'
-import { cloneDeep } from 'lodash'
 
 type Props = {
   updateSaleOption: (input: any) => void

@@ -14,7 +14,7 @@ import {
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { AppInput } from '@/components/input'
 import { useClickOutside } from '@mantine/hooks'
-import { TProductAttributeOption } from '../../type'
+import { TProductAttributeOption, TProductCreateNewAtribute } from '../../type'
 import { useStyles } from './index.styles'
 
 type TProductOptionComponentProps = {
@@ -37,6 +37,8 @@ type TProductOptionAttributeProps = {
   updateAttributeOptions?: (data: TProductAttributeOption[]) => void
   updateContentValue?: (data: string | number) => void
   removeAttributeOption?: (data: string) => void
+  setManyChoices?: (data: boolean) => void
+  setEnabled: (data: boolean) => void
 }
 
 export const ProductOptionComponent = ({
@@ -91,11 +93,12 @@ export const ProductOptionAttribute = ({
   isOption = false,
   manyChoices = false,
   atLeastOne,
-  optionsAttribute,
   updateAttributeName,
   updateAttributeOptions,
   updateContentValue,
-  removeAttributeOption
+  setManyChoices,
+  removeAttributeOption,
+  setEnabled
 }: TProductOptionAttributeProps) => {
   const initAttributeDataOption: TProductAttributeOption = {
     text: '',
@@ -107,7 +110,7 @@ export const ProductOptionAttribute = ({
 
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const [activeManyChoices, setActiveManyChoices] = useState(atLeastOne && !manyChoices)
+  const [activeManyChoices, setActiveManyChoices] = useState(manyChoices)
   const [isActive, setIsActive] = useState<boolean>(true)
   const [isEditable, setIsEditable] = useState<boolean>(false)
   const [optionList, setOptionList] = useState(isOption ? [initAttributeDataOption] : [initAttributeDataNotOption])
@@ -116,10 +119,12 @@ export const ProductOptionAttribute = ({
 
   const toggleManyChoices = () => {
     setActiveManyChoices(!activeManyChoices)
+    setManyChoices && setManyChoices(!activeManyChoices)
   }
 
   const onToggleStatus = (status: boolean) => {
     setIsActive(status)
+    setEnabled(status)
   }
 
   const removeOption = (index: number) => {

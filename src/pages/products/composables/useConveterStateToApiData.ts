@@ -14,7 +14,6 @@ export default function useConveterStateToApiData(input: ProductState | any): TP
   // @ts-ignore
   delete cloneInput.photosStore
   // @ts-ignore
-  delete cloneInput.saleOptions
   // return {
   //   ...(input as TProductCreateNew),
   //   productName: 'productName',
@@ -23,7 +22,6 @@ export default function useConveterStateToApiData(input: ProductState | any): TP
   //   // dispatch: undefined,
   //   // photos: undefined,
   //   // photosStore: undefined,
-  //   // saleOptions: undefined,
   //   isVAT: true,
   //   productMainIngredients: '123',
   //   mainFunctions: ['s', 's', 's'],

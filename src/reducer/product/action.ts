@@ -1,4 +1,4 @@
-import { ProductInfos } from '@/pages/products/type'
+import { ProductInfos, TProductCreateNewAtribute } from '@/pages/products/type'
 import {
   AddProductInfo,
   ProductType,
@@ -16,13 +16,15 @@ import {
   SetPhotosStoreProductInfo,
   SetProductPrice,
   SetProductInfos,
-  SetSelectMultiOption,
+  SetAppearAttributeOption,
+  SetSelectManyChoices,
   SetTitleProductInfo,
-  SetTypicalFunction,
+  SetMainFunctions,
   SetProductQuantity,
   SetProductAttributeName,
   SetProductMainIngredients,
-  SetProductAttributeOption
+  AddAttributeOption,
+  RemoveAttributeOption
 } from './type'
 
 export const setProductName = (value: string): SetProductName => ({
@@ -50,7 +52,7 @@ export const setIntroductionContent = (value: string): SetIntroductionContent =>
   payload: value
 })
 
-export const setMainFunctions = (value: string[]): SetTypicalFunction => ({
+export const setMainFunctions = (value: string[]): SetMainFunctions => ({
   type: ProductType.SET_MAIN_FUNCTIONS,
   payload: value
 })
@@ -70,7 +72,12 @@ export const setMotionPhotos = (value: { enabled: boolean; motionTime: number })
   payload: value
 })
 
-export const setManyChoices = (value: { data: boolean; index: number }): SetSelectMultiOption => ({
+export const setAppearAttributeOption = (value: { data: boolean; index: number }): SetAppearAttributeOption => ({
+  type: ProductType.SET_APPREAR_ATTRIBUTE_OPTION,
+  payload: value
+})
+
+export const setManyChoices = (value: { data: boolean; index: number }): SetSelectManyChoices => ({
   type: ProductType.SET_MANY_CHOICES,
   payload: value
 })
@@ -136,5 +143,15 @@ export const updateProductMainIngredients = (value: any): SetProductMainIngredie
 
 export const updateProductAttributeOptionName = (value: { data: string; index: number }): SetProductAttributeName => ({
   type: ProductType.SET_PRODUCT_ATTRIBUTE_NAME,
+  payload: value
+})
+
+export const addAttributeOption = (value: TProductCreateNewAtribute): AddAttributeOption => ({
+  type: ProductType.ADD_ATTRIBUTE_OPTION,
+  payload: value
+})
+
+export const removeAttributeOption = (value: string): RemoveAttributeOption => ({
+  type: ProductType.REMOVE_ATTRIBUTE_OPTION,
   payload: value
 })
