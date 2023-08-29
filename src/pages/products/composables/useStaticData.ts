@@ -37,7 +37,7 @@ const productAddTest = {
   auxiliaryName: 'Bia SOS',
   prices: 20000,
   introduction: 'Đây là một sản phẩm có cồn blah blah',
-  typicalFunction: ['Làm khoẻ mạnh', 'Làm mạnh khoẻ'],
+  mainFunctions: ['Làm khoẻ mạnh', 'Làm mạnh khoẻ'],
   photos: {
     filePaths: ['', '', '', '', '', '', '', ''],
     enabled: true,
@@ -60,7 +60,7 @@ const productAddTest = {
       canSelectMultiOptions: true,
       title: 'Thành phần chính',
       field: 'mainIngredient',
-      multiOptions: false
+      manyChoices: false
     },
     {
       value: [
@@ -77,7 +77,7 @@ const productAddTest = {
       canSelectMultiOptions: true,
       title: 'Chọn size',
       field: 'size',
-      multiOptions: true
+      manyChoices: true
     },
     {
       value: [
@@ -90,7 +90,7 @@ const productAddTest = {
       canSelectMultiOptions: true,
       title: 'Lượng đá',
       field: 'iceContent',
-      multiOptions: true
+      manyChoices: true
     },
     {
       value: [
@@ -103,7 +103,7 @@ const productAddTest = {
       canSelectMultiOptions: true,
       title: 'Lượng đường',
       field: 'sugarContent',
-      multiOptions: true
+      manyChoices: true
     }
   ],
   infos: [
@@ -116,4 +116,95 @@ const productAddTest = {
   ]
 }
 
-export { test, productAddTest, testName }
+const productAttribue = [
+  {
+    value: 'CHỌN SIZE',
+    order: 0,
+    manyChoices: false,
+    atLeastOne: true,
+    appear: true,
+    options: [
+      {
+        text: 'Size M',
+        price: 0
+      },
+      {
+        text: 'Size L',
+        price: 5000
+      }
+    ]
+  },
+  {
+    value: 'LIỀU LƯỢNG NGỌT',
+    order: 0,
+    manyChoices: false,
+    atLeastOne: true,
+    appear: true,
+    options: [
+      {
+        text: '100% Đường (Ngọt Ngây)',
+        price: 0
+      },
+      {
+        text: '50% Đường (Ngọt Vừa)',
+        price: 0
+      },
+      {
+        text: '0% Đường (Nguyên Chất)',
+        price: 0
+      }
+    ]
+  },
+  {
+    value: 'LIỀU LƯỢNG ĐÁ',
+    order: 0,
+    manyChoices: false,
+    atLeastOne: true,
+    appear: true,
+    options: [
+      {
+        text: '100% Đá (Bình Thường)',
+        price: 0
+      },
+      {
+        text: '50% Đá (Ít Đá)',
+        price: 0
+      },
+      {
+        text: '0% Đá (Đá Riêng)',
+        price: 0
+      }
+    ]
+  },
+  {
+    value: 'KẾT HỢP THÊM',
+    order: 0,
+    manyChoices: false,
+    atLeastOne: true,
+    appear: true,
+    options: [
+      {
+        text: 'Ổi x Mật Ong x Cà Rốt',
+        price: 0
+      },
+      {
+        text: 'Ổi x Mật Ong x Lê',
+        price: 0
+      },
+      {
+        text: 'Ổi x Mật Ong x Dứa',
+        price: 0
+      },
+      {
+        text: 'Ổi x Mật Ong x Dưa Hấu',
+        price: 0
+      },
+      {
+        text: 'Ổi x Mật Ong x Cần Tây',
+        price: 0
+      }
+    ]
+  }
+]
+
+export { test, productAddTest, testName, productAttribue }

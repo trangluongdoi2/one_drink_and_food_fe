@@ -1,23 +1,17 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { cloneDeep } from 'lodash'
 import { ActionIcon, Box, Checkbox, CheckboxProps, Flex, Radio, Stack, Text } from '@mantine/core'
 import { CircleFillIcon } from '@/assets/icon'
-import { clone } from '@/utils/utility'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
-// import { updateSaleOption } from '@/reducer/product/action'
+import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import { useStyles } from './index.styles'
-import { SaleOptionValue } from '@/pages/products/type'
-
-type SaleOption = {
-  info: string | number
-  price?: number
-}
 
 type Props = {
-  updateSaleOption: (input: { data: SaleOption[]; index: number }) => void
+  updateSaleOption: (input: any) => void
 }
 
-// eslint-disable-next-line react/prop-types
-const CheckboxIcon: CheckboxProps['icon'] = ({ className }) => (
+const CheckboxIcon: CheckboxProps['icon'] = ({ className }: any) => (
   <ActionIcon className={className} size={6}>
     <CircleFillIcon />
   </ActionIcon>
@@ -26,52 +20,65 @@ const CheckboxIcon: CheckboxProps['icon'] = ({ className }) => (
 export const OverviewTable = ({ updateSaleOption }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const { saleOptions, dispatch } = useProductContext()
+  const { attributes, productMainIngredients } = useProductContext()
+  const [mapChoicesOptions, setMapChoicesOptions] = useState<Map<string, TProductAttributeOption[]>>(new Map())
 
-  const convertUpdateData = (data: string[] | string, index: number) => {
-    const cloneSaleOptions = clone(saleOptions)
-    const updateData = [...cloneSaleOptions[index].value]
-    return updateData.filter((item: SaleOption) => data.includes(item.info as string))
+  const changeEnableValueUniqueOption = (optionField: string, data: TProductCreateNewAtribute) => {
+    const currentOption = data.options?.filter((item: any) => item.text === optionField)
+    if (currentOption?.length) {
+      const newMap = cloneDeep(mapChoicesOptions)
+      newMap.set(data.value, currentOption)
+      setMapChoicesOptions(newMap)
+    }
   }
 
-  const changeEnableValueMultiOptions = (data: string[], index: number) => {
-    const convertedData = convertUpdateData(data, index)
-    updateSaleOption({ data: convertedData, index })
-    // dispatch(updateSaleOption({ data: convertedData, index }))
+  const changeEnableValueMultiOptions = (optionFields: Array<string | number>, data: TProductCreateNewAtribute) => {
+    const currentOptions = data.options?.filter((option: TProductAttributeOption) => optionFields.includes(option.text))
+    if (currentOptions?.length) {
+      const newMap = cloneDeep(mapChoicesOptions)
+      newMap.set(data.value, currentOptions)
+      setMapChoicesOptions(newMap)
+    }
   }
 
-  const changeEnableValueUniqueOption = (data: string, index: number) => {
-    const convertedData = convertUpdateData(data, index)
-    updateSaleOption({ data: convertedData, index })
-    // dispatch(updateSaleOption({ data: convertedData, index }))
-  }
+  useEffect(() => {
+    updateSaleOption(mapChoicesOptions)
+  }, [mapChoicesOptions])
 
   return (
     <Flex gap={6} direction={'column'}>
       <Box className={classes.container}>
-        {saleOptions.map((item, index) => (
+        <Box>
+          <Stack spacing={0}>
+            <Text className={classes.text__title}>{t('main_ingredient')}</Text>
+            <Text className={classes.text__content} style={{ height: '22px', padding: '7px 10px' }}>
+              {productMainIngredients ? productMainIngredients : t('main_ingredient')}
+            </Text>
+          </Stack>
+        </Box>
+        {attributes.map((item, index) => (
           <Box key={index}>
-            {item.enable && (
+            {item.appear && (
               <Stack key={index} spacing={0}>
-                <Text className={classes.text__title}>{item.title}</Text>
+                <Text className={classes.text__title}>{item.value}</Text>
                 <Flex className={classes.container__content}>
-                  {item.isOption ? (
-                    <Stack sx={{ width: '100%' }}>
-                      {!item.canSelectMultiOptions ? (
-                        <Radio.Group
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            rowGap: '10px'
-                          }}
-                          onChange={(event) => changeEnableValueUniqueOption(event, index)}
-                        >
-                          {item.value.map((data: SaleOption, childIndex: number) => (
+                  <Stack sx={{ width: '100%' }}>
+                    {!item.manyChoices ? (
+                      <Radio.Group
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          rowGap: '10px'
+                        }}
+                        onChange={(event) => changeEnableValueUniqueOption(event, item)}
+                      >
+                        {item.options?.length &&
+                          item.options.map((data: TProductAttributeOption, childIndex: number) => (
                             <Flex key={childIndex} align={'center'} rowGap={10}>
                               <Radio
-                                value={data.info}
-                                label={data.info || t('option', { index: childIndex + 1 })}
+                                value={data.text}
+                                label={data.text || t('option', { index: childIndex + 1 })}
                                 sx={{ flex: '1' }}
                                 classNames={{
                                   label: classes.text__content,
@@ -84,22 +91,23 @@ export const OverviewTable = ({ updateSaleOption }: Props) => {
                               <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
                             </Flex>
                           ))}
-                        </Radio.Group>
-                      ) : (
-                        <Checkbox.Group
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            rowGap: '10px'
-                          }}
-                          onChange={(event) => changeEnableValueMultiOptions(event, index)}
-                        >
-                          {item.value.map((data: SaleOption, childIndex: number) => (
+                      </Radio.Group>
+                    ) : (
+                      <Checkbox.Group
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          rowGap: '10px'
+                        }}
+                        onChange={(event) => changeEnableValueMultiOptions(event, item)}
+                      >
+                        {item.options?.length &&
+                          item.options.map((data: TProductAttributeOption, childIndex: number) => (
                             <Flex key={childIndex} align={'center'} rowGap={10}>
                               <Checkbox
-                                value={data.info}
-                                label={data.info || t('option', { index: childIndex + 1 })}
+                                value={data.text}
+                                label={data.text || t('option', { index: childIndex + 1 })}
                                 sx={{ flex: '1', alignItems: 'center' }}
                                 classNames={{
                                   label: classes.text__content,
@@ -113,18 +121,9 @@ export const OverviewTable = ({ updateSaleOption }: Props) => {
                               <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
                             </Flex>
                           ))}
-                        </Checkbox.Group>
-                      )}
-                    </Stack>
-                  ) : (
-                    <Stack>
-                      {item.value.map((data: SaleOption, childIndex: number) => (
-                        <Text key={childIndex} className={classes.text__content}>
-                          {data.info}
-                        </Text>
-                      ))}
-                    </Stack>
-                  )}
+                      </Checkbox.Group>
+                    )}
+                  </Stack>
                 </Flex>
               </Stack>
             )}

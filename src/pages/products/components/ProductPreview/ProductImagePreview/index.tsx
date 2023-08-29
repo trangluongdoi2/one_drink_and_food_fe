@@ -10,7 +10,7 @@ import { useStyles } from './index.styles'
 export const ProductImagePreview = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const { typicalFunction, introduction } = useProductContext()
+  const { mainFunctions, introduction } = useProductContext()
   const filePaths = useProductContext().photos?.filePaths as string[]
   const enabled = useProductContext().photos?.enabled
   const motionTime = useProductContext().photos?.motionTime as number
@@ -31,8 +31,8 @@ export const ProductImagePreview = () => {
         )}
       </Box>
       <Stack>
-        {typicalFunction &&
-          typicalFunction.map((item, index) => (
+        {mainFunctions &&
+          mainFunctions.map((item, index) => (
             <Flex key={index} columnGap={6}>
               <ActionIcon size={10}>
                 <DoneOutlineIcon />

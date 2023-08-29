@@ -17,7 +17,7 @@ import {
   setPhotosStoreProductInfo
 } from '@/reducer/product/action'
 
-export const ProductInfoCategoryForm = () => {
+export const ProductInformationForm = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const { infos, dispatch } = useProductContext()
@@ -46,7 +46,6 @@ export const ProductInfoCategoryForm = () => {
   }
 
   const updateFileStores = (data: File[], index: number) => {
-    // console.log(data, 'updateFileStores')
     dispatch(setPhotosStoreProductInfo({ data, index }))
   }
 

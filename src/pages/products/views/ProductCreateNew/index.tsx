@@ -9,8 +9,11 @@ import { useStyles } from './index.styles'
 import { camelToSnakeCase } from '@/utils/string-utils'
 import { useLocation } from 'react-router-dom'
 import { TProductCreateNew, ProductInfos } from '../../type'
-import ProductsApi from '../../api'
+import ProductsApi from '../../api/product'
 import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
+import CategoryApi from '../../api/category'
+import { useProductCreateMutation } from '../../query/product'
+import { useEffect, useState } from 'react'
 
 type Props = {
   type: string
@@ -20,8 +23,10 @@ type Props = {
 export const ProductCreateNew = ({ type, subType }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const productData = useProductContext()
+  const productStateData = useProductContext()
   const splitPath = useLocation().pathname.split('/')
+  const [validButton, setValidButton] = useState<boolean>(true)
+  // const [productCreateData, setProductCreateData] = useState<TProductCreateNew | undefined>()
 
   const items = [
     { title: t(type), href: `products/${type}`, currentPath: type },
@@ -41,24 +46,26 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     </Anchor>
   ))
 
-  // const promiseUploadImage = (file: File, collection: FIREBASE_COLLECTION) =>
-  //   new Promise((resolve) => {
-  //     uploadImage(file, collection, (url: string) => {
-  //       if (url) {
-  //         resolve(url)
-  //       }
-  //     })
-  //   })
+  const { mutate } = useProductCreateMutation()
 
   const onSaveProduct = async () => {
-    const input: TProductCreateNew = useConverterStateToApiData(productData)
-    const productApi = new ProductsApi()
-    console.log(input, 'input..')
-
-    await productApi.createProduct(input).then((res: any) => {
-      console.log(res, 'res...')
-    })
+    const input: TProductCreateNew = useConverterStateToApiData(productStateData)
+    mutate(input)
   }
+
+  const checkValidButton = () => {
+    const { productName, auxiliaryName, productPrice, productQuantity } = productStateData
+    return !!productName && !!auxiliaryName && !!productPrice && !!productQuantity
+  }
+
+  useEffect(() => {
+    setValidButton(checkValidButton())
+  }, [
+    productStateData.productName,
+    productStateData.auxiliaryName,
+    productStateData.productPrice,
+    productStateData.productQuantity
+  ])
 
   return (
     <Paper className={classes.container}>
@@ -70,7 +77,7 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
           </div>
           <div className={classes.container__preview}>
             <ProductPreview />
-            <Button className={classes.container__button} onClick={onSaveProduct}>
+            <Button className={classes.container__button} onClick={onSaveProduct} disabled={!validButton}>
               {t('create_new_product')}
             </Button>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { ActionIcon, Flex, NumberInput, Paper, Text } from '@mantine/core'
 import { DoneOutlineIcon, ToggleDarkLgIcon, ToggleLightLgIcon } from '@/assets/icon'
 import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
@@ -51,7 +51,7 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
   const { classes } = useStyles()
 
   const changeMotionDelays = (event: React.FocusEvent<HTMLInputElement>) => {
-    console.log(Number(event.target.value), ' Number(event.target.value)...');
+    console.log(Number(event.target.value), ' Number(event.target.value)...')
     // updateMotion({ enabled: true, motionTime: Number(event.target.value) })
   }
 
@@ -84,7 +84,7 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
 export const ProductOverviewNewForm = () => {
   const { classes } = useStyles()
   // const { dispatch, photos } = useProductContext()
-  const { dispatch, motionTime } = useProductContext()
+  const { dispatch, motionTime, productName, auxiliaryName, productQuantity } = useProductContext()
 
   const motionValue = { enabled: true, motionTime: motionTime }
 
@@ -155,12 +155,13 @@ export const ProductOverviewNewForm = () => {
         title={t('auxiliary_name')}
         placeholder={t('fill_product_auxiliary_name')}
         field='auxiliaryName'
+        isImperative={true}
         updateInput={updateInput}
       />
       <AppInput
         title={t('prices')}
         placeholder={t('fill_product_prices')}
-        field='productQuantity'
+        field='productPrice'
         typeInput='number'
         isImperative={true}
         hiddenToggleIcon={true}
