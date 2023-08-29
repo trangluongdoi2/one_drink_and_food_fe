@@ -52,10 +52,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             TextInput: {
               styles: (theme) => ({
                 input: {
-                  backgroundColor: theme.colors.dark[0],
+                  backgroundColor: theme.colors.dark[3],
                   '&:focus-within': {
                     borderColor: theme.colors.gray,
-                    backgroundColor: theme.colors.dark[1]
+                    backgroundColor: theme.colors.dark[3]
                   },
                   fontSize: 12
                 }

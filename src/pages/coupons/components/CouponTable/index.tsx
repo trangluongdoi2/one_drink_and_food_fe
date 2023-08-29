@@ -1,156 +1,120 @@
-import { ActiveEditIcon, DefaultAvatar } from '@/assets/icon'
+import { DefaultAvatar, OneActiveIcon } from '@/assets/icon'
 import Table from '@/components/table/table'
+import RowInput from '@/components/table/table/rowInput'
 import { TColumnsProps } from '@/components/table/table/type'
 import { TCouponType } from '@/types/coupon'
-import { ActionIcon, Avatar, Text } from '@mantine/core'
-import { FC } from 'react'
-import { CouponFormProvider, useCouponForm } from '../../form'
-
-const mock = [
-  {
-    couponCode: 'abc',
-    couponTitle: 'Coupon 1',
-    couponEndDate: {
-      date: '',
-      time: ''
-    },
-    couponFreeShipping: false,
-    couponNote: '',
-    couponOptions: '',
-    couponProductDetails: '',
-    couponProductType: [],
-    couponQuantity: 0,
-    couponStartDate: {
-      date: '',
-      time: ''
-    },
-    couponValue: 0,
-    image: ''
-  },
-  {
-    couponCode: 'abccd',
-    couponTitle: 'Coupon 2',
-    couponEndDate: {
-      date: '',
-      time: ''
-    },
-    couponFreeShipping: false,
-    couponNote: '',
-    couponOptions: '',
-    couponProductDetails: '',
-    couponProductType: [],
-    couponQuantity: 0,
-    couponStartDate: {
-      date: '',
-      time: ''
-    },
-    couponValue: 0,
-    image: ''
-  }
-]
+import { Avatar } from '@mantine/core'
+import { FC, useState } from 'react'
+import { CouponFormProvider, defaultCoupon, useCouponForm } from '../../form'
 
 type TCouponTableProps = {
   data: TCouponType[]
 }
 
 const CouponTable: FC<TCouponTableProps> = ({ data }) => {
-  const form = useCouponForm({
-    initialValues: {
-      couponCode: '',
-      couponTitle: '',
-      couponEndDate: {
-        date: '',
-        time: ''
-      },
-      couponFreeShipping: false,
-      couponNote: '',
-      couponOptions: '',
-      couponProductDetails: '',
-      couponProductType: [],
-      couponQuantity: 0,
-      couponStartDate: {
-        date: '',
-        time: ''
-      },
-      couponValue: 0,
-      image: ''
-    }
-  })
+  const form = useCouponForm({ initialValues: defaultCoupon })
+  const [edit, setEdit] = useState<boolean>(false)
+  const [selectedRows, setSelectedRows] = useState<string[]>([])
+  console.log('🚀 ~ file: index.tsx:17 ~ selectedRows:', selectedRows)
 
   const columns: TColumnsProps[] = [
     {
-      id: '1111',
+      id: 'code',
       title: 'Mã',
-      width: '10%',
+      width: '15%',
       position: 'left',
-      render: (
-        <Text fw='bolder' lh={1.4}>
-          UUID
-        </Text>
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data?.couponCode}
+          name='startDate'
+          onChange={(value) => console.log(value)}
+          textStyle={{ fw: 'bolder' }}
+        />
       )
     },
     {
-      id: '1111222',
+      id: 'avatar',
       title: 'Avatar',
       width: '10%',
       position: 'left',
-      render: !form.getInputProps('image').value ? (
-        <DefaultAvatar />
-      ) : (
-        <Avatar src={form.getInputProps('image').value} radius='lg' />
-      )
+      render: (data) => (!data.image ? <DefaultAvatar /> : <Avatar src={data.image} radius='lg' />)
     },
     {
-      id: '1113',
+      id: 'startDate',
       title: 'Ngày bắt đầu',
       width: '15%',
       position: 'left',
-      render: <Text lh={1.4}>1/4/2023</Text>
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data?.couponStartDate?.date}
+          name='startDate'
+          onChange={(value) => console.log(value)}
+        />
+      )
     },
     {
-      id: '1114',
+      id: 'endDate',
       title: 'Ngày kết thúc',
       width: '15%',
       position: 'left',
-      render: <Text lh={1.4}>UUID</Text>
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data?.couponEndDate?.date}
+          name='startDate'
+          onChange={(value) => console.log(value)}
+        />
+      )
     },
     {
-      id: '1115',
+      id: 'usedCoupon',
       title: 'Đã sử dụng',
       width: '15%',
-      position: 'left',
-      render: <Text lh={1.4}>UUID</Text>
+      position: 'center',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data?.couponQuantity}
+          name='startDate'
+          onChange={(value) => console.log(value)}
+        />
+      )
     },
     {
-      id: '1116',
+      id: 'quantity',
       title: 'Số lượng phát hành',
       width: '15%',
-      position: 'left',
-      render: <Text lh={1.4}>UUID</Text>
+      position: 'center',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data?.couponQuantity}
+          name='startDate'
+          onChange={(value) => console.log(value)}
+        />
+      )
     },
     {
-      id: '1117',
+      id: 'status',
       title: 'Trạng thái',
       width: '10%',
-      position: 'left',
-      render: <Text lh={1.4}>UUID</Text>
-    },
-    {
-      id: '1118',
-      title: 'Công cụ',
-      width: '5%',
-      position: 'left',
-      render: (
-        <ActionIcon>
-          <ActiveEditIcon />
-        </ActionIcon>
-      )
+      position: 'center',
+      render: (data) => (data.couponQuantity ? <OneActiveIcon /> : <DefaultAvatar />)
     }
   ]
 
   return (
     <CouponFormProvider form={form}>
-      <Table data={data} columns={columns} />
+      <Table
+        data={data}
+        columns={columns}
+        editMode={edit}
+        onChangeEditMode={setEdit}
+        selectedRows={selectedRows}
+        onSelectRows={setSelectedRows}
+      />
     </CouponFormProvider>
   )
 }

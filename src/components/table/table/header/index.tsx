@@ -1,13 +1,14 @@
 import { Group, List, Text, UnstyledButton } from '@mantine/core'
 import { FC } from 'react'
-import { useStyles } from '../index.style'
+
 import { TColumnsProps } from '../type'
+import { useStyles } from './index.style'
 
 type TTableHeaderProps = {
   headerContent: TColumnsProps[]
 }
 
-export const TableHeader: FC<TTableHeaderProps> = ({ headerContent }) => {
+export const Header: FC<TTableHeaderProps> = ({ headerContent }) => {
   const { classes } = useStyles()
   return (
     <List className={classes.list}>
@@ -29,7 +30,7 @@ type THeaderColumnProps = {
 
 const HeaderColumn: FC<THeaderColumnProps> = ({ children, position = 'left', width }) => {
   return (
-    <List.Item style={{ float: 'left', width: width }}>
+    <List.Item style={{ textAlign: position, width: width }}>
       <UnstyledButton>
         <Group position={position}>
           <Text fw={300} fz={12}>

@@ -1,31 +1,30 @@
+import { ActiveEditIcon, EditIcon } from '@/assets/icon'
 import { TColumnsProps } from '@/components/table/table/type'
-import { useOrderContext } from '@/context/OrderContext/OrderContext'
-import { setSelectedRow } from '@/reducer/order/action'
-import { OrderProps } from '@/types/order'
-import { Checkbox, Flex, List, Stack, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Checkbox, Flex, List, Stack } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
-import { Fragment, useState } from 'react'
+import { Fragment, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
 
 type TRowProps = {
   row: any
-  selectedRow: string[]
   columns?: TColumnsProps[]
+  editMode?: boolean
+  onChangeEditMode: React.Dispatch<SetStateAction<boolean>>
+  selectedRows: string[]
+  onSelectRows: React.Dispatch<SetStateAction<string[]>>
 }
 
-export const Row = ({ row, selectedRow, columns }: TRowProps) => {
-  const { dispatch } = useOrderContext()
+export const Row = ({ row, columns, editMode, onChangeEditMode, selectedRows, onSelectRows }: TRowProps) => {
   const { fireBaseId: id } = row
-  const [edit, setEdit] = useState<boolean>(false)
-  const isSelected = selectedRow.includes(id)
-  const theme = useMantineTheme()
+  const isSelected = selectedRows.includes(id)
   const { classes } = useStyles({ isSelected })
+  const [edit, setEdit] = useState<boolean>(false)
 
   const handleSelectedRow = () => {
-    if (!selectedRow.includes(id)) {
-      dispatch(setSelectedRow([...selectedRow, id]))
+    if (!isSelected) {
+      onSelectRows([...selectedRows, id])
     } else {
-      dispatch(setSelectedRow(selectedRow.filter((row) => row !== id)))
+      onSelectRows(selectedRows.filter((row) => row !== id))
     }
   }
 
@@ -46,12 +45,15 @@ export const Row = ({ row, selectedRow, columns }: TRowProps) => {
           <Checkbox checked={isSelected} color='gray.8' size='lg' radius={10} onChange={handleSelectedRow} />
         </List>
         <List className={classes.list}>
-          <Flex gap={10} align='center' justify='left' p={20} className={classes.content}>
+          <Flex gap={10} align='center' justify='center' p={20} className={classes.content}>
             {columns?.map((col: TColumnsProps) => (
-              <Stack key={col.id} w={col.width}>
-                {col.render}
+              <Stack key={col.id} w={col.width} align={col.position}>
+                {col && col.render && col.render(row, edit)}
               </Stack>
             ))}
+            <Stack key='action' w='5%' align='flex-end'>
+              <ActionIcon onClick={() => setEdit(!edit)}>{edit ? <ActiveEditIcon /> : <EditIcon />}</ActionIcon>
+            </Stack>
           </Flex>
         </List>
       </Flex>
