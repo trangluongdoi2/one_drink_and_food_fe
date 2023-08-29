@@ -4,21 +4,23 @@ import { ActionIcon, Checkbox, Flex, List, Stack } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { Fragment, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
+import { IconCheck, IconX } from '@tabler/icons-react'
+import { useCouponFormContext } from '@/pages/coupons/form'
 
 type TRowProps = {
   row: any
   columns?: TColumnsProps[]
-  editMode?: boolean
-  onChangeEditMode: React.Dispatch<SetStateAction<boolean>>
   selectedRows: string[]
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
+  onSubmitChange: () => void
 }
 
-export const Row = ({ row, columns, editMode, onChangeEditMode, selectedRows, onSelectRows }: TRowProps) => {
+export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange }: TRowProps) => {
   const { fireBaseId: id } = row
   const isSelected = selectedRows.includes(id)
   const { classes } = useStyles({ isSelected })
   const [edit, setEdit] = useState<boolean>(false)
+  const form = useCouponFormContext()
 
   const handleSelectedRow = () => {
     if (!isSelected) {
@@ -26,16 +28,6 @@ export const Row = ({ row, columns, editMode, onChangeEditMode, selectedRows, on
     } else {
       onSelectRows(selectedRows.filter((row) => row !== id))
     }
-  }
-
-  const successNotification = () => {
-    notifications.show({
-      title: 'Chỉnh sửa thành công',
-      message: 'Thông tin đơn hàng đã được cập nhật',
-      autoClose: 3000,
-      color: 'green',
-      withCloseButton: true
-    })
   }
 
   return (
@@ -51,9 +43,20 @@ export const Row = ({ row, columns, editMode, onChangeEditMode, selectedRows, on
                 {col && col.render && col.render(row, edit)}
               </Stack>
             ))}
-            <Stack key='action' w='5%' align='flex-end'>
-              <ActionIcon onClick={() => setEdit(!edit)}>{edit ? <ActiveEditIcon /> : <EditIcon />}</ActionIcon>
-            </Stack>
+            <Flex key='action' w='5%' align='flex-end'>
+              <ActionIcon color='dark.4' onClick={onSubmitChange}>
+                {edit && <IconCheck />}
+              </ActionIcon>
+              <ActionIcon
+                color='dark.4'
+                onClick={() => {
+                  setEdit(!edit)
+                  form.setValues({ selectedCoupon: row })
+                }}
+              >
+                {edit ? <IconX /> : <EditIcon />}
+              </ActionIcon>
+            </Flex>
           </Flex>
         </List>
       </Flex>

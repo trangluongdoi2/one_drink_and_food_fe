@@ -4,22 +4,22 @@ import { createFormContext } from '@mantine/form'
 export const defaultCoupon = {
   couponCode: '',
   couponTitle: '',
-  couponEndDate: {
-    date: '',
-    time: ''
-  },
+  couponEndDate: '',
   couponFreeShipping: false,
   couponNote: '',
   couponOptions: '',
   couponProductDetails: '',
   couponProductType: [],
   couponQuantity: 0,
-  couponStartDate: {
-    date: '',
-    time: ''
-  },
+  couponStartDate: '',
   couponValue: 0,
-  image: ''
+  image: '',
+  fireBaseId: ''
 }
 
-export const [CouponFormProvider, useCouponFormContext, useCouponForm] = createFormContext<TCouponType>()
+type TCouponForm = {
+  selectedCoupon: TCouponType
+  couponData: TCouponType[]
+}
+
+export const [CouponFormProvider, useCouponFormContext, useCouponForm] = createFormContext<TCouponForm>()

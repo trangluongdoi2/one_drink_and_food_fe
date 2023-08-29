@@ -1,6 +1,6 @@
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 import { Center, Stack, Text } from '@mantine/core'
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { TablePagination } from '../pagination'
 import { SearchTable } from '../search'
 
@@ -13,20 +13,20 @@ export type TTableProps = {
   columns: TColumnsProps[]
   searchValue?: string
   rowPerPage?: number
-  editMode?: boolean
-  onChangeEditMode: React.Dispatch<SetStateAction<boolean>>
   selectedRows: string[]
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
+  onSubmitChange: () => void
+  searchKey: string
 }
 
 const Table = ({
   data,
   columns,
   rowPerPage = 10,
-  editMode = false,
-  onChangeEditMode,
   selectedRows,
-  onSelectRows
+  onSelectRows,
+  onSubmitChange,
+  searchKey
 }: TTableProps) => {
   const [searchValue, setSearch] = useState('')
 
@@ -50,10 +50,14 @@ const Table = ({
     !isSelectedAll ? onSelectRows(data.map((item) => item.fireBaseId)) : onSelectRows([])
   }
 
+  useEffect(() => {
+    setSortedData(slicedData)
+  }, [slicedData])
+
   return (
     <>
       <SearchTable
-        onSearchChange={(e) => handleSearchChange(e, 'couponCode')}
+        onSearchChange={(e) => handleSearchChange(e, searchKey)}
         selectedAll={isSelectedAll}
         search={searchValue}
         onSelectAll={handleSelectAll}
@@ -68,10 +72,9 @@ const Table = ({
                 row={row}
                 key={index}
                 columns={columns}
-                editMode={editMode}
-                onChangeEditMode={onChangeEditMode}
                 selectedRows={selectedRows}
                 onSelectRows={onSelectRows}
+                onSubmitChange={onSubmitChange}
               />
             ))
           ) : (

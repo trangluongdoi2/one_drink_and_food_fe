@@ -2,20 +2,50 @@ import { DefaultAvatar, OneActiveIcon } from '@/assets/icon'
 import Table from '@/components/table/table'
 import RowInput from '@/components/table/table/rowInput'
 import { TColumnsProps } from '@/components/table/table/type'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
+import { FirebaseService } from '@/firebase/handler'
 import { TCouponType } from '@/types/coupon'
 import { Avatar } from '@mantine/core'
-import { FC, useState } from 'react'
-import { CouponFormProvider, defaultCoupon, useCouponForm } from '../../form'
+import { notifications } from '@mantine/notifications'
+import { FC, useEffect, useState } from 'react'
+import { CouponFormProvider, defaultCoupon, useCouponForm, useCouponFormContext } from '../../form'
 
 type TCouponTableProps = {
   data: TCouponType[]
 }
 
 const CouponTable: FC<TCouponTableProps> = ({ data }) => {
-  const form = useCouponForm({ initialValues: defaultCoupon })
-  const [edit, setEdit] = useState<boolean>(false)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
-  console.log('🚀 ~ file: index.tsx:17 ~ selectedRows:', selectedRows)
+  const form = useCouponFormContext()
+  const { selectedCoupon, couponData } = form.values
+
+  const successNotification = () => {
+    notifications.show({
+      title: 'Chỉnh sửa thành công',
+      message: 'Thông tin đơn hàng đã được cập nhật',
+      autoClose: 3000,
+      color: 'dark',
+      withCloseButton: true
+    })
+  }
+
+  const handleSubmitChange = async () => {
+    const newArr = couponData.map((data) =>
+      data.fireBaseId === selectedCoupon.fireBaseId ? { ...selectedCoupon } : data
+    )
+
+    form.setValues({ couponData: newArr })
+    try {
+      await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedCoupon, selectedCoupon.fireBaseId)
+      successNotification()
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleChangeInput = (key: keyof TCouponType, value: string) => {
+    form.setValues({ selectedCoupon: { ...selectedCoupon, [key]: value } })
+  }
 
   const columns: TColumnsProps[] = [
     {
@@ -27,8 +57,8 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
         <RowInput
           isEditing={isEdit}
           value={data?.couponCode}
-          name='startDate'
-          onChange={(value) => console.log(value)}
+          name='couponCode'
+          onChange={(value) => handleChangeInput('couponCode', value)}
           textStyle={{ fw: 'bolder' }}
         />
       )
@@ -48,9 +78,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponStartDate?.date}
-          name='startDate'
-          onChange={(value) => console.log(value)}
+          value={data?.couponStartDate}
+          name='couponStartDate'
+          onChange={(value) => handleChangeInput('couponStartDate', value)}
         />
       )
     },
@@ -62,9 +92,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponEndDate?.date}
-          name='startDate'
-          onChange={(value) => console.log(value)}
+          value={data?.couponEndDate}
+          name='couponEndDate'
+          onChange={(value) => handleChangeInput('couponEndDate', value)}
         />
       )
     },
@@ -77,8 +107,8 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
         <RowInput
           isEditing={isEdit}
           value={data?.couponQuantity}
-          name='startDate'
-          onChange={(value) => console.log(value)}
+          name='couponQuantity'
+          onChange={(value) => handleChangeInput('couponQuantity', value)}
         />
       )
     },
@@ -91,8 +121,8 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
         <RowInput
           isEditing={isEdit}
           value={data?.couponQuantity}
-          name='startDate'
-          onChange={(value) => console.log(value)}
+          name='couponQuantity'
+          onChange={(value) => handleChangeInput('couponQuantity', value)}
         />
       )
     },
@@ -105,17 +135,19 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
     }
   ]
 
+  useEffect(() => {
+    form.setValues({ couponData: data })
+  }, [data])
+
   return (
-    <CouponFormProvider form={form}>
-      <Table
-        data={data}
-        columns={columns}
-        editMode={edit}
-        onChangeEditMode={setEdit}
-        selectedRows={selectedRows}
-        onSelectRows={setSelectedRows}
-      />
-    </CouponFormProvider>
+    <Table
+      data={couponData}
+      columns={columns}
+      searchKey={'couponCode'}
+      onSubmitChange={handleSubmitChange}
+      selectedRows={selectedRows}
+      onSelectRows={setSelectedRows}
+    />
   )
 }
 
