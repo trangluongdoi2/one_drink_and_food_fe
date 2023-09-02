@@ -12,7 +12,6 @@ export const ProductGrid = ({ title, productSubType }: ProductGridProps) => {
 
   useEffect(() => {
     refetch()
-    // console.log(data, 'data....')
   }, [])
 
   return (

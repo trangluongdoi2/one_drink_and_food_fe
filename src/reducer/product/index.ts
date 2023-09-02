@@ -17,7 +17,34 @@ export const initinalState: ProductState = {
   productType: 'juice',
   productRatingsAverage: 0,
   note: '',
-  listInformation: [],
+  listInformation: [
+    {
+      title: '',
+      order: 0,
+      appear: true,
+      informationItems: [
+        {
+          text: ''
+        },
+        {
+          text: ''
+        }
+      ]
+    }
+    // {
+    //   title: '',
+    //   order: 0,
+    //   appear: true,
+    //   informationItems: [
+    //     {
+    //       text: ''
+    //     },
+    //     {
+    //       text: ''
+    //     }
+    //   ]
+    // }
+  ],
 
   // for state
   introduction: '',
@@ -27,15 +54,6 @@ export const initinalState: ProductState = {
     motionTime: 1000
   },
   photosStore: [],
-  infos: [
-    {
-      title: trans('topic_name'),
-      infoPhotos: [],
-      infoPhotosStore: [],
-      content: '',
-      enable: true
-    }
-  ],
   attributes: [
     {
       value: 'CHỌN SIZE',
@@ -129,8 +147,8 @@ export const initinalState: ProductState = {
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
-  const infos = clone(state.infos)
   let attributes = clone(state.attributes)
+  const listInformation = clone(state.listInformation)
   switch (type) {
     case ProductType.SET_PRODUCT_NAME:
       return {
@@ -242,33 +260,61 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         attributes: [...attributes]
       }
     }
-
-    // case ProductType.
+    case ProductType.ADD_PRODUCT_INFO_ITEM: {
+      return {
+        ...state,
+        listInformation: [...listInformation, payload]
+      }
+    }
+    case ProductType.SET_APPREAR_PRODUCT_INFO_ITEM: {
+      listInformation[payload.index].appear = payload.data
+      return {
+        ...state,
+        listInformation: [...listInformation]
+      }
+    }
+    case ProductType.SET_TITLE_PRODUCT_INFO_ITEM: {
+      listInformation[payload.index].title = payload.data
+      return {
+        ...state,
+        listInformation: [...listInformation]
+      }
+    }
+    case ProductType.REMOVE_PRODUCT_INFO_ITEM: {
+      if (listInformation.length > 1) {
+        listInformation.splice(payload, 1)
+        return {
+          ...state,
+          listInformation: [...listInformation]
+        }
+      }
+      return { ...state }
+    }
+    case ProductType.UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO: {
+      listInformation[payload.index].informationItems = payload.data
+      return {
+        ...state,
+        listInformation: [...listInformation]
+      }
+    }
 
     // Todo
-    case ProductType.SET_PRODUCT_INFOS: {
-      const { index, data } = payload
-      return {
-        ...state,
-        infos: state.infos.splice(index, 1, data)
-      }
-    }
-    case ProductType.SET_PHOTOS_PRODUCT_INFO: {
-      const { index, data } = payload
-      infos[index].infoPhotos = [...data]
-      return {
-        ...state,
-        infos
-      }
-    }
-    case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
-      const { index, data } = payload
-      infos[index].infoPhotosStore = [...data]
-      return {
-        ...state,
-        infos
-      }
-    }
+    // case ProductType.SET_PHOTOS_PRODUCT_INFO: {
+    //   const { index, data } = payload
+    //   infos[index].infoPhotos = [...data]
+    //   return {
+    //     ...state,
+    //     infos
+    //   }
+    // }
+    // case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
+    //   const { index, data } = payload
+    //   infos[index].infoPhotosStore = [...data]
+    //   return {
+    //     ...state,
+    //     infos
+    //   }
+    // }
     default:
       return {
         ...state
