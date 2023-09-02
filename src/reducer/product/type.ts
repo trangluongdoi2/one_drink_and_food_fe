@@ -1,8 +1,12 @@
-import { TProductCreateNew, ProductInfos, SaleOptionValue, TProductCreateNewAtribute } from '@/pages/products/type'
+import {
+  TProductCreateNew,
+  TProductCreateNewAtribute,
+  TProductInformationContent,
+  TProductCreateNewInformation
+} from '@/pages/products/type'
 export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
   photosStore?: File[]
-  infos: Array<ProductInfos>
   introduction?: ''
 }
 
@@ -19,20 +23,21 @@ export enum ProductType {
   SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
   ADD_ATTRIBUTE_OPTION = 'ADD_ATTRIBUTE_OPTION',
   REMOVE_ATTRIBUTE_OPTION = 'REMOVE_ATTRIBUTE_OPTION',
-  SET_PRODUCT_INFOS = 'SET_PRODUCT_INFOS',
-  ADD_PRODUCT_INFO = 'ADD_PRODUCT_INFO',
-  REMOVE_PRODUCT_INFO = 'REMOVE_PRODUCT_INFO',
+  ADD_PRODUCT_INFO_ITEM = 'ADD_PRODUCT_INFO_ITEM',
+  REMOVE_PRODUCT_INFO_ITEM = 'REMOVE_PRODUCT_INFO_ITEM',
   SET_CONTENT_PRODUCT_INFO = 'SET_CONTENT_PRODUCT_INFO',
   SET_PHOTOS_PRODUCT_INFO = 'SET_PHOTOS_PRODUCT_INFO',
   SET_PHOTOS_STORE_PRODUCT_INFO = 'SET_PHOTOS_STORE_PRODUCT_INFO',
   SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
-  SET_TITLE_PRODUCT_INFO = 'SET_TITLE_PRODUCT_INFO',
   SET_PRODUCT_ATTRIBUTES = 'SET_PRODUCT_ATTRIBUTES',
   SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
   SET_PRODUCT_MAIN_INGREDIENTS = 'SET_PRODUCT_MAIN_INGREDIENTS',
   SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME',
   SET_MANY_CHOICES = 'SET_MANY_CHOICES',
-  SET_APPREAR_ATTRIBUTE_OPTION = 'SET_APPREAR_ATTRIBUTE_OPTION'
+  SET_APPREAR_ATTRIBUTE_OPTION = 'SET_APPREAR_ATTRIBUTE_OPTION',
+  SET_APPREAR_PRODUCT_INFO_ITEM = 'SET_APPREAR_PRODUCT_INFO_ITEM',
+  SET_TITLE_PRODUCT_INFO_ITEM = 'SET_TITLE_PRODUCT_INFO_ITEM',
+  UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO = 'UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO'
 }
 
 export interface SetProductName {
@@ -106,24 +111,6 @@ export interface SetAppearAttributeOption {
   }
 }
 
-export interface SetProductInfos {
-  type: ProductType.SET_PRODUCT_INFOS
-  payload: {
-    data: ProductInfos
-    index: number
-  }
-}
-
-export interface AddProductInfo {
-  type: ProductType.ADD_PRODUCT_INFO
-  payload: ProductInfos
-}
-
-export interface RemoveProductInfo {
-  type: ProductType.REMOVE_PRODUCT_INFO
-  payload: number
-}
-
 export interface SetContentProductInfo {
   type: ProductType.SET_CONTENT_PRODUCT_INFO
   payload: {
@@ -147,16 +134,6 @@ export interface SetPhotosStoreProductInfo {
     data: File[]
     index: number
   }
-}
-
-export interface SetEnabledProductInfo {
-  type: ProductType.SET_ENABLED_PRODUCT_INFO
-  payload: { data: boolean; index: number }
-}
-
-export interface SetTitleProductInfo {
-  type: ProductType.SET_TITLE_PRODUCT_INFO
-  payload: { data: string; index: number }
 }
 export interface SetProductQuantity {
   type: ProductType.SET_PRODUCT_QUANTITY
@@ -187,6 +164,31 @@ export interface SetProductAttributeName {
   payload: { data: string; index: number }
 }
 
+export interface SetAppearProductInfoItem {
+  type: ProductType.SET_APPREAR_PRODUCT_INFO_ITEM
+  payload: { data: boolean; index: number }
+}
+
+export interface SetTitleProductInfoItem {
+  type: ProductType.SET_TITLE_PRODUCT_INFO_ITEM
+  payload: { data: string; index: number }
+}
+
+export interface AddProductInfoItem {
+  type: ProductType.ADD_PRODUCT_INFO_ITEM
+  payload: TProductCreateNewInformation
+}
+
+export interface RemoveProductInfoItem {
+  type: ProductType.REMOVE_PRODUCT_INFO_ITEM
+  payload: number
+}
+
+export interface UpdateInfoItemsInProductInfo {
+  type: ProductType.UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO
+  payload: { data: TProductInformationContent[]; index: number }
+}
+
 export type ProductTypeAction =
   | SetProductName
   | SetAuxiliaryName
@@ -198,14 +200,9 @@ export type ProductTypeAction =
   | SetPhotosStore
   | SetMotionPhotos
   | SetSelectManyChoices
-  | SetProductInfos
-  | AddProductInfo
-  | RemoveProductInfo
   | SetContentProductInfo
   | SetPhotosProductInfo
   | SetPhotosStoreProductInfo
-  | SetEnabledProductInfo
-  | SetTitleProductInfo
   | SetProductQuantity
   | SetProductAttribues
   | SetProductContent
@@ -214,3 +211,8 @@ export type ProductTypeAction =
   | AddAttributeOption
   | RemoveAttributeOption
   | SetAppearAttributeOption
+  | AddProductInfoItem
+  | SetAppearProductInfoItem
+  | SetTitleProductInfoItem
+  | UpdateInfoItemsInProductInfo
+  | RemoveProductInfoItem

@@ -36,14 +36,6 @@ export interface SaleOptionValue {
   price?: number
 }
 
-export interface ProductInfos {
-  title: string
-  infoPhotos: string[]
-  infoPhotosStore: File[]
-  content: string
-  enable: boolean
-}
-
 export enum JuiceType {
   JUICE_BOTTLED = 'juiceBottled',
   JUICE_GLASS = 'juiceGlass'
@@ -75,7 +67,8 @@ export interface TProductCreateNewAtribute {
 }
 
 export interface TProductInformationContent {
-  image: string
+  image?: string
+  topicName?: string
   text: string
 }
 export interface TProductCreateNewInformation {
