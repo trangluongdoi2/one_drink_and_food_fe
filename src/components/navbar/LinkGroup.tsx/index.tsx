@@ -26,7 +26,7 @@ const LinksGroup: FC<PropsType> = ({ getCurrentTab, isActive, icon: Icon, active
       <Accordion.Control px={30} py={10} onClick={() => handleTabClick(label)}>
         <Group position='apart' spacing={0} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
           <Flex align='center' h={40}>
-            {hover || isActive ? <Icon /> : <ActiveIcon />}
+            {hover || isActive ? <ActiveIcon /> : <Icon />}
             <Text ml='md' size={14}>
               {label}
             </Text>

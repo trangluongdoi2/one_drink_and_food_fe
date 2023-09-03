@@ -3,9 +3,9 @@ import { Outlet } from 'react-router-dom'
 
 const AuthLayout = () => {
   return (
-    // <AuthProvider>
-    <Outlet />
-    // </AuthProvider>
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
   )
 }
 
