@@ -2,7 +2,6 @@ import './i18n/i18n'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
@@ -55,8 +54,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               input: {
                 backgroundColor: theme.colors.dark[3],
                 '&:focus-within': {
-                  borderColor: theme.colors.gray,
-                  backgroundColor: theme.colors.dark[3]
+                  borderColor: theme.colors.gray
+                  // backgroundColor: theme.colors.dark[3]
                 },
                 fontSize: 12
               }

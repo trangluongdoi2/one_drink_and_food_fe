@@ -35,9 +35,7 @@ const CouponTag = ({ data, loading, label }: TCouponTagProps) => {
               {couponTitle ?? ''}
             </Text>
             <Text size={14}>MÃ : {couponCode}</Text>
-            <Text size={12}>
-              {couponEndDate?.date} {couponEndDate?.time}
-            </Text>
+            {couponEndDate && <Text size={12}>Đến: {couponEndDate}</Text>}
           </Stack>
         </Flex>
         <DeleteIcon />

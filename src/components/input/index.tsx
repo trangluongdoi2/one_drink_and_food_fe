@@ -31,7 +31,8 @@ const useStyles = createStyles(() => ({
     }
   },
   inputText: {
-    height: '40px'
+    height: '40px',
+    fontSize: '12px'
   },
   inputArea: {
     minHeight: '180px'

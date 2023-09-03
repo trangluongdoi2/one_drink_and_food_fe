@@ -19,8 +19,9 @@ import { MEMBERSHIP } from '@/types/user'
 import { createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './protectedRoute'
 
-import AddCoupon from '@/pages/coupons/features/addCoupon'
+import { default as AddCoupon, default as AddCouponList } from '@/pages/coupons/features/addCouponList'
 import CouponList from '@/pages/coupons/features/couponList'
+import AddCouponDetail from '@/pages/coupons/features/addCouponDetail'
 
 export const router = createBrowserRouter([
   {
@@ -223,8 +224,16 @@ export const router = createBrowserRouter([
                 element: <CouponList />
               },
               {
+                path: '/coupons',
+                element: <AddCouponList />
+              },
+              {
                 path: '/coupons/create',
-                element: <AddCoupon />
+                element: <AddCouponDetail />
+              },
+              {
+                path: '/coupons/edit/:id',
+                element: <AddCouponDetail />
               }
             ]
           },
