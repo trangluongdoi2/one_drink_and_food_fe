@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { GridItem, swap } from 'react-grid-dnd'
 import { useTranslation } from 'react-i18next'
-import { ActionIcon, Group, Paper, Stack, Text, Image, Box } from '@mantine/core'
+import { AddFillIcon, CloseButton, TableRowsIcon } from '@/assets/icon'
+import { DragDropGridHandler } from '@/components/DragDropGridHandler'
+import { DragDropGridConfigs } from '@/components/DragDropGridHandler/type'
+import { ActionIcon, Box, Group, Image, Paper, Text } from '@mantine/core'
 import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
-import { AddFillIcon, TableRowsIcon, CloseButton } from '@/assets/icon'
 import { useStyles } from './index.styles'
 
 type Props = {
@@ -58,9 +61,15 @@ export const ProductAddImageForm = ({
   const { t } = useTranslation()
   const { classes } = useStyles()
   const acceptType = [MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]
+  const configs: DragDropGridConfigs = {
+    height: 110,
+    boxesPerRow: 4,
+    totalItems: limitQuantity
+  }
 
   const [filePaths, setFilePaths] = useState<string[]>(Array.from({ length: limitQuantity }, () => ''))
   const [fileStores, setFileStores] = useState<File[] | any>(Array.from({ length: limitQuantity }, () => null))
+  const [dragDropItems, setDragDropItems] = useState<Array<any>>(filePaths)
 
   const onUploadFile = (index: number) => (event: FileWithPath[]) => {
     const newFilesPath = [...filePaths]
@@ -78,31 +87,41 @@ export const ProductAddImageForm = ({
     setFilePaths(newFiles)
   }
 
+  const onChange = (sourceId: string, sourceIndex: number, targetIndex: number) => {
+    const nextState = swap(dragDropItems, sourceIndex, targetIndex)
+    setDragDropItems(nextState)
+  }
+
   useEffect(() => {
     updateFilePaths(filePaths)
     updateFileStores(fileStores)
+    setDragDropItems(filePaths)
   }, [filePaths, fileStores])
 
   return (
     <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>
       {!hiddenTitle && <Text className={classes.title}>{t('add_image')}</Text>}
-      <Paper className={classes.imageContainer}>
+      <DragDropGridHandler configs={configs} onChange={onChange}>
         {filePaths?.map((url: string, index: number) => (
-          <Stack className={classes.child} key={index}>
-            <ActionIcon size={20} className={classes.iconMenu}>
-              <TableRowsIcon />
-            </ActionIcon>
-            <Dropzone accept={acceptType} onDrop={onUploadFile(index)} classNames={{ root: classes.add__zone }}>
-              <Group position='center'>
-                <Group className={classes.iconAdd}>
-                  <AddFillIcon />
+          <GridItem style={{ marginRight: '10px', marginBottom: '10px' }} key={index}>
+            <Box className={classes.child}>
+              <ActionIcon size={20} className={classes.iconMenu}>
+                <TableRowsIcon />
+              </ActionIcon>
+              <Dropzone accept={acceptType} onDrop={onUploadFile(index)} classNames={{ root: classes.add__zone }}>
+                <Group position='center'>
+                  <Group className={classes.iconAdd}>
+                    <AddFillIcon />
+                  </Group>
                 </Group>
-              </Group>
-            </Dropzone>
-            {url && <PreviewImageZone fileURL={url} index={index} removeFile={removeFile} />}
-          </Stack>
+              </Dropzone>
+              {url && <PreviewImageZone fileURL={url} index={index} removeFile={removeFile} />}
+
+            </Box>
+          </GridItem>
         ))}
-      </Paper>
+      </DragDropGridHandler>
+      <Paper className={classes.imageContainer}></Paper>
     </Paper>
   )
 }

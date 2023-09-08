@@ -14,6 +14,7 @@ import { GridItem, swap } from 'react-grid-dnd'
 import { v4 as uuidv4 } from 'uuid'
 import ProductTable from '../../components/ProductTable'
 import { useFetchProduct } from '../../services/useFetchProduct'
+import { DragDropGridConfigs } from '@/components/DragDropGridHandler/type'
 
 interface ProductListProps {
   title: string
@@ -86,7 +87,7 @@ const ProductList = ({ title, query }: ProductListProps) => {
     dispatch(setSelectedRow([]))
   }
 
-  const configs = {
+  const configs: DragDropGridConfigs = {
     boxesPerRow: 2,
     height: 100,
     totalItems: items.length
