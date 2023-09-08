@@ -1,18 +1,19 @@
-import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text, Grid } from '@mantine/core'
-import { DeleteIcon, ActiveDeleteIcon } from '@/assets/icon'
-import ProductTable from '../../components/ProductTable'
+import { ActiveDeleteIcon, DeleteIcon } from '@/assets/icon'
+import { DragDropGridHandler } from '@/components/DragDropGridHandler'
+import CustomCheckBox from '@/components/checkBox'
 import CustomModal from '@/components/modal'
+import { checkList } from '@/constants/tabList'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
-import CustomCheckBox from '@/components/checkBox'
-import { useEffect, useState } from 'react'
 import { ProductGroup } from '@/types/product'
-import { useFetchProduct } from '../../services/useFetchProduct'
+import { ActionIcon, Box, Center, Flex, Loader, Paper, Stack, Text, Title } from '@mantine/core'
+import { useState } from 'react'
+import { GridItem, swap } from 'react-grid-dnd'
 import { v4 as uuidv4 } from 'uuid'
-import { checkList } from '@/constants/tabList'
-import { useGetAllCategories } from '../../services/category/getAllCategories'
+import ProductTable from '../../components/ProductTable'
+import { useFetchProduct } from '../../services/useFetchProduct'
 
 interface ProductListProps {
   title: string
@@ -48,9 +49,10 @@ const mock = {
 
 const ProductList = ({ title, query }: ProductListProps) => {
   const { deleteById, createWithCustomKey } = FirebaseService
-
   const { selectedRow, dispatch } = useOrderContext()
   const [selectedOption, setSelectedOption] = useState<string[]>([])
+  const [items, setItems] = useState<Array<Record<string, any>>>(checkList)
+
   const isEmpty = selectedRow.length === 0
   const { loading, productData } = useFetchProduct({
     key: 'group',
@@ -84,6 +86,17 @@ const ProductList = ({ title, query }: ProductListProps) => {
     dispatch(setSelectedRow([]))
   }
 
+  const configs = {
+    boxesPerRow: 2,
+    height: 100,
+    totalItems: items.length
+  }
+
+  const onChange = (sourceId: string, sourceIndex: number, targetIndex: number) => {
+    const nextState = swap(items, sourceIndex, targetIndex)
+    setItems(nextState)
+  }
+
   return (
     <Paper p={40} sx={(theme) => ({ backgroundColor: theme.colors.dark[0] })}>
       <Stack spacing={20}>
@@ -97,19 +110,20 @@ const ProductList = ({ title, query }: ProductListProps) => {
             </ActionIcon>
           </Flex>
         </Flex>
-        <Grid>
-          {checkList.map(({ title, value }, index) => (
-            <Grid.Col span={6} key={index}>
-              <CustomCheckBox
-                title={title}
-                value={value}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
-              />
-            </Grid.Col>
+        <DragDropGridHandler configs={configs} onChange={onChange}>
+          {items.map((item: any, index: number) => (
+            <GridItem key={index}>
+              <Box sx={{ height: '80px', marginRight: '20px', marginBottom: '20px' }}>
+                <CustomCheckBox
+                  title={item.title}
+                  value={item.value}
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                />
+              </Box>
+            </GridItem>
           ))}
-        </Grid>
-
+        </DragDropGridHandler>
         {loading ? (
           <Paper p={40} radius={10} shadow='md'>
             <Center>
