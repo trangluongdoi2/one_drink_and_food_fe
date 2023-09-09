@@ -1,25 +1,25 @@
-import { SelectOptionDarkIcon, SelectOptionLightIcon, TableRowsIcon } from '@/assets/icon'
+import { SelectOptionDarkIcon, SelectOptionLightIcon } from '@/assets/icon'
+import { DragDropBlock } from '@/components/DragDropBlock'
 import { DragDropListHandler } from '@/components/DragDropListHandler'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import {
   addAttributeOption,
   removeAttributeOption,
+  reorderProductAttributesList,
   setAppearAttributeOption,
   setManyChoices,
   updateProductAttributeOption,
   updateProductAttributeOptionName,
-  updateProductMainIngredients,
-  reorderProductAttributesList
+  updateProductMainIngredients
 } from '@/reducer/product/action'
 import { ActionIcon, Center, Flex, Paper, Stack, Text } from '@mantine/core'
 import { useListState } from '@mantine/hooks'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { useTranslation } from 'react-i18next'
 import { ProductOptionAttribute } from '../../ProductOptionAttribute'
 import { useStyles } from './index.styles'
-import { DragDropBlock } from '@/components/DragDropBlock'
 
 export const ProductSalesFrameForm = () => {
   const { classes } = useStyles()
@@ -92,7 +92,7 @@ export const ProductSalesFrameForm = () => {
                   removeAttributeOption={(data: string) => dispatch(removeAttributeOption(data))}
                   setManyChoices={(data: boolean) => dispatch(setManyChoices({ data, index }))}
                   setEnabled={(data: boolean) => dispatch(setAppearAttributeOption({ data, index }))}
-                  blockDraggable={<DragDropBlock provided={...provided} />}
+                  blockDraggable={<DragDropBlock provided={provided} />}
                 />
               </div>
             )}
