@@ -12,6 +12,11 @@ export const useStyles = createStyles(() => ({
     opacity: 0.5,
     pointerEvents: 'none'
   },
+  border: {
+    width: '460px',
+    height: '1px',
+    background: '#F5F5F5'
+  },
   title: {
     fontWeight: 700,
     fontSize: '14px',

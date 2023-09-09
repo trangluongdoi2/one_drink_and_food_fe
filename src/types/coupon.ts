@@ -8,7 +8,7 @@ export type TCouponType = {
   couponProductType: string[]
   couponQuantity: number
   couponStartDate: string
-  couponEndDate: string
+  couponEndDate: string | any
   couponValue: number
   image: string
   fireBaseId: string

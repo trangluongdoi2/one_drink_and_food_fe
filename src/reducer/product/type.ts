@@ -30,6 +30,7 @@ export enum ProductType {
   SET_PHOTOS_STORE_PRODUCT_INFO = 'SET_PHOTOS_STORE_PRODUCT_INFO',
   SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
   SET_PRODUCT_ATTRIBUTES = 'SET_PRODUCT_ATTRIBUTES',
+  REORDER_PRODUCT_ATTRIBUTES_LIST = 'REORDER_PRODUCT_ATTRIBUTES_LIST',
   SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
   SET_PRODUCT_MAIN_INGREDIENTS = 'SET_PRODUCT_MAIN_INGREDIENTS',
   SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME',
@@ -149,6 +150,10 @@ export interface SetProductAttribues {
   payload: Record<string, any>
 }
 
+export interface ReorderProductAttributesList {
+  type: ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST
+  payload: { from: number; to: number }
+}
 export interface SetProductAttributeOption {
   type: ProductType.SET_PRODUCT_ATTRIBUTE_OPTION
   payload: any
@@ -205,6 +210,7 @@ export type ProductTypeAction =
   | SetPhotosStoreProductInfo
   | SetProductQuantity
   | SetProductAttribues
+  | ReorderProductAttributesList
   | SetProductContent
   | SetProductAttributeName
   | SetProductMainIngredients

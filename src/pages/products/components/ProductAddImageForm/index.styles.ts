@@ -54,6 +54,10 @@ export const useStyles = createStyles(() => ({
     zIndex: 2,
     borderRadius: '10px'
   },
+  image_detail: {
+    borderRadius: '10px',
+    pointerEvents: 'none'
+  },
   icon__remove: {
     position: 'absolute',
     zIndex: 3,

@@ -1,8 +1,61 @@
 import { clone } from '@/utils/utility'
+import { TProductCreateNewAtribute } from '@/pages/products/type'
 import { ProductState, ProductType, ProductTypeAction } from './type'
-import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
-import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
-const { trans } = useTranslationMiddleware()
+
+const initProductAttributes: TProductCreateNewAtribute[] = [
+  {
+    value: 'CHỌN SIZE',
+    order: 0,
+    manyChoices: false,
+    atLeastOne: true,
+    appear: true,
+    options: [
+      {
+        text: '',
+        price: 0
+      }
+    ]
+  },
+  {
+    value: 'LIỀU LƯỢNG NGỌT',
+    order: 0,
+    manyChoices: true,
+    atLeastOne: false,
+    appear: true,
+    options: [
+      {
+        text: '',
+        price: 0
+      },
+    ]
+  },
+  {
+    value: 'LIỀU LƯỢNG ĐÁ',
+    order: 0,
+    manyChoices: false,
+    atLeastOne: false,
+    appear: true,
+    options: [
+      {
+        text: '',
+        price: 0
+      },
+    ]
+  },
+  {
+    value: 'KẾT HỢP THÊM',
+    order: 0,
+    manyChoices: true,
+    atLeastOne: false,
+    appear: true,
+    options: [
+      {
+        text: '',
+        price: 0
+      }
+    ]
+  }
+]
 
 export const initinalState: ProductState = {
   productName: '',
@@ -31,21 +84,8 @@ export const initinalState: ProductState = {
         }
       ]
     }
-    // {
-    //   title: '',
-    //   order: 0,
-    //   appear: true,
-    //   informationItems: [
-    //     {
-    //       text: ''
-    //     },
-    //     {
-    //       text: ''
-    //     }
-    //   ]
-    // }
   ],
-
+  attributes: initProductAttributes,
   // for state
   introduction: '',
   photos: {
@@ -53,97 +93,7 @@ export const initinalState: ProductState = {
     enabled: true,
     motionTime: 1000
   },
-  photosStore: [],
-  attributes: [
-    {
-      value: 'CHỌN SIZE',
-      order: 0,
-      manyChoices: false,
-      atLeastOne: true,
-      appear: true,
-      options: [
-        {
-          text: 'Size M',
-          price: 0
-        },
-        {
-          text: 'Size L',
-          price: 5000
-        }
-      ]
-    },
-    {
-      value: 'LIỀU LƯỢNG NGỌT',
-      order: 0,
-      manyChoices: true,
-      atLeastOne: false,
-      appear: true,
-      options: [
-        {
-          text: '100% Đường (Ngọt Ngây)',
-          price: 1000
-        },
-        {
-          text: '50% Đường (Ngọt Vừa)',
-          price: 2000
-        },
-        {
-          text: '0% Đường (Nguyên Chất)',
-          price: 0
-        }
-      ]
-    },
-    {
-      value: 'LIỀU LƯỢNG ĐÁ',
-      order: 0,
-      manyChoices: false,
-      atLeastOne: false,
-      appear: true,
-      options: [
-        {
-          text: '100% Đá (Bình Thường)',
-          price: 0
-        },
-        {
-          text: '50% Đá (Ít Đá)',
-          price: 0
-        },
-        {
-          text: '0% Đá (Đá Riêng)',
-          price: 0
-        }
-      ]
-    },
-    {
-      value: 'KẾT HỢP THÊM',
-      order: 0,
-      manyChoices: true,
-      atLeastOne: false,
-      appear: true,
-      options: [
-        {
-          text: 'Ổi x Mật Ong x Cà Rốt',
-          price: 1000
-        },
-        {
-          text: 'Ổi x Mật Ong x Lê',
-          price: 2000
-        },
-        {
-          text: 'Ổi x Mật Ong x Dứa',
-          price: 2000
-        },
-        {
-          text: 'Ổi x Mật Ong x Dưa Hấu',
-          price: 3000
-        },
-        {
-          text: 'Ổi x Mật Ong x Cần Tây',
-          price: 1000
-        }
-      ]
-    }
-  ]
+  photosStore: []
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
@@ -218,6 +168,13 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       if (index !== -1) {
         attributes[index].options = [...payload.options]
       }
+      return {
+        ...state,
+        attributes: [...attributes]
+      }
+    }
+    case ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST: {
+      ;[attributes[payload.from], attributes[payload.to]] = [attributes[payload.to], attributes[payload.from]]
       return {
         ...state,
         attributes: [...attributes]

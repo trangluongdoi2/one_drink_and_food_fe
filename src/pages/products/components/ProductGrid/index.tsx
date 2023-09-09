@@ -11,7 +11,7 @@ export const ProductGrid = ({ title, productSubType }: ProductGridProps) => {
   const { data, refetch } = useAllProductQuery({})
 
   useEffect(() => {
-    refetch()
+    // refetch()
   }, [])
 
   return (

@@ -83,7 +83,6 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
 
 export const ProductOverviewNewForm = () => {
   const { classes } = useStyles()
-  // const { dispatch, photos } = useProductContext()
   const { dispatch, motionTime, productName, auxiliaryName, productQuantity } = useProductContext()
 
   const motionValue = { enabled: true, motionTime: motionTime }
