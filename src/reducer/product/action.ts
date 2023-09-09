@@ -28,7 +28,8 @@ import {
   SetTitleProductInfoItem,
   AddProductInfoItem,
   RemoveProductInfoItem,
-  UpdateInfoItemsInProductInfo
+  UpdateInfoItemsInProductInfo,
+  ReorderProductAttributesList
 } from './type'
 
 export const setProductName = (value: string): SetProductName => ({
@@ -132,6 +133,11 @@ export const addAttributeOption = (value: TProductCreateNewAtribute): AddAttribu
 
 export const removeAttributeOption = (value: string): RemoveAttributeOption => ({
   type: ProductType.REMOVE_ATTRIBUTE_OPTION,
+  payload: value
+})
+
+export const reorderProductAttributesList = (value: { from: number; to: number }): ReorderProductAttributesList => ({
+  type: ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST,
   payload: value
 })
 

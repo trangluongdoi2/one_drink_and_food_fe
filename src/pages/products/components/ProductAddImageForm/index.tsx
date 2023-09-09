@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { GridItem, swap } from 'react-grid-dnd'
 import { useTranslation } from 'react-i18next'
+import { GridItem, swap } from 'react-grid-dnd'
+import { ActionIcon, Box, Group, Image, Paper, Text } from '@mantine/core'
+import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
 import { AddFillIcon, CloseButton, TableRowsIcon } from '@/assets/icon'
 import { DragDropGridHandler } from '@/components/DragDropGridHandler'
 import { DragDropGridConfigs } from '@/components/DragDropGridHandler/type'
-import { ActionIcon, Box, Group, Image, Paper, Text } from '@mantine/core'
-import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
 import { useStyles } from './index.styles'
 
 type Props = {
@@ -34,11 +34,16 @@ export const PreviewImageZone = ({ fileURL, index, removeFile }: PreviewImageZon
   }
 
   return (
-    <Box className={classes.image_preview} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <Box
+      draggable={false}
+      className={classes.image_preview}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <Image
         src={fileURL}
         imageProps={{ onLoad: () => URL.revokeObjectURL(fileURL) }}
-        classNames={{ image: classes.image_preview }}
+        classNames={{ image: classes.image_detail }}
         width={100}
         height={100}
       />
@@ -67,42 +72,53 @@ export const ProductAddImageForm = ({
     totalItems: limitQuantity
   }
 
-  const [filePaths, setFilePaths] = useState<string[]>(Array.from({ length: limitQuantity }, () => ''))
+  const [dragDropItems, setDragDropItems] = useState<Array<any>>(Array.from({ length: limitQuantity }, () => ''))
   const [fileStores, setFileStores] = useState<File[] | any>(Array.from({ length: limitQuantity }, () => null))
-  const [dragDropItems, setDragDropItems] = useState<Array<any>>(filePaths)
 
+  const createLocalUrl = (file: FileWithPath) => {
+    if (!file) {
+      return ''
+    }
+    return URL.createObjectURL(file)
+  }
   const onUploadFile = (index: number) => (event: FileWithPath[]) => {
-    const newFilesPath = [...filePaths]
+    const newFilesPath = [...dragDropItems]
     const newFiles = [...fileStores]
-    const imageUrl = URL.createObjectURL(event[0] as FileWithPath)
-    newFilesPath[index] = imageUrl
+    newFilesPath[index] = createLocalUrl(event[0])
     newFiles[index] = event[0] as FileWithPath
-    setFilePaths(newFilesPath)
+    setDragDropItems(newFilesPath)
     setFileStores(newFiles)
   }
 
   const removeFile = (index: number) => {
-    const newFiles = [...filePaths]
+    const newFiles = [...dragDropItems]
     newFiles.splice(index, 1, '')
-    setFilePaths(newFiles)
+    setDragDropItems(newFiles)
   }
 
   const onChange = (sourceId: string, sourceIndex: number, targetIndex: number) => {
     const nextState = swap(dragDropItems, sourceIndex, targetIndex)
+    const cloneFileStores = [...fileStores]
+    ;[cloneFileStores[sourceIndex], cloneFileStores[targetIndex]] = [
+      cloneFileStores[targetIndex],
+      cloneFileStores[sourceIndex]
+    ]
+    nextState[sourceIndex] = createLocalUrl(cloneFileStores[sourceIndex])
+    nextState[targetIndex] = createLocalUrl(cloneFileStores[targetIndex])
     setDragDropItems(nextState)
+    setFileStores(cloneFileStores)
   }
 
   useEffect(() => {
-    updateFilePaths(filePaths)
+    updateFilePaths(dragDropItems)
     updateFileStores(fileStores)
-    setDragDropItems(filePaths)
-  }, [filePaths, fileStores])
+  }, [dragDropItems, fileStores])
 
   return (
     <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>
       {!hiddenTitle && <Text className={classes.title}>{t('add_image')}</Text>}
       <DragDropGridHandler configs={configs} onChange={onChange}>
-        {filePaths?.map((url: string, index: number) => (
+        {dragDropItems?.map((url: string, index: number) => (
           <GridItem style={{ marginRight: '10px', marginBottom: '10px' }} key={index}>
             <Box className={classes.child}>
               <ActionIcon size={20} className={classes.iconMenu}>
@@ -116,7 +132,6 @@ export const ProductAddImageForm = ({
                 </Group>
               </Dropzone>
               {url && <PreviewImageZone fileURL={url} index={index} removeFile={removeFile} />}
-
             </Box>
           </GridItem>
         ))}

@@ -33,6 +33,7 @@ type TProductOptionAttributeProps = {
   manyChoices?: boolean
   atLeastOne?: boolean
   optionsAttribute?: TProductAttributeOption[]
+  blockDraggable: any
   updateAttributeName?: (data: string) => void
   updateAttributeOptions?: (data: TProductAttributeOption[]) => void
   updateContentValue?: (data: string | number) => void
@@ -98,8 +99,9 @@ export const ProductOptionAttribute = ({
   updateContentValue,
   setManyChoices,
   removeAttributeOption,
-  setEnabled
-}: TProductOptionAttributeProps) => {
+  setEnabled,
+  blockDraggable
+}: any) => {
   const initAttributeDataOption: TProductAttributeOption = {
     text: '',
     price: 0
@@ -175,9 +177,7 @@ export const ProductOptionAttribute = ({
       <Stack>
         <Flex justify={'space-between'} align={'center'}>
           <Flex align={'center'} columnGap={12.5}>
-            <ActionIcon size={20} disabled={true}>
-              <TableRowsIcon />
-            </ActionIcon>
+            {blockDraggable}
             {isEditable ? (
               <AppInput
                 placeholder={t('fill_information_of_title')}
@@ -226,6 +226,7 @@ export const ProductOptionAttribute = ({
             )}
           </Flex>
         </Flex>
+        <div className={classes.border}></div>
       </Stack>
     </Paper>
   )
