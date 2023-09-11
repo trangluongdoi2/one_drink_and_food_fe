@@ -1,14 +1,16 @@
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
-import { useFetchAll } from '@/hook/useFetchAll'
-import { TCouponType } from '@/types/coupon'
-import { Center, Loader, Paper, Stack, Title } from '@mantine/core'
-import CouponTable from '../../components/CouponTable'
 import ScreenLoader from '@/components/screenLoader'
-import { CouponFormProvider, defaultCoupon, useCouponForm } from '../../form'
+import { Paper, Stack } from '@mantine/core'
 import CouponHeader from '../../components/CouponHeader'
+import CouponTable from '../../components/CouponTable'
+import { CouponFormProvider, defaultCoupon, useCouponForm } from '../../form'
+import { useGetCoupon } from '../../services/hook'
 
 const CouponList = () => {
-  const { data, loading } = useFetchAll<TCouponType[]>(FIREBASE_COLLECTION.DISCOUNT)
+  const { data, isLoading } = useGetCoupon({
+    page: 1,
+    limit: 10,
+    sort: 'title'
+  })
   const form = useCouponForm({
     initialValues: {
       selectedCoupon: defaultCoupon,
@@ -16,7 +18,7 @@ const CouponList = () => {
     }
   })
 
-  if (loading) return <ScreenLoader visible={loading} />
+  if (isLoading) return <ScreenLoader visible={isLoading} />
 
   return (
     <CouponFormProvider form={form}>

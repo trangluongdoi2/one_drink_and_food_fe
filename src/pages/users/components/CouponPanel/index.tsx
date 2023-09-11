@@ -20,7 +20,7 @@ const CouponPanel = () => {
         {data && data?.length > 0 ? (
           <Grid gutter={20} sx={{ width: '95%' }}>
             {data.map((item) => (
-              <Grid.Col span={6} key={item?.couponCode}>
+              <Grid.Col span={6} key={item?.code}>
                 <CouponTag data={item} loading={loading} />
               </Grid.Col>
             ))}

@@ -9,7 +9,7 @@ const ImageDropzone = () => {
   const [files, setFiles] = useState<FileWithPath[]>([])
 
   return (
-    <Paper bg={'dark.0'} w={100} h={100} radius={10} mt={20} mb={10}>
+    <Paper bg={'dark.0'} w={100} h={100} radius={10}>
       {!files.length ? (
         <DefaultImage onUploadFile={setFiles} />
       ) : (

@@ -91,6 +91,6 @@
   "start_date": "Ngày bắt đầu",
   "end_date": "Ngày kết thúc",
   "start_date_placeholder": "Điền ngày bắt đầu hoạt động",
-  "end_date_placeholder": "Điền ngày kết thúc hoạt động"
-
+  "end_date_placeholder": "Điền ngày kết thúc hoạt động",
+  "expired_date": "Hạn sử dụng"
 }

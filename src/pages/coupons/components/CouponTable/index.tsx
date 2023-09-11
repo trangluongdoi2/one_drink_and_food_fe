@@ -9,6 +9,8 @@ import { Avatar } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { FC, useEffect, useState } from 'react'
 import { useCouponFormContext } from '../../form'
+import dayjs from 'dayjs'
+import { prettyDate } from '@/utils/convertDate'
 
 type TCouponTableProps = {
   data: TCouponType[]
@@ -30,13 +32,11 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
   }
 
   const handleSubmitChange = async () => {
-    const newArr = couponData.map((data) =>
-      data.fireBaseId === selectedCoupon.fireBaseId ? { ...selectedCoupon } : data
-    )
+    const newArr = couponData.map((data) => (data._id === selectedCoupon._id ? { ...selectedCoupon } : data))
 
     form.setValues({ couponData: newArr })
     try {
-      await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedCoupon, selectedCoupon.fireBaseId)
+      await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedCoupon, selectedCoupon._id)
       successNotification()
     } catch (err) {
       console.error(err)
@@ -56,9 +56,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponCode}
-          name='couponCode'
-          onChange={(value) => handleChangeInput('couponCode', value)}
+          value={data?.code}
+          name='code'
+          onChange={(value) => handleChangeInput('code', value)}
           textStyle={{ fw: 'bolder' }}
         />
       )
@@ -78,9 +78,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponStartDate}
-          name='couponStartDate'
-          onChange={(value) => handleChangeInput('couponStartDate', value)}
+          value={prettyDate(data?.startDate)}
+          name='startDate'
+          onChange={(value) => handleChangeInput('startDate', value)}
         />
       )
     },
@@ -92,9 +92,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponEndDate}
-          name='couponEndDate'
-          onChange={(value) => handleChangeInput('couponEndDate', value)}
+          value={prettyDate(data?.endDate)}
+          name='endDate'
+          onChange={(value) => handleChangeInput('endDate', value)}
         />
       )
     },
@@ -106,9 +106,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponQuantity}
-          name='couponQuantity'
-          onChange={(value) => handleChangeInput('couponQuantity', value)}
+          value={data?.usesCount}
+          name='usesCount'
+          onChange={(value) => handleChangeInput('usesCount', value)}
         />
       )
     },
@@ -120,9 +120,9 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.couponQuantity}
-          name='couponQuantity'
-          onChange={(value) => handleChangeInput('couponQuantity', value)}
+          value={data?.maxUsesPerUser}
+          name='maxUsesPerUser'
+          onChange={(value) => handleChangeInput('maxUsesPerUser', value)}
         />
       )
     },
@@ -131,7 +131,7 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       title: 'Trạng thái',
       width: '10%',
       position: 'center',
-      render: (data) => (data.couponQuantity ? <OneActiveIcon /> : <DefaultAvatar />)
+      render: (data) => (data.isActive ? <OneActiveIcon /> : <DefaultAvatar />)
     }
   ]
 
@@ -143,7 +143,7 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
     <Table
       data={couponData}
       columns={columns}
-      searchKey={'couponCode'}
+      searchKey={'code'}
       onSubmitChange={handleSubmitChange}
       selectedRows={selectedRows}
       onSelectRows={setSelectedRows}

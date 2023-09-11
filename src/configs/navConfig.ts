@@ -87,7 +87,7 @@ const navConfig: TNavConfig[] = [
     active: ActiveCouponIcon,
     links: [
       { label: 'Danh sách mã', link: '/coupons/list' },
-      { label: 'Thêm mã khuyến mãi', link: '/coupons/create' }
+      { label: 'Thêm mã khuyến mãi', link: '/coupons' }
     ]
   },
   {

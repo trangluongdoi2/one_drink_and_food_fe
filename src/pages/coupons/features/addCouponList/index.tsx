@@ -1,12 +1,14 @@
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
-import { useFetchAll } from '@/hook/useFetchAll'
-import { TCouponType } from '@/types/coupon'
-import { Paper, Stack, Title } from '@mantine/core'
-import CouponList from '../../components/CouponList'
+import { Paper, Stack } from '@mantine/core'
 import CouponHeader from '../../components/CouponHeader'
+import CouponList from '../../components/CouponList'
+import { useGetCoupon } from '../../services/hook'
 
 const AddCouponList = () => {
-  const { data, loading } = useFetchAll<TCouponType[]>(FIREBASE_COLLECTION.DISCOUNT)
+  const { data, isLoading } = useGetCoupon({
+    page: 1,
+    limit: 10,
+    sort: 'title'
+  })
 
   return (
     <Paper p={40} sx={(theme) => ({ backgroundColor: theme.colors.dark[0], zIndex: 1 })}>
@@ -14,7 +16,7 @@ const AddCouponList = () => {
         <CouponHeader title='Thêm mã khuyến mãi' />
 
         <Paper p={40} radius={10} shadow='md'>
-          <CouponList data={data} loading={loading} />
+          <CouponList data={data} loading={isLoading} />
         </Paper>
       </Stack>
     </Paper>

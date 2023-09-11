@@ -1810,11 +1810,6 @@ chart.js@^4.2.1:
   dependencies:
     "@kurkle/color" "^0.3.0"
 
-classnames@^2.2.6:
-  version "2.3.2"
-  resolved "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz"
-  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
-
 cliui@^7.0.2:
   version "7.0.4"
   resolved "https://registry.npmjs.org/cliui/-/cliui-7.0.4.tgz"
@@ -1916,6 +1911,11 @@ damerau-levenshtein@^1.0.8:
   version "1.0.8"
   resolved "https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
+
+dayjs@^1.11.9:
+  version "1.11.9"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.9.tgz#9ca491933fadd0a60a2c19f6c237c03517d71d1a"
+  integrity sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==
 
 debug@^3.2.7:
   version "3.2.7"
@@ -2029,11 +2029,6 @@ draftjs-to-html@^0.9.1:
   version "0.9.1"
   resolved "https://registry.npmjs.org/draftjs-to-html/-/draftjs-to-html-0.9.1.tgz"
   integrity sha512-fFstE6+IayaVFBEvaFt/wN8vdj8FsTRzij7dy7LI9QIwf5LgfHFi9zSpvCg+feJ2tbYVqHxUkjcibwpsTpgFVQ==
-
-draftjs-utils@^0.10.2:
-  version "0.10.2"
-  resolved "https://registry.npmjs.org/draftjs-utils/-/draftjs-utils-0.10.2.tgz"
-  integrity sha512-EstHqr3R3JVcilJrBaO/A+01GvwwKmC7e4TCjC7S94ZeMh4IVmf60OuQXtHHpwItK8C2JCi3iljgN5KHkJboUg==
 
 electron-to-chromium@^1.4.284:
   version "1.4.353"
@@ -2828,11 +2823,6 @@ html-parse-stringify@^3.0.1:
   dependencies:
     void-elements "3.1.0"
 
-html-to-draftjs@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/html-to-draftjs/-/html-to-draftjs-1.5.0.tgz"
-  integrity sha512-kggLXBNciKDwKf+KYsuE+V5gw4dZ7nHyGMX9m0wy7urzWjKGWyNFetmArRLvRV0VrxKN70WylFsJvMTJx02OBQ==
-
 http-parser-js@>=0.5.1:
   version "0.5.8"
   resolved "https://registry.npmjs.org/http-parser-js/-/http-parser-js-0.5.8.tgz"
@@ -3197,13 +3187,6 @@ lines-and-columns@^1.1.6:
   version "1.2.4"
   resolved "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
-
-linkify-it@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/linkify-it/-/linkify-it-2.2.0.tgz"
-  integrity sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
-  dependencies:
-    uc.micro "^1.0.1"
 
 localforage@^1.10.0:
   version "1.10.0"
@@ -3637,17 +3620,6 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
-
-react-draft-wysiwyg@^1.15.0:
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/react-draft-wysiwyg/-/react-draft-wysiwyg-1.15.0.tgz"
-  integrity sha512-p1cYZcWc6/ALFBVksbFoCM3b29fGQDlZLIMrXng0TU/UElxIOF2/AWWo4L5auIYVhmqKTZ0NkNjnXOzGGuxyeA==
-  dependencies:
-    classnames "^2.2.6"
-    draftjs-utils "^0.10.2"
-    html-to-draftjs "^1.5.0"
-    linkify-it "^2.2.0"
-    prop-types "^15.7.2"
 
 react-dropzone@14.2.3:
   version "14.2.3"
@@ -4128,11 +4100,6 @@ ua-parser-js@^0.7.18:
   version "0.7.34"
   resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.34.tgz"
   integrity sha512-cJMeh/eOILyGu0ejgTKB95yKT3zOenSe9UGE3vj6WfiOwgGYnmATUsnDixMFvdU+rNMvWih83hrUP8VwhF9yXQ==
-
-uc.micro@^1.0.1:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/uc.micro/-/uc.micro-1.0.6.tgz"
-  integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

@@ -1,15 +1,34 @@
-export type TCouponType = {
-  couponCode: string
-  couponTitle: string
-  couponFreeShipping: boolean
-  couponNote: string
-  couponOptions: string
-  couponProductDetails: string
-  couponProductType: string[]
-  couponQuantity: number
-  couponStartDate: string
-  couponEndDate: string | any
-  couponValue: number
-  image: string
-  fireBaseId: string
+import { TPaginationParams } from './global'
+
+type TDiscountType = 'fixed' | 'percent'
+
+type TAppliesTo = 'all' | 'specific'
+
+type TCouponType = {
+  _id: string
+  code: string
+  title: string
+  description: string
+  name: string
+  image?: string
+  type: TDiscountType
+  value: number
+  startDate: string
+  endDate: string
+  productIds: string[]
+  maxUses: number
+  mainFunctions: string[]
+  usesCount: number
+  userUsed: string[]
+  maxUsesPerUser: number
+  minOrderValue: number
+  isActive: boolean
+  isNoLimit: boolean
+  appliesTo: TAppliesTo
 }
+
+type TGetCouponParams = TPaginationParams & {
+  sort: keyof TCouponType
+}
+
+export type { TAppliesTo, TCouponType, TDiscountType, TGetCouponParams }
