@@ -1,8 +1,8 @@
 import { clone } from '@/utils/utility'
-import { TProductCreateNewAtribute } from '@/pages/products/type'
+import { TProductCreateNewAtribute, TProductThumbs } from '@/pages/products/type'
 import { ProductState, ProductType, ProductTypeAction } from './type'
 
-const initProductAttributes: TProductCreateNewAtribute[] = [
+const pureProductAttributes: TProductCreateNewAtribute[] = [
   {
     value: 'CHỌN SIZE',
     order: 0,
@@ -11,7 +11,7 @@ const initProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'Lựa chọn 1',
         price: 0
       }
     ]
@@ -24,9 +24,9 @@ const initProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'Lựa chọn 1',
         price: 0
-      },
+      }
     ]
   },
   {
@@ -37,9 +37,9 @@ const initProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'Lựa chọn 1',
         price: 0
-      },
+      }
     ]
   },
   {
@@ -50,21 +50,65 @@ const initProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'Lựa chọn 1',
         price: 0
       }
     ]
   }
 ]
 
+const pureProductThumbs: TProductThumbs[] = [
+  {
+    name: 'thumb1',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb2',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb3',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb4',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb5',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb6',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb7',
+    url: null,
+    key: null
+  },
+  {
+    name: 'thumb8',
+    url: null,
+    key: null
+  }
+]
+
 export const initinalState: ProductState = {
   productName: '',
-  productMainIngredients: '',
+  productMainIngredients: 'Ổi',
+  productThumbs: pureProductThumbs,
   auxiliaryName: '',
   mainFunctions: ['s', 's', 's'],
   productDescription: 'dsadsadsadsadasd',
   productPrice: 1000,
-  productQuantity: 0,
+  productQuantity: 1,
   isVAT: true,
   motionTime: 1000,
   productType: 'juice',
@@ -72,20 +116,20 @@ export const initinalState: ProductState = {
   note: '',
   listInformation: [
     {
-      title: '',
+      title: 'Tiêu đề 1',
       order: 0,
       appear: true,
       informationItems: [
         {
-          text: ''
+          text: 'Thông tin 1'
         },
         {
-          text: ''
+          text: 'Thông tin 2'
         }
       ]
     }
   ],
-  attributes: initProductAttributes,
+  attributes: pureProductAttributes,
   // for state
   introduction: '',
   photos: {
@@ -113,12 +157,12 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     case ProductType.SET_PRODUCT_PRICE:
       return {
         ...state,
-        productPrice: payload
+        productPrice: Number(payload)
       }
     case ProductType.SET_PRODUCT_QUANTITY: {
       return {
         ...state,
-        productQuantity: payload
+        productQuantity: Number(payload)
       }
     }
     case ProductType.SET_INTRODUCTION:

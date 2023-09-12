@@ -88,9 +88,10 @@ export const TypeInput = ({
   switch (typeInput) {
     case 'number':
       return (
-        <NumberInput
+        <TextInput
+          type='number'
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputText}`, rightSection: `${classes.rightSection}` }}
+          classNames={{ input: `${classes.input} ${classes.inputText} ${classInput}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
           onBlur={onUpdateInput}
@@ -139,7 +140,7 @@ export const AppInput = ({
 
   const form = useUserForm({
     initialValues: {
-      [field]: typeof field === 'string' ? value ?? '' : 0
+      [field]: typeof field === 'string' ? value ?? '' : value ?? 0
     } as Partial<ProductDetailProps>
   })
 
@@ -156,7 +157,7 @@ export const AppInput = ({
       <form>
         <Box ref={ref}>
           {title && (
-            <Flex justify='space-between' align={'flex-end'} sx={{ marginTop: '20px', marginBottom: '10px' }}>
+            <Flex justify='space-between' align={'flex-end'} sx={{ margin: '20px 0 10px 0' }}>
               <Text className={classes['.text__title']}>{title}</Text>
               <Flex align={'center'}>
                 {!hiddenToggleIcon && <ToggleButon isActive={isActive} onToggleStatus={() => setIsActive(!isActive)} />}

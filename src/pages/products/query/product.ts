@@ -59,3 +59,18 @@ export const useProductCreateMutation = ({ config }: TProductMutationConfig = {}
     mutationFn: (input: TProductCreateNew) => productApi.create(input)
   })
 }
+
+export const useUploadProductThumbsMutation = ({ config }: TProductMutationConfig = {}) => {
+  return useMutation({
+    ...config,
+    mutationFn: (input: any) => productApi.uploadProductThumbs(input)
+  })
+}
+
+export const useRemoveProductThumbsMutation = ({ config }: TProductMutationConfig = {}) => {
+  return useMutation({
+    ...config,
+    // @ts-ignore
+    mutationFn: (input: any) => productApi.removeProductThumbs(input)
+  })
+}
