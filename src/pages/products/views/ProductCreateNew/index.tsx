@@ -12,8 +12,10 @@ import { TProductCreateNew } from '../../type'
 import ProductsApi from '../../api/product'
 import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
 import CategoryApi from '../../api/category'
-import { useProductCreateMutation } from '../../query/product'
+import { useProductCreateMutation, useUploadProductThumbsMutation } from '../../query/product'
 import { useEffect, useState } from 'react'
+import AuthApi from '@/features/auth'
+import { ProductType } from '@/reducer/product/type'
 
 type Props = {
   type: string
@@ -26,6 +28,8 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
   const productStateData = useProductContext()
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
+  const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
   // const [productCreateData, setProductCreateData] = useState<TProductCreateNew | undefined>()
 
   const items = [
@@ -46,11 +50,27 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     </Anchor>
   ))
 
-  const { mutate } = useProductCreateMutation()
+  const {
+    mutate: mutateProductCreateNew,
+    data: createdProduct,
+    isSuccess: isSuccessProductCreateNew
+  } = useProductCreateMutation()
+  const {
+    mutate: mutateProductUploadThumbs,
+    data: dataImageUpload,
+    isSuccess: isSuccessProductUploadThumbs
+  } = useUploadProductThumbsMutation()
 
   const onSaveProduct = async () => {
-    const input: TProductCreateNew = useConverterStateToApiData(productStateData)
-    mutate(input)
+    setLoading(true)
+    setTempPhotoStores(productStateData.photosStore as File[])
+    const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
+      productType: type as any,
+      productSubType: subType
+    })
+    const authApi = new AuthApi()
+    await authApi.loginAdmin({ username: 'admin', password: '1' })
+    mutateProductCreateNew(input)
   }
 
   const checkValidButton = () => {
@@ -67,6 +87,25 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     productStateData.productQuantity
   ])
 
+  useEffect(() => {
+    if (isSuccessProductCreateNew) {
+      const formData = new FormData()
+      if (tempPhotoStores?.length) {
+        for (let i = 0; i < tempPhotoStores.length; i++) {
+          formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
+        }
+      }
+      const productId = createdProduct._id
+      mutateProductUploadThumbs({ id: productId, thumbs: formData })
+    }
+  }, [isSuccessProductCreateNew])
+
+  useEffect(() => {
+    if (isSuccessProductCreateNew && isSuccessProductCreateNew) {
+      setLoading(false)
+    }
+  }, [isSuccessProductCreateNew, isSuccessProductUploadThumbs])
+
   return (
     <Paper className={classes.container}>
       <Stack>
@@ -77,7 +116,12 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
           </div>
           <div className={classes.container__preview}>
             <ProductPreview />
-            <Button className={classes.container__button} onClick={onSaveProduct} disabled={!validButton}>
+            <Button
+              className={classes.container__button}
+              onClick={onSaveProduct}
+              disabled={!validButton}
+              loading={loading}
+            >
               {t('create_new_product')}
             </Button>
           </div>

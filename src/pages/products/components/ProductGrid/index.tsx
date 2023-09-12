@@ -3,15 +3,14 @@ import { Paper } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { ProductCard } from '../ProductCard'
 import { ProductPortfolio } from '../ProductPortfolio'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAllProductQuery } from '../../query/product'
 
 export const ProductGrid = ({ title, productSubType }: ProductGridProps) => {
   const { classes } = useStyles()
   const { data, refetch } = useAllProductQuery({})
-
   useEffect(() => {
-    // refetch()
+    refetch()
   }, [])
 
   return (
@@ -19,12 +18,12 @@ export const ProductGrid = ({ title, productSubType }: ProductGridProps) => {
       <ProductPortfolio title={title} />
       <Paper className={classes.containerGrid}>
         <ProductCard forNewProduct={true} productSubType={productSubType} />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {data?.length &&
+          data.map((item: any, index: number) => (
+            <div key={index}>
+              <ProductCard item={item} />
+            </div>
+          ))}
       </Paper>
     </Paper>
   )

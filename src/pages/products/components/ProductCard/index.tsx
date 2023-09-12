@@ -5,8 +5,10 @@ import { AddFillIcon, DeleteIcon } from '@/assets/icon'
 import { ProductCardProps } from '@/pages/products/type'
 import { camelToSnakeCase } from '@/utils/string-utils'
 import { useStyles } from './index.styles'
+import { useEffect, useState } from 'react'
+import ProductsApi from '../../api/product'
 
-export const ProductCard = ({ forNewProduct = false, productSubType, productOverview }: ProductCardProps) => {
+export const ProductCard = ({ forNewProduct = false, productSubType, item }: ProductCardProps) => {
   const navigation = useNavigate()
   const { classes } = useStyles()
   const { t } = useTranslation()
@@ -23,6 +25,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, productOver
 
   const onEditProduct = () => {
     console.log('onDeleteProduct')
+    const productApi = new ProductsApi()
   }
 
   return (
@@ -39,12 +42,12 @@ export const ProductCard = ({ forNewProduct = false, productSubType, productOver
       ) : (
         <>
           <Stack>
-            <Image width={250} height={250} radius={10} />
+            <Image width={250} height={250} radius={10} src={item.productThumbs[0].url} />
           </Stack>
           <Stack className={classes.container_title}>
             <Stack spacing={0}>
-              <Text className={classes.container_mainTitle}>Ổi</Text>
-              <Text className={classes.container_childTitle}>#1 Nữ Hoàng Vitamin C</Text>
+              <Text className={classes.container_mainTitle}>{item.productName}</Text>
+              <Text className={classes.container_childTitle}>{item.auxiliaryName}</Text>
             </Stack>
             <ActionIcon onClick={onDeleteProduct}>
               <DeleteIcon />
@@ -52,7 +55,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, productOver
           </Stack>
           <Stack className={classes.container_price}>
             <Flex align={'flex-end'}>
-              <Text className={classes.price_text}>45.000đ</Text>
+              <Text className={classes.price_text}>{item.productPrice}</Text>
             </Flex>
             <Button className={classes.price_button} onClick={onEditProduct}>
               {t('edit')}

@@ -1,6 +1,12 @@
 import Api from '@/api'
-import { PRODUCTS_ALL_URL, PRODUCT_ALL_PUBLISH_URL, PRODUCT_CREATE_URL, PRODUCT_DETAIL } from '@/configs/urlConfig'
-import { TProductCreateNew } from '../type'
+import {
+  API_URL,
+  PRODUCTS_ALL_URL,
+  PRODUCT_ALL_PUBLISH_URL,
+  PRODUCT_CREATE_URL,
+  PRODUCT_DETAIL
+} from '@/configs/urlConfig'
+import { TProductCreateNew, TProductThumbs } from '../type'
 
 interface ProductDetail {
   id: string
@@ -34,5 +40,25 @@ export default class ProductsApi extends Api {
 
   async getProductByCategoryId(categoryId: string) {
     // const res = await this.get()
+  }
+
+  deleteProduct(productId: string) {
+    // this.delete(PRODUCT_DELETE_URL, )
+  }
+
+  async uploadProductThumbs(input: { id: string; thumbs: any }) {
+    const PRODUCT_UPLOAD_THUMBS_URL = `${API_URL}/products/${input.id}/thumbs`
+    const res = await this.post(PRODUCT_UPLOAD_THUMBS_URL, input.thumbs, 'form')
+    return res.data
+  }
+
+  removeProductThumbs(input: { id: string; thumbsKeys: { keys: string[] } }) {
+    const PRODUCT_REMOVE_THUMBS_URL = `${API_URL}/products/${input.id}/thumbs`
+    this.delete(PRODUCT_REMOVE_THUMBS_URL, input.thumbsKeys)
+  }
+
+  async uploadInformationImages(input: { id: string; inforImages: any }) {
+    const PRODUCT_UPLOAD_INFOS_IMAGE_THUMBS_URL = `${API_URL}/products/${input.id}/information-images`
+    await this.post(PRODUCT_UPLOAD_INFOS_IMAGE_THUMBS_URL, input.inforImages)
   }
 }

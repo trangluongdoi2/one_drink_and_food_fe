@@ -14,6 +14,7 @@ export interface ProductCardProps {
   productOverview?: ProductOverview
   productType?: string
   productSubType?: string
+  item?: any
 }
 
 export interface ProductOptionFrameProps {
@@ -52,6 +53,11 @@ export enum ProductTypeEnum {
 
 export type ProductType = 'juice' | 'coffee' | 'tea' | 'smoothie' | 'yogurt'
 
+export interface TProductThumbs {
+  name: string
+  url: string | null
+  key: string | null
+}
 export interface TProductAttributeOption {
   text: string | number
   price?: number
@@ -79,10 +85,12 @@ export interface TProductCreateNewInformation {
 }
 
 export interface TProductCreateNew {
+  _id?: string
   productName: string
   auxiliaryName: string
   isVAT: string | boolean
   productMainIngredients: string
+  productThumbs: TProductThumbs[]
   motionTime: number | null
   mainFunctions: string[]
   productDescription: string
