@@ -5,7 +5,6 @@ export const useStyles = createStyles(() => ({
     position: 'relative',
     maxWidth: 374,
     zIndex: 100,
-    cursor: 'pointer',
 
     '&:hover': {
       transform: 'scale(1.02)'
@@ -19,6 +18,7 @@ export const useStyles = createStyles(() => ({
     width: 120,
     height: 35,
     borderRadius: '10px 0 10px 0',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    cursor: 'pointer'
   }
 }))

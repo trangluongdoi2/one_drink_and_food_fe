@@ -77,5 +77,31 @@
   "friday": "Thứ 6",
   "saturday": "Thứ 7",
   "sunday": "Chủ Nhật",
-  "un_valid": "{{field}} không được trống"
+  "un_valid": "{{field}} không được trống",
+  "coupon": {
+    "main_title": "Tiêu đề chính",
+    "title_placeholder": "Điền tiêu đề",
+    "discount_events": "Chương trình khuyến mãi",
+    "code": "Mã Code",
+    "code_placeholder": "Điền mã code khuyến mãi",
+    "value": "Giá trị khuyến mãi",
+    "quantity": "Số lượng phát hành",
+    "quantity_placeholder": "Điền số lượng muốn phát hành",
+    "add": "Thêm mã khuyến mãi",
+    "update": "Cập nhật mã khuyến mãi"
+  },
+  "start_date": "Ngày bắt đầu",
+  "end_date": "Ngày kết thúc",
+  "start_date_placeholder": "Điền ngày bắt đầu hoạt động",
+  "end_date_placeholder": "Điền ngày kết thúc hoạt động",
+  "expired_date": "Hạn sử dụng",
+  "message": {
+    "coupon": {
+      "createSuccess": "Tạo mã giảm giá thành công",
+      "createFailed": "Tạo mã giảm giá thất bại",
+      "updateSuccess": "Cập nhật mã giảm giá thành công",
+      "updateFailed": "Cập nhật mã giảm giá thất bại"
+    }
+  },
+  "notEmpty": "Không được trống"
 }

@@ -1,26 +1,29 @@
 import { DeleteIcon } from '@/assets/icon'
 import { TCouponType } from '@/types/coupon'
-import { Divider, Flex, Image, Paper, Skeleton, Stack, Text } from '@mantine/core'
+import { prettyDate } from '@/utils/convertDate'
+import { ActionIcon, Divider, Flex, Image, Paper, Skeleton, Stack, Text } from '@mantine/core'
 import { useStyles } from './CouponTags.style'
 
 type TCouponTagProps = {
-  data: TCouponType
-  loading: boolean
+  data: Pick<TCouponType, 'code' | 'name' | 'image' | 'endDate'>
+  loading?: boolean
   label?: string
+  onDelete?: () => void
+  onClick?: () => void
 }
 
-const CouponTag = ({ data, loading, label }: TCouponTagProps) => {
+const CouponTag = ({ data, loading = false, label, onDelete, onClick }: TCouponTagProps) => {
   const { classes } = useStyles()
   if (loading) {
     return <Skeleton visible={loading} width='100%' height={100} className={classes.container} />
   }
 
-  const { image, couponTitle, couponEndDate, couponCode } = data
+  const { image, name, endDate, code } = data
 
   return (
     <Paper p={10} shadow='md' className={classes.container}>
       {label && (
-        <Flex className={classes.tag} justify='center' align='center'>
+        <Flex className={classes.tag} justify='center' align='center' onClick={onClick}>
           <Text color='#fff' fw='bold' size={14}>
             {label}
           </Text>
@@ -30,17 +33,19 @@ const CouponTag = ({ data, loading, label }: TCouponTagProps) => {
         <Flex gap={10} justify='flex-start'>
           <Image src={image} width={100} height={100} radius={10} />
           <Divider variant='dashed' size={2} orientation='vertical' />
-          <Stack spacing={3} mt={10} sx={{ maxWidth: 200 }} justify='flex-start'>
+          <Stack spacing={3} mt={10} maw={200} justify='flex-start'>
             <Text fw='bold' lh={1.4}>
-              {couponTitle ?? ''}
+              {name ?? ''}
             </Text>
-            <Text size={14}>MÃ : {couponCode}</Text>
-            <Text size={12}>
-              {couponEndDate?.date} {couponEndDate?.time}
-            </Text>
+            <Text size={14}>MÃ : {code}</Text>
+            {endDate && <Text size={12}>Đến: {prettyDate(endDate)}</Text>}
           </Stack>
         </Flex>
-        <DeleteIcon />
+        {onDelete && (
+          <ActionIcon onClick={onDelete}>
+            <DeleteIcon />
+          </ActionIcon>
+        )}
       </Flex>
     </Paper>
   )

@@ -1,20 +1,24 @@
-import { TCouponType } from '@/types/coupon'
+import { TAppliesTo, TCouponType, TDiscountType } from '@/types/coupon'
 import { createFormContext } from '@mantine/form'
 
 export const defaultCoupon = {
-  couponCode: '',
-  couponTitle: '',
-  couponEndDate: '',
-  couponFreeShipping: false,
-  couponNote: '',
-  couponOptions: '',
-  couponProductDetails: '',
-  couponProductType: [],
-  couponQuantity: 0,
-  couponStartDate: '',
-  couponValue: 0,
-  image: '',
-  fireBaseId: ''
+  _id: '',
+  code: '',
+  title: '',
+  name: '',
+  description: '',
+  type: 'fixed' as TDiscountType,
+  value: 0,
+  productIds: [],
+  maxUses: 0,
+  mainFunctions: [],
+  usesCount: 0,
+  usersUsed: [''],
+  maxUsesPerUser: 0,
+  minOrderValue: 0,
+  isActive: false,
+  isNoLimit: false,
+  appliesTo: 'all' as TAppliesTo
 }
 
 type TCouponForm = {
@@ -23,3 +27,6 @@ type TCouponForm = {
 }
 
 export const [CouponFormProvider, useCouponFormContext, useCouponForm] = createFormContext<TCouponForm>()
+
+export const [CreateCouponFormProvider, useCreateCouponFormContext, useCreateCouponForm] =
+  createFormContext<TCouponType>()
