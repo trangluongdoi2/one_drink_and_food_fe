@@ -1,6 +1,5 @@
 import { SelectOptionDarkIcon, SelectOptionLightIcon } from '@/assets/icon'
 import { DragDropBlock } from '@/components/DragDropBlock'
-import { DragDropListHandler } from '@/components/DragDropListHandler'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import {
@@ -20,6 +19,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import { useTranslation } from 'react-i18next'
 import { ProductOptionAttribute } from '../../ProductOptionAttribute'
 import { useStyles } from './index.styles'
+import { DragDropListHandler } from '@/components/DragDropListHandler'
 
 export const ProductSalesFrameForm = () => {
   const { classes } = useStyles()
