@@ -13,13 +13,13 @@ type TCouponType = {
   image?: string
   type: TDiscountType
   value: number
-  startDate: string
-  endDate: string
+  startDate?: string
+  endDate?: string
   productIds: string[]
   maxUses: number
   mainFunctions: string[]
   usesCount: number
-  userUsed: string[]
+  usersUsed: string[]
   maxUsesPerUser: number
   minOrderValue: number
   isActive: boolean

@@ -9,9 +9,10 @@ type TCouponTagProps = {
   loading?: boolean
   label?: string
   onDelete?: () => void
+  onClick?: () => void
 }
 
-const CouponTag = ({ data, loading = false, label, onDelete }: TCouponTagProps) => {
+const CouponTag = ({ data, loading = false, label, onDelete, onClick }: TCouponTagProps) => {
   const { classes } = useStyles()
   if (loading) {
     return <Skeleton visible={loading} width='100%' height={100} className={classes.container} />
@@ -22,7 +23,7 @@ const CouponTag = ({ data, loading = false, label, onDelete }: TCouponTagProps) 
   return (
     <Paper p={10} shadow='md' className={classes.container}>
       {label && (
-        <Flex className={classes.tag} justify='center' align='center'>
+        <Flex className={classes.tag} justify='center' align='center' onClick={onClick}>
           <Text color='#fff' fw='bold' size={14}>
             {label}
           </Text>

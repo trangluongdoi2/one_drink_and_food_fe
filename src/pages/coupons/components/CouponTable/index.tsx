@@ -5,12 +5,11 @@ import { TColumnsProps } from '@/components/table/table/type'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { FirebaseService } from '@/firebase/handler'
 import { TCouponType } from '@/types/coupon'
+import { prettyDate } from '@/utils/convertDate'
+import { notify } from '@/utils/notification'
 import { Avatar } from '@mantine/core'
-import { notifications } from '@mantine/notifications'
 import { FC, useEffect, useState } from 'react'
 import { useCouponFormContext } from '../../form'
-import dayjs from 'dayjs'
-import { prettyDate } from '@/utils/convertDate'
 
 type TCouponTableProps = {
   data: TCouponType[]
@@ -21,23 +20,13 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
   const form = useCouponFormContext()
   const { selectedCoupon, couponData } = form.values
 
-  const successNotification = () => {
-    notifications.show({
-      title: 'Chỉnh sửa thành công',
-      message: 'Thông tin đơn hàng đã được cập nhật',
-      autoClose: 3000,
-      color: 'dark',
-      withCloseButton: true
-    })
-  }
-
   const handleSubmitChange = async () => {
     const newArr = couponData.map((data) => (data._id === selectedCoupon._id ? { ...selectedCoupon } : data))
 
     form.setValues({ couponData: newArr })
     try {
       await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedCoupon, selectedCoupon._id)
-      successNotification()
+      notify({ message: 'Thông tin đơn hàng đã được cập nhật' })
     } catch (err) {
       console.error(err)
     }

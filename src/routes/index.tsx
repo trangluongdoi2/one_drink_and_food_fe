@@ -233,7 +233,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: '/coupons/edit/:id',
-                element: <AddCouponDetail />
+                element: <AddCouponDetail type='edit' />
               }
             ]
           },

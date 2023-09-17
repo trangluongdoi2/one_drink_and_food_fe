@@ -4,6 +4,7 @@ import { ScrollArea, SimpleGrid } from '@mantine/core'
 import { FC } from 'react'
 import AddCouponTag from '../AddCouponTag'
 import CouponSkeleton from '../CouponSkeleton'
+import { useNavigate } from 'react-router-dom'
 
 type TCouponList = {
   data?: TCouponType[]
@@ -11,6 +12,7 @@ type TCouponList = {
 }
 
 const CouponList: FC<TCouponList> = ({ data, loading }) => {
+  const navigate = useNavigate()
   return (
     <ScrollArea h='70vh' type='always' offsetScrollbars dir='ltr'>
       <SimpleGrid cols={2} spacing={20} w='75%'>
@@ -18,7 +20,7 @@ const CouponList: FC<TCouponList> = ({ data, loading }) => {
         {loading && <CouponSkeleton visible={loading || !data} />}
         {data?.map((item) => (
           <div key={item.code}>
-            <CouponTag data={item} loading={loading} label='Chỉnh' />
+            <CouponTag data={item} loading={loading} label='Chỉnh' onClick={() => navigate(`edit/${item._id}`)} />
           </div>
         ))}
       </SimpleGrid>

@@ -23,4 +23,4 @@ export const parseDateFirebase = (time: string) => {
   }
 }
 
-export const prettyDate = (date: string) => (date ? dayjs(date).format(DATE_FORMAT) : '-')
+export const prettyDate = (date?: string) => (date ? dayjs(date).format(DATE_FORMAT) : '-')

@@ -1,6 +1,8 @@
+import { CustomInput } from '@/components/form/CustomInput'
+import CurrencyLabel from '@/components/form/CustomInput/CurrencyLabel'
 import ImageDropzone from '@/components/form/ImageDropzone'
 import ImageMotion from '@/components/form/ImageMotion'
-import { AppInput } from '@/components/input'
+import { prettyDate } from '@/utils/convertDate'
 import { Flex, Paper } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { useCreateCouponFormContext } from '../../form'
@@ -8,7 +10,7 @@ import CouponHeader from '../CouponHeader'
 
 export const CreateCouponForm = () => {
   const { t } = useTranslation()
-  const { values, setValues } = useCreateCouponFormContext()
+  const { values, setValues, getInputProps } = useCreateCouponFormContext()
 
   return (
     <Paper p={40} radius={10} shadow='md'>
@@ -25,73 +27,64 @@ export const CreateCouponForm = () => {
         active={false}
         onChangeActive={() => console.log('aaa')}
       />
-      <AppInput
-        title={t('coupon.main_title') as string}
+      <CustomInput
+        title={t('coupon.main_title')}
         placeholder={t('coupon.title_placeholder')}
-        field=''
-        isImperative={true}
-        hiddenToggleIcon={true}
-        updateInput={(data) => setValues({ title: data.value as string })}
-        value={values.title}
+        isImperative
+        hiddenToggleIcon
+        {...getInputProps('title')}
       />
-      <AppInput
-        title={t('coupon.discount_events') as string}
+
+      <CustomInput
+        title={t('coupon.discount_events')}
         placeholder={t('coupon.title_placeholder')}
-        field=''
-        isImperative={true}
-        hiddenToggleIcon={true}
-        value={values.name}
-        updateInput={(data) => setValues({ name: data.value as string })}
+        isImperative
+        hiddenToggleIcon
+        {...getInputProps('name')}
       />
-      <AppInput
-        title={t('introduction') as string}
+
+      <CustomInput
+        title={t('introduction')}
         placeholder={t('fill_product_introduction')}
-        field=''
-        hiddenToggleIcon={true}
-        updateInput={(data) => setValues({ description: data.value as string })}
         typeInput='area'
+        {...getInputProps('description')}
       />
-      <AppInput
-        title={t('coupon.code') as string}
+      <CustomInput
+        title={t('coupon.code')}
         placeholder={t('coupon.code_placeholder')}
-        field=''
-        isImperative={true}
-        hiddenToggleIcon={true}
-        value={values.code}
-        updateInput={(data) => setValues({ code: data.value as string })}
+        isImperative
+        hiddenToggleIcon
+        {...getInputProps('code')}
       />
-      <AppInput
-        title={t('start_date') as string}
+      <CustomInput
+        title={t('start_date')}
         placeholder={t('start_date_placeholder')}
-        field=''
-        hiddenToggleIcon={true}
-        value={values.endDate}
-        updateInput={(data) => setValues({ startDate: data.value as string })}
+        hiddenToggleIcon
+        {...getInputProps('startDate')}
+        value={prettyDate(values.startDate)}
       />
-      <AppInput
-        title={t('end_date') as string}
+      <CustomInput
+        title={t('end_date')}
         placeholder={t('end_date_placeholder')}
-        field=''
-        hiddenToggleIcon={true}
-        value={values.endDate}
-        updateInput={(data) => setValues({ endDate: data.value as string })}
+        hiddenToggleIcon
+        {...getInputProps('endDate')}
+        value={prettyDate(values.endDate)}
       />
-      <AppInput
-        title={t('coupon.value') as string}
+      <CustomInput
+        title={t('coupon.value')}
         placeholder={t('coupon.quantity_placeholder')}
-        field=''
-        hiddenToggleIcon={true}
-        value={values.value}
-        updateInput={(data) => setValues({ value: data.value as number })}
+        hiddenToggleIcon
         typeInput='number'
+        rightSection={<CurrencyLabel type={values.type} onChange={(value) => setValues({ type: value })} />}
+        rightSectionWidth={100}
+        {...getInputProps('value')}
       />
-      <AppInput
+      <CustomInput
         title={t('coupon.quantity') as string}
         placeholder={t('coupon.quantity_placeholder')}
-        field=''
-        hiddenToggleIcon={true}
-        value={values.maxUsesPerUser}
-        updateInput={(data) => setValues({ maxUsesPerUser: data.value as number })}
+        hiddenToggleIcon
+        typeInput='number'
+        {...getInputProps('maxUsesPerUser')}
       />
     </Paper>
   )

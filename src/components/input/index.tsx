@@ -1,12 +1,11 @@
+import { ToggleButon } from '@/components/button/ToggleButton'
+import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
+import { ProductDetailProps } from '@/types/product'
+import { snakeCaseToUnderscore } from '@/utils/string-utils'
+import { Box, Flex, NumberInput, Text, TextInput, Textarea, createStyles } from '@mantine/core'
+import { useFocusWithin } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Flex, NumberInput, Text, TextInput, Textarea, createStyles } from '@mantine/core'
-import { ProductDetailProps } from '@/types/product'
-import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
-import { ToggleButon } from '@/components/button/ToggleButton'
-import { useFocusWithin } from '@mantine/hooks'
-import { camelToSnakeCase, snakeCaseToUnderscore } from '@/utils/string-utils'
-import { TProductAttributeOption } from '@/pages/products/type'
 
 const useStyles = createStyles(() => ({
   '.text__title': {
