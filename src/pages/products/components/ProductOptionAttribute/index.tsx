@@ -7,7 +7,6 @@ import {
   EditIconLight,
   SelectOptionDarkIcon,
   SelectOptionLightIcon,
-  TableRowsIcon,
   CloseButton,
   AddFillIcon
 } from '@/assets/icon'
@@ -18,7 +17,7 @@ import { TProductAttributeOption, TProductCreateNewAtribute } from '../../type'
 import { useStyles } from './index.styles'
 
 type TProductOptionComponentProps = {
-  optionDatas: any
+  optionDatas: TProductAttributeOption[]
   defaultPlaceholder: string
   updateInput: (data: any, index?: number, isPrice?: boolean) => void
   setIsFocused: (status: boolean) => void
@@ -27,12 +26,8 @@ type TProductOptionComponentProps = {
 }
 
 type TProductOptionAttributeProps = {
-  title: string
   defaultPlaceholder: string
-  isOption: boolean
-  manyChoices?: boolean
-  atLeastOne?: boolean
-  optionsAttribute?: TProductAttributeOption[]
+  attribute: TProductCreateNewAtribute
   blockDraggable: any
   updateAttributeName?: (data: string) => void
   updateAttributeOptions?: (data: TProductAttributeOption[]) => void
@@ -54,14 +49,15 @@ export const ProductOptionComponent = ({
   return (
     <div>
       {optionDatas.length &&
-        optionDatas.map((_: any, index: number) => (
+        optionDatas.map((option: TProductAttributeOption, index: number) => (
           <Flex gap={12} align={'center'} key={index}>
             <div style={{ flex: '1' }}>
               <AppInput
                 field={'text'}
                 placeholder={defaultPlaceholder}
-                updateInput={(data) => updateInput(data, index)}
                 hiddenToggleIcon={true}
+                value={option.text}
+                updateInput={(data) => updateInput(data, index)}
                 checkIsFocused={setIsFocused}
               />
             </div>
@@ -71,6 +67,7 @@ export const ProductOptionComponent = ({
                 field={'price'}
                 placeholder={t('prices')}
                 hiddenToggleIcon={true}
+                value={option.price}
                 updateInput={(data) => updateInput(data, index, true)}
                 checkIsFocused={setIsFocused}
               />
@@ -89,19 +86,15 @@ export const ProductOptionComponent = ({
 }
 
 export const ProductOptionAttribute = ({
-  title,
   defaultPlaceholder,
-  isOption = false,
-  manyChoices = false,
-  atLeastOne,
+  attribute,
   updateAttributeName,
   updateAttributeOptions,
-  updateContentValue,
   setManyChoices,
   removeAttributeOption,
   setEnabled,
   blockDraggable
-}: any) => {
+}: TProductOptionAttributeProps) => {
   const initAttributeDataOption: TProductAttributeOption = {
     text: '',
     price: 0
@@ -112,11 +105,12 @@ export const ProductOptionAttribute = ({
 
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const [activeManyChoices, setActiveManyChoices] = useState(manyChoices)
-  const [isActive, setIsActive] = useState<boolean>(true)
+  const [activeManyChoices, setActiveManyChoices] = useState(attribute.manyChoices)
+  const [isActive, setIsActive] = useState<boolean>(attribute.appear)
   const [isEditable, setIsEditable] = useState<boolean>(false)
-  const [optionList, setOptionList] = useState(isOption ? [initAttributeDataOption] : [initAttributeDataNotOption])
+  const [optionList, setOptionList] = useState<any>(attribute.options)
   const [isFocused, setIsFocused] = useState<boolean>(false)
+  const [isOption, setIsOption] = useState<boolean>(attribute.manyChoices || attribute.atLeastOne)
   const ref = useClickOutside(() => setIsEditable(false))
 
   const toggleManyChoices = () => {
@@ -141,8 +135,9 @@ export const ProductOptionAttribute = ({
 
   const addOption = () => {
     const newArray = [...optionList]
-    newArray.push(initAttributeDataOption)
+    newArray.push(isOption ? initAttributeDataNotOption : initAttributeDataOption)
     setOptionList(newArray)
+    updateAttributeOptions && updateAttributeOptions(newArray)
   }
 
   const onUpdateAttributeName = (data: string) => {
@@ -158,15 +153,11 @@ export const ProductOptionAttribute = ({
   }
 
   const updateInput = (data: { value: string | number; field: keyof TProductAttributeOption }, index = 0) => {
-    if (isOption) {
-      const newOptionList = optionList.slice()
-      const newAttributeOption = newOptionList[index]
-      newAttributeOption[data.field] = data.value as any
-      setOptionList(newOptionList)
-      updateAttributeOptions && updateAttributeOptions(newOptionList)
-      return
-    }
-    updateContentValue && updateContentValue(data.value)
+    const newOptionList = optionList.slice()
+    const newAttributeOption = newOptionList[index]
+    newAttributeOption[data.field] = data.value as any
+    setOptionList(newOptionList)
+    updateAttributeOptions && updateAttributeOptions(newOptionList)
   }
 
   return (
@@ -183,18 +174,18 @@ export const ProductOptionAttribute = ({
                 placeholder={t('fill_information_of_title')}
                 field='title'
                 updateInput={(data: Record<string, any>) => onUpdateAttributeName(data.value)}
-                value={title}
+                value={attribute.value}
                 classInput={classes.input__title}
                 checkIsFocused={setIsFocused}
               />
             ) : (
-              <Text className={classes.title}>{title}</Text>
+              <Text className={classes.title}>{attribute.value}</Text>
             )}
             <ActionIcon onClick={onFocus}>{isEditable ? <EditIconDark /> : <EditIconLight />}</ActionIcon>
           </Flex>
           <Flex align={'center'}>
             <ToggleButon onToggleStatus={onToggleStatus} isActive={isActive} />
-            <ActionIcon onClick={() => onRemoveAttributeOption(title)}>
+            <ActionIcon onClick={() => onRemoveAttributeOption(attribute.value)}>
               <DeleteIcon />
             </ActionIcon>
           </Flex>
@@ -217,10 +208,11 @@ export const ProductOptionAttribute = ({
               />
             ) : (
               <AppInput
-                field={'content'}
+                field={'text'}
                 placeholder={defaultPlaceholder}
-                updateInput={(data) => updateInput(data)}
+                value={optionList[0].text}
                 hiddenToggleIcon={true}
+                updateInput={(data) => updateInput(data)}
                 checkIsFocused={setIsFocused}
               />
             )}

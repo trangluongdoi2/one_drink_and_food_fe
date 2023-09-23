@@ -28,8 +28,14 @@ export default class ProductsApi extends Api {
     return res.data
   }
 
-  async getProductDetails(input: ProductDetail) {
-    const res = await this.get(PRODUCT_DETAIL, input)
+  // async getProductDetails(input: ProductDetail) {
+  //   const res = await this.get(PRODUCT_DETAIL, input)
+  //   return res.data
+  // }
+
+  async getProductDetails(productId: string) {
+    const PRODUCT_DETAIL_URL = `${API_URL}/products/detail/${productId}`
+    const res = await this.get(PRODUCT_DETAIL_URL)
     return res.data
   }
 

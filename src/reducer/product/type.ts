@@ -6,7 +6,7 @@ import {
 } from '@/pages/products/type'
 export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
-  photosStore?: File[]
+  tempPhotoThumbs?: File[]
   introduction?: ''
 }
 
@@ -18,8 +18,8 @@ export enum ProductType {
   SET_ENABLE_INCLUDE_VAT_PRICES = 'SET_ENABLE_INCLUDE_VAT_PRICES',
   SET_INTRODUCTION = 'SET_INTRODUCTION',
   SET_MAIN_FUNCTIONS = 'SET_MAIN_FUNCTIONS',
-  SET_PHOTOS = 'SET_PHOTOS',
-  SET_PHOTOS_STORE = 'SET_PHOTOS_STORE',
+  SET_PHOTO_URLS = 'SET_PHOTO_URLS',
+  SET_PHOTO_THUMBS = 'SET_PHOTO_THUMBS',
   SET_MOTION_PHOTOS = 'SET_MOTION_PHOTOS',
   ADD_ATTRIBUTE_OPTION = 'ADD_ATTRIBUTE_OPTION',
   REMOVE_ATTRIBUTE_OPTION = 'REMOVE_ATTRIBUTE_OPTION',
@@ -71,13 +71,13 @@ export interface SetMainFunctions {
   payload: string[]
 }
 
-export interface SetPhotos {
-  type: ProductType.SET_PHOTOS
+export interface SetPhotoUrls {
+  type: ProductType.SET_PHOTO_URLS
   payload: string[]
 }
 
-export interface SetPhotosStore {
-  type: ProductType.SET_PHOTOS_STORE
+export interface SetPhotoThumbs {
+  type: ProductType.SET_PHOTO_THUMBS
   payload: File[]
 }
 
@@ -201,8 +201,8 @@ export type ProductTypeAction =
   | SetEnableIncludeVATPrices
   | SetIntroductionContent
   | SetMainFunctions
-  | SetPhotos
-  | SetPhotosStore
+  | SetPhotoUrls
+  | SetPhotoThumbs
   | SetMotionPhotos
   | SetSelectManyChoices
   | SetContentProductInfo

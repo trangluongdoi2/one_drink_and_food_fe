@@ -9,7 +9,7 @@ const removeAttributes = [
   'infos',
   'dispatch',
   'photos',
-  'photosStore',
+  'tempPhotoThumbs',
   'productThumbs',
   'productType',
   'productRatingsAverage',

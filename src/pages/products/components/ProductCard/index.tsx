@@ -25,7 +25,10 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
 
   const onEditProduct = () => {
     console.log('onDeleteProduct')
-    const productApi = new ProductsApi()
+    const productId = item._id as string
+    console.log(productId, 'productId...')
+    navigation(`/products/juice/${productId}`)
+    // const productApi = new ProductsApi()
   }
 
   return (

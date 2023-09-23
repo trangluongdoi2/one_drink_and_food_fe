@@ -22,6 +22,7 @@ import ProtectedRoute from './protectedRoute'
 import { default as AddCoupon, default as AddCouponList } from '@/pages/coupons/features/addCouponList'
 import CouponList from '@/pages/coupons/features/couponList'
 import AddCouponDetail from '@/pages/coupons/features/addCouponDetail'
+import { ProductUpdate } from '@/pages/products/views/ProductUpdate'
 
 export const router = createBrowserRouter([
   {
@@ -170,9 +171,17 @@ export const router = createBrowserRouter([
                 element: <ProductJuiceGrid />
               },
               {
+                path: '/products/juice/:id',
+                element: (
+                  <ProductContextProvider mode={'update'}>
+                    <ProductUpdate type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
+                  </ProductContextProvider>
+                )
+              },
+              {
                 path: '/products/juice/juice-glass/create-new',
                 element: (
-                  <ProductContextProvider>
+                  <ProductContextProvider mode={'create-new'}>
                     <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
                   </ProductContextProvider>
                 )
@@ -180,7 +189,7 @@ export const router = createBrowserRouter([
               {
                 path: '/products/juice/juice-bottled/create-new',
                 element: (
-                  <ProductContextProvider>
+                  <ProductContextProvider mode={'create-new'}>
                     <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
                   </ProductContextProvider>
                 )
