@@ -116,6 +116,7 @@ const ProductList = ({ title, query }: ProductListProps) => {
             <GridItem key={index}>
               <Box sx={{ height: '80px', marginRight: '20px', marginBottom: '20px' }}>
                 <CustomCheckBox
+                  key={item.id}
                   title={item.title}
                   value={item.value}
                   selectedOption={selectedOption}
