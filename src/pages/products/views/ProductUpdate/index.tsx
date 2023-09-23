@@ -22,7 +22,7 @@ type Props = {
   subType: string
 }
 
-export const ProductCreateNew = ({ type, subType }: Props) => {
+export const ProductUpdate = ({ type, subType }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const productStateData = useProductContext()
@@ -122,7 +122,7 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
               disabled={!validButton}
               loading={loading}
             >
-              {t('create_new_product')}
+              {t('update_product')}
             </Button>
           </div>
         </Paper>

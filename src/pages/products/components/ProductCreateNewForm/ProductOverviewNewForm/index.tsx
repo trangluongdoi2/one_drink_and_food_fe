@@ -10,8 +10,8 @@ import {
   setIntroductionContent,
   setMotionPhotos,
   setProductName,
-  setPhotos,
-  setPhotosStore,
+  setPhotoUrls,
+  setPhotoThumbs,
   setProductPrice,
   setMainFunctions,
   setProductQuantity
@@ -96,11 +96,11 @@ export const ProductOverviewNewForm = () => {
   }
 
   const updateFilePaths = (data: string[]) => {
-    dispatch(setPhotos(data))
+    dispatch(setPhotoUrls(data))
   }
 
   const updateFileStores = (data: any) => {
-    dispatch(setPhotosStore(data))
+    dispatch(setPhotoThumbs(data))
   }
 
   const updateInput = (data: { value: string | number; field: string }) => {

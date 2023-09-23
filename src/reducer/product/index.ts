@@ -11,7 +11,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: 'Lựa chọn 1',
+        text: '',
         price: 0
       }
     ]
@@ -24,7 +24,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: 'Lựa chọn 1',
+        text: '',
         price: 0
       }
     ]
@@ -37,7 +37,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: 'Lựa chọn 1',
+        text: '',
         price: 0
       }
     ]
@@ -50,7 +50,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: 'Lựa chọn 1',
+        text: '',
         price: 0
       }
     ]
@@ -137,7 +137,7 @@ export const initinalState: ProductState = {
     enabled: true,
     motionTime: 1000
   },
-  photosStore: []
+  tempPhotoThumbs: []
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
@@ -180,7 +180,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         ...state,
         isVAT: payload
       }
-    case ProductType.SET_PHOTOS:
+    case ProductType.SET_PHOTO_URLS:
       return {
         ...state,
         photos: {
@@ -188,20 +188,20 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
           filePaths: payload
         }
       }
-    case ProductType.SET_PHOTOS_STORE:
+    case ProductType.SET_PHOTO_THUMBS:
       return {
         ...state,
-        photosStore: payload
+        tempPhotoThumbs: payload
       }
-    case ProductType.SET_MOTION_PHOTOS:
-      return {
-        ...state,
-        photos: {
-          ...state.photos,
-          enabled: payload.enabled,
-          motionTime: payload.motionTime
-        }
-      }
+    // case ProductType.SET_MOTION_PHOTOS:
+    //   return {
+    //     ...state,
+    //     photos: {
+    //       ...state.photos,
+    //       enabled: payload.enabled,
+    //       motionTime: payload.motionTime
+    //     }
+    //   }
     case ProductType.SET_PRODUCT_MAIN_INGREDIENTS:
       return {
         ...state,
@@ -218,7 +218,9 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST: {
+      console.log(JSON.parse(JSON.stringify(attributes)), 'attrs before')
       ;[attributes[payload.from], attributes[payload.to]] = [attributes[payload.to], attributes[payload.from]]
+      console.log(JSON.parse(JSON.stringify(attributes)), 'attrs after')
       return {
         ...state,
         attributes: [...attributes]
@@ -241,6 +243,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_APPREAR_ATTRIBUTE_OPTION: {
       const { index, data } = payload
+      // console.log(data, 'data....')
       attributes[index].appear = data
       return {
         ...state,

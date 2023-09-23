@@ -12,9 +12,9 @@ import {
   setTitleProductInfoItem,
   setAppearProductInfoItem,
   updateInfoItemsInProductInfo,
-  removeProductInfoItem
-  // setPhotosProductInfo,
-  // setPhotosStoreProductInfo,
+  removeProductInfoItem,
+  setPhotosProductInfo,
+  setPhotosStoreProductInfo
 } from '@/reducer/product/action'
 import { clone } from 'lodash'
 
@@ -104,11 +104,11 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
   }
 
   const updateFilePaths = (data: string[], index: number) => {
-    // dispatch(setPhotosProductInfo({ data, index }))
+    dispatch(setPhotosProductInfo({ data, index }))
   }
 
   const updateFileStores = (data: File[], index: number) => {
-    // dispatch(setPhotosStoreProductInfo({ data, index }))
+    dispatch(setPhotosStoreProductInfo({ data, index }))
   }
 
   return (
@@ -172,13 +172,13 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
                   </ActionIcon>
                 </Flex>
               </Flex>
-              {/* <ProductAddImageForm
-                    updateFilePaths={(event) => updateFilePaths(event, index)}
-                    updateFileStores={(event) => updateFileStores(event, index)}
-                    limitQuantity={4}
-                    hiddenTitle={true}
-                    isActive={info.enable}
-                  /> */}
+              <ProductAddImageForm
+                updateFilePaths={(event) => updateFilePaths(event, index)}
+                updateFileStores={(event) => updateFileStores(event, index)}
+                limitQuantity={4}
+                hiddenTitle={true}
+                isActive={true}
+              />
               <AppInput
                 title={t('content') as string}
                 placeholder={t('fill_information_of_title')}

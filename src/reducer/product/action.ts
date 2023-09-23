@@ -11,9 +11,9 @@ import {
   SetIntroductionContent,
   SetMotionPhotos,
   SetProductName,
-  SetPhotos,
+  SetPhotoUrls,
   SetPhotosProductInfo,
-  SetPhotosStore,
+  SetPhotoThumbs,
   SetPhotosStoreProductInfo,
   SetProductPrice,
   SetAppearAttributeOption,
@@ -62,13 +62,13 @@ export const setMainFunctions = (value: string[]): SetMainFunctions => ({
   payload: value
 })
 
-export const setPhotos = (value: string[]): SetPhotos => ({
-  type: ProductType.SET_PHOTOS,
+export const setPhotoUrls = (value: string[]): SetPhotoUrls => ({
+  type: ProductType.SET_PHOTO_URLS,
   payload: value
 })
 
-export const setPhotosStore = (value: File[]): SetPhotosStore => ({
-  type: ProductType.SET_PHOTOS_STORE,
+export const setPhotoThumbs = (value: File[]): SetPhotoThumbs => ({
+  type: ProductType.SET_PHOTO_THUMBS,
   payload: value
 })
 

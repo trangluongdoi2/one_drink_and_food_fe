@@ -1,3 +1,4 @@
 export interface IContextProviderProps {
-  children: React.ReactNode
+  children: React.ReactNode | any
+  mode?: 'create-new' | 'update'
 }
