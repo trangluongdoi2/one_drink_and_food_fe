@@ -13,8 +13,8 @@ const CouponList = () => {
   })
   const form = useCouponForm({
     initialValues: {
-      selectedCoupon: defaultCoupon,
-      couponData: []
+      selectedDataRow: defaultCoupon,
+      dataForm: []
     }
   })
 

@@ -7,6 +7,7 @@ import { SearchTable } from '../search'
 import { Header } from './header'
 import { Row } from './row/Row'
 import { TColumnsProps } from './type'
+import { UseFormReturnType } from '@mantine/form'
 
 export type TTableProps = {
   data: any[]
@@ -14,9 +15,10 @@ export type TTableProps = {
   searchValue?: string
   rowPerPage?: number
   selectedRows: string[]
+  searchKey: string
+  form: UseFormReturnType<any, (values: any) => any>
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
   onSubmitChange: () => void
-  searchKey: string
 }
 
 const Table = ({
@@ -24,13 +26,14 @@ const Table = ({
   columns,
   rowPerPage = 10,
   selectedRows,
+  searchKey,
+  form,
   onSelectRows,
-  onSubmitChange,
-  searchKey
+  onSubmitChange
 }: TTableProps) => {
   const [searchValue, setSearch] = useState('')
 
-  const { totalItems, active, onChange, slicedData } = useGetRowPerPage<any[]>({
+  const { totalItems, active, slicedData, onChange } = useGetRowPerPage<any[]>({
     data,
     rowPerPage: rowPerPage
   })
@@ -48,6 +51,10 @@ const Table = ({
 
   const handleSelectAll = () => {
     !isSelectedAll ? onSelectRows(data.map((item) => item.fireBaseId)) : onSelectRows([])
+  }
+
+  const onSetSelectedRow = (row: Record<string, any>) => {
+    form.setValues({ selectedDataRow: row })
   }
 
   useEffect(() => {
@@ -75,15 +82,14 @@ const Table = ({
                 selectedRows={selectedRows}
                 onSelectRows={onSelectRows}
                 onSubmitChange={onSubmitChange}
+                setSelectedRow={onSetSelectedRow}
               />
             ))
           ) : (
             <Center h={200}>
-              <td>
-                <Text weight={500} align='center'>
-                  Danh sách khách hàng trống
-                </Text>
-              </td>
+              <Text weight={500} align='center'>
+                Danh sách trống
+              </Text>
             </Center>
           )}
         </Stack>

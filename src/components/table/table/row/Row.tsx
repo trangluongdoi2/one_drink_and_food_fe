@@ -13,14 +13,14 @@ type TRowProps = {
   selectedRows: string[]
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
   onSubmitChange: () => void
+  setSelectedRow: (row: any) => void
 }
 
-export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange }: TRowProps) => {
+export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange, setSelectedRow }: TRowProps) => {
   const { fireBaseId: id } = row
   const isSelected = selectedRows.includes(id)
   const { classes } = useStyles({ isSelected })
   const [edit, setEdit] = useState<boolean>(false)
-  const form = useCouponFormContext()
 
   const handleSelectedRow = () => {
     if (!isSelected) {
@@ -30,9 +30,14 @@ export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange }
     }
   }
 
+  const onEditRow = () => {
+    setEdit(!edit)
+    setSelectedRow(row)
+  }
+
   return (
     <Fragment>
-      <Flex className={classes.container}>
+      <Flex className={classes.container}> 
         <List className={classes.checkbox}>
           <Checkbox checked={isSelected} color='gray.8' size='lg' radius={10} onChange={handleSelectedRow} />
         </List>
@@ -47,13 +52,7 @@ export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange }
               <ActionIcon color='dark.4' onClick={onSubmitChange}>
                 {edit && <IconCheck />}
               </ActionIcon>
-              <ActionIcon
-                color='dark.4'
-                onClick={() => {
-                  setEdit(!edit)
-                  form.setValues({ selectedCoupon: row })
-                }}
-              >
+              <ActionIcon color='dark.4' onClick={onEditRow}>
                 {edit ? <IconX /> : <EditIcon />}
               </ActionIcon>
             </Flex>

@@ -243,7 +243,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_APPREAR_ATTRIBUTE_OPTION: {
       const { index, data } = payload
-      // console.log(data, 'data....')
       attributes[index].appear = data
       return {
         ...state,

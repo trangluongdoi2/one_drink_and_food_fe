@@ -22,8 +22,8 @@ export const defaultCoupon = {
 }
 
 type TCouponForm = {
-  selectedCoupon: TCouponType
-  couponData: TCouponType[]
+  selectedDataRow: Record<string, any>
+  dataForm: Array<Record<string, any>>
 }
 
 export const [CouponFormProvider, useCouponFormContext, useCouponForm] = createFormContext<TCouponForm>()

@@ -22,7 +22,7 @@ const getPageTotal = ({ total, rowPerPage }: { total: number; rowPerPage: number
 
 export const useGetRowPerPage = <T>({ data, rowPerPage }: UseGetRowPerPageProps<T>) => {
   const [page, onChange] = useState(1)
-  const [slicedData, setSlicedData] = useState(data.slice(0, rowPerPage))
+  const [slicedData, setSlicedData] = useState(data.length ? data.slice(0, rowPerPage) : [])
   const totalItems = getPageTotal({ total: data.length, rowPerPage: rowPerPage })
 
   const pagination = usePagination({ total: totalItems, page, onChange })

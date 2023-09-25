@@ -1,13 +1,16 @@
 import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
 import { DeleteIcon, ActiveDeleteIcon } from '@/assets/icon'
-import { useFetchOrder } from '@/pages/order/services/useFetchOrder'
-import OrderTable from '../../components/orderTable'
+import OrderTable from '../../components/OrderTable'
 import CustomModal from '@/components/modal'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
 import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { v4 as uuidv4 } from 'uuid'
+import { OrderFormProvider, defaultOrder, useOrderForm } from '../../form'
+import { useEffect } from 'react'
+import { useGetOrder } from '../../services/hook'
+import ScreenLoader from '@/components/screenLoader'
 
 const id = uuidv4()
 
@@ -81,9 +84,15 @@ interface OrderListProps {
 }
 
 const OrderList = ({ title, query }: OrderListProps) => {
-  const { loading, orderData } = useFetchOrder({ key: 'status', params: query })
+  const { data, loading } = useGetOrder({ key: 'status', params: query })
   const { createWithCustomKey, deleteById } = FirebaseService
 
+  const form = useOrderForm({
+    initialValues: {
+      selectedDataRow: defaultOrder,
+      dataForm: []
+    }
+  })
   const { selectedRow, dispatch } = useOrderContext()
   const isEmpty = selectedRow.length === 0
 
@@ -113,6 +122,8 @@ const OrderList = ({ title, query }: OrderListProps) => {
     dispatch(setSelectedRow([]))
   }
 
+  if (loading) return <ScreenLoader visible={loading} />
+
   return (
     <Paper p={40} sx={(theme) => ({ backgroundColor: theme.colors.dark[0] })}>
       <Stack spacing={20}>
@@ -126,26 +137,11 @@ const OrderList = ({ title, query }: OrderListProps) => {
             </ActionIcon>
           </Flex>
         </Flex>
-
-        {loading ? (
+        <OrderFormProvider form={form}>
           <Paper p={40} radius={10} shadow='md'>
-            <Center>
-              <Loader variant='dots' />
-            </Center>
+            <OrderTable data={data ?? []} />
           </Paper>
-        ) : (
-          <Paper p={40} radius={10} shadow='md'>
-            {orderData && orderData.length > 0 ? (
-              <OrderTable data={orderData} />
-            ) : (
-              <Center>
-                <Stack justify='center'>
-                  <Text align='center'>Danh sách khách hàng trống</Text>
-                </Stack>
-              </Center>
-            )}
-          </Paper>
-        )}
+        </OrderFormProvider>
       </Stack>
     </Paper>
   )

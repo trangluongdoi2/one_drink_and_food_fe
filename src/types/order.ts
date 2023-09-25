@@ -22,3 +22,7 @@ export interface OrderProps {
   avatar: string
   receivedDate: string
 }
+
+export interface TOrderType extends OrderProps {
+  _id: string
+}
