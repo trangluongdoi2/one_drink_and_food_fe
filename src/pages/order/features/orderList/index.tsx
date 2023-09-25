@@ -89,8 +89,8 @@ const OrderList = ({ title, query }: OrderListProps) => {
 
   const form = useOrderForm({
     initialValues: {
-      selectedOrder: defaultOrder,
-      orderData: []
+      selectedDataRow: defaultOrder,
+      dataForm: []
     }
   })
   const { selectedRow, dispatch } = useOrderContext()
@@ -118,8 +118,8 @@ const OrderList = ({ title, query }: OrderListProps) => {
     })
 
   const handleDeleteOrder = (list: string[]) => {
-    // list.forEach((item) => deleteById(FIREBASE_COLLECTION.ORDERS, item))
-    // dispatch(setSelectedRow([]))
+    list.forEach((item) => deleteById(FIREBASE_COLLECTION.ORDERS, item))
+    dispatch(setSelectedRow([]))
   }
 
   if (loading) return <ScreenLoader visible={loading} />
@@ -138,15 +138,9 @@ const OrderList = ({ title, query }: OrderListProps) => {
           </Flex>
         </Flex>
         <OrderFormProvider form={form}>
-          <form
-            onSubmit={form.onSubmit(() => {
-              console.log('submit...')
-            })}
-          >
-            <Paper p={40} radius={10} shadow='md'>
-              <OrderTable data={data ?? []} />
-            </Paper>
-          </form>
+          <Paper p={40} radius={10} shadow='md'>
+            <OrderTable data={data ?? []} />
+          </Paper>
         </OrderFormProvider>
       </Stack>
     </Paper>

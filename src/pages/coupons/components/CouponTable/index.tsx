@@ -18,14 +18,14 @@ type TCouponTableProps = {
 const CouponTable: FC<TCouponTableProps> = ({ data }) => {
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const form = useCouponFormContext()
-  const { selectedCoupon, couponData } = form.values
+  const { selectedDataRow, dataForm } = form.values
 
   const handleSubmitChange = async () => {
-    const newArr = couponData.map((data) => (data._id === selectedCoupon._id ? { ...selectedCoupon } : data))
+    const newArr = dataForm.map((data) => (data._id === selectedDataRow._id ? { ...selectedDataRow } : data))
 
-    form.setValues({ couponData: newArr })
+    form.setValues({ dataForm: newArr })
     try {
-      await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedCoupon, selectedCoupon._id)
+      await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedDataRow, selectedDataRow._id)
       notify({ message: 'Thông tin đơn hàng đã được cập nhật' })
     } catch (err) {
       console.error(err)
@@ -33,7 +33,7 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
   }
 
   const handleChangeInput = (key: keyof TCouponType, value: string) => {
-    form.setValues({ selectedCoupon: { ...selectedCoupon, [key]: value } })
+    form.setValues({ selectedDataRow: { ...selectedDataRow, [key]: value } })
   }
 
   const columns: TColumnsProps[] = [
@@ -125,38 +125,17 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
   ]
 
   useEffect(() => {
-    const dataTest = [
-      {
-        _id: '',
-        code: '',
-        title: '',
-        name: '',
-        description: '',
-        type: 'fixed',
-        value: 0,
-        productIds: [],
-        maxUses: 0,
-        mainFunctions: [],
-        usesCount: 0,
-        usersUsed: [''],
-        maxUsesPerUser: 0,
-        minOrderValue: 0,
-        isActive: false,
-        isNoLimit: false,
-        appliesTo: 'all'
-      }
-    ]
-    // @ts-ignore
-    form.setValues({ couponData: dataTest })
+    form.setValues({ dataForm: data })
   }, [data])
 
   return (
     <Table
-      data={couponData}
+      data={dataForm}
       columns={columns}
       searchKey={'code'}
-      onSubmitChange={handleSubmitChange}
       selectedRows={selectedRows}
+      form={form}
+      onSubmitChange={handleSubmitChange}
       onSelectRows={setSelectedRows}
     />
   )

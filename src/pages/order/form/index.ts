@@ -13,8 +13,8 @@ export const defaultOrder = {
 }
 
 type TOrderForm = {
-  selectedOrder: TOrderType
-  orderData: TOrderType[]
+  selectedDataRow: Record<string, any>
+  dataForm: Array<Record<string, any>>
 }
 
 export const [OrderFormProvider, useOrderFormContext, useOrderForm] = createFormContext<TOrderForm>()

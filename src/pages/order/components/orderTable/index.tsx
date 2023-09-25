@@ -15,16 +15,16 @@ interface TOrderTableProps {
 const OrderTable: FC<TOrderTableProps> = ({ data }) => {
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const form = useOrderFormContext()
-  const { selectedOrder, orderData } = form.values
+  const { selectedDataRow, dataForm } = form.values
 
   const handleSubmitChange = async () => {
-    const newArr = orderData.map((data: any) => (data._id === selectedOrder._id ? { ...selectedOrder } : data))
+    const newArr = dataForm.map((data: any) => (data._id === selectedDataRow._id ? { ...selectedDataRow } : data))
 
-    form.setValues({ orderData: newArr })
+    form.setValues({ dataForm: newArr })
   }
 
   const handleChangeInput = (key: keyof TOrderType, value: string) => {
-    form.setValues({ selectedOrder: { ...selectedOrder, [key]: value } })
+    form.setValues({ selectedDataRow: { ...selectedDataRow, [key]: value } })
   }
 
   const columns: TColumnsProps[] = [
@@ -108,33 +108,17 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
   ]
 
   useEffect(() => {
-    const dataTest = [
-      {
-        _id: '',
-        address: '',
-        phone: '',
-        status: ORDER_STATUS.PREPARING,
-        fireBaseId: '',
-        recipientName: '',
-        avatar: '',
-        receivedDate: ''
-      }
-    ]
-    form.setValues({ orderData: dataTest })
+    form.setValues({ dataForm: data })
   }, [data])
-
-  useEffect(() => {
-    console.log(selectedOrder, orderData, 'selectedOrder, orderData....')
-    console.log(form.getInputProps('orderData'), 'order get input')
-  }, [])
 
   return (
     <Table
-      data={orderData}
+      data={data}
       columns={columns}
       searchKey={'address'}
-      onSubmitChange={handleSubmitChange}
       selectedRows={selectedRows}
+      form={form}
+      onSubmitChange={handleSubmitChange}
       onSelectRows={setSelectedRows}
     />
   )
