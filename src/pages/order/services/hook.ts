@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { QueryType } from '@/types/fireStore'
 
-export const useFetchOrder = ({ key, params }: QueryType) => {
+export const useGetOrder = ({ key, params }: QueryType) => {
   const { getAll, getAllWithQuery } = FirebaseService
-  const [orderData, setOrderData] = useState<TOrderType[]>()
+  const [orderData, setOrderData] = useState<TOrderType[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<any>()
   const { pathname } = useLocation()
 
-  const fetchOrderData = async () => {
+  const useGetOrderData = async () => {
     setLoading(true)
     setError('')
     try {
@@ -28,9 +28,8 @@ export const useFetchOrder = ({ key, params }: QueryType) => {
   }
 
   useEffect(() => {
-    fetchOrderData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useGetOrderData()
   }, [key, pathname])
 
-  return { loading, orderData, error }
+  return { loading, data: orderData, error }
 }

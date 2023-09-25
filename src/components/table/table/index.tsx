@@ -30,7 +30,7 @@ const Table = ({
 }: TTableProps) => {
   const [searchValue, setSearch] = useState('')
 
-  const { totalItems, active, onChange, slicedData } = useGetRowPerPage<any[]>({
+  const { totalItems, active, slicedData, onChange } = useGetRowPerPage<any[]>({
     data,
     rowPerPage: rowPerPage
   })
@@ -79,11 +79,9 @@ const Table = ({
             ))
           ) : (
             <Center h={200}>
-              <td>
-                <Text weight={500} align='center'>
-                  Danh sách khách hàng trống
-                </Text>
-              </td>
+              <Text weight={500} align='center'>
+                Danh sách trống
+              </Text>
             </Center>
           )}
         </Stack>

@@ -125,7 +125,29 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
   ]
 
   useEffect(() => {
-    form.setValues({ couponData: data })
+    const dataTest = [
+      {
+        _id: '',
+        code: '',
+        title: '',
+        name: '',
+        description: '',
+        type: 'fixed',
+        value: 0,
+        productIds: [],
+        maxUses: 0,
+        mainFunctions: [],
+        usesCount: 0,
+        usersUsed: [''],
+        maxUsesPerUser: 0,
+        minOrderValue: 0,
+        isActive: false,
+        isNoLimit: false,
+        appliesTo: 'all'
+      }
+    ]
+    // @ts-ignore
+    form.setValues({ couponData: dataTest })
   }, [data])
 
   return (
