@@ -6,11 +6,7 @@ import { CouponFormProvider, defaultCoupon, useCouponForm } from '../../form'
 import { useGetCoupon } from '../../services/hook'
 
 const CouponList = () => {
-  const { data, isLoading } = useGetCoupon({
-    page: 1,
-    limit: 10,
-    sort: 'title'
-  })
+  const { data, isLoading } = useGetCoupon()
   const form = useCouponForm({
     initialValues: {
       selectedDataRow: defaultCoupon,

@@ -25,6 +25,7 @@ type TCouponType = {
   isActive: boolean
   isNoLimit: boolean
   appliesTo: TAppliesTo
+  createdAt?: string
 }
 
 type TGetCouponParams = TPaginationParams & {
