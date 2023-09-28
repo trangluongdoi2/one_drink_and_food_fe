@@ -4,6 +4,8 @@ import { ProductState, ProductTypeAction } from '@/reducer/product/type'
 import { productReducer, initinalState as initialProductState } from '@/reducer/product'
 import ProductsApi from '@/pages/products/api/product'
 import { useParams } from 'react-router-dom'
+import { editProductData } from '@/pages/products/composables/useStaticData'
+// const mockData =
 
 interface ProductContextDefault extends ProductState {
   dispatch: React.Dispatch<ProductTypeAction>
@@ -25,21 +27,12 @@ const ProductContextProvider = ({ children, mode }: IContextProviderProps) => {
   }
 
   const { id } = useParams()
-  const productApi = new ProductsApi()
+  console.log(editProductData, 'editProductData...')
+  // const productApi = new ProductsApi()
   // @ts-ignore
-  const [state, dispatch] = useReducer(productReducer, initialProductState)
+  const [state, dispatch] = useReducer(productReducer, editProductData)
   const value = useMemo(() => ({ ...state, dispatch }), [state])
   return <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
-  // productApi.getAllProducts().then((result: any) => {
-  //   console.log(result, 'result...')
-  // })
-  // productApi.getProductDetails(id as string).then((result: any) => {
-  //   // @ts-ignore
-  //   const [state, dispatch] = useReducer(productReducer, result)
-  //   const value = useMemo(() => ({ ...state, dispatch }), [state])
-  //   return <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
-  // })
-  // @ts-ignore
 }
 
 export const useProductContext = () => useContext(ProductContext)

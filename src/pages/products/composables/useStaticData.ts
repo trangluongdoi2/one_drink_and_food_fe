@@ -207,4 +207,67 @@ const productAttribue = [
   }
 ]
 
-export { test, productAddTest, testName, productAttribue }
+const editProductData = {
+  _id: '6500448b9967beb72af43a7f',
+  productName: 'Sản phẩm 1',
+  auxiliaryName: 'Tên phụ trợ 1',
+  isVAT: true,
+  productMainIngredients: 'Ổi',
+  productThumbs: [
+    {
+      name: 'thumb1',
+      url: 'https://one-drink-food.s3.ap-southeast-1.amazonaws.com/d571492a-f79c-4bad-ba96-96d84ea4976a-thumb1',
+      key: 'd571492a-f79c-4bad-ba96-96d84ea4976a-thumb1'
+    },
+    {
+      name: 'thumb2',
+      url: null,
+      key: null
+    },
+    {
+      name: 'thumb3',
+      url: null,
+      key: null
+    },
+    {
+      name: 'thumb4',
+      url: null,
+      key: null
+    },
+    {
+      name: 'thumb5',
+      url: null,
+      key: null
+    },
+    {
+      name: 'thumb6',
+      url: null,
+      key: null
+    },
+    {
+      name: 'thumb7',
+      url: null,
+      key: null
+    },
+    {
+      name: 'thumb8',
+      url: null,
+      key: null
+    }
+  ],
+  motionTime: 1000,
+  mainFunctions: ['Function1', 'Function2', 'Function3'],
+  productDescription: 'dsadsadsadsadasd',
+  productPrice: 1,
+  productQuantity: 1,
+  productRatingsAverage: 4.5,
+  category: '650034ac8ff5743043cad6d7',
+  note: '',
+  createdAt: '2023-09-12T10:59:24.374Z',
+  updatedAt: '2023-09-12T10:59:25.748Z',
+  productSlug: 'san-pham-1',
+  introduction: 'Gioi thieu ehehhe',
+  __v: 0
+}
+
+export { test, productAddTest, testName, productAttribue, editProductData }

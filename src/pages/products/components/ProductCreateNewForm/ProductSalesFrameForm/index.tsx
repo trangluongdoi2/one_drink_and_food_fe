@@ -26,7 +26,7 @@ export const ProductSalesFrameForm = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const { dispatch, attributes } = useProductContext()
-  const [dragDropAttributesList, handlers] = useListState(attributes)
+  const [dragDropAttributesList, handlers] = useListState(attributes ?? [])
 
   const onAddAttributeOption = (isOption = true) => {
     const length = attributes.length
@@ -78,27 +78,28 @@ export const ProductSalesFrameForm = () => {
         setEnabled={() => {}}
       />
       <DragDropListHandler onDragEnd={onDragEnd}>
-        {dragDropAttributesList.map((attribute: TProductCreateNewAtribute, index: number) => (
-          <Draggable key={attribute.value} index={index} draggableId={attribute.value}>
-            {(provided: any, snapshot: any) => (
-              <div ref={provided.innerRef} {...provided.draggableProps}>
-                <ProductOptionAttribute
-                  key={index}
-                  defaultPlaceholder={t('fill_selected_information')}
-                  attribute={attribute}
-                  updateAttributeOptions={(data: TProductAttributeOption[]) =>
-                    updateAttributeOptions({ attrVal: attribute.value, options: data })
-                  }
-                  updateAttributeName={(data: string) => dispatch(updateProductAttributeOptionName({ data, index }))}
-                  removeAttributeOption={(data: string) => dispatch(removeAttributeOption(data))}
-                  setManyChoices={(data: boolean) => dispatch(setManyChoices({ data, index }))}
-                  setEnabled={(data: boolean) => dispatch(setAppearAttributeOption({ data, index }))}
-                  blockDraggable={<DragDropBlock provided={provided} />}
-                />
-              </div>
-            )}
-          </Draggable>
-        ))}
+        {dragDropAttributesList?.length &&
+          dragDropAttributesList.map((attribute: TProductCreateNewAtribute, index: number) => (
+            <Draggable key={attribute.value} index={index} draggableId={attribute.value}>
+              {(provided: any, snapshot: any) => (
+                <div ref={provided.innerRef} {...provided.draggableProps}>
+                  <ProductOptionAttribute
+                    key={index}
+                    defaultPlaceholder={t('fill_selected_information')}
+                    attribute={attribute}
+                    updateAttributeOptions={(data: TProductAttributeOption[]) =>
+                      updateAttributeOptions({ attrVal: attribute.value, options: data })
+                    }
+                    updateAttributeName={(data: string) => dispatch(updateProductAttributeOptionName({ data, index }))}
+                    removeAttributeOption={(data: string) => dispatch(removeAttributeOption(data))}
+                    setManyChoices={(data: boolean) => dispatch(setManyChoices({ data, index }))}
+                    setEnabled={(data: boolean) => dispatch(setAppearAttributeOption({ data, index }))}
+                    blockDraggable={<DragDropBlock provided={provided} />}
+                  />
+                </div>
+              )}
+            </Draggable>
+          ))}
       </DragDropListHandler>
       <ActionIcon className={`title-add ${classes['button-add']}`} onClick={() => onAddAttributeOption(true)}>
         <Text>+{t('add_option_frame')}</Text>
