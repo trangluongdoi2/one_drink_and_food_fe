@@ -15,7 +15,7 @@ const CouponList: FC<TCouponList> = ({ data, loading }) => {
   const navigate = useNavigate()
   return (
     <ScrollArea h='70vh' type='always' offsetScrollbars dir='ltr'>
-      <SimpleGrid cols={2} spacing={20} w='75%' p={40}>
+      <SimpleGrid cols={2} spacing={20} w='100%' p={40}>
         <AddCouponTag />
         {loading && <CouponSkeleton visible={loading || !data} />}
         {data?.map((item) => (

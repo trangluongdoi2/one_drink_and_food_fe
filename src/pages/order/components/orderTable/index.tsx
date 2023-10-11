@@ -2,7 +2,7 @@ import { DefaultAvatar } from '@/assets/icon'
 import Table from '@/components/table/table'
 import RowInput from '@/components/table/table/rowInput'
 import { TColumnsProps } from '@/components/table/table/type'
-import { ORDER_STATUS, TOrderType } from '@/types/order'
+import { TOrderType } from '@/types/order'
 import { prettyDate } from '@/utils/convertDate'
 import { Avatar } from '@mantine/core'
 import { FC, useEffect, useState } from 'react'
@@ -117,9 +117,9 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
       columns={columns}
       searchKey={'address'}
       selectedRows={selectedRows}
-      form={form}
       onSubmitChange={handleSubmitChange}
       onSelectRows={setSelectedRows}
+      onEdit={(value: TOrderType) => form.setValues({ selectedDataRow: value })}
     />
   )
 }

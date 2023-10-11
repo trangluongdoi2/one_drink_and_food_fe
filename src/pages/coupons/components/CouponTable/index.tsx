@@ -2,39 +2,54 @@ import { DefaultAvatar, OneActiveIcon } from '@/assets/icon'
 import Table from '@/components/table/table'
 import RowInput from '@/components/table/table/rowInput'
 import { TColumnsProps } from '@/components/table/table/type'
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
-import { FirebaseService } from '@/firebase/handler'
 import { TCouponType } from '@/types/coupon'
-import { prettyDate } from '@/utils/convertDate'
+import { convertFormat, prettyDate } from '@/utils/convertDate'
 import { notify } from '@/utils/notification'
 import { Avatar } from '@mantine/core'
+import dayjs from 'dayjs'
 import { FC, useEffect, useState } from 'react'
-import { useCouponFormContext } from '../../form'
+import { useTranslation } from 'react-i18next'
+import { defaultCoupon, useCouponFormContext } from '../../form'
+import { useUpdateCoupon } from '../../services/hook'
 
 type TCouponTableProps = {
   data: TCouponType[]
+  loading?: boolean
 }
 
-const CouponTable: FC<TCouponTableProps> = ({ data }) => {
+const CouponTable: FC<TCouponTableProps> = ({ data, loading = false }) => {
+  const { t } = useTranslation()
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const form = useCouponFormContext()
   const { selectedDataRow, dataForm } = form.values
+  const updateCouponMutation = useUpdateCoupon()
 
   const handleSubmitChange = async () => {
-    const newArr = dataForm.map((data) => (data._id === selectedDataRow._id ? { ...selectedDataRow } : data))
-
-    form.setValues({ dataForm: newArr })
-    try {
-      await FirebaseService.updateById(FIREBASE_COLLECTION.DISCOUNT, selectedDataRow, selectedDataRow._id)
-      notify({ message: 'Thông tin đơn hàng đã được cập nhật' })
-    } catch (err) {
-      console.error(err)
+    const dataSend = {
+      ...selectedDataRow,
+      startDate: dayjs(convertFormat(selectedDataRow.startDate)).toISOString(),
+      endDate: dayjs(convertFormat(selectedDataRow.endDate)).toISOString(),
+      usesCount: Number(selectedDataRow.usesCount),
+      maxUsesPerUser: Number(selectedDataRow.maxUsesPerUser)
     }
+
+    await updateCouponMutation.mutateAsync(
+      { params: dataSend, id: selectedDataRow._id ?? '' },
+      {
+        onSuccess: () => {
+          notify({ message: t('message.coupon.updateSuccess') })
+          form.setValues({ selectedDataRow: defaultCoupon })
+        },
+        onError: () => notify({ message: t('message.coupon.updateFailed') })
+      }
+    )
   }
 
   const handleChangeInput = (key: keyof TCouponType, value: string) => {
     form.setValues({ selectedDataRow: { ...selectedDataRow, [key]: value } })
   }
+
+  console.log(form.values.selectedDataRow)
 
   const columns: TColumnsProps[] = [
     {
@@ -134,9 +149,10 @@ const CouponTable: FC<TCouponTableProps> = ({ data }) => {
       columns={columns}
       searchKey={'code'}
       selectedRows={selectedRows}
-      form={form}
       onSubmitChange={handleSubmitChange}
       onSelectRows={setSelectedRows}
+      onEdit={(value: TCouponType) => form.setValues({ selectedDataRow: value })}
+      loading={loading}
     />
   )
 }

@@ -1,3 +1,5 @@
+import { Gender } from '@/reducer/customer/type'
+
 export enum MEMBERSHIP {
   SILVER = 'silver',
   GOLD = 'gold',
@@ -41,4 +43,33 @@ export interface UserListHeaderProps {
     value: keyof SortUserProps
     position?: 'left' | 'center' | 'right'
   }[]
+}
+
+type TAddressList = {
+  addressId: string
+  addressType: string
+  addressName: string
+  address: string
+  receiver: string
+  receiverMobilePhoneNumber: string
+  building: string
+  note: string
+}
+
+export type TUser = {
+  firstName: string
+  lastName: string
+  email: string
+  mobilePhoneNumber: string
+  gender?: Gender
+  birth: string
+  referCode: string
+  defaultIdHomeAddress: string
+  defaultIdCompanyAddress: string
+  listAddress?: TAddressList[]
+}
+
+export type TUserForm = {
+  selectedDataRow: TUser
+  dataForm: []
 }

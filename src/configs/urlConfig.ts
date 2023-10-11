@@ -23,3 +23,5 @@ export const CATEGORY_CREATE_URL = `${API_URL}/categories`
 export const CATEGORY_FIND_ALL_URL = `${API_URL}/categories`
 
 export const COUPON_URL = `${API_URL}/discounts`
+
+export const USER_ADMIN_URL = `${API_URL}/admins/users`

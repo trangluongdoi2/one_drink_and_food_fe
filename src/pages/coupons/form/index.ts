@@ -22,7 +22,7 @@ export const defaultCoupon = {
 }
 
 type TCouponForm = {
-  selectedDataRow: Record<string, any>
+  selectedDataRow: TCouponType
   dataForm: Array<Record<string, any>>
 }
 

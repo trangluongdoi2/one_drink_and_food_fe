@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
-import { Center, Stack, Text } from '@mantine/core'
-import { sortData } from '@/utils/sortData'
-import { SortUserProps, UserProps } from '@/types/user'
-import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
 import { SearchTable, TableHeader, TablePagination } from '@/components/table'
-import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 import { userHeader } from '@/constants/header'
-import { setSelectedRow } from '@/reducer/customer/action'
+import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
+import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
 import { CustomerRow } from '@/pages/users/components/CustomerRows'
+import { setSelectedRow } from '@/reducer/customer/action'
+import { SortUserProps, UserProps } from '@/types/user'
+import { sortData } from '@/utils/sortData'
+import { Center, Stack, Text } from '@mantine/core'
+import { useEffect, useState } from 'react'
 
 interface CustomTableProps {
   data: UserProps[]

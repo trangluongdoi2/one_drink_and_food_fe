@@ -1,5 +1,5 @@
 import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
-import { Center, Stack, Text } from '@mantine/core'
+import { Center, Loader, Stack, Text } from '@mantine/core'
 import { SetStateAction, useEffect, useState } from 'react'
 import { TablePagination } from '../pagination'
 import { SearchTable } from '../search'
@@ -7,7 +7,6 @@ import { SearchTable } from '../search'
 import { Header } from './header'
 import { Row } from './row/Row'
 import { TColumnsProps } from './type'
-import { UseFormReturnType } from '@mantine/form'
 
 export type TTableProps = {
   data: any[]
@@ -16,9 +15,10 @@ export type TTableProps = {
   rowPerPage?: number
   selectedRows: string[]
   searchKey: string
-  form: UseFormReturnType<any, (values: any) => any>
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
   onSubmitChange: () => void
+  onEdit?: (value: any) => void
+  loading?: boolean
 }
 
 const Table = ({
@@ -27,9 +27,10 @@ const Table = ({
   rowPerPage = 10,
   selectedRows,
   searchKey,
-  form,
   onSelectRows,
-  onSubmitChange
+  onSubmitChange,
+  onEdit,
+  loading = false
 }: TTableProps) => {
   const [searchValue, setSearch] = useState('')
 
@@ -53,13 +54,16 @@ const Table = ({
     !isSelectedAll ? onSelectRows(data.map((item) => item.fireBaseId)) : onSelectRows([])
   }
 
-  const onSetSelectedRow = (row: Record<string, any>) => {
-    form.setValues({ selectedDataRow: row })
-  }
-
   useEffect(() => {
     setSortedData(slicedData)
   }, [slicedData])
+
+  if (loading || !data || !data.length)
+    return (
+      <Center>
+        <Loader variant='dots' color='dark' />
+      </Center>
+    )
 
   return (
     <>
@@ -73,7 +77,13 @@ const Table = ({
         <Header headerContent={columns} />
 
         <Stack spacing={15}>
-          {sortedData && sortedData.length > 0 ? (
+          {!sortedData.length ? (
+            <Center h={200}>
+              <Text weight={500} align='center'>
+                Danh sách trống
+              </Text>
+            </Center>
+          ) : (
             sortedData.map((row: any, index) => (
               <Row
                 row={row}
@@ -82,15 +92,9 @@ const Table = ({
                 selectedRows={selectedRows}
                 onSelectRows={onSelectRows}
                 onSubmitChange={onSubmitChange}
-                setSelectedRow={onSetSelectedRow}
+                onEdit={onEdit}
               />
             ))
-          ) : (
-            <Center h={200}>
-              <Text weight={500} align='center'>
-                Danh sách trống
-              </Text>
-            </Center>
           )}
         </Stack>
       </Stack>
