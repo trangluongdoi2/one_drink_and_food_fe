@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useStyles } from './CustomInput.styles'
 import { TypeInput } from './TypeInput'
 
-export interface CustomInputProps extends InputProps {
+export interface CustomInputProps extends Omit<InputProps, 'classNames'> {
   title?: string | null
   isImperative?: boolean
   isActiveInput?: boolean
