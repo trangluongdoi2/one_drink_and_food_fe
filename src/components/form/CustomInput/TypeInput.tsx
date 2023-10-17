@@ -10,7 +10,7 @@ type TypeInputProps = Omit<CustomInputProps, 'moreOptions' | 'title' | 'placehol
 export const TypeInput: FC<TypeInputProps> = ({
   typeInput,
   isActiveInput,
-  classInput,
+  classNames,
   placeholder,
   value,
   onChange,
@@ -40,7 +40,7 @@ export const TypeInput: FC<TypeInputProps> = ({
       return (
         <Textarea
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputArea} ${classInput}` }}
+          classNames={{ input: `${classes.input} ${classes.inputArea} ${classNames}` }}
           disabled={!isActiveInput}
           value={value}
           onChange={({ currentTarget }) => onChange(currentTarget.value)}
@@ -51,7 +51,7 @@ export const TypeInput: FC<TypeInputProps> = ({
       return (
         <TextInput
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputText} ${classInput}` }}
+          classNames={{ input: `${classes.input} ${classes.inputText} ${classNames}` }}
           disabled={!isActiveInput}
           value={value}
           defaultValue={value}

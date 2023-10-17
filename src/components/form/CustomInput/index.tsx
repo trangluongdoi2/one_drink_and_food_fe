@@ -12,7 +12,7 @@ export interface CustomInputProps extends InputProps {
   typeInput?: string
   hiddenToggleIcon?: boolean
   moreOptions?: React.ReactNode
-  classInput?: string
+  classNames?: string
   value: string | number
   onChange: (value: string | number) => void
   placeholder?: string | null
@@ -26,7 +26,7 @@ export const CustomInput: FC<CustomInputProps> = ({
   isImperative = false,
   hiddenToggleIcon = false,
   moreOptions,
-  classInput,
+  classNames,
   value,
   onChange,
   error,
@@ -50,7 +50,7 @@ export const CustomInput: FC<CustomInputProps> = ({
       <TypeInput
         typeInput={typeInput}
         isActiveInput={isActive}
-        classInput={classInput}
+        classNames={classNames}
         isImperative={isImperative}
         placeholder={placeholder ?? ''}
         value={value}

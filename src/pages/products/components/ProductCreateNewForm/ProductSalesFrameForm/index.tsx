@@ -29,7 +29,7 @@ export const ProductSalesFrameForm = () => {
   const [dragDropAttributesList, handlers] = useListState(attributes ?? [])
 
   const onAddAttributeOption = (isOption = true) => {
-    const length = attributes.length
+    const length = attributes?.length ?? 0
     const pureOptionContent = isOption
       ? {
           text: '',
@@ -73,6 +73,7 @@ export const ProductSalesFrameForm = () => {
       <ProductMainAttribute
         title={'Thành phần chính'}
         defaultPlaceholder={t('fill_ingredient_product_content')}
+        appear={true}
         updateContentValue={(data: string | number) => updateMainIngredients({ attrVal: 'mainIngredients', data })}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         setEnabled={() => {}}

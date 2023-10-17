@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query'
 import { ExtractFnReturnType, MutationConfig, QueryConfig, queryClient } from '@/configs/react-query'
 import ProductsApi from '../api/product'
-import { TProductCreateNew } from '../type'
+import { TProductCreateNew, TProductUpdate } from '../type'
 
 const productApi = new ProductsApi()
 
@@ -11,6 +11,7 @@ type QueryFnType =
   | typeof productApi.create
   | typeof productApi.getProductByCategoryId
   | typeof productApi.getProductDetails
+  | typeof productApi.update
 
 type MutationFnType = QueryFnType
 
@@ -57,6 +58,16 @@ export const useProductCreateMutation = ({ config }: TProductMutationConfig = {}
     // },
     ...config,
     mutationFn: (input: TProductCreateNew) => productApi.create(input)
+  })
+}
+
+export const useProductUpdateMutation = ({ config }: TProductMutationConfig = {}) => {
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['category-update'] })
+    },
+    ...config,
+    mutationFn: (input: TProductUpdate) => productApi.update(input)
   })
 }
 

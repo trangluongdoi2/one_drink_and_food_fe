@@ -16,6 +16,7 @@ import { useProductCreateMutation, useUploadProductThumbsMutation } from '../../
 import { useEffect, useState } from 'react'
 import AuthApi from '@/features/auth'
 import { ProductType } from '@/reducer/product/type'
+import { setProductDirty } from '@/reducer/product/action'
 
 type Props = {
   type: string
@@ -26,6 +27,7 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const productStateData = useProductContext()
+  // const { dispatch } = useProductContext();
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
   const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
@@ -61,21 +63,27 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     isSuccess: isSuccessProductUploadThumbs
   } = useUploadProductThumbsMutation()
 
-  const onSaveProduct = async () => {
-    setLoading(true)
-    setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
-    const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
-      productType: type as any,
-      productSubType: subType
-    })
-    const authApi = new AuthApi()
-    await authApi.loginAdmin({ username: 'admin', password: '1' })
-    mutateProductCreateNew(input)
+  const onCreateProduct = async () => {
+    productStateData.dispatch(setProductDirty(false))
+    // if (productStateData.dirty) {
+    //   console.log('Case 1????')
+    //   return
+    // }
+    // setLoading(true)
+    // setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
+    // const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
+    //   productType: type as any,
+    //   productSubType: subType
+    // })
+    // const authApi = new AuthApi()
+    // await authApi.loginAdmin({ username: 'admin', password: '1' })
+    // mutateProductCreateNew(input)
+    // productStateData.dispatch(setProductDirty(false))
   }
 
   const checkValidButton = () => {
     const { productName, auxiliaryName, productPrice, productQuantity } = productStateData
-    return !!productName && !!auxiliaryName && !!productPrice && !!productQuantity
+    return !!productName && !!productPrice && !!productQuantity
   }
 
   useEffect(() => {
@@ -118,12 +126,13 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
             <ProductPreview />
             <Button
               className={classes.container__button}
-              onClick={onSaveProduct}
               disabled={!validButton}
               loading={loading}
+              onClick={onCreateProduct}
             >
               {t('create_new_product')}
             </Button>
+            {/* <Button onClick={test}>Test...</Button> */}
           </div>
         </Paper>
       </Stack>

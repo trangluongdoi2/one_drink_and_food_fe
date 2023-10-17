@@ -102,7 +102,6 @@ export const ProductOverviewNewForm = () => {
   }
 
   const updateMainFunctions = (data: string[]) => {
-    console.log()
     dispatch(setMainFunctions(data))
   }
 
@@ -167,7 +166,6 @@ export const ProductOverviewNewForm = () => {
         placeholder={t('fill_product_auxiliary_name')}
         value={auxiliaryName}
         field='auxiliaryName'
-        isImperative={true}
         updateInput={updateInput}
       />
       <AppInput

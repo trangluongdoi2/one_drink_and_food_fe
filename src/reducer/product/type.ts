@@ -8,9 +8,11 @@ export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
   tempPhotoThumbs?: File[]
   introduction?: ''
+  dirty?: boolean
 }
 
 export enum ProductType {
+  SET_PRODUCT_DIRTY = 'SET_PRODUCT_DIRTY',
   SET_PRODUCT_NAME = 'SET_PRODUCT_NAME',
   SET_AUXILIARY_NAME = 'SET_AUXILIARY_NAME',
   SET_PRODUCT_PRICE = 'SET_PRODUCT_PRICE',
@@ -41,10 +43,16 @@ export enum ProductType {
   UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO = 'UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO'
 }
 
+export interface SetProductDirty {
+  type: ProductType.SET_PRODUCT_DIRTY
+  payload: boolean
+}
+
 export interface SetProductName {
   type: ProductType.SET_PRODUCT_NAME
   payload: string
 }
+
 
 export interface SetAuxiliaryName {
   type: ProductType.SET_AUXILIARY_NAME
@@ -195,6 +203,7 @@ export interface UpdateInfoItemsInProductInfo {
 }
 
 export type ProductTypeAction =
+  | SetProductDirty
   | SetProductName
   | SetAuxiliaryName
   | SetProductPrice

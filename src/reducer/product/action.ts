@@ -5,12 +5,13 @@ import {
 } from '@/pages/products/type'
 import {
   ProductType,
+  SetProductDirty,
+  SetProductName,
   SetAuxiliaryName,
   SetContentProductInfo,
   SetEnableIncludeVATPrices,
   SetIntroductionContent,
   SetMotionPhotos,
-  SetProductName,
   SetPhotoUrls,
   SetPhotosProductInfo,
   SetPhotoThumbs,
@@ -31,6 +32,11 @@ import {
   UpdateInfoItemsInProductInfo,
   ReorderProductAttributesList
 } from './type'
+
+export const setProductDirty = (value: boolean): SetProductDirty => ({
+  type: ProductType.SET_PRODUCT_DIRTY,
+  payload: value
+})
 
 export const setProductName = (value: string): SetProductName => ({
   type: ProductType.SET_PRODUCT_NAME,

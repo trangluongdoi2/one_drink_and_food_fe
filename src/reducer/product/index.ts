@@ -24,7 +24,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'Ngọt vừa',
         price: 0
       }
     ]
@@ -37,7 +37,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'Ít đá',
         price: 0
       }
     ]
@@ -50,7 +50,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: '',
+        text: 'None',
         price: 0
       }
     ]
@@ -101,6 +101,7 @@ const pureProductThumbs: TProductThumbs[] = [
 ]
 
 export const initinalState: ProductState = {
+  // dirty: false,
   productName: '',
   productMainIngredients: 'Ổi',
   productThumbs: pureProductThumbs,
@@ -141,48 +142,61 @@ export const initinalState: ProductState = {
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
-  let attributes = clone(state.attributes)
-  const listInformation = clone(state.listInformation)
+  let attributes = clone(state.attributes ?? [])
+  const listInformation = clone(state.listInformation ?? [])
   switch (type) {
+    case ProductType.SET_PRODUCT_DIRTY:
+      return {
+        ...state,
+        dirty: payload
+      }
     case ProductType.SET_PRODUCT_NAME:
       return {
         ...state,
-        productName: payload
+        productName: payload,
+        dirty: true
       }
     case ProductType.SET_AUXILIARY_NAME:
       return {
         ...state,
-        auxiliaryName: payload
+        auxiliaryName: payload,
+        dirty: true
       }
     case ProductType.SET_PRODUCT_PRICE:
       return {
         ...state,
-        productPrice: Number(payload)
+        productPrice: Number(payload),
+        dirty: true
       }
     case ProductType.SET_PRODUCT_QUANTITY: {
       return {
         ...state,
-        productQuantity: Number(payload)
+        productQuantity: Number(payload),
+        dirty: true
       }
     }
     case ProductType.SET_INTRODUCTION:
       return {
         ...state,
-        introduction: payload
+        introduction: payload,
+        dirty: true
       }
     case ProductType.SET_MAIN_FUNCTIONS:
       return {
         ...state,
-        mainFunctions: payload
+        mainFunctions: payload,
+        dirty: true
       }
     case ProductType.SET_ENABLE_INCLUDE_VAT_PRICES:
       return {
         ...state,
-        isVAT: payload
+        isVAT: payload,
+        dirty: true
       }
     case ProductType.SET_PHOTO_URLS:
       return {
         ...state,
+        dirty: true,
         photos: {
           ...state.photos,
           filePaths: payload
@@ -191,6 +205,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     case ProductType.SET_PHOTO_THUMBS:
       return {
         ...state,
+        dirty: true,
         tempPhotoThumbs: payload
       }
     // case ProductType.SET_MOTION_PHOTOS:
@@ -205,6 +220,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     case ProductType.SET_PRODUCT_MAIN_INGREDIENTS:
       return {
         ...state,
+        dirty: true,
         productMainIngredients: payload.data
       }
     case ProductType.SET_PRODUCT_ATTRIBUTES: {
@@ -214,15 +230,15 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     }
     case ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST: {
-      console.log(JSON.parse(JSON.stringify(attributes)), 'attrs before')
       ;[attributes[payload.from], attributes[payload.to]] = [attributes[payload.to], attributes[payload.from]]
-      console.log(JSON.parse(JSON.stringify(attributes)), 'attrs after')
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     }
@@ -230,6 +246,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       attributes[payload.index].value = payload.data
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     case ProductType.SET_MANY_CHOICES: {
@@ -238,6 +255,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       attributes[index].atLeastOne = !data
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     }
@@ -246,6 +264,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       attributes[index].appear = data
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     }
@@ -253,6 +272,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       attributes = attributes.filter((attr: TProductCreateNewAtribute) => attr.value !== payload)
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     }
@@ -260,12 +280,14 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       attributes.push(payload)
       return {
         ...state,
+        dirty: true,
         attributes: [...attributes]
       }
     }
     case ProductType.ADD_PRODUCT_INFO_ITEM: {
       return {
         ...state,
+        dirty: true,
         listInformation: [...listInformation, payload]
       }
     }
@@ -273,6 +295,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       listInformation[payload.index].appear = payload.data
       return {
         ...state,
+        dirty: true,
         listInformation: [...listInformation]
       }
     }
@@ -280,6 +303,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       listInformation[payload.index].title = payload.data
       return {
         ...state,
+        dirty: true,
         listInformation: [...listInformation]
       }
     }
@@ -288,6 +312,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         listInformation.splice(payload, 1)
         return {
           ...state,
+          dirty: true,
           listInformation: [...listInformation]
         }
       }
@@ -297,6 +322,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       listInformation[payload.index].informationItems = payload.data
       return {
         ...state,
+        dirty: true,
         listInformation: [...listInformation]
       }
     }

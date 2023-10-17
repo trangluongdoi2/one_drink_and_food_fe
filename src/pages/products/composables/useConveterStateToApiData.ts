@@ -14,7 +14,8 @@ const removeAttributes = [
   'productType',
   'productRatingsAverage',
   'isVAT',
-  'introduction'
+  'introduction',
+  'dirty'
 ]
 
 export default async function useConveterStateToApiData(
@@ -26,6 +27,7 @@ export default async function useConveterStateToApiData(
     delete cloneInput[attr]
   })
   let categoryId = await categoryApi.findByProductType(options?.productType as any)
+  console.log(categoryId, 'categoryId...')
   if (!categoryId?.length) {
     categoryId = await categoryApi.create({
       name: options?.productSubType as string,

@@ -104,6 +104,8 @@ export interface TProductCreateNew {
   note: string
 }
 
+export type TProductUpdate = TProductCreateNew
+
 export interface TCategoryCreate {
   name: string
   order: number

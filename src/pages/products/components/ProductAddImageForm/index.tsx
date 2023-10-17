@@ -86,7 +86,7 @@ export const ProductAddImageForm = ({
     const newFiles = [...fileStores]
     newFilesPath[index] = createLocalUrl(event[0])
     newFiles[index] = event[0] as FileWithPath
-    setDragDropItems(newFilesPath)
+    // setDragDropItems(newFilesPath)
     setFileStores(newFiles)
   }
 

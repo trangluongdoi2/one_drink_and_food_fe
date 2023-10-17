@@ -1,21 +1,16 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
-import { v4 as uuidv4 } from 'uuid'
-import { clone } from '@/utils/utility'
+import { useLocation } from 'react-router-dom'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
+import AuthApi from '@/features/auth'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
-import { useStyles } from './index.styles'
-import { camelToSnakeCase } from '@/utils/string-utils'
-import { useLocation } from 'react-router-dom'
-import { TProductCreateNew } from '../../type'
-import ProductsApi from '../../api/product'
 import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
-import CategoryApi from '../../api/category'
-import { useProductCreateMutation, useUploadProductThumbsMutation } from '../../query/product'
-import { useEffect, useState } from 'react'
-import AuthApi from '@/features/auth'
-import { ProductType } from '@/reducer/product/type'
+import { camelToSnakeCase } from '@/utils/string-utils'
+import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
+import { useProductUpdateMutation, useUploadProductThumbsMutation } from '../../query/product'
+import { TProductUpdate } from '../../type'
+import { useStyles } from './index.styles'
 
 type Props = {
   type: string
@@ -51,26 +46,29 @@ export const ProductUpdate = ({ type, subType }: Props) => {
   ))
 
   const {
-    mutate: mutateProductCreateNew,
-    data: createdProduct,
-    isSuccess: isSuccessProductCreateNew
-  } = useProductCreateMutation()
+    mutate: mutateProductUpdate,
+    data: updatedProduct,
+    isSuccess: isSuccessProductUpdate
+  } = useProductUpdateMutation()
+
   const {
     mutate: mutateProductUploadThumbs,
     data: dataImageUpload,
     isSuccess: isSuccessProductUploadThumbs
   } = useUploadProductThumbsMutation()
 
-  const onSaveProduct = async () => {
+  const onUpdateProduct = async () => {
     setLoading(true)
     setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
-    const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
+    const input: TProductUpdate = await useConverterStateToApiData(productStateData, {
       productType: type as any,
       productSubType: subType
     })
     const authApi = new AuthApi()
     await authApi.loginAdmin({ username: 'admin', password: '1' })
-    mutateProductCreateNew(input)
+    setLoading(false)
+    // @ts-ignore
+    mutateProductUpdate(input)
   }
 
   const checkValidButton = () => {
@@ -88,23 +86,23 @@ export const ProductUpdate = ({ type, subType }: Props) => {
   ])
 
   useEffect(() => {
-    if (isSuccessProductCreateNew) {
+    if (isSuccessProductUpdate) {
       const formData = new FormData()
       if (tempPhotoStores?.length) {
         for (let i = 0; i < tempPhotoStores.length; i++) {
           formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
         }
       }
-      const productId = createdProduct._id
+      const productId = updatedProduct._id
       mutateProductUploadThumbs({ id: productId, thumbs: formData })
     }
-  }, [isSuccessProductCreateNew])
+  }, [isSuccessProductUpdate])
 
   useEffect(() => {
-    if (isSuccessProductCreateNew && isSuccessProductCreateNew) {
+    if (isSuccessProductUpdate && isSuccessProductUploadThumbs) {
       setLoading(false)
     }
-  }, [isSuccessProductCreateNew, isSuccessProductUploadThumbs])
+  }, [isSuccessProductUpdate, isSuccessProductUploadThumbs])
 
   return (
     <Paper className={classes.container}>
@@ -118,7 +116,7 @@ export const ProductUpdate = ({ type, subType }: Props) => {
             <ProductPreview />
             <Button
               className={classes.container__button}
-              onClick={onSaveProduct}
+              onClick={onUpdateProduct}
               disabled={!validButton}
               loading={loading}
             >

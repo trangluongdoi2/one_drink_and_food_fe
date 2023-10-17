@@ -6,7 +6,7 @@ import {
   PRODUCT_CREATE_URL,
   PRODUCT_DETAIL
 } from '@/configs/urlConfig'
-import { TProductCreateNew, TProductThumbs } from '../type'
+import { TProductCreateNew, TProductThumbs, TProductUpdate } from '../type'
 
 interface ProductDetail {
   id: string
@@ -46,6 +46,13 @@ export default class ProductsApi extends Api {
 
   async getProductByCategoryId(categoryId: string) {
     // const res = await this.get()
+  }
+
+  async update(input: TProductUpdate) {
+    // const PRODUCT_UPDATE_URL = `${API_URL}/products/${'juice'}/${input._id}`
+    const PRODUCT_UPDATE_URL = `${API_URL}/products/${'juice'}/${'650039a28ff5743043cad739'}`
+    const res = await this.patch(PRODUCT_UPDATE_URL, input)
+    return res.data
   }
 
   deleteProduct(productId: string) {
