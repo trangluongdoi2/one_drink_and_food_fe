@@ -27,9 +27,10 @@ export const ProductCreateNewForm = () => {
       <Stack>
         <ProductOverviewNewForm />
         <ProductSalesFrameForm />
-        {listInformation.map((item: TProductCreateNewInformation, index) => (
-          <ProductInformationForm key={index} infoItem={item} index={index} />
-        ))}
+        {listInformation?.length &&
+          listInformation.map((item: TProductCreateNewInformation, index) => (
+            <ProductInformationForm key={index} infoItem={item} index={index} />
+          ))}
         <Paper className='create-new-product-card__container'>
           <ActionIcon className='title-add' sx={{ marginTop: '0 !important' }} onClick={onAddProductInfoItem}>
             <Text>+{t('create_information_category')}</Text>

@@ -1,5 +1,7 @@
 import { ToggleButon } from '@/components/button/ToggleButton'
+import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { UserFormProvider, useUserForm, useUserFormContext } from '@/context/form-context'
+import { setProductDirty } from '@/reducer/product/action'
 import { ProductDetailProps } from '@/types/product'
 import { snakeCaseToUnderscore } from '@/utils/string-utils'
 import { Box, Flex, NumberInput, Text, TextInput, Textarea, createStyles } from '@mantine/core'
@@ -31,6 +33,7 @@ const useStyles = createStyles(() => ({
   },
   inputText: {
     height: '40px',
+    maxHeight: '80px',
     fontSize: '12px'
   },
   inputArea: {
@@ -38,6 +41,10 @@ const useStyles = createStyles(() => ({
   },
   rightSection: {
     display: 'none'
+  },
+  ['input--invalid']: {
+    maxHeight: '80px',
+    background: 'red'
   }
 }))
 export interface InputProps {
@@ -51,28 +58,44 @@ export interface InputProps {
   typeInput?: string
   hiddenToggleIcon?: boolean
   moreOptions?: React.ReactNode
-  classInput?: string
+  classNames?: string
   checkIsFocused?: (data: boolean) => void
   updateInput: (data: { value: string | number; field: any }) => void
+  setInvalidInput?: (data: boolean) => void
 }
 
 type TypeInputProps = Pick<
   InputProps,
-  'typeInput' | 'placeholder' | 'field' | 'isActiveInput' | 'updateInput' | 'classInput' | 'isImperative'
+  | 'typeInput'
+  | 'placeholder'
+  | 'field'
+  | 'isActiveInput'
+  | 'updateInput'
+  | 'classNames'
+  | 'isImperative'
+  | 'setInvalidInput'
 >
+
+const listFieldInvalid = ['']
 
 export const TypeInput = ({
   typeInput,
   placeholder,
   field,
   isActiveInput,
-  classInput,
+  classNames,
   isImperative,
-  updateInput
+  updateInput,
+  setInvalidInput
 }: TypeInputProps) => {
   const { classes } = useStyles()
   const form = useUserFormContext()
   const { t } = useTranslation()
+  const { dirty, dispatch } = useProductContext()
+
+  const [isInvalid, setIsInvalid] = useState<boolean>(!!form.errors[field])
+
+  const listCheckValidInput = ['text', 'price']
 
   const useConvertField = (field: string) => {
     return snakeCaseToUnderscore(field)
@@ -81,9 +104,26 @@ export const TypeInput = ({
   const onUpdateInput = () => {
     if (isImperative && !form.getInputProps(field).value) {
       form.setFieldError(field, t('un_valid', { field: t(useConvertField(field)) }))
+      return
     }
     updateInput({ value: form.getInputProps(field)?.value, field })
   }
+
+  useEffect(() => {
+    if (dirty === false) {
+      listCheckValidInput.forEach((field: string) => {
+        if (form.getInputProps(field).value === '') {
+          form.setFieldError(field, t('un_valid_value'))
+          dispatch(setProductDirty(true))
+        }
+      })
+    }
+  }, [dirty])
+
+  useEffect(() => {
+    setIsInvalid(!!form.errors[field])
+    setInvalidInput && setInvalidInput(!!form.errors[field])
+  }, [form.errors[field]])
 
   switch (typeInput) {
     case 'number':
@@ -91,7 +131,9 @@ export const TypeInput = ({
         <TextInput
           type='number'
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputText} ${classInput}` }}
+          classNames={{
+            input: `${classes.input} ${classes.inputText} ${classNames}`
+          }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
           onBlur={onUpdateInput}
@@ -101,7 +143,7 @@ export const TypeInput = ({
       return (
         <Textarea
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputArea} ${classInput}` }}
+          classNames={{ input: `${classes.input} ${classes.inputArea} ${classNames}` }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
           onBlur={onUpdateInput}
@@ -111,7 +153,9 @@ export const TypeInput = ({
       return (
         <TextInput
           placeholder={placeholder}
-          classNames={{ input: `${classes.input} ${classes.inputText} ${classInput}` }}
+          classNames={{
+            input: `${classes.input} ${classes.inputText} ${classNames}`
+          }}
           disabled={!isActiveInput}
           {...form.getInputProps(field)}
           onBlur={onUpdateInput}
@@ -129,9 +173,10 @@ export const AppInput = ({
   hiddenToggleIcon = false,
   moreOptions,
   value,
-  classInput,
+  classNames,
   checkIsFocused,
-  updateInput
+  updateInput,
+  setInvalidInput
 }: InputProps) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
@@ -170,9 +215,10 @@ export const AppInput = ({
             placeholder={placeholder}
             field={field}
             isActiveInput={isActive}
-            classInput={classInput}
+            classNames={classNames}
             isImperative={isImperative}
             updateInput={changeParentInput}
+            setInvalidInput={setInvalidInput}
           />
           {moreOptions}
         </Box>

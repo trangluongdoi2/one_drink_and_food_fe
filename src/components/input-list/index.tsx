@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionIcon, Flex, Stack, Text, TextInput, createStyles } from '@mantine/core'
-import { ProductDetailProps } from '@/types/product'
 import { AddFillIcon, CloseButton } from '@/assets/icon'
-import { UserFormProvider, useUserForm } from '@/context/form-context'
+import { InputListFormProvider, initInputListForm, useInputListForm } from './form'
 
 type InputListProps = {
   title: string
   field: string
+  value: any
   canToggleActive?: boolean
   isActiveInput?: boolean
   iconToggle?: React.ReactNode
@@ -49,6 +49,7 @@ const useStyles = createStyles(() => ({
 export const AppInputList = ({
   title,
   field,
+  value,
   isActiveInput = true,
   iconToggle,
   iconStatus,
@@ -56,20 +57,14 @@ export const AppInputList = ({
 }: InputListProps) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
-  const form = useUserForm({
-    initialValues: {
-      [field]: ['']
-    }
+
+  const form = useInputListForm({
+    initialValues: initInputListForm
   })
-  const initInputItem = {
-    value: ''
-  }
-  const [listInput, setListInput] = useState([initInputItem])
+  const [listInput, setListInput] = useState(value?.length ? value : [])
 
   const addMoreFunction = () => {
-    setListInput([...listInput, initInputItem])
-    const len = form.getInputProps(field).value.length
-    form.insertListItem(field, '', len)
+    setListInput([...listInput, undefined])
   }
 
   const removeItemInListInput = (index: number) => {
@@ -79,15 +74,24 @@ export const AppInputList = ({
     }
     newListInput.splice(index, 1)
     setListInput([...newListInput])
-    form.removeListItem(field, index)
+  }
+
+  const onUpdateInputListForm = () => {
+    updateList(form.values.data)
+  }
+
+  const onUpdateInputItem = (event: any, index: number) => {
+    const newListInput = [...listInput]
+    newListInput.splice(index, 1, event?.target?.value ?? '');
+    setListInput([...newListInput])
   }
 
   useEffect(() => {
-    updateList(form.getInputProps(field).value)
-  }, [form.values])
+    form.setValues({ data: listInput })
+  }, [listInput])
 
   return (
-    <UserFormProvider form={form}>
+    <InputListFormProvider form={form}>
       <form>
         <Stack className={classes.container}>
           <Flex justify={'space-between'} align={'center'}>
@@ -97,21 +101,24 @@ export const AppInputList = ({
             </Flex>
           </Flex>
           <Flex direction={'column'} gap={5}>
-            {listInput.map((item, index: number) => (
-              <Flex align={'center'} key={index}>
-                {iconStatus}
-                <TextInput
-                  placeholder={`${t('function', { index: index + 1 })}`}
-                  className={classes.inputWrapper}
-                  classNames={{ input: `${classes.input}` }}
-                  disabled={!isActiveInput}
-                  {...form.getInputProps(`${field}.${index}`)}
-                />
-                <ActionIcon onClick={() => removeItemInListInput(index)}>
-                  <CloseButton />
-                </ActionIcon>
-              </Flex>
-            ))}
+            {listInput?.length &&
+              listInput.map((_: any, index: number) => (
+                <Flex align={'center'} key={index}>
+                  {iconStatus}
+                  <TextInput
+                    placeholder={`${t('function', { index: index + 1 })}`}
+                    className={classes.inputWrapper}
+                    classNames={{ input: `${classes.input}` }}
+                    disabled={!isActiveInput}
+                    value={_ ?? ''}
+                    onBlur={onUpdateInputListForm}
+                    onChange={(evt: any) => onUpdateInputItem(evt, index)}
+                  />
+                  <ActionIcon onClick={() => removeItemInListInput(index)}>
+                    <CloseButton />
+                  </ActionIcon>
+                </Flex>
+              ))}
           </Flex>
           <Flex>
             <ActionIcon onClick={() => addMoreFunction()} className={classes.actionIcon}>
@@ -125,6 +132,6 @@ export const AppInputList = ({
           </Flex>
         </Stack>
       </form>
-    </UserFormProvider>
+    </InputListFormProvider>
   )
 }

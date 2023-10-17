@@ -46,11 +46,20 @@ export const ProductOptionComponent = ({
   addOption
 }: TProductOptionComponentProps) => {
   const { t } = useTranslation()
+  const { classes } = useStyles()
+  const [isInvalidText, setIsInvalidText] = useState<boolean>(false)
+  const [isInvalidPrice, setIsInvalidPrice] = useState<boolean>(false)
+  const [isInvalid, setInvalid] = useState<boolean>(isInvalidText || isInvalidPrice)
+
+  useEffect(() => {
+    setInvalid(isInvalidText || isInvalidPrice)
+  }, [isInvalidText, isInvalidPrice])
+
   return (
     <div>
       {optionDatas.length &&
         optionDatas.map((option: TProductAttributeOption, index: number) => (
-          <Flex gap={12} align={'center'} key={index}>
+          <Flex gap={12} align={isInvalid ? 'flex-start' : 'center'} key={index}>
             <div style={{ flex: '1' }}>
               <AppInput
                 field={'text'}
@@ -59,6 +68,7 @@ export const ProductOptionComponent = ({
                 value={option.text}
                 updateInput={(data) => updateInput(data, index)}
                 checkIsFocused={setIsFocused}
+                setInvalidInput={setIsInvalidText}
               />
             </div>
             <div style={{ width: '104px' }}>
@@ -70,6 +80,7 @@ export const ProductOptionComponent = ({
                 value={option.price}
                 updateInput={(data) => updateInput(data, index, true)}
                 checkIsFocused={setIsFocused}
+                setInvalidInput={setIsInvalidPrice}
               />
             </div>
             <ActionIcon onClick={() => removeOption(index)}>
@@ -88,12 +99,12 @@ export const ProductOptionComponent = ({
 export const ProductOptionAttribute = ({
   defaultPlaceholder,
   attribute,
+  blockDraggable,
   updateAttributeName,
   updateAttributeOptions,
   setManyChoices,
   removeAttributeOption,
-  setEnabled,
-  blockDraggable
+  setEnabled
 }: TProductOptionAttributeProps) => {
   const initAttributeDataOption: TProductAttributeOption = {
     text: '',
@@ -175,7 +186,7 @@ export const ProductOptionAttribute = ({
                 field='title'
                 updateInput={(data: Record<string, any>) => onUpdateAttributeName(data.value)}
                 value={attribute.value}
-                classInput={classes.input__title}
+                classNames={classes.input__title}
                 checkIsFocused={setIsFocused}
               />
             ) : (

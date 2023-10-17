@@ -1,4 +1,4 @@
-import { AddFillIcon, CloseButton, DeleteIcon, EditIconDark, EditIconLight } from '@/assets/icon'
+import { EditIconDark, EditIconLight } from '@/assets/icon'
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { AppInput } from '@/components/input'
 import { ActionIcon, Box, Flex, Paper, Stack, Text } from '@mantine/core'
@@ -7,30 +7,15 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TProductAttributeOption } from '../../type'
 import { useStyles } from './index.styles'
-
-type TProductOptionComponentProps = {
-  optionDatas: any
-  defaultPlaceholder: string
-  updateInput: (data: any, index?: number, isPrice?: boolean) => void
-  setIsFocused: (status: boolean) => void
-  removeOption: (index: number) => void
-  addOption: () => void
-}
+import { useProductContext } from '@/context/ProductContext/ProductContext'
 
 type TProductMainAttributeProps = {
   title: string
   defaultPlaceholder: string
-  isOption: boolean
-  manyChoices?: boolean
-  atLeastOne?: boolean
-  optionsAttribute?: TProductAttributeOption[]
-  blockDraggable: any
-  attribute?: any
+  appear: boolean
+  blockDraggable?: any
   updateAttributeName?: (data: string) => void
-  updateAttributeOptions?: (data: TProductAttributeOption[]) => void
   updateContentValue?: (data: string | number) => void
-  removeAttributeOption?: (data: string) => void
-  setManyChoices?: (data: boolean) => void
   setEnabled: (data: boolean) => void
 }
 
@@ -38,18 +23,18 @@ export const ProductMainAttribute = ({
   title,
   defaultPlaceholder,
   appear = true,
+  blockDraggable,
   updateAttributeName,
   updateContentValue,
-  removeAttributeOption,
-  setEnabled,
-  blockDraggable
-}: any) => {
+  setEnabled
+}: TProductMainAttributeProps) => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const [isActive, setIsActive] = useState<boolean>(appear)
   const [isEditable, setIsEditable] = useState<boolean>(false)
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const ref = useClickOutside(() => setIsEditable(false))
+  const { productMainIngredients } = useProductContext()
 
   const onToggleStatus = (status: boolean) => {
     setIsActive(status)
@@ -58,10 +43,6 @@ export const ProductMainAttribute = ({
 
   const onUpdateAttributeName = (data: string) => {
     updateAttributeName && updateAttributeName(data)
-  }
-
-  const onRemoveAttributeOption = (data: string) => {
-    removeAttributeOption && removeAttributeOption(data)
   }
 
   const onFocus = () => {
@@ -87,7 +68,7 @@ export const ProductMainAttribute = ({
                 field='title'
                 updateInput={(data: Record<string, any>) => onUpdateAttributeName(data.value)}
                 value={title}
-                classInput={classes.input__title}
+                classNames={classes.input__title}
                 checkIsFocused={setIsFocused}
               />
             ) : (
@@ -97,15 +78,13 @@ export const ProductMainAttribute = ({
           </Flex>
           <Flex align={'center'}>
             <ToggleButon onToggleStatus={onToggleStatus} isActive={isActive} />
-            <ActionIcon onClick={() => onRemoveAttributeOption(title)}>
-              <DeleteIcon />
-            </ActionIcon>
           </Flex>
         </Flex>
         <Flex className={isActive ? '' : `${classes['container__input--deactive']}`}>
           <Box sx={{ flex: 1 }}>
             <AppInput
               field={'content'}
+              value={productMainIngredients}
               placeholder={defaultPlaceholder}
               updateInput={(data) => updateInput(data)}
               hiddenToggleIcon={true}

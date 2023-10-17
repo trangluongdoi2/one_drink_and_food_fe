@@ -1,4 +1,4 @@
-import { useState, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { ActionIcon, Flex, NumberInput, Paper, Text } from '@mantine/core'
 import { DoneOutlineIcon, ToggleDarkLgIcon, ToggleLightLgIcon } from '@/assets/icon'
 import { ProductAddImageForm } from '@/pages/products/components/ProductAddImageForm'
@@ -83,7 +83,17 @@ const MotionImage = ({ motionValue, updateMotion }: MotionImageProps) => {
 
 export const ProductOverviewNewForm = () => {
   const { classes } = useStyles()
-  const { dispatch, motionTime, productName, auxiliaryName, productQuantity } = useProductContext()
+  const {
+    motionTime,
+    productName,
+    auxiliaryName,
+    productPrice,
+    productQuantity,
+    introduction,
+    mainFunctions,
+
+    dispatch
+  } = useProductContext()
 
   const motionValue = { enabled: true, motionTime: motionTime }
 
@@ -146,6 +156,7 @@ export const ProductOverviewNewForm = () => {
         title={t('product_name')}
         placeholder={t('fill_product_name')}
         field='productName'
+        value={productName}
         isImperative={true}
         hiddenToggleIcon={true}
         updateInput={updateInput}
@@ -153,15 +164,16 @@ export const ProductOverviewNewForm = () => {
       <AppInput
         title={t('auxiliary_name')}
         placeholder={t('fill_product_auxiliary_name')}
+        value={auxiliaryName}
         field='auxiliaryName'
-        isImperative={true}
         updateInput={updateInput}
       />
       <AppInput
+        typeInput='number'
         title={t('prices')}
         placeholder={t('fill_product_prices')}
         field='productPrice'
-        typeInput='number'
+        value={productPrice}
         isImperative={true}
         hiddenToggleIcon={true}
         moreOptions={<IncludePricesVAT enableVAT={toggleIsVAT} />}
@@ -171,6 +183,7 @@ export const ProductOverviewNewForm = () => {
         title={t('product_quantity')}
         placeholder={t('fill_product_quantity')}
         field='productQuantity'
+        value={productQuantity}
         typeInput='number'
         isImperative={true}
         hiddenToggleIcon={true}
@@ -179,6 +192,7 @@ export const ProductOverviewNewForm = () => {
       <AppInputList
         title={t('main_functions')}
         field='mainFunctions'
+        value={mainFunctions}
         iconStatus={<DoneOutlineIcon />}
         updateList={updateMainFunctions}
       ></AppInputList>
@@ -187,6 +201,7 @@ export const ProductOverviewNewForm = () => {
         placeholder={t('fill_product_introduction')}
         typeInput='area'
         field='introduction'
+        value={introduction}
         updateInput={updateInput}
       />
     </Paper>

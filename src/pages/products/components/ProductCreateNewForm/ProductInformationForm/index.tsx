@@ -104,11 +104,11 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
   }
 
   const updateFilePaths = (data: string[], index: number) => {
-    dispatch(setPhotosProductInfo({ data, index }))
+    // dispatch(setPhotosProductInfo({ data, index }))
   }
 
   const updateFileStores = (data: File[], index: number) => {
-    dispatch(setPhotosStoreProductInfo({ data, index }))
+    // dispatch(setPhotosStoreProductInfo({ data, index }))
   }
 
   return (
@@ -125,7 +125,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
                 field='title'
                 updateInput={updateInput}
                 value={infoItem.title}
-                classInput={classes.input__title}
+                classNames={classes.input__title}
               />
             ) : (
               <Text className={classes.topic}>
@@ -157,7 +157,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
                       field='nameTopic'
                       updateInput={(event) => updateInput(event, index)}
                       value={item.topicName}
-                      classInput={classes.input__title}
+                      classNames={classes.input__title}
                     />
                   ) : (
                     <Text className={classes.topic}>{!item.topicName ? t('topic_name') : item.topicName}</Text>

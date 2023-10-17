@@ -104,5 +104,6 @@
       "updateFailed": "Cập nhật mã giảm giá thất bại"
     }
   },
-  "notEmpty": "Không được trống"
+  "notEmpty": "Không được trống",
+  "un_valid_value": "Giá trị không được trống"
 }

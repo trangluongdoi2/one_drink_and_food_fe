@@ -56,79 +56,80 @@ export const OverviewTable = ({ updateSaleOption }: Props) => {
             </Text>
           </Stack>
         </Box>
-        {attributes.map((item, index) => (
-          <Box key={index}>
-            {item.appear && (
-              <Stack key={index} spacing={0}>
-                <Text className={classes.text__title}>{item.value}</Text>
-                <Flex className={classes.container__content}>
-                  <Stack sx={{ width: '100%' }}>
-                    {!item.manyChoices ? (
-                      <Radio.Group
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          rowGap: '10px'
-                        }}
-                        onChange={(event) => changeEnableValueUniqueOption(event, item)}
-                      >
-                        {item.options?.length &&
-                          item.options.map((data: TProductAttributeOption, childIndex: number) => (
-                            <Flex key={childIndex} align={'center'} rowGap={10}>
-                              <Radio
-                                value={data.text}
-                                label={data.text || t('option', { index: childIndex + 1 })}
-                                sx={{ flex: '1' }}
-                                classNames={{
-                                  label: classes.text__content,
-                                  labelWrapper: classes['label-wrapper'],
-                                  radio: classes['radio-input'],
-                                  inner: classes['radio-inner'],
-                                  icon: classes['radio-inner']
-                                }}
-                              />
-                              <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
-                            </Flex>
-                          ))}
-                      </Radio.Group>
-                    ) : (
-                      <Checkbox.Group
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          rowGap: '10px'
-                        }}
-                        onChange={(event) => changeEnableValueMultiOptions(event, item)}
-                      >
-                        {item.options?.length &&
-                          item.options.map((data: TProductAttributeOption, childIndex: number) => (
-                            <Flex key={childIndex} align={'center'} rowGap={10}>
-                              <Checkbox
-                                value={data.text}
-                                label={data.text || t('option', { index: childIndex + 1 })}
-                                sx={{ flex: '1', alignItems: 'center' }}
-                                classNames={{
-                                  label: classes.text__content,
-                                  labelWrapper: classes['label-wrapper'],
-                                  inner: classes['checkbox-inner'],
-                                  input: classes['checkbox-input'],
-                                  icon: classes['checkbox-inner']
-                                }}
-                                icon={CheckboxIcon}
-                              />
-                              <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
-                            </Flex>
-                          ))}
-                      </Checkbox.Group>
-                    )}
-                  </Stack>
-                </Flex>
-              </Stack>
-            )}
-          </Box>
-        ))}
+        {attributes?.length &&
+          attributes.map((item, index) => (
+            <Box key={index}>
+              {item.appear && (
+                <Stack key={index} spacing={0}>
+                  <Text className={classes.text__title}>{item.value}</Text>
+                  <Flex className={classes.container__content}>
+                    <Stack sx={{ width: '100%' }}>
+                      {!item.manyChoices ? (
+                        <Radio.Group
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            rowGap: '10px'
+                          }}
+                          onChange={(event) => changeEnableValueUniqueOption(event, item)}
+                        >
+                          {item.options?.length &&
+                            item.options.map((data: TProductAttributeOption, childIndex: number) => (
+                              <Flex key={childIndex} align={'center'} rowGap={10}>
+                                <Radio
+                                  value={data.text}
+                                  label={data.text || t('option', { index: childIndex + 1 })}
+                                  sx={{ flex: '1' }}
+                                  classNames={{
+                                    label: classes.text__content,
+                                    labelWrapper: classes['label-wrapper'],
+                                    radio: classes['radio-input'],
+                                    inner: classes['radio-inner'],
+                                    icon: classes['radio-inner']
+                                  }}
+                                />
+                                <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
+                              </Flex>
+                            ))}
+                        </Radio.Group>
+                      ) : (
+                        <Checkbox.Group
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            rowGap: '10px'
+                          }}
+                          onChange={(event) => changeEnableValueMultiOptions(event, item)}
+                        >
+                          {item.options?.length &&
+                            item.options.map((data: TProductAttributeOption, childIndex: number) => (
+                              <Flex key={childIndex} align={'center'} rowGap={10}>
+                                <Checkbox
+                                  value={data.text}
+                                  label={data.text || t('option', { index: childIndex + 1 })}
+                                  sx={{ flex: '1', alignItems: 'center' }}
+                                  classNames={{
+                                    label: classes.text__content,
+                                    labelWrapper: classes['label-wrapper'],
+                                    inner: classes['checkbox-inner'],
+                                    input: classes['checkbox-input'],
+                                    icon: classes['checkbox-inner']
+                                  }}
+                                  icon={CheckboxIcon}
+                                />
+                                <Text className={classes['text__content-price']}>(+{data.price}đ)</Text>
+                              </Flex>
+                            ))}
+                        </Checkbox.Group>
+                      )}
+                    </Stack>
+                  </Flex>
+                </Stack>
+              )}
+            </Box>
+          ))}
       </Box>
     </Flex>
   )

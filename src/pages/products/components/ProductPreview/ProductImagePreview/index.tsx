@@ -26,12 +26,10 @@ export const ProductImagePreview = () => {
   return (
     <Stack className={classes.container}>
       <Box className={classes.container__carousel}>
-        {slides.length > 0 && (
-          <AppCarousel slides={slides} options={OPTIONS} enabled={enabled} motionTime={motionTime} />
-        )}
+        {slides?.length && <AppCarousel slides={slides} options={OPTIONS} enabled={enabled} motionTime={motionTime} />}
       </Box>
       <Stack>
-        {mainFunctions &&
+        {mainFunctions?.length &&
           mainFunctions.map((item, index) => (
             <Flex key={index} columnGap={6}>
               <ActionIcon size={10}>
