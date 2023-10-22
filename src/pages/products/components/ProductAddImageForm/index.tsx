@@ -7,6 +7,7 @@ import { AddFillIcon, CloseButton, TableRowsIcon } from '@/assets/icon'
 import { DragDropGridHandler } from '@/components/DragDropGridHandler'
 import { DragDropGridConfigs } from '@/components/DragDropGridHandler/type'
 import { useStyles } from './index.styles'
+import { blobToBase64 } from '@/utils/string-utils'
 
 type Props = {
   limitQuantity: number
@@ -79,14 +80,14 @@ export const ProductAddImageForm = ({
     if (!file) {
       return ''
     }
-    return URL.createObjectURL(file)
+    return blobToBase64(file)
   }
-  const onUploadFile = (index: number) => (event: FileWithPath[]) => {
+  const onUploadFile = (index: number) => async (event: FileWithPath[]) => {
     const newFilesPath = [...dragDropItems]
     const newFiles = [...fileStores]
-    newFilesPath[index] = createLocalUrl(event[0])
+    newFilesPath[index] = await createLocalUrl(event[0])
     newFiles[index] = event[0] as FileWithPath
-    // setDragDropItems(newFilesPath)
+    setDragDropItems(newFilesPath)
     setFileStores(newFiles)
   }
 
@@ -96,15 +97,13 @@ export const ProductAddImageForm = ({
     setDragDropItems(newFiles)
   }
 
-  const onChange = (sourceId: string, sourceIndex: number, targetIndex: number) => {
+  const onChange = async (sourceId: string, sourceIndex: number, targetIndex: number) => {
     const nextState = swap(dragDropItems, sourceIndex, targetIndex)
     const cloneFileStores = [...fileStores]
     ;[cloneFileStores[sourceIndex], cloneFileStores[targetIndex]] = [
       cloneFileStores[targetIndex],
       cloneFileStores[sourceIndex]
     ]
-    nextState[sourceIndex] = createLocalUrl(cloneFileStores[sourceIndex])
-    nextState[targetIndex] = createLocalUrl(cloneFileStores[targetIndex])
     setDragDropItems(nextState)
     setFileStores(cloneFileStores)
   }
@@ -118,23 +117,24 @@ export const ProductAddImageForm = ({
     <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>
       {!hiddenTitle && <Text className={classes.title}>{t('add_image')}</Text>}
       <DragDropGridHandler configs={configs} onChange={onChange}>
-        {dragDropItems?.map((url: string, index: number) => (
-          <GridItem style={{ marginRight: '10px', marginBottom: '10px' }} key={index}>
-            <Box className={classes.child}>
-              <ActionIcon size={20} className={classes.iconMenu}>
-                <TableRowsIcon />
-              </ActionIcon>
-              <Dropzone accept={acceptType} onDrop={onUploadFile(index)} classNames={{ root: classes.add__zone }}>
-                <Group position='center'>
-                  <Group className={classes.iconAdd}>
-                    <AddFillIcon />
+        {dragDropItems?.length &&
+          dragDropItems?.map((url: string, index: number) => (
+            <GridItem style={{ marginRight: '10px', marginBottom: '10px' }} key={index}>
+              <Box className={classes.child}>
+                <ActionIcon size={20} className={classes.iconMenu}>
+                  <TableRowsIcon />
+                </ActionIcon>
+                <Dropzone accept={acceptType} onDrop={onUploadFile(index)} classNames={{ root: classes.add__zone }}>
+                  <Group position='center'>
+                    <Group className={classes.iconAdd}>
+                      <AddFillIcon />
+                    </Group>
                   </Group>
-                </Group>
-              </Dropzone>
-              {url && <PreviewImageZone fileURL={url} index={index} removeFile={removeFile} />}
-            </Box>
-          </GridItem>
-        ))}
+                </Dropzone>
+                {url && <PreviewImageZone fileURL={url} index={index} removeFile={removeFile} />}
+              </Box>
+            </GridItem>
+          ))}
       </DragDropGridHandler>
       <Paper className={classes.imageContainer}></Paper>
     </Paper>

@@ -107,6 +107,7 @@ export const TypeInput = ({
       return
     }
     updateInput({ value: form.getInputProps(field)?.value, field })
+    dispatch(setProductDirty(false))
   }
 
   useEffect(() => {

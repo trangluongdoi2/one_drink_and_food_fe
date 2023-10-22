@@ -73,17 +73,12 @@ export const ProductUpdate = ({ type, subType }: Props) => {
 
   const checkValidButton = () => {
     const { productName, auxiliaryName, productPrice, productQuantity } = productStateData
-    return !!productName && !!auxiliaryName && !!productPrice && !!productQuantity
+    return !!productName && !!productPrice && !!productQuantity
   }
 
   useEffect(() => {
     setValidButton(checkValidButton())
-  }, [
-    productStateData.productName,
-    productStateData.auxiliaryName,
-    productStateData.productPrice,
-    productStateData.productQuantity
-  ])
+  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
 
   useEffect(() => {
     if (isSuccessProductUpdate) {

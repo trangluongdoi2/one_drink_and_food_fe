@@ -73,6 +73,9 @@ export const useProductUpdateMutation = ({ config }: TProductMutationConfig = {}
 
 export const useUploadProductThumbsMutation = ({ config }: TProductMutationConfig = {}) => {
   return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['category-create-thumb'] })
+    },
     ...config,
     mutationFn: (input: any) => productApi.uploadProductThumbs(input)
   })

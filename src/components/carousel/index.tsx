@@ -69,20 +69,21 @@ export const AppCarousel = ({ slides, options, enabled, motionTime = 1000, hasTh
     <div className={classes.embla}>
       <div className={classes.embla__viewport} ref={emblaMainRef}>
         <div className={classes.embla__container}>
-          {slides.map((slide: string, index: number) => (
-            <div className={classes.embla__slide} key={index}>
-              {slide ? (
-                <Image
-                  src={imageByIndex(slides, index)}
-                  width={225}
-                  height={225}
-                  classNames={{ image: classes.embla__slide__img }}
-                />
-              ) : (
-                <div className={classes['embla__slide__img--empty']}></div>
-              )}
-            </div>
-          ))}
+          {slides?.length &&
+            slides.map((slide: string, index: number) => (
+              <div className={classes.embla__slide} key={index}>
+                {slide ? (
+                  <Image
+                    src={imageByIndex(slides, index)}
+                    width={225}
+                    height={225}
+                    classNames={{ image: classes.embla__slide__img }}
+                  />
+                ) : (
+                  <div className={classes['embla__slide__img--empty']}></div>
+                )}
+              </div>
+            ))}
         </div>
       </div>
       {hasThumbnail && (

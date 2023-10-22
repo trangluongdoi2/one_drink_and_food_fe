@@ -64,21 +64,19 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
   } = useUploadProductThumbsMutation()
 
   const onCreateProduct = async () => {
+    if (productStateData.dirty) {
+      return
+    }
+    setLoading(true)
+    setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
+    const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
+      productType: type as any,
+      productSubType: subType
+    })
+    const authApi = new AuthApi()
+    await authApi.loginAdmin({ username: 'admin', password: '1' })
+    mutateProductCreateNew(input)
     productStateData.dispatch(setProductDirty(false))
-    // if (productStateData.dirty) {
-    //   console.log('Case 1????')
-    //   return
-    // }
-    // setLoading(true)
-    // setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
-    // const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
-    //   productType: type as any,
-    //   productSubType: subType
-    // })
-    // const authApi = new AuthApi()
-    // await authApi.loginAdmin({ username: 'admin', password: '1' })
-    // mutateProductCreateNew(input)
-    // productStateData.dispatch(setProductDirty(false))
   }
 
   const checkValidButton = () => {
@@ -88,23 +86,19 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
 
   useEffect(() => {
     setValidButton(checkValidButton())
-  }, [
-    productStateData.productName,
-    productStateData.auxiliaryName,
-    productStateData.productPrice,
-    productStateData.productQuantity
-  ])
+  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
 
   useEffect(() => {
     if (isSuccessProductCreateNew) {
-      const formData = new FormData()
-      if (tempPhotoStores?.length) {
-        for (let i = 0; i < tempPhotoStores.length; i++) {
-          formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
-        }
-      }
-      const productId = createdProduct._id
-      mutateProductUploadThumbs({ id: productId, thumbs: formData })
+      console.log(JSON.parse(JSON.stringify(createdProduct)), 'createdProduct....')
+      // const formData = new FormData()
+      // if (tempPhotoStores?.length) {
+      //   for (let i = 0; i < tempPhotoStores.length; i++) {
+      //     formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
+      //   }
+      // }
+      // const productId = createdProduct._id
+      // mutateProductUploadThumbs({ id: productId, thumbs: formData })
     }
   }, [isSuccessProductCreateNew])
 
@@ -132,7 +126,6 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
             >
               {t('create_new_product')}
             </Button>
-            {/* <Button onClick={test}>Test...</Button> */}
           </div>
         </Paper>
       </Stack>

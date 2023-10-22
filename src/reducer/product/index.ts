@@ -199,7 +199,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         dirty: true,
         photos: {
           ...state.photos,
-          filePaths: payload
+          filePaths: [...payload]
         }
       }
     case ProductType.SET_PHOTO_THUMBS:
@@ -344,9 +344,9 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     //     infos
     //   }
     // }
-    default:
-      return {
-        ...state
-      }
+    // default:
+    //   return {
+    //     ...state
+    //   }
   }
 }
