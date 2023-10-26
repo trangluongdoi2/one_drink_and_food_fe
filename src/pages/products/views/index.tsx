@@ -1,2 +1,2 @@
-export * from './ProductJuice'
+export * from './ProductBaseThroughType'
 export * from './ProductCreateNew'

@@ -8,7 +8,7 @@ import HomePage from '@/pages/home'
 import LoginPage from '@/pages/login'
 import OrderList from '@/pages/order/features/orderList'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
-import { ProductCreateNew, ProductJuiceGrid } from '@/pages/products'
+import { ProductCreateNew, ProdctBaseThroughType } from '@/pages/products'
 import { JuiceType, ProductTypeEnum } from '@/pages/products/type'
 import ProductList from '@/pages/products/views/ProductList'
 import RegisterPage from '@/pages/register'
@@ -167,53 +167,59 @@ export const router = createBrowserRouter([
                 element: <ProductList title='Danh sách sản phẩm' query='all' />
               },
               {
-                path: '/products/juice',
-                element: <ProductJuiceGrid />
+                path: '/products/:productType',
+                element: <ProdctBaseThroughType />
+                // children: [
+                //   {
+                //     path: '/products/:productType/:productSubType/create-new',
+                //     element: <div>ProductSubtype</div>
+                //   }
+                // ]
               },
+              // {
+              //   path: '/products/juice/:id',
+              //   element: (
+              //     <ProductContextProvider mode={'update'}>
+              //       <ProductUpdate type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
+              //     </ProductContextProvider>
+              //   )
+              // },
               {
-                path: '/products/juice/:id',
-                element: (
-                  <ProductContextProvider mode={'update'}>
-                    <ProductUpdate type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
-                  </ProductContextProvider>
-                )
-              },
-              {
-                path: '/products/juice/juice-glass/create-new',
+                path: '/products/:productType/:productSubtype/create-new',
                 element: (
                   <ProductContextProvider mode={'create-new'}>
                     <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
                   </ProductContextProvider>
                 )
               },
-              {
-                path: '/products/juice/juice-bottled/create-new',
-                element: (
-                  <ProductContextProvider mode={'create-new'}>
-                    <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
-                  </ProductContextProvider>
-                )
-              },
-              {
-                path: '/products/smoothy',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/yogurt',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/tea',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/coffee',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/other',
-                element: <ProductAnalytic />
-              }
+              // {
+              //   path: '/products/juice/juice-bottled/create-new',
+              //   element: (
+              //     <ProductContextProvider mode={'create-new'}>
+              //       <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
+              //     </ProductContextProvider>
+              //   )
+              // },
+              // {
+              //   path: '/products/smoothy',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/yogurt',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/tea',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/coffee',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/other',
+              //   element: <ProductAnalytic />
+              // }
             ]
           },
           {

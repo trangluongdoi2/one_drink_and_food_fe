@@ -18,12 +18,15 @@ export const ProductGrid = ({ title, productSubType }: ProductGridProps) => {
       <ProductPortfolio title={title} />
       <Paper className={classes.containerGrid}>
         <ProductCard forNewProduct={true} productSubType={productSubType} />
-        {data?.length &&
+        {data?.length ? (
           data.map((item: any, index: number) => (
             <div key={index}>
               <ProductCard item={item} />
             </div>
-          ))}
+          ))
+        ) : (
+          <div></div>
+        )}
       </Paper>
     </Paper>
   )

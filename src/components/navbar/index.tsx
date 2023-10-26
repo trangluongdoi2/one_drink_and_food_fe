@@ -29,7 +29,6 @@ const NavbarHeader = () => {
               </ActionIcon>
             </Group>
           </Navbar.Section>
-
           <Navbar.Section grow className={classes.links} component={ScrollArea}>
             <Accordion
               chevronPosition='right'

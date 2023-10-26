@@ -14,11 +14,15 @@ import {
   ActiveGiftIcon,
   ActiveCouponIcon
 } from '@/assets/icon'
-import { useTranslation } from 'react-i18next';
+import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
+
+const { trans } = useTranslationMiddleware()
 
 export type TNavLink = { label: string; link: string }
 
 const productTypeArr = ['juice', 'coffee', 'tea', 'smoothie', 'yogurt']
+
+const productLabel = productTypeArr.map((type: string) => trans(type))
 
 export enum TNavbarTag {
   OVERVIEW = 'Overview',
@@ -83,21 +87,13 @@ const navConfig: TNavConfig[] = [
     icon: ProductIcon,
     active: ActiveProductIcon,
     links: [
-      ...productTypeArr.map((type: string) => ({
-        label: type,
-        link: '/products'
+      { label: 'Danh sách sản phẩm', link: '/products/all' },
+      ...productTypeArr.map((type: string, index: number) => ({
+        label: productLabel[index],
+        link: `/products/${type}`
       })),
-      { label: 'Vật phẩm', link: '/products' }
+      { label: 'Vật phẩm', link: '/products/others' }
     ]
-    // links: [
-    //   { label: 'Danh sách sản phẩm', link: '/products' },
-    //   { label: 'Nước ép', link: '/products' },
-    //   { label: 'Sinh tố', link: '/products' },
-    //   { label: 'Yogurt', link: '/products' },
-    //   { label: 'Trà', link: '/products' },
-    //   { label: 'Cà phê', link: '/products' },
-    //   { label: 'Vật phẩm', link: '/products' }
-    // ]
   },
   {
     label: 'Tin tức',
