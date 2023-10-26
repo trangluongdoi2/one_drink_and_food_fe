@@ -1,15 +1,17 @@
-import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
 import { DeleteIcon, MailIcon } from '@/assets/icon'
-import { MEMBERSHIP } from '@/types/user'
-import { FirebaseService } from '@/firebase/handler'
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
-import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
-import { setSelectedRow } from '@/reducer/customer/action'
 import CustomModal from '@/components/modal'
+import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
+import { FirebaseService } from '@/firebase/handler'
+import { setSelectedRow } from '@/reducer/customer/action'
+import { MEMBERSHIP, TUserForm } from '@/types/user'
 import { getMemberName } from '@/utils/getMemberName'
-import CustomerTable from '@/pages/users/components/CustomerTables'
-import { useFetchUser } from '@/pages/users/services/useFetchUser'
-import { notifications } from '@mantine/notifications'
+import { notify } from '@/utils/notification'
+import { ActionIcon, Flex, Paper, Stack, Title } from '@mantine/core'
+import UserTable from '../../components/CustomerTables/UserTable'
+import { useGetAllUser } from '../../services/hook'
+import { useForm } from '@mantine/form'
+import { defaultUser } from '@/constants/user'
 
 interface UserListProps {
   membership: MEMBERSHIP | 'all'
@@ -32,12 +34,22 @@ const mockData = {
 const ListCustomer = ({ membership }: UserListProps) => {
   const { selectedRow, dispatch } = useCustomerContext()
   const title = getMemberName(membership)
-  const { loading, userData } = useFetchUser({ key: 'member', params: membership })
+
+  const form = useForm<TUserForm>({
+    initialValues: {
+      selectedDataRow: defaultUser,
+      dataForm: []
+    }
+  })
+
   const { create, deleteById } = FirebaseService
+
+  const { data: userAdminData, isLoading } = useGetAllUser()
 
   const handleAddItem = async () => {
     create(FIREBASE_COLLECTION.USERS, mockData)
   }
+
   const openDeleteModal = () =>
     CustomModal({
       title: 'Xoá thông tin',
@@ -67,19 +79,11 @@ const ListCustomer = ({ membership }: UserListProps) => {
             {title}
           </Title>
           <Flex gap={20}>
-            {/* <ActionIcon
-              onClick={() => {
-                handleAddItem()
-              }}
-            >
-              <MailIcon />
-            </ActionIcon> */}
             <ActionIcon
               onClick={() => {
-                notifications.show({
+                notify({
                   title: 'Chỉnh sửa thành công',
-                  message: 'Thông tin khách hàng đã được cập nhật',
-                  autoClose: 3000
+                  message: 'Thông tin khách hàng đã được cập nhật'
                 })
               }}
             >
@@ -90,24 +94,9 @@ const ListCustomer = ({ membership }: UserListProps) => {
             </ActionIcon>
           </Flex>
         </Flex>
-
-        {loading ? (
-          <Paper p={40} radius={10} shadow='md'>
-            <Center>
-              <Loader variant='dots' />
-            </Center>
-          </Paper>
-        ) : (
-          <Paper p={40} radius={10} shadow='md'>
-            {userData && userData.length > 0 ? (
-              <CustomerTable data={userData} />
-            ) : (
-              <Center>
-                <Text>Danh sách khách hàng trống</Text>
-              </Center>
-            )}
-          </Paper>
-        )}
+        <Paper p={40} radius={10} shadow='md'>
+          <UserTable data={userAdminData ?? []} loading={isLoading} form={form} />
+        </Paper>
       </Stack>
     </Paper>
   )

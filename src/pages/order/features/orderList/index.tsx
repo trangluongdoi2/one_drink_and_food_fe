@@ -1,16 +1,15 @@
-import { ActionIcon, Center, Flex, Loader, Paper, Stack, Title, Text } from '@mantine/core'
-import { DeleteIcon, ActiveDeleteIcon } from '@/assets/icon'
-import OrderTable from '../../components/OrderTable'
+import { ActiveDeleteIcon, DeleteIcon } from '@/assets/icon'
 import CustomModal from '@/components/modal'
+import ScreenLoader from '@/components/screenLoader'
 import { useOrderContext } from '@/context/OrderContext/OrderContext'
+import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
-import { FIREBASE_COLLECTION } from '@/firebase/collection'
+import { ActionIcon, Flex, Paper, Stack, Title } from '@mantine/core'
 import { v4 as uuidv4 } from 'uuid'
 import { OrderFormProvider, defaultOrder, useOrderForm } from '../../form'
-import { useEffect } from 'react'
 import { useGetOrder } from '../../services/hook'
-import ScreenLoader from '@/components/screenLoader'
+import OrderTable from '../../components/orderTable'
 
 const id = uuidv4()
 

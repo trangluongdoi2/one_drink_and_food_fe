@@ -1,11 +1,9 @@
-import { ActiveEditIcon, EditIcon } from '@/assets/icon'
+import { EditIcon } from '@/assets/icon'
 import { TColumnsProps } from '@/components/table/table/type'
 import { ActionIcon, Checkbox, Flex, List, Stack } from '@mantine/core'
-import { notifications } from '@mantine/notifications'
+import { IconCheck, IconX } from '@tabler/icons-react'
 import { Fragment, SetStateAction, useState } from 'react'
 import { useStyles } from './index.style'
-import { IconCheck, IconX } from '@tabler/icons-react'
-import { useCouponFormContext } from '@/pages/coupons/form'
 
 type TRowProps = {
   row: any
@@ -13,10 +11,10 @@ type TRowProps = {
   selectedRows: string[]
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
   onSubmitChange: () => void
-  setSelectedRow: (row: any) => void
+  onEdit?: (value: any) => void
 }
 
-export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange, setSelectedRow }: TRowProps) => {
+export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange, onEdit }: TRowProps) => {
   const { fireBaseId: id } = row
   const isSelected = selectedRows.includes(id)
   const { classes } = useStyles({ isSelected })
@@ -30,29 +28,35 @@ export const Row = ({ row, columns, selectedRows, onSelectRows, onSubmitChange, 
     }
   }
 
-  const onEditRow = () => {
+  const handleEditRow = () => {
     setEdit(!edit)
-    setSelectedRow(row)
+    onEdit && !edit && onEdit(row)
   }
 
   return (
     <Fragment>
-      <Flex className={classes.container}> 
+      <Flex className={classes.container}>
         <List className={classes.checkbox}>
           <Checkbox checked={isSelected} color='gray.8' size='lg' radius={10} onChange={handleSelectedRow} />
         </List>
         <List className={classes.list}>
           <Flex gap={10} align='center' justify='center' p={20} className={classes.content}>
             {columns?.map((col: TColumnsProps) => (
-              <Stack key={col.id} w={col.width} align={col.position}>
+              <Stack key={col.id} w={col.width} align={col.position} className={classes.column}>
                 {col && col.render && col.render(row, edit)}
               </Stack>
             ))}
             <Flex key='action' w='5%' align='flex-end'>
-              <ActionIcon color='dark.4' onClick={onSubmitChange}>
+              <ActionIcon
+                color='dark.4'
+                onClick={() => {
+                  onSubmitChange()
+                  setEdit(false)
+                }}
+              >
                 {edit && <IconCheck />}
               </ActionIcon>
-              <ActionIcon color='dark.4' onClick={onEditRow}>
+              <ActionIcon color='dark.4' onClick={handleEditRow}>
                 {edit ? <IconX /> : <EditIcon />}
               </ActionIcon>
             </Flex>
