@@ -2,7 +2,6 @@ import { CustomInput } from '@/components/form/CustomInput'
 import CurrencyLabel from '@/components/form/CustomInput/CurrencyLabel'
 import ImageDropzone from '@/components/form/ImageDropzone'
 import ImageMotion from '@/components/form/ImageMotion'
-import { prettyDate } from '@/utils/convertDate'
 import { Flex, Paper } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { useCreateCouponFormContext } from '../../form'
@@ -61,14 +60,14 @@ export const CreateCouponForm = () => {
         placeholder={t('start_date_placeholder')}
         hiddenToggleIcon
         {...getInputProps('startDate')}
-        value={prettyDate(values.startDate)}
+        value={values.startDate ?? ''}
       />
       <CustomInput
         title={t('end_date')}
         placeholder={t('end_date_placeholder')}
         hiddenToggleIcon
         {...getInputProps('endDate')}
-        value={prettyDate(values.endDate)}
+        value={values.endDate ?? ''}
       />
       <CustomInput
         title={t('coupon.value')}

@@ -11,10 +11,24 @@ type TCouponConfig = {
   config?: MutationConfig<CouponMutation>
 }
 
-const useGetCoupon = (params: TGetCouponParams) => {
+const useGetCoupon = (params?: TGetCouponParams) => {
   return useQuery({
     queryKey: 'coupon',
     queryFn: () => couponApi.findWithPagination(params)
+  })
+}
+
+const useGetAllCoupon = () => {
+  return useQuery({
+    queryKey: 'coupon-all',
+    queryFn: () => couponApi.findAll()
+  })
+}
+
+const useGetCouponById = (id: string) => {
+  return useQuery({
+    queryKey: 'coupon-by-id',
+    queryFn: () => couponApi.findById(id)
   })
 }
 
@@ -42,4 +56,4 @@ const useUpdateCoupon = () => {
   })
 }
 
-export { useGetCoupon, useCreateCoupon, useUpdateCoupon }
+export { useGetCoupon, useCreateCoupon, useUpdateCoupon, useGetAllCoupon, useGetCouponById }

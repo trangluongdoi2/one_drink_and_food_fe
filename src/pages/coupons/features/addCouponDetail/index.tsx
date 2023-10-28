@@ -1,13 +1,15 @@
+import { convertFormat, prettyDate } from '@/utils/convertDate'
 import { notify } from '@/utils/notification'
 import { Paper, SimpleGrid, Stack } from '@mantine/core'
 import { isNotEmpty } from '@mantine/form'
+import dayjs from 'dayjs'
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { CreateCouponForm, PreviewCoupon } from '../../components/CouponDetail'
 import CouponHeader from '../../components/CouponHeader'
 import { CreateCouponFormProvider, defaultCoupon, useCreateCouponForm } from '../../form'
-import { useCreateCoupon, useGetCoupon, useUpdateCoupon } from '../../services/hook'
+import { useCreateCoupon, useGetCouponById, useUpdateCoupon } from '../../services/hook'
 
 type TAddCouponDetailProps = {
   type?: 'edit' | 'create'
@@ -28,17 +30,13 @@ const AddCouponDetail: FC<TAddCouponDetailProps> = ({ type = 'create' }) => {
   })
   const couponMutation = useCreateCoupon()
   const updateCouponMutation = useUpdateCoupon()
-  const { data } = useGetCoupon({
-    page: 1,
-    limit: 10,
-    sort: 'title'
-  })
+  const { data } = useGetCouponById(id ?? '')
 
   const handleAddSubmit = async () => {
     const dataSend = {
       ...form.values,
-      startDate: new Date(form.values.startDate ?? '').toISOString(),
-      endDate: new Date(form.values.endDate ?? '').toISOString()
+      startDate: dayjs(convertFormat(form.values.startDate)).toISOString(),
+      endDate: dayjs(convertFormat(form.values.endDate)).toISOString()
     }
 
     await couponMutation.mutateAsync(dataSend, {
@@ -50,10 +48,9 @@ const AddCouponDetail: FC<TAddCouponDetailProps> = ({ type = 'create' }) => {
   const handleUpdateSubmit = async () => {
     const dataSend = {
       ...form.values,
-      startDate: new Date(form.values.startDate ?? '').toISOString(),
-      endDate: new Date(form.values.endDate ?? '').toISOString()
+      startDate: dayjs(convertFormat(form.values.startDate)).toISOString(),
+      endDate: dayjs(convertFormat(form.values.endDate)).toISOString()
     }
-
     await updateCouponMutation.mutateAsync(
       { params: dataSend, id: id ?? '' },
       {
@@ -64,12 +61,17 @@ const AddCouponDetail: FC<TAddCouponDetailProps> = ({ type = 'create' }) => {
   }
 
   useEffect(() => {
-    if (type === 'edit' && data && data.length) {
-      const selectedCoupon = data.find((coupon) => coupon._id === id)
-      form.setValues({ ...selectedCoupon })
+    if (type === 'edit' && data) {
+      form.setValues({
+        ...data,
+        startDate: prettyDate(data.startDate),
+        endDate: prettyDate(data.endDate)
+      })
     }
     form.resetDirty()
   }, [data])
+
+  console.log(form.values)
 
   return (
     <CreateCouponFormProvider form={form}>

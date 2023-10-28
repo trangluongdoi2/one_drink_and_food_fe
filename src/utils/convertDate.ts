@@ -23,4 +23,10 @@ export const parseDateFirebase = (time: string) => {
   }
 }
 
-export const prettyDate = (date?: string) => (date ? dayjs(date).format(DATE_FORMAT) : '-')
+export const prettyDate = (date?: string, format: string | undefined = DATE_FORMAT) =>
+  date ? dayjs(date).format(format) : '-'
+
+/*
+ **** Convert DD/MM/YYYY into YYYY/MM/DD
+ */
+export const convertFormat = (date?: string) => date?.split('/').reverse().join('/')

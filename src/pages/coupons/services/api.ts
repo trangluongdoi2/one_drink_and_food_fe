@@ -14,16 +14,21 @@ type TUseUpdateCouponService = {
 }
 
 export default class CouponApi extends Api {
-  async findAll() {
-    const res = await this.get(COUPON_URL)
-    return res.data
+  async findAll(): Promise<TCouponType[]> {
+    const { data } = await this.get(`${COUPON_URL}/applies-to/all`)
+    return data ?? []
   }
 
-  async findWithPagination(params: TGetCouponParams): Promise<TCouponType[]> {
+  async findWithPagination(params?: TGetCouponParams): Promise<TCouponType[]> {
     const { data } = await this.get(COUPON_URL, {
       params: params
     })
-    return data?.data ?? []
+    return data ?? []
+  }
+
+  async findById(id: string): Promise<TCouponType> {
+    const { data } = await this.get(`${COUPON_URL}/${id}`)
+    return data ?? []
   }
 
   async createCoupon(params: Partial<TCouponType>): Promise<TCouponType> {

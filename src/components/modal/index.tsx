@@ -20,7 +20,7 @@ const CustomModal = ({
   },
   title,
   content,
-  confirmColor = { color: 'blue' },
+  confirmColor = { color: 'dark' },
   onCancel = () => undefined,
   onConfirm
 }: CustomModalProps) => {

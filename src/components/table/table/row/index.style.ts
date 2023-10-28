@@ -27,6 +27,10 @@ export const useStyles = createStyles((theme, { isSelected }: { isSelected: bool
     width: '100%',
     fontSize: 12
   },
+  column: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  },
   td: {
     input: {
       backgroundColor: theme.colors.dark[3],
