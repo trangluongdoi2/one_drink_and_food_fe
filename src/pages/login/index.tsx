@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { TextInput, PasswordInput, Paper, Title, Container, Button, Stack, Image, Box, Center } from '@mantine/core'
 import { debounce } from 'lodash'
+import AuthApi from '@/features/auth'
 import background from '@/assets/image/logo-background.png'
 import { OneLogo, UnvisibilityIcon, VisibilityIcon } from '@/assets/icon'
-import AuthApi from '@/features/auth'
-import { login } from '@/firebase/authenticate'
-// import AuthApi from '@/features/auth'
 
 const LoginPage = () => {
   const [userName, setUserName] = useState<string>('')
@@ -18,19 +16,16 @@ const LoginPage = () => {
   const authApi = new AuthApi()
 
   const handleLoginWithEmail = async () => {
-    // const loginInfo = {
-    //   username: userName,
-    //   password: userPassword
-    // }
-    // const data = await authApi.loginAdmin(loginInfo)
-    // if (data?.adminInfo) {
-    //   navigate('/')
-    // } else if (data?.message) {
-    //   setErrorMessage(data.message)
-    // }
-
-    // for firebase
-    login({ email: userName, password: userPassword, setErrorMessage: setErrorMessage })
+    const loginInfo = {
+      username: userName,
+      password: userPassword
+    }
+    const data = await authApi.loginAdmin(loginInfo)
+    if (data?.adminInfo) {
+      navigate('/')
+    } else if (data?.message) {
+      setErrorMessage(data.message)
+    }
   }
 
   const handleEmailChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,10 +37,6 @@ const LoginPage = () => {
     const { value } = event.target
     setUserPassword(value)
   }, 100)
-
-  if (localStorage.getItem('accessToken')) {
-    return <Navigate to='/' />
-  }
 
   useEffect(() => {
     if (!userName && !userPassword) {
