@@ -9,7 +9,6 @@ export default class CategoryApi extends Api {
   }
 
   async findByProductType(productType: ProductType) {
-    console.log(productType, 'productType...')
     const url = `${API_URL}/categories/${productType}`
     const res = await this.get(url)
     return res.data

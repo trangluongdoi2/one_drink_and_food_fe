@@ -12,12 +12,11 @@ type TLinkItemProps = {
 
 export const LinkItem: FC<TLinkItemProps> = ({ link, selected, setSelected }) => {
   const { classes } = useStyles()
-  const handleOnClick = () => setSelected(link.label)
   const isSelected = selected === link.label
 
   return (
     <Link to={link.link} style={{ textDecoration: 'none' }}>
-      <Text className={clsx(classes.link, { [classes.selected]: isSelected })} onClick={handleOnClick}>
+      <Text className={clsx(classes.link, { [classes.selected]: isSelected })} onClick={() => setSelected(link.label)}>
         {link.label}
       </Text>
     </Link>

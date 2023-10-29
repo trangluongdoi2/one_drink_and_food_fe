@@ -1,17 +1,19 @@
 import { useTranslation } from 'react-i18next'
 import { useLocation, useParams } from 'react-router-dom'
 import { Anchor, Breadcrumbs, Flex, Paper, Stack } from '@mantine/core'
-import { ProductPortfolio } from '../../components/ProductPortfolio'
-import { ProductGrid } from '../../components/ProductGrid'
-import useGetProductTypeAndSubtype from '../../composables/useGetProductTypeAndSubtype'
+import useGetProductTypeAndSubtype from '@/pages/products/composables/useGetProductTypeAndSubtype'
+import { ProductPortfolio } from '@/pages/products/components/ProductPortfolio'
+import { ProductGrid } from '@/pages/products/components/ProductGrid'
 import { useStyles } from './index.styles'
+import { useEffect } from 'react'
+import { ProductCard } from '../../components/ProductCard'
 
-export const ProdctBaseThroughType = () => {
+export const ProductBaseThroughType = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const splitPath = useLocation().pathname.split('/')
   const { productType } = useParams() as unknown as any
-  const { productSubTypeList } = useGetProductTypeAndSubtype(productType)
+  const { productData, subTypeArrays } = useGetProductTypeAndSubtype(productType)
 
   const items = [{ title: t(productType), href: `products/${productType}`, currentPath: productType }].map(
     (item, index) => (
@@ -31,12 +33,19 @@ export const ProdctBaseThroughType = () => {
       <Stack spacing={20}>
         <ProductPortfolio isBasePortfolio={true} />
         <Flex direction={'column'} gap={20}>
-          {productSubTypeList?.length ? (
-            productSubTypeList.map((item: any, index: number) => (
-              <ProductGrid key={index} title={item} productSubType={item} />
+          {subTypeArrays?.length ? (
+            subTypeArrays.map((subType: string, index: number) => (
+              <div key={index}>
+                <ProductGrid
+                  key={index}
+                  productSubType={subType}
+                  title={subType}
+                  data={productData[productType].get(subType)}
+                />
+              </div>
             ))
           ) : (
-            <div></div>
+            <ProductCard forNewProduct={true} />
           )}
         </Flex>
       </Stack>

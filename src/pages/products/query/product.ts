@@ -2,6 +2,7 @@ import { useMutation, useQuery } from 'react-query'
 import { ExtractFnReturnType, MutationConfig, QueryConfig, queryClient } from '@/configs/react-query'
 import ProductsApi from '../api/product'
 import { TProductCreateNew, TProductUpdate } from '../type'
+import CategoryApi from '../api/category'
 
 const productApi = new ProductsApi()
 
@@ -36,6 +37,17 @@ export const useAllProductPublishQuery = ({ config }: TProductQueryConfig = {}) 
   return useQuery<ExtractFnReturnType<any>>({
     queryKey: ['products-publish'],
     queryFn: () => productApi.getAllProductPublish(),
+    ...config
+  })
+}
+
+export const useAllProductByProductTypeAndSubType = ({ config }: TProductQueryConfig = {}, input: any) => {
+  const categoryApi = new CategoryApi();
+  return useQuery<ExtractFnReturnType<any>>({
+    queryFn: () => {
+      const data = categoryApi.findByProductType(input.type)
+      return data
+    },
     ...config
   })
 }

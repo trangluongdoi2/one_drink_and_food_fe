@@ -36,7 +36,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
               <TableRowsIcon />
             </ActionIcon>
             <Text fz={18} fw={700}>
-              {t('category')} | {t(title as string)}
+              {t('category')} | {title}
             </Text>
             <ActionIcon onClick={onEditPorfolio}>
               <EditIconLight />

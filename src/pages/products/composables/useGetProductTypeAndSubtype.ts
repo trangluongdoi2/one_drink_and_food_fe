@@ -1,33 +1,59 @@
-import { useEffect, useState } from 'react';
-import CategoryApi from '../api/category';
+import { useCallback, useEffect, useState } from 'react'
 import { ProductType } from '../type'
+import { useCategoryGetByProductType } from '../query/category'
 
-const useGetProductTypeAndSubtype = (producType: ProductType) => {
-  const categoryApi = new CategoryApi()
-  const [productSubTypeList, setProductSubtypeList] = useState<string[]>([])
+const productTypeArr = ['juice', 'coffee', 'tea', 'smoothie', 'yogurt']
 
-  const getProductSubtypeFromType = async () => {
-    const data = await categoryApi.findByProductType(producType)
-    if (data?.length) {
-      const subTypeList = data.map((item: any) => item.name)
-      const subTypeListSet = new Set(subTypeList)
-      setProductSubtypeList(Array.from(subTypeListSet) as string[])
+const useGetProductTypeAndSubtype = (productType: ProductType) => {
+  const { data: productDataThroughType, isFetching, refetch } = useCategoryGetByProductType(productType, {})
+  const [productData, setProductData] = useState<Record<string, any>>({})
+  const [subTypeArrays, setSubTypeArrays] = useState<string[]>([])
+
+  const getSubTypeListFromType = () => {
+    if (!productDataThroughType?.length) {
+      return new Map()
     }
+    const subTypeList = productDataThroughType.map((item: any) => item.name)
+    const subTypeListSet = new Set(subTypeList)
+    const subTypeListArr = Array.from(subTypeListSet) as string[]
+    const newMap = new Map()
+    subTypeListArr.forEach((subType: string) => newMap.set(subType, []))
+    return newMap
   }
 
-  const productSubTypeMap = {
-    juice: ['juiceGlass', 'juiceBottle'],
-    coffee: ['coffeeGlass', 'coffeeBottle'],
-    tea: ['tea1', 'tea2'],
-    smoothie: ['smoothie1', 'smoothie2'],
-    yogurt: ['yogurt1', 'yogurt2']
+  const setSubTypeMap = () => {
+    const cloneData = { ...productData }
+    const subTypeMap = getSubTypeListFromType()
+    cloneData[productType] = subTypeMap
+    if (subTypeMap.size) {
+      for (const key of subTypeMap.keys()) {
+        const dataFilter = productDataThroughType.filter((item: any) => item.name === key)[0]?.products
+        cloneData[productType].set(key, dataFilter)
+      }
+    }
+    setProductData(cloneData)
+    setSubTypeArrays(Array.from(subTypeMap.keys()))
   }
 
   useEffect(() => {
-    getProductSubtypeFromType().catch(console.error)
-  }, [producType])
+    refetch()
+  }, [productType])
 
-  return { productSubTypeMap, productSubTypeList }
+  useEffect(() => {
+    if (!isFetching) {
+      setSubTypeMap()
+    }
+  }, [productType, isFetching])
+
+  useEffect(() => {
+    const initObj: Record<string, any> = {}
+    productTypeArr.forEach((type: string) => {
+      initObj[type] = new Map()
+    })
+    setProductData(initObj)
+  }, [])
+
+  return { subTypeArrays, productData }
 }
 
 export default useGetProductTypeAndSubtype

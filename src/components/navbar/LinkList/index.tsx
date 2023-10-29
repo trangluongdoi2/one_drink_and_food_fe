@@ -10,7 +10,7 @@ type TLinkListProps = {
   setSelected: Dispatch<SetStateAction<string>>
 }
 
-const LinkList: FC<TLinkListProps> = ({ tag, links, selected, setSelected }) => {
+const LinkList: FC<TLinkListProps> = ({ links, selected, setSelected }) => {
   const hasLinks = Array.isArray(links)
 
   if (!hasLinks) return null
@@ -18,7 +18,7 @@ const LinkList: FC<TLinkListProps> = ({ tag, links, selected, setSelected }) => 
   return (
     <Accordion.Panel>
       {links.map((link, index) => (
-        <LinkItem tag={tag} link={link} selected={selected} setSelected={setSelected} key={index} />
+        <LinkItem link={link} selected={selected} setSelected={setSelected} key={index} />
       ))}
     </Accordion.Panel>
   )
