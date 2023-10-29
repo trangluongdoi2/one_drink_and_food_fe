@@ -2,6 +2,7 @@ export interface ProductGridProps {
   productType?: string
   productSubType?: string
   title?: string
+  data: any
 }
 
 export interface ProductOverview {

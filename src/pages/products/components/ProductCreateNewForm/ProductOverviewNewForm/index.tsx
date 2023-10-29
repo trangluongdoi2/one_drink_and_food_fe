@@ -147,8 +147,8 @@ export const ProductOverviewNewForm = () => {
     <Paper className={`${classes.container} create-new-product-card__container`}>
       <ProductAddImageForm
         limitQuantity={8}
-        updateFilePaths={updateFilePaths}
         options={optionImageUploadForm}
+        updateFilePaths={updateFilePaths}
         updateFileStores={updateFileStores}
       />
       <MotionImage motionValue={motionValue} updateMotion={updateMotions} />

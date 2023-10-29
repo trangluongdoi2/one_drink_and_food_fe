@@ -23,9 +23,11 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
     <Paper className={classes.container}>
       {isBasePortfolio ? (
         <Flex className={classes.child} align={'center'} justify={'space-between'}>
-          <Text fz={18} tt='uppercase' fw={700}>
-            + {t('add_new_category')}
-          </Text>
+          <ActionIcon sx={{ width: '100%', justifyContent: 'flex-start' }}>
+            <Text fz={18} fw={700} tt='uppercase' color='#000000'>
+              + {t('add_new_category')}
+            </Text>
+          </ActionIcon>
         </Flex>
       ) : (
         <Flex className={classes.child} align={'center'} justify={'space-between'}>
@@ -34,7 +36,7 @@ export const ProductPortfolio = ({ title, isBasePortfolio = false }: ProductPorf
               <TableRowsIcon />
             </ActionIcon>
             <Text fz={18} fw={700}>
-              {t('category')} | {t(title as string)}
+              {t('category')} | {title}
             </Text>
             <ActionIcon onClick={onEditPorfolio}>
               <EditIconLight />

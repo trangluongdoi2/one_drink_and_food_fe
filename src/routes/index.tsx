@@ -8,7 +8,7 @@ import HomePage from '@/pages/home'
 import LoginPage from '@/pages/login'
 import OrderList from '@/pages/order/features/orderList'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
-import { ProductCreateNew, ProductJuiceGrid } from '@/pages/products'
+import { ProductCreateNew, ProductBaseThroughType } from '@/pages/products'
 import { JuiceType, ProductTypeEnum } from '@/pages/products/type'
 import ProductList from '@/pages/products/views/ProductList'
 import RegisterPage from '@/pages/register'
@@ -16,7 +16,7 @@ import AddCustomer from '@/pages/users/features/addCustomer'
 import ListCustomer from '@/pages/users/features/listCustomer'
 import { ORDER_STATUS } from '@/types/order'
 import { MEMBERSHIP } from '@/types/user'
-import { createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './protectedRoute'
 
 import { default as AddCoupon, default as AddCouponList } from '@/pages/coupons/features/addCouponList'
@@ -161,17 +161,19 @@ export const router = createBrowserRouter([
           },
           {
             path: '/products',
+            // element: <Navigate to='/products/all' />,
+            // element: <div>Product Alls</div>,
             children: [
               {
                 path: '/products/all',
                 element: <ProductList title='Danh sách sản phẩm' query='all' />
               },
               {
-                path: '/products/juice',
-                element: <ProductJuiceGrid />
+                path: '/products/:productType',
+                element: <ProductBaseThroughType />
               },
               {
-                path: '/products/juice/:id',
+                path: '/products/:productType/:id',
                 element: (
                   <ProductContextProvider mode={'update'}>
                     <ProductUpdate type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
@@ -179,41 +181,41 @@ export const router = createBrowserRouter([
                 )
               },
               {
-                path: '/products/juice/juice-glass/create-new',
+                path: '/products/:productType/:productSubtype/create-new',
                 element: (
                   <ProductContextProvider mode={'create-new'}>
                     <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
                   </ProductContextProvider>
                 )
               },
-              {
-                path: '/products/juice/juice-bottled/create-new',
-                element: (
-                  <ProductContextProvider mode={'create-new'}>
-                    <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
-                  </ProductContextProvider>
-                )
-              },
-              {
-                path: '/products/smoothy',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/yogurt',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/tea',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/coffee',
-                element: <ProductAnalytic />
-              },
-              {
-                path: '/products/other',
-                element: <ProductAnalytic />
-              }
+              // {
+              //   path: '/products/juice/juice-bottled/create-new',
+              //   element: (
+              //     <ProductContextProvider mode={'create-new'}>
+              //       <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
+              //     </ProductContextProvider>
+              //   )
+              // },
+              // {
+              //   path: '/products/smoothy',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/yogurt',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/tea',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/coffee',
+              //   element: <ProductAnalytic />
+              // },
+              // {
+              //   path: '/products/other',
+              //   element: <ProductAnalytic />
+              // }
             ]
           },
           {

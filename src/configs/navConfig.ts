@@ -14,11 +14,28 @@ import {
   ActiveGiftIcon,
   ActiveCouponIcon
 } from '@/assets/icon'
+import useTranslationMiddleware from '@/i18n/useTranslationMiddleware'
+
+const { trans } = useTranslationMiddleware()
 
 export type TNavLink = { label: string; link: string }
 
+const productTypeArr = ['juice', 'coffee', 'tea', 'smoothie', 'yogurt']
+
+const productLabel = productTypeArr.map((type: string) => trans(type))
+
+export enum TNavbarTag {
+  OVERVIEW = 'Overview',
+  CUSTOMER = 'Customer',
+  ORDER = 'Order',
+  PRODUCT = 'Product',
+  COUPON = 'Coupon',
+  GIFT = 'Gift'
+}
+
 export type TNavConfig = {
   label: string
+  tag?: TNavbarTag
   icon: string
   active: string
   links: TNavLink[]
@@ -28,6 +45,7 @@ export type TNavConfig = {
 const navConfig: TNavConfig[] = [
   {
     label: 'Tổng quan',
+    tag: TNavbarTag.OVERVIEW,
     icon: OverviewIcon,
     active: ActiveOverviewIcon,
     links: [
@@ -37,6 +55,7 @@ const navConfig: TNavConfig[] = [
   },
   {
     label: 'Khách hàng',
+    tag: TNavbarTag.CUSTOMER,
     icon: UserIcon,
     active: ActiveUserIcon,
     initiallyOpened: false,
@@ -50,6 +69,7 @@ const navConfig: TNavConfig[] = [
   },
   {
     label: 'Đơn hàng',
+    tag: TNavbarTag.ORDER,
     icon: OrderIcon,
     active: ActiveOrderIcon,
     links: [
@@ -63,16 +83,16 @@ const navConfig: TNavConfig[] = [
   },
   {
     label: 'Sản phẩm',
+    tag: TNavbarTag.PRODUCT,
     icon: ProductIcon,
     active: ActiveProductIcon,
     links: [
       { label: 'Danh sách sản phẩm', link: '/products/all' },
-      { label: 'Nước ép', link: '/products/juice' },
-      { label: 'Sinh tố', link: '/products/smoothy' },
-      { label: 'Yogurt', link: '/products/yogurt' },
-      { label: 'Trà', link: '/products/tea' },
-      { label: 'Cà phê', link: '/products/coffee' },
-      { label: 'Vật phẩm', link: '/products/other' }
+      ...productTypeArr.map((type: string, index: number) => ({
+        label: productLabel[index],
+        link: `/products/${type}`
+      })),
+      { label: 'Vật phẩm', link: '/products/others' }
     ]
   },
   {

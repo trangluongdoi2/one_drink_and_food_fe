@@ -7,7 +7,7 @@ import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateN
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
 import { useStyles } from './index.styles'
 import { camelToSnakeCase } from '@/utils/string-utils'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { TProductCreateNew } from '../../type'
 import ProductsApi from '../../api/product'
 import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
@@ -28,6 +28,7 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
   const { classes } = useStyles()
   const productStateData = useProductContext()
   // const { dispatch } = useProductContext();
+  const test = useParams()
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
   const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
@@ -64,21 +65,19 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
   } = useUploadProductThumbsMutation()
 
   const onCreateProduct = async () => {
+    if (productStateData.dirty) {
+      return
+    }
+    setLoading(true)
+    setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
+    const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
+      productType: type as any,
+      productSubType: subType
+    })
+    const authApi = new AuthApi()
+    await authApi.loginAdmin({ username: 'admin', password: '1' })
+    mutateProductCreateNew(input)
     productStateData.dispatch(setProductDirty(false))
-    // if (productStateData.dirty) {
-    //   console.log('Case 1????')
-    //   return
-    // }
-    // setLoading(true)
-    // setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
-    // const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
-    //   productType: type as any,
-    //   productSubType: subType
-    // })
-    // const authApi = new AuthApi()
-    // await authApi.loginAdmin({ username: 'admin', password: '1' })
-    // mutateProductCreateNew(input)
-    // productStateData.dispatch(setProductDirty(false))
   }
 
   const checkValidButton = () => {
@@ -88,23 +87,19 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
 
   useEffect(() => {
     setValidButton(checkValidButton())
-  }, [
-    productStateData.productName,
-    productStateData.auxiliaryName,
-    productStateData.productPrice,
-    productStateData.productQuantity
-  ])
+  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
 
   useEffect(() => {
     if (isSuccessProductCreateNew) {
-      const formData = new FormData()
-      if (tempPhotoStores?.length) {
-        for (let i = 0; i < tempPhotoStores.length; i++) {
-          formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
-        }
-      }
-      const productId = createdProduct._id
-      mutateProductUploadThumbs({ id: productId, thumbs: formData })
+      console.log(JSON.parse(JSON.stringify(createdProduct)), 'createdProduct....')
+      // const formData = new FormData()
+      // if (tempPhotoStores?.length) {
+      //   for (let i = 0; i < tempPhotoStores.length; i++) {
+      //     formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
+      //   }
+      // }
+      // const productId = createdProduct._id
+      // mutateProductUploadThumbs({ id: productId, thumbs: formData })
     }
   }, [isSuccessProductCreateNew])
 
@@ -113,6 +108,11 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
       setLoading(false)
     }
   }, [isSuccessProductCreateNew, isSuccessProductUploadThumbs])
+
+  useEffect(() => {
+    // console.log();
+    console.log(test, 'test....')
+  }, [])
 
   return (
     <Paper className={classes.container}>
@@ -132,7 +132,6 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
             >
               {t('create_new_product')}
             </Button>
-            {/* <Button onClick={test}>Test...</Button> */}
           </div>
         </Paper>
       </Stack>

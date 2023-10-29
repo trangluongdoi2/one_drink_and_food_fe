@@ -1,9 +1,10 @@
-import { TNavLink } from '@/configs/navConfig'
+import { TNavLink, TNavbarTag } from '@/configs/navConfig'
 import { Accordion } from '@mantine/core'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { LinkItem } from '../LinkItem'
 
 type TLinkListProps = {
+  tag?: TNavbarTag
   links: TNavLink[]
   selected: string
   setSelected: Dispatch<SetStateAction<string>>
