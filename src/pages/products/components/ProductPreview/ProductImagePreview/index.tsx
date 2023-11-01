@@ -21,7 +21,11 @@ export const ProductImagePreview = () => {
   const [slides, setSlides] = useState<string[]>([])
 
   useEffect(() => {
-    setSlides([...filePaths])
+    if (filePaths?.length) {
+      setSlides([...filePaths])
+    } else {
+      setSlides(['', '', '', '', '', '', '', ''])
+    }
   }, [filePaths])
 
   return (

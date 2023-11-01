@@ -1,4 +1,5 @@
 import { clone } from '@/utils/utility'
+import { cloneDeep } from 'lodash'
 import { TProductCreateNewAtribute, TProductThumbs } from '@/pages/products/type'
 import { ProductState, ProductType, ProductTypeAction } from './type'
 
@@ -37,7 +38,7 @@ const pureProductAttributes: TProductCreateNewAtribute[] = [
     appear: true,
     options: [
       {
-        text: 'Ít đá',
+        text: 'Nhiều đá',
         price: 0
       }
     ]
@@ -100,7 +101,7 @@ const pureProductThumbs: TProductThumbs[] = [
   }
 ]
 
-export const initinalState: ProductState = {
+export const initinalState: ProductState | any = {
   // dirty: false,
   productName: '',
   productMainIngredients: 'Ổi',
@@ -142,9 +143,17 @@ export const initinalState: ProductState = {
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
-  let attributes = clone(state.attributes ?? [])
-  const listInformation = clone(state.listInformation ?? [])
+  let attributes = [] as any
+  let listInformation = [] as any
+  if (state?.attributes?.length) {
+    attributes = cloneDeep(state.attributes)
+  }
+  if (state?.listInformation?.length) {
+    listInformation = cloneDeep(state.listInformation)
+  }
   switch (type) {
+    case ProductType.SET_INIT_PRODUCT_DATA:
+      return payload
     case ProductType.SET_PRODUCT_DIRTY:
       return {
         ...state,
@@ -198,7 +207,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         ...state,
         dirty: true,
         photos: {
-          ...state.photos,
+          ...state?.photos,
           filePaths: [...payload]
         }
       }
@@ -224,6 +233,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         productMainIngredients: payload.data
       }
     case ProductType.SET_PRODUCT_ATTRIBUTES: {
+      console.log(ProductType.SET_PRODUCT_ATTRIBUTES, 'set product attributes..')
       const index = attributes.findIndex((attr: any) => attr.value === payload.attrVal)
       if (index !== -1) {
         attributes[index].options = [...payload.options]

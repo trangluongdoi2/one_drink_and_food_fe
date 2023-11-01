@@ -33,6 +33,11 @@ import {
   ReorderProductAttributesList
 } from './type'
 
+export const setInitProductData = (value: any): any => ({
+  type: ProductType.SET_INIT_PRODUCT_DATA,
+  payload: value
+})
+
 export const setProductDirty = (value: boolean): SetProductDirty => ({
   type: ProductType.SET_PRODUCT_DIRTY,
   payload: value

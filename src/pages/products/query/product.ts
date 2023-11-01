@@ -3,6 +3,7 @@ import { ExtractFnReturnType, MutationConfig, QueryConfig, queryClient } from '@
 import ProductsApi from '../api/product'
 import { TProductCreateNew, TProductUpdate } from '../type'
 import CategoryApi from '../api/category'
+import { AdminApi } from '@/api/admin'
 
 const productApi = new ProductsApi()
 
@@ -65,9 +66,6 @@ export const useProductCreateMutation = ({ config }: TProductMutationConfig = {}
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['category-create'] })
     },
-    // onSettled: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['category-create'] })
-    // },
     ...config,
     mutationFn: (input: TProductCreateNew) => productApi.create(input)
   })
@@ -98,5 +96,27 @@ export const useRemoveProductThumbsMutation = ({ config }: TProductMutationConfi
     ...config,
     // @ts-ignore
     mutationFn: (input: any) => productApi.removeProductThumbs(input)
+  })
+}
+
+export const usePublishProductByIdMutation = ({ config }: TProductMutationConfig = {}) => {
+  const adminApi = new AdminApi()
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['product-publish-by-id'] })
+    },
+    ...config,
+    mutationFn: (productId: string) => adminApi.publishProductById(productId)
+  })
+}
+
+export const useUnPublishProductByIdMutation = ({ config }: TProductMutationConfig = {}) => {
+  const adminApi = new AdminApi()
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['product-unpublish-by-id'] })
+    },
+    ...config,
+    mutationFn: (productId: string) => adminApi.unPublishProductById(productId)
   })
 }

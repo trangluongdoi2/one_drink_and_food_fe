@@ -3,6 +3,7 @@ import { createStyles } from '@mantine/core'
 export const useStyles = createStyles(() => ({
   container: {
     padding: '8px 40px',
+    paddingBottom: 0,
     marginBottom: '16px'
   },
   ['container--focused']: {

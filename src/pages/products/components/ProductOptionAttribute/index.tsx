@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionIcon, Flex, Paper, Stack, Text } from '@mantine/core'
+import { ActionIcon, Box, Flex, Stack, Text } from '@mantine/core'
+import { useClickOutside } from '@mantine/hooks'
 import {
+  AddFillIcon,
+  CloseButton,
   DeleteIcon,
   EditIconDark,
   EditIconLight,
   SelectOptionDarkIcon,
-  SelectOptionLightIcon,
-  CloseButton,
-  AddFillIcon
+  SelectOptionLightIcon
 } from '@/assets/icon'
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { AppInput } from '@/components/input'
-import { useClickOutside } from '@mantine/hooks'
-import { TProductAttributeOption, TProductCreateNewAtribute } from '../../type'
+import { TProductAttributeOption, TProductCreateNewAtribute } from '@/pages/products/type'
 import { useStyles } from './index.styles'
 
 type TProductOptionComponentProps = {
@@ -46,7 +46,6 @@ export const ProductOptionComponent = ({
   addOption
 }: TProductOptionComponentProps) => {
   const { t } = useTranslation()
-  const { classes } = useStyles()
   const [isInvalidText, setIsInvalidText] = useState<boolean>(false)
   const [isInvalidPrice, setIsInvalidPrice] = useState<boolean>(false)
   const [isInvalid, setInvalid] = useState<boolean>(isInvalidText || isInvalidPrice)
@@ -171,11 +170,15 @@ export const ProductOptionAttribute = ({
     updateAttributeOptions && updateAttributeOptions(newOptionList)
   }
 
+  useEffect(() => {
+    setIsActive(attribute.appear)
+    setOptionList(attribute.options)
+    setIsOption(attribute.manyChoices || attribute.atLeastOne)
+    setActiveManyChoices(attribute.manyChoices)
+  }, [attribute])
+
   return (
-    <Paper
-      ref={ref}
-      className={isFocused ? `${classes.container} ${classes['container--focused']}` : classes.container}
-    >
+    <Box ref={ref} className={isFocused ? `${classes.container} ${classes['container--focused']}` : classes.container}>
       <Stack>
         <Flex justify={'space-between'} align={'center'}>
           <Flex align={'center'} columnGap={12.5}>
@@ -231,6 +234,6 @@ export const ProductOptionAttribute = ({
         </Flex>
         <div className={classes.border}></div>
       </Stack>
-    </Paper>
+    </Box>
   )
 }

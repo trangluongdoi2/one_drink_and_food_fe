@@ -106,7 +106,10 @@ export const TypeInput = ({
       form.setFieldError(field, t('un_valid', { field: t(useConvertField(field)) }))
       return
     }
-    updateInput({ value: form.getInputProps(field)?.value, field })
+    updateInput({
+      value: field === 'price' ? Number(form.getInputProps(field)?.value) : form.getInputProps(field)?.value,
+      field
+    })
     dispatch(setProductDirty(false))
   }
 
@@ -197,6 +200,10 @@ export const AppInput = ({
   useEffect(() => {
     checkIsFocused && checkIsFocused(focused)
   }, [focused])
+
+  useEffect(() => {
+    form.setFieldValue(field, value)
+  }, [value])
 
   return (
     <UserFormProvider form={form}>

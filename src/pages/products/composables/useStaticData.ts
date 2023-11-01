@@ -267,7 +267,7 @@ const editProductData = {
   updatedAt: '2023-09-12T10:59:25.748Z',
   productSlug: 'san-pham-1',
   introduction: 'Gioi thieu ehehhe',
-  __v: 0
+  __v: 0,
 }
 
 export { test, productAddTest, testName, productAttribue, editProductData }

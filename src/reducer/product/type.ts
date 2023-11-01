@@ -12,6 +12,7 @@ export interface ProductState extends TProductCreateNew {
 }
 
 export enum ProductType {
+  SET_INIT_PRODUCT_DATA = 'SET_INIT_PRODUCT_DATA',
   SET_PRODUCT_DIRTY = 'SET_PRODUCT_DIRTY',
   SET_PRODUCT_NAME = 'SET_PRODUCT_NAME',
   SET_AUXILIARY_NAME = 'SET_AUXILIARY_NAME',
@@ -43,6 +44,10 @@ export enum ProductType {
   UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO = 'UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO'
 }
 
+export interface InitData {
+  type: ProductType.SET_INIT_PRODUCT_DATA
+  payload: any
+}
 export interface SetProductDirty {
   type: ProductType.SET_PRODUCT_DIRTY
   payload: boolean
@@ -203,6 +208,7 @@ export interface UpdateInfoItemsInProductInfo {
 }
 
 export type ProductTypeAction =
+  | InitData
   | SetProductDirty
   | SetProductName
   | SetAuxiliaryName

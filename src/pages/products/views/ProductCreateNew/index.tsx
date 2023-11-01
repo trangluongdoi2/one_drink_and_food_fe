@@ -1,46 +1,36 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation, useParams } from 'react-router-dom'
 import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
-import { v4 as uuidv4 } from 'uuid'
-import { clone } from '@/utils/utility'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
-import { useStyles } from './index.styles'
-import { camelToSnakeCase } from '@/utils/string-utils'
-import { useLocation, useParams } from 'react-router-dom'
-import { TProductCreateNew } from '../../type'
-import ProductsApi from '../../api/product'
 import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
-import CategoryApi from '../../api/category'
-import { useProductCreateMutation, useUploadProductThumbsMutation } from '../../query/product'
-import { useEffect, useState } from 'react'
-import AuthApi from '@/features/auth'
-import { ProductType } from '@/reducer/product/type'
 import { setProductDirty } from '@/reducer/product/action'
+import {
+  useProductCreateMutation,
+  usePublishProductByIdMutation,
+  useUploadProductThumbsMutation
+} from '../../query/product'
+import { TProductCreateNew } from '../../type'
+import { useStyles } from './index.styles'
 
-type Props = {
-  type: string
-  subType: string
-}
-
-export const ProductCreateNew = ({ type, subType }: Props) => {
+export const ProductCreateNew = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const productStateData = useProductContext()
-  // const { dispatch } = useProductContext();
-  const test = useParams()
+  const { productType, productSubType } = useParams()
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
   const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  // const [productCreateData, setProductCreateData] = useState<TProductCreateNew | undefined>()
 
   const items = [
-    { title: t(type), href: `products/${type}`, currentPath: type },
-    { title: t(subType), href: `products/${type}`, currentPath: subType },
+    { title: t(productType ?? ''), href: `products/${productType}`, currentPath: productType },
+    { title: productSubType, href: `products/${productType}`, currentPath: productSubType },
     {
       title: t('add_product'),
-      href: `products/${type}/${camelToSnakeCase(subType)}/create-new`,
+      href: `products/${productType}/${productSubType ?? ''}/create-new`,
       currentPath: 'create-new'
     }
   ].map((item, index) => (
@@ -58,11 +48,10 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     data: createdProduct,
     isSuccess: isSuccessProductCreateNew
   } = useProductCreateMutation()
-  const {
-    mutate: mutateProductUploadThumbs,
-    data: dataImageUpload,
-    isSuccess: isSuccessProductUploadThumbs
-  } = useUploadProductThumbsMutation()
+  const { mutate: mutateProductUploadThumbs, isSuccess: isSuccessProductUploadThumbs } =
+    useUploadProductThumbsMutation()
+
+  const { mutate: mutateProductPublishById, isSuccess: isSuccessProductPublishById } = usePublishProductByIdMutation()
 
   const onCreateProduct = async () => {
     if (productStateData.dirty) {
@@ -71,17 +60,15 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
     setLoading(true)
     setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
     const input: TProductCreateNew = await useConverterStateToApiData(productStateData, {
-      productType: type as any,
-      productSubType: subType
+      productType: productType as any,
+      productSubType: productSubType as any
     })
-    const authApi = new AuthApi()
-    await authApi.loginAdmin({ username: 'admin', password: '1' })
     mutateProductCreateNew(input)
     productStateData.dispatch(setProductDirty(false))
   }
 
   const checkValidButton = () => {
-    const { productName, auxiliaryName, productPrice, productQuantity } = productStateData
+    const { productName, productPrice, productQuantity } = productStateData
     return !!productName && !!productPrice && !!productQuantity
   }
 
@@ -91,28 +78,29 @@ export const ProductCreateNew = ({ type, subType }: Props) => {
 
   useEffect(() => {
     if (isSuccessProductCreateNew) {
-      console.log(JSON.parse(JSON.stringify(createdProduct)), 'createdProduct....')
-      // const formData = new FormData()
-      // if (tempPhotoStores?.length) {
-      //   for (let i = 0; i < tempPhotoStores.length; i++) {
-      //     formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
-      //   }
-      // }
-      // const productId = createdProduct._id
-      // mutateProductUploadThumbs({ id: productId, thumbs: formData })
+      const productId = createdProduct._id
+      mutateProductPublishById(productId)
     }
   }, [isSuccessProductCreateNew])
 
   useEffect(() => {
-    if (isSuccessProductCreateNew && isSuccessProductCreateNew) {
-      setLoading(false)
+    if (isSuccessProductPublishById) {
+      const formData = new FormData()
+      if (tempPhotoStores?.length) {
+        for (let i = 0; i < tempPhotoStores.length; i++) {
+          formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
+        }
+      }
+      const productId = createdProduct._id
+      mutateProductUploadThumbs({ id: productId, thumbs: formData })
     }
-  }, [isSuccessProductCreateNew, isSuccessProductUploadThumbs])
+  }, [isSuccessProductPublishById])
 
   useEffect(() => {
-    // console.log();
-    console.log(test, 'test....')
-  }, [])
+    if (isSuccessProductCreateNew && isSuccessProductPublishById && isSuccessProductUploadThumbs) {
+      setLoading(false)
+    }
+  }, [isSuccessProductCreateNew, isSuccessProductPublishById, isSuccessProductUploadThumbs])
 
   return (
     <Paper className={classes.container}>

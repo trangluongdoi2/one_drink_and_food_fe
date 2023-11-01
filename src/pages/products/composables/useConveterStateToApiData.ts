@@ -26,19 +26,18 @@ export default async function useConveterStateToApiData(
   removeAttributes.forEach((attr: string) => {
     delete cloneInput[attr]
   })
-  let categoryId = await categoryApi.findByProductType(options?.productType as any)
-  console.log(categoryId, 'categoryId...')
-  if (!categoryId?.length) {
-    categoryId = await categoryApi.create({
+  let categoryData = await categoryApi.findByProductType(options?.productType as any)
+  if (!categoryData?.length) {
+    categoryData = await categoryApi.create({
       name: options?.productSubType as string,
       productType: options?.productType as ProductType,
       order: 0
-      // @ts-ignore
-    })._id
+    })
   }
+  const categoryId = categoryData.filter((item: any) => item.name === options?.productSubType)[0]._id
   return {
     ...(cloneInput as any),
-    category: categoryId[0]._id
+    category: categoryId
     // productName: 'Dưa lưới',
     // auxiliaryName: 'Nữ Hoàng Vitamin C',
     // productMainIngredients: 'Ổi x Mật Ong',

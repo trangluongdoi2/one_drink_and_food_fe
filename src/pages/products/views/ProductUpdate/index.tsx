@@ -1,38 +1,31 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
-import AuthApi from '@/features/auth'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
 import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
-import { camelToSnakeCase } from '@/utils/string-utils'
 import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
 import { useProductUpdateMutation, useUploadProductThumbsMutation } from '../../query/product'
 import { TProductUpdate } from '../../type'
 import { useStyles } from './index.styles'
 
-type Props = {
-  type: string
-  subType: string
-}
-
-export const ProductUpdate = ({ type, subType }: Props) => {
+export const ProductUpdate = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const productStateData = useProductContext()
+  const { productType, productSubType } = useParams()
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
   const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  // const [productCreateData, setProductCreateData] = useState<TProductCreateNew | undefined>()
 
   const items = [
-    { title: t(type), href: `products/${type}`, currentPath: type },
-    { title: t(subType), href: `products/${type}`, currentPath: subType },
+    { title: t(productType ?? ''), href: `products/${productType}`, currentPath: productType },
+    { title: productSubType, href: `products/${productType}`, currentPath: productSubType },
     {
       title: t('add_product'),
-      href: `products/${type}/${camelToSnakeCase(subType)}/create-new`,
+      href: `products/${productType}/${productSubType ?? ''}/create-new`,
       currentPath: 'create-new'
     }
   ].map((item, index) => (
@@ -61,18 +54,16 @@ export const ProductUpdate = ({ type, subType }: Props) => {
     setLoading(true)
     setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
     const input: TProductUpdate = await useConverterStateToApiData(productStateData, {
-      productType: type as any,
-      productSubType: subType
+      productType: productType as any,
+      productSubType: productSubType as any
     })
-    const authApi = new AuthApi()
-    await authApi.loginAdmin({ username: 'admin', password: '1' })
     setLoading(false)
     // @ts-ignore
     mutateProductUpdate(input)
   }
 
   const checkValidButton = () => {
-    const { productName, auxiliaryName, productPrice, productQuantity } = productStateData
+    const { productName, productPrice, productQuantity } = productStateData
     return !!productName && !!productPrice && !!productQuantity
   }
 

@@ -1,4 +1,4 @@
-import { Paper } from '@mantine/core'
+import { Box, Paper } from '@mantine/core'
 import { useStyles } from './index.styles'
 import { ProductImagePreview } from '@/pages/products/components/ProductPreview/ProductImagePreview'
 import { ProductOverviewPreview } from '@/pages/products/components/ProductPreview/ProductOverviewPreview'
@@ -8,7 +8,7 @@ export const ProductPreview = () => {
   const { classes } = useStyles()
   return (
     <Paper className='create-new-product-card__container'>
-      <Paper className={classes.container}>
+      <Box className={classes.container}>
         <div className={classes.container__image}>
           <ProductImagePreview />
         </div>
@@ -18,7 +18,7 @@ export const ProductPreview = () => {
         <div className={classes.container__info}>
           <ProductInfoPreview />
         </div>
-      </Paper>
+      </Box>
     </Paper>
   )
 }

@@ -116,6 +116,7 @@ export const ProductOverviewNewForm = () => {
   const updateInput = (data: { value: string | number; field: string }) => {
     switch (data.field) {
       case 'productName':
+        console.log('???? setProductName...')
         dispatch(setProductName(data.value as string))
         break
       case 'auxiliaryName':

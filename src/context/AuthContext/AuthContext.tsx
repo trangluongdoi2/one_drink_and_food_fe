@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { getAuth, User, UserInfo } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import AuthApi from '@/features/auth'
 
 const initialAuthContext = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  user: {} as User | null | UserInfo | any
+  user: {
+    username: 'admin',
+    password: '1'
+  }
 }
-
 export const AuthContext = createContext(initialAuthContext)
 
 interface AuthProviderProps {
@@ -15,30 +15,19 @@ interface AuthProviderProps {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState(null)
-  const navigate = useNavigate()
-  const auth = getAuth()
 
   const value = useMemo(() => ({ user, setUser }), [user])
 
+  const loginAdmin = async () => {
+    const authApi = new AuthApi()
+    const data = await authApi.loginAdmin(initialAuthContext.user as any)
+  }
+
   useEffect(() => {
-    const unsubcribed = auth.onAuthStateChanged((user: any) => {
-      if (user?.uid) {
-        setUser(user)
-        localStorage.setItem('accessToken', user.accessToken)
-        return
-      }
+    loginAdmin().catch((err) => console.error(err))
+  }, [])
 
-      setUser(null)
-      localStorage.clear()
-      navigate('/login')
-    })
-
-    return () => {
-      unsubcribed()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth])
-
+  // @ts-ignore
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 

@@ -173,29 +173,21 @@ export const router = createBrowserRouter([
                 element: <ProductBaseThroughType />
               },
               {
-                path: '/products/:productType/:id',
+                path: '/products/:productType/:productSubType/:id',
                 element: (
                   <ProductContextProvider mode={'update'}>
-                    <ProductUpdate type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
+                    <ProductUpdate />
                   </ProductContextProvider>
                 )
               },
               {
-                path: '/products/:productType/:productSubtype/create-new',
+                path: '/products/:productType/:productSubType/create-new',
                 element: (
                   <ProductContextProvider mode={'create-new'}>
-                    <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
+                    <ProductCreateNew />
                   </ProductContextProvider>
                 )
-              },
-              // {
-              //   path: '/products/juice/juice-bottled/create-new',
-              //   element: (
-              //     <ProductContextProvider mode={'create-new'}>
-              //       <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
-              //     </ProductContextProvider>
-              //   )
-              // },
+              }
               // {
               //   path: '/products/smoothy',
               //   element: <ProductAnalytic />

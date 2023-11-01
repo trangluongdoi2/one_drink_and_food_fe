@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AddFillIcon, DeleteIcon } from '@/assets/icon'
-import { ProductCardProps } from '@/pages/products/type'
-import { camelToSnakeCase } from '@/utils/string-utils'
 import { ActionIcon, Button, Flex, Image, Paper, Stack, Text } from '@mantine/core'
+import { ProductCardProps } from '@/pages/products/type'
+import { AddFillIcon, DeleteIcon } from '@/assets/icon'
 import { useStyles } from './index.styles'
 
 export const ProductCard = ({ forNewProduct = false, productSubType, item }: ProductCardProps) => {
@@ -11,10 +11,12 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
   const { classes } = useStyles()
   const { t } = useTranslation()
   const { productType } = useParams()
+  const [subType, setSubType] = useState<string>(
+    productSubType ?? productSubType ?? `${productType ?? +Math.floor(Math.random() * 10)}`
+  )
   const onCreateNewProduct = () => {
     if (forNewProduct) {
-      const subType = productSubType ?? `${productType ?? +Math.floor(Math.random() * 10)}`
-      navigation(`/products/${productType}/${camelToSnakeCase(subType)}/create-new`)
+      navigation(`/products/${productType}/${subType}/create-new`)
       return
     }
   }
@@ -25,8 +27,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
 
   const onEditProduct = () => {
     const productId = item._id as string
-    navigation(`/products/${productType}/${productId}`)
-    // const productApi = new ProductsApi()
+    navigation(`/products/${productType}/${subType}/${productId}`)
   }
 
   return (

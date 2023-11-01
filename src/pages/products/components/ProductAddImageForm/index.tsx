@@ -8,6 +8,8 @@ import { DragDropGridHandler } from '@/components/DragDropGridHandler'
 import { DragDropGridConfigs } from '@/components/DragDropGridHandler/type'
 import { useStyles } from './index.styles'
 import { blobToBase64 } from '@/utils/string-utils'
+import { useProductContext } from '@/context/ProductContext/ProductContext'
+import { TProductThumbs } from '../../type'
 
 type Props = {
   limitQuantity: number
@@ -33,6 +35,10 @@ export const PreviewImageZone = ({ fileURL, index, removeFile }: PreviewImageZon
   const handleMouseLeave = () => {
     setIsHovering(false)
   }
+
+  // useEffect(() => {
+  //   console.log(fileURL, 'fileURL...')
+  // }, [])
 
   return (
     <Box
@@ -73,6 +79,8 @@ export const ProductAddImageForm = ({
     totalItems: limitQuantity
   }
 
+  const { productThumbs } = useProductContext()
+
   const [dragDropItems, setDragDropItems] = useState<Array<any>>(Array.from({ length: limitQuantity }, () => ''))
   const [fileStores, setFileStores] = useState<File[] | any>(Array.from({ length: limitQuantity }, () => null))
 
@@ -111,10 +119,18 @@ export const ProductAddImageForm = ({
   useEffect(() => {
     updateFilePaths(dragDropItems)
     updateFileStores(fileStores)
+    console.log(dragDropItems, 'dragDropItems....')
   }, [dragDropItems, fileStores])
 
+  useEffect(() => {
+    if (productThumbs?.length) {
+      const urlMap = productThumbs.map((thumb: TProductThumbs) => thumb.url) as string[]
+      setDragDropItems(urlMap)
+    }
+  }, [productThumbs])
+
   return (
-    <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>
+    <Box className={`${!isActive ? classes.containerDisabled : ''}`}>
       {!hiddenTitle && <Text className={classes.title}>{t('add_image')}</Text>}
       <DragDropGridHandler configs={configs} onChange={onChange}>
         {dragDropItems?.length &&
@@ -136,7 +152,7 @@ export const ProductAddImageForm = ({
             </GridItem>
           ))}
       </DragDropGridHandler>
-      <Paper className={classes.imageContainer}></Paper>
-    </Paper>
+      {/* <Paper className={classes.imageContainer}></Paper> */}
+    </Box>
   )
 }
