@@ -105,6 +105,10 @@ export interface TProductCreateNew {
   note: string
 }
 
+// export interface TProductDetail {
+
+// }
+
 export type TProductUpdate = TProductCreateNew
 
 export interface TCategoryCreate {

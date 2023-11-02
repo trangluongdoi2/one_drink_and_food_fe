@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query'
 import { ExtractFnReturnType, MutationConfig, QueryConfig, queryClient } from '@/configs/react-query'
+import { ProductType, TProductCreateNew, TProductUpdate } from '../type'
 import ProductsApi from '../api/product'
-import { TProductCreateNew, TProductUpdate } from '../type'
 import CategoryApi from '../api/category'
 import { AdminApi } from '@/api/admin'
 
@@ -43,7 +43,7 @@ export const useAllProductPublishQuery = ({ config }: TProductQueryConfig = {}) 
 }
 
 export const useAllProductByProductTypeAndSubType = ({ config }: TProductQueryConfig = {}, input: any) => {
-  const categoryApi = new CategoryApi();
+  const categoryApi = new CategoryApi()
   return useQuery<ExtractFnReturnType<any>>({
     queryFn: () => {
       const data = categoryApi.findByProductType(input.type)
@@ -77,7 +77,8 @@ export const useProductUpdateMutation = ({ config }: TProductMutationConfig = {}
       queryClient.invalidateQueries({ queryKey: ['category-update'] })
     },
     ...config,
-    mutationFn: (input: TProductUpdate) => productApi.update(input)
+    mutationFn: (input: { data: TProductUpdate; productType: ProductType }) =>
+      productApi.update(input.data, input.productType)
   })
 }
 

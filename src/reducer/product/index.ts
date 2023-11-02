@@ -153,7 +153,13 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
   }
   switch (type) {
     case ProductType.SET_INIT_PRODUCT_DATA:
-      return payload
+      return {
+        ...payload,
+        photos: {
+          ...state?.photos,
+          // filePaths: [...payload.productThumbs.map((thumb: any) => thumb?.url)]
+        }
+      }
     case ProductType.SET_PRODUCT_DIRTY:
       return {
         ...state,

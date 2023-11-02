@@ -33,7 +33,7 @@ const ProductContextProvider = ({ children, mode }: IContextProviderProps) => {
 
   useEffect(() => {
     if (productDetails && !isFetching) {
-      console.log(productDetails?.productThumbs, 'productDetails.productThumbs..')
+      console.log(productDetails, 'productDetails...')
       dispatch(setInitProductData({ ...productDetails }))
     }
   }, [productDetails, isFetching])

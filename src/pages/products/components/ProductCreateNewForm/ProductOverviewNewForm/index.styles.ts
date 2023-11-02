@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/core'
 
 export const useStyles = createStyles(() => ({
+  container: {
+    // height: '1006px'
+    // flex: 1
+  },
   actionIcon: {
     width: '40px',
     height: '20px'

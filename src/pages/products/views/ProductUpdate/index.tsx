@@ -4,10 +4,14 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
-import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
+import useConverterStateToApiDataUpdate from '@/pages/products/composables/useConverterStateToApiDataUpdate'
 import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
-import { useProductUpdateMutation, useUploadProductThumbsMutation } from '../../query/product'
-import { TProductUpdate } from '../../type'
+import {
+  useProductUpdateMutation,
+  usePublishProductByIdMutation,
+  useUploadProductThumbsMutation
+} from '../../query/product'
+import { ProductType, ProductTypeEnum, TProductUpdate } from '../../type'
 import { useStyles } from './index.styles'
 
 export const ProductUpdate = () => {
@@ -17,16 +21,15 @@ export const ProductUpdate = () => {
   const { productType, productSubType } = useParams()
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
-  const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
   const [loading, setLoading] = useState<boolean>(false)
 
   const items = [
     { title: t(productType ?? ''), href: `products/${productType}`, currentPath: productType },
     { title: productSubType, href: `products/${productType}`, currentPath: productSubType },
     {
-      title: t('add_product'),
-      href: `products/${productType}/${productSubType ?? ''}/create-new`,
-      currentPath: 'create-new'
+      title: t('update_product'),
+      href: `products/${productType}/${productSubType ?? ''}/update`,
+      currentPath: 'update'
     }
   ].map((item, index) => (
     <Anchor
@@ -38,28 +41,16 @@ export const ProductUpdate = () => {
     </Anchor>
   ))
 
-  const {
-    mutate: mutateProductUpdate,
-    data: updatedProduct,
-    isSuccess: isSuccessProductUpdate
-  } = useProductUpdateMutation()
+  const { mutate: mutateProductUpdate, isSuccess: isSuccessProductUpdate } = useProductUpdateMutation()
 
-  const {
-    mutate: mutateProductUploadThumbs,
-    data: dataImageUpload,
-    isSuccess: isSuccessProductUploadThumbs
-  } = useUploadProductThumbsMutation()
+  const { mutate: mutateProductUploadThumbs, isSuccess: isSuccessProductUploadThumbs } =
+    useUploadProductThumbsMutation()
+
+  const { mutate: mutateProductPublishById, isSuccess: isSuccessProductPublishById } = usePublishProductByIdMutation()
 
   const onUpdateProduct = async () => {
     setLoading(true)
-    setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
-    const input: TProductUpdate = await useConverterStateToApiData(productStateData, {
-      productType: productType as any,
-      productSubType: productSubType as any
-    })
-    setLoading(false)
-    // @ts-ignore
-    mutateProductUpdate(input)
+    mutateProductPublishById(productStateData._id as string)
   }
 
   const checkValidButton = () => {
@@ -68,21 +59,24 @@ export const ProductUpdate = () => {
   }
 
   useEffect(() => {
-    setValidButton(checkValidButton())
-  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
-
-  useEffect(() => {
-    if (isSuccessProductUpdate) {
+    if (isSuccessProductPublishById) {
       const formData = new FormData()
-      if (tempPhotoStores?.length) {
-        for (let i = 0; i < tempPhotoStores.length; i++) {
-          formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
+      if (productStateData.tempPhotoThumbs?.length) {
+        for (let i = 0; i < productStateData.tempPhotoThumbs.length; i++) {
+          formData.append(`thumb${i + 1}`, productStateData.tempPhotoThumbs[i] as any)
         }
       }
-      const productId = updatedProduct._id
+      const productId = productStateData._id
       mutateProductUploadThumbs({ id: productId, thumbs: formData })
+      const input: TProductUpdate = useConverterStateToApiDataUpdate(productStateData)
+      console.log(input, 'input..')
+      mutateProductUpdate({ data: input, productType: (productType ?? ProductTypeEnum.JUICE) as ProductType })
     }
-  }, [isSuccessProductUpdate])
+  }, [isSuccessProductPublishById])
+
+  useEffect(() => {
+    setValidButton(checkValidButton())
+  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
 
   useEffect(() => {
     if (isSuccessProductUpdate && isSuccessProductUploadThumbs) {

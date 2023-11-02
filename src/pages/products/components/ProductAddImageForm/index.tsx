@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GridItem, swap } from 'react-grid-dnd'
-import { ActionIcon, Box, Group, Image, Paper, Text } from '@mantine/core'
+import { ActionIcon, Box, Group, Image, Text } from '@mantine/core'
 import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
 import { AddFillIcon, CloseButton, TableRowsIcon } from '@/assets/icon'
 import { DragDropGridHandler } from '@/components/DragDropGridHandler'
@@ -35,10 +35,6 @@ export const PreviewImageZone = ({ fileURL, index, removeFile }: PreviewImageZon
   const handleMouseLeave = () => {
     setIsHovering(false)
   }
-
-  // useEffect(() => {
-  //   console.log(fileURL, 'fileURL...')
-  // }, [])
 
   return (
     <Box
@@ -119,7 +115,6 @@ export const ProductAddImageForm = ({
   useEffect(() => {
     updateFilePaths(dragDropItems)
     updateFileStores(fileStores)
-    console.log(dragDropItems, 'dragDropItems....')
   }, [dragDropItems, fileStores])
 
   useEffect(() => {
@@ -152,7 +147,6 @@ export const ProductAddImageForm = ({
             </GridItem>
           ))}
       </DragDropGridHandler>
-      {/* <Paper className={classes.imageContainer}></Paper> */}
     </Box>
   )
 }
