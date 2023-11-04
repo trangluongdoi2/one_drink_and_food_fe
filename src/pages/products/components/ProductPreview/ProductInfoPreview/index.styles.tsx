@@ -6,10 +6,11 @@ export const useStyles = createStyles(() => ({
     marginTop: '33px'
   },
   container__category: {
-    '&:nth-of-type(even)': {
-      display: 'flex',
-      flexDirection: 'row-reverse',
+    '> div:nth-of-type(odd)': {
       textAlign: 'right'
+    },
+    '> div:nth-of-type(even)': {
+      flexDirection: 'row-reverse'
     }
   },
   container__carousel: {

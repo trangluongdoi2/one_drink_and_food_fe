@@ -15,6 +15,7 @@ type Props = {
   limitQuantity: number
   hiddenTitle?: boolean
   isActive?: boolean
+  forMainProductThumbs?: boolean
   options?: Record<string, any>
   updateFilePaths: (data: string[]) => void
   updateFileStores: (data: File[]) => void
@@ -63,6 +64,7 @@ export const ProductAddImageForm = ({
   limitQuantity,
   hiddenTitle = false,
   isActive = true,
+  forMainProductThumbs = true,
   updateFilePaths,
   updateFileStores
 }: Props) => {
@@ -118,7 +120,8 @@ export const ProductAddImageForm = ({
   }, [dragDropItems, fileStores])
 
   useEffect(() => {
-    if (productThumbs?.length) {
+    if (productThumbs?.length && forMainProductThumbs) {
+      console.log('Case 1...')
       const urlMap = productThumbs.map((thumb: TProductThumbs) => thumb.url) as string[]
       setDragDropItems(urlMap)
     }

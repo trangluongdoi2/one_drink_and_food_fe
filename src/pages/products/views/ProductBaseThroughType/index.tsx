@@ -5,8 +5,9 @@ import useGetProductTypeAndSubtype from '@/pages/products/composables/useGetProd
 import { ProductPortfolio } from '@/pages/products/components/ProductPortfolio'
 import { ProductGrid } from '@/pages/products/components/ProductGrid'
 import { useStyles } from './index.styles'
-import { useEffect } from 'react'
 import { ProductCard } from '../../components/ProductCard'
+import { ProductTypeEnum } from '../../type'
+import { ProductAnalytic } from '@/pages/overview/features/ProductAnalytic'
 
 export const ProductBaseThroughType = () => {
   const { classes } = useStyles()
@@ -26,6 +27,10 @@ export const ProductBaseThroughType = () => {
       </Anchor>
     )
   )
+
+  if (productType !== ProductTypeEnum.JUICE) {
+    return <ProductAnalytic />
+  }
 
   return (
     <Paper className={classes.container}>

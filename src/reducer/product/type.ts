@@ -7,6 +7,9 @@ import {
 export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
   tempPhotoThumbs?: File[]
+  informationPhotosStates?: Map<string, Array<{ filePaths: string[]; file: File[] }>>
+  // informationPhotosStates?: Map<string, Array>
+  // informationPhotosStates?: Array<
   introduction?: ''
   dirty?: boolean
 }
@@ -57,7 +60,6 @@ export interface SetProductName {
   type: ProductType.SET_PRODUCT_NAME
   payload: string
 }
-
 
 export interface SetAuxiliaryName {
   type: ProductType.SET_AUXILIARY_NAME
@@ -138,7 +140,8 @@ export interface SetPhotosProductInfo {
   type: ProductType.SET_PHOTOS_PRODUCT_INFO
   payload: {
     data: string[]
-    index: number
+    parentIndex: number
+    childIndex: number
   }
 }
 
@@ -146,7 +149,8 @@ export interface SetPhotosStoreProductInfo {
   type: ProductType.SET_PHOTOS_STORE_PRODUCT_INFO
   payload: {
     data: File[]
-    index: number
+    parentIndex: number
+    childIndex: number
   }
 }
 export interface SetProductQuantity {

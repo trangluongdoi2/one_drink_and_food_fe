@@ -107,12 +107,20 @@ export const setContentProductInfo = (value: {
   payload: value
 })
 
-export const setPhotosProductInfo = (value: { data: string[]; index: number }): SetPhotosProductInfo => ({
+export const setPhotosProductInfo = (value: {
+  data: string[]
+  parentIndex: number
+  childIndex: number
+}): SetPhotosProductInfo => ({
   type: ProductType.SET_PHOTOS_PRODUCT_INFO,
   payload: value
 })
 
-export const setPhotosStoreProductInfo = (value: { data: File[]; index: number }): SetPhotosStoreProductInfo => ({
+export const setPhotosStoreProductInfo = (value: {
+  data: File[]
+  parentIndex: number
+  childIndex: number
+}): SetPhotosStoreProductInfo => ({
   type: ProductType.SET_PHOTOS_STORE_PRODUCT_INFO,
   payload: value
 })

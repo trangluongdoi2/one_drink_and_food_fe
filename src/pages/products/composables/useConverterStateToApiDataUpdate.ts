@@ -20,6 +20,7 @@ export default function useConveterStateToApiDataUpdate(
   options?: { productType: ProductType; productSubType: string }
 ): TProductUpdate | any {
   const cloneInput = cloneDeep(input)
+  console.log(cloneInput, 'cloneInput...')
   removeAttributes.forEach((attr: string) => {
     delete cloneInput[attr]
   })

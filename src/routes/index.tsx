@@ -9,7 +9,6 @@ import LoginPage from '@/pages/login'
 import OrderList from '@/pages/order/features/orderList'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
 import { ProductCreateNew, ProductBaseThroughType } from '@/pages/products'
-import { JuiceType, ProductTypeEnum } from '@/pages/products/type'
 import ProductList from '@/pages/products/views/ProductList'
 import RegisterPage from '@/pages/register'
 import AddCustomer from '@/pages/users/features/addCustomer'
@@ -161,8 +160,6 @@ export const router = createBrowserRouter([
           },
           {
             path: '/products',
-            // element: <Navigate to='/products/all' />,
-            // element: <div>Product Alls</div>,
             children: [
               {
                 path: '/products/all',
@@ -178,7 +175,7 @@ export const router = createBrowserRouter([
                   <ProductContextProvider mode={'update'}>
                     <ProductUpdate />
                   </ProductContextProvider>
-                )
+                ),
               },
               {
                 path: '/products/:productType/:productSubType/create-new',
@@ -188,26 +185,6 @@ export const router = createBrowserRouter([
                   </ProductContextProvider>
                 )
               }
-              // {
-              //   path: '/products/smoothy',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/yogurt',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/tea',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/coffee',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/other',
-              //   element: <ProductAnalytic />
-              // }
             ]
           },
           {

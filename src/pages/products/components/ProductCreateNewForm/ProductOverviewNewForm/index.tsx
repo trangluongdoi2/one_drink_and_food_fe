@@ -148,6 +148,7 @@ export const ProductOverviewNewForm = () => {
       <ProductAddImageForm
         limitQuantity={8}
         options={optionImageUploadForm}
+        forMainProductThumbs={true}
         updateFilePaths={updateFilePaths}
         updateFileStores={updateFileStores}
       />

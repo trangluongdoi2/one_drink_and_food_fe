@@ -123,10 +123,14 @@ export const initinalState: ProductState | any = {
       appear: true,
       informationItems: [
         {
-          text: 'Thông tin 1'
+          text: 'Thông tin 1',
+          filePath: [],
+          fileStore: []
         },
         {
-          text: 'Thông tin 2'
+          text: 'Thông tin 2',
+          filePath: [],
+          fileStore: []
         }
       ]
     }
@@ -139,6 +143,7 @@ export const initinalState: ProductState | any = {
     enabled: true,
     motionTime: 1000
   },
+  informationPhotosStates: new Map(),
   tempPhotoThumbs: []
 }
 
@@ -150,16 +155,19 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
   }
   if (state?.listInformation?.length) {
     listInformation = cloneDeep(state.listInformation)
+    // for (const item of listInformation) {
+    //   state.informationPhotosStates = new Map()
+    //   const data = { filePath: [], file: [] }
+    //   state.informationPhotosStates.set(
+    //     item.title,
+    //     item.informationItems.map(() => data)
+    //   )
+    // }
   }
+
   switch (type) {
     case ProductType.SET_INIT_PRODUCT_DATA:
-      return {
-        ...payload,
-        photos: {
-          ...state?.photos,
-          // filePaths: [...payload.productThumbs.map((thumb: any) => thumb?.url)]
-        }
-      }
+      return payload
     case ProductType.SET_PRODUCT_DIRTY:
       return {
         ...state,
@@ -344,22 +352,27 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
 
     // Todo
-    // case ProductType.SET_PHOTOS_PRODUCT_INFO: {
-    //   const { index, data } = payload
-    //   infos[index].infoPhotos = [...data]
-    //   return {
-    //     ...state,
-    //     infos
-    //   }
-    // }
-    // case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
-    //   const { index, data } = payload
-    //   infos[index].infoPhotosStore = [...data]
-    //   return {
-    //     ...state,
-    //     infos
-    //   }
-    // }
+    case ProductType.SET_PHOTOS_PRODUCT_INFO: {
+      const { parentIndex, childIndex, data } = payload
+      listInformation[parentIndex].informationItems[childIndex].filePath = [...data]
+      return {
+        ...state,
+        dirty: true,
+        listInformation: [...listInformation]
+      }
+    }
+    case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
+      const { parentIndex, childIndex, data } = payload
+      listInformation[parentIndex].informationItems[childIndex].fileStore = [...data]
+      return {
+        ...state,
+        dirty: true,
+        listInformation: [...listInformation]
+      }
+      return {
+        ...state
+      }
+    }
     // default:
     //   return {
     //     ...state

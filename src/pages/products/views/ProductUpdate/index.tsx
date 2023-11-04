@@ -69,7 +69,6 @@ export const ProductUpdate = () => {
       const productId = productStateData._id
       mutateProductUploadThumbs({ id: productId, thumbs: formData })
       const input: TProductUpdate = useConverterStateToApiDataUpdate(productStateData)
-      console.log(input, 'input..')
       mutateProductUpdate({ data: input, productType: (productType ?? ProductTypeEnum.JUICE) as ProductType })
     }
   }, [isSuccessProductPublishById])

@@ -21,6 +21,8 @@ export const AppCarousel = ({ slides, options, enabled, motionTime = 1000, hasTh
     loop: true
   })
 
+  // const [tempSlides, setTempSlides] = useState<string[]>(slides)
+
   const imageByIndex = (slides: string[], index: number): string => slides[index % slides.length]
 
   const onThumbClick = useCallback(
@@ -70,7 +72,7 @@ export const AppCarousel = ({ slides, options, enabled, motionTime = 1000, hasTh
       <div className={classes.embla__viewport} ref={emblaMainRef}>
         <div className={classes.embla__container}>
           {slides?.length &&
-            slides.map((slide: string, index: number) => (
+            slides?.map((slide: string, index: number) => (
               <div className={classes.embla__slide} key={index}>
                 {slide ? (
                   <Image

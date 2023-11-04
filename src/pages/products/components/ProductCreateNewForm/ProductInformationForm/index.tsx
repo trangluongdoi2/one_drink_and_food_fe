@@ -22,7 +22,7 @@ type Props = {
   infoItem: TProductCreateNewInformation
   index: number
 }
-export const ProductInformationForm = ({ infoItem, index }: Props) => {
+export const ProductInformationForm = ({ infoItem, index: parentIndex }: Props) => {
   const { classes } = useStyles()
   const { t } = useTranslation()
   const { dispatch } = useProductContext()
@@ -34,7 +34,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
   )
 
   const setEnabled = (data: boolean) => {
-    dispatch(setAppearProductInfoItem({ data, index }))
+    dispatch(setAppearProductInfoItem({ data, index: parentIndex }))
   }
 
   const updateNameTopic = (data: string, i = 0) => {
@@ -43,8 +43,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
       // @ts-ignore
       cloneInformationItems[i].topicName = data
     }
-    console.log(cloneInformationItems, 'cloneInformationItems.....')
-    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index }))
+    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index: parentIndex }))
   }
 
   const updateTextTopic = (data: string, i = 0) => {
@@ -52,7 +51,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
     if (cloneInformationItems?.length) {
       cloneInformationItems[i].text = data
     }
-    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index }))
+    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index: parentIndex }))
   }
 
   const addTopicOfProductInfoItem = () => {
@@ -61,7 +60,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
       text: ''
     }
     cloneInformationItems.push(initTopicItem)
-    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index }))
+    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index: parentIndex }))
   }
 
   const removeTopicOfProductInfoItem = (i: number) => {
@@ -70,13 +69,13 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
       return
     }
     cloneInformationItems.splice(i, 1)
-    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index }))
+    dispatch(updateInfoItemsInProductInfo({ data: cloneInformationItems, index: parentIndex }))
   }
 
   const updateInput = (data: { value: string | number; field: string }, childIndex?: number) => {
     switch (data.field) {
       case 'title':
-        dispatch(setTitleProductInfoItem({ data: data.value as string, index }))
+        dispatch(setTitleProductInfoItem({ data: data.value as string, index: parentIndex }))
         break
       case 'nameTopic':
         updateNameTopic(data.value as string, childIndex)
@@ -93,22 +92,22 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
     setEditable(!status)
   }
 
-  const onEditTopicProductInfoItem = (status: boolean, index: number) => {
+  const onEditTopicProductInfoItem = (status: boolean, childIndex: number) => {
     const listEditable = [...listEditableTopic]
-    listEditable[index] = !status
+    listEditable[childIndex] = !status
     setListEditableTopic(listEditable)
   }
 
   const onRemoveProductInfoItem = () => {
-    dispatch(removeProductInfoItem(index))
+    dispatch(removeProductInfoItem(parentIndex))
   }
 
-  const updateFilePaths = (data: string[], index: number) => {
-    // dispatch(setPhotosProductInfo({ data, index }))
+  const updateFilePaths = (data: string[], childIndex: number) => {
+    dispatch(setPhotosProductInfo({ data, parentIndex, childIndex }))
   }
 
-  const updateFileStores = (data: File[], index: number) => {
-    // dispatch(setPhotosStoreProductInfo({ data, index }))
+  const updateFileStores = (data: File[], childIndex: number) => {
+    dispatch(setPhotosStoreProductInfo({ data, parentIndex, childIndex }))
   }
 
   return (
@@ -138,7 +137,7 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
           </Flex>
           <Flex align={'center'}>
             <ToggleButon onToggleStatus={(event) => setEnabled(event)} isActive={infoItem.appear} />
-            <ActionIcon onClick={() => dispatch(removeProductInfoItem(index))}>
+            <ActionIcon onClick={() => dispatch(removeProductInfoItem(parentIndex))}>
               <DeleteIcon />
             </ActionIcon>
           </Flex>
@@ -173,11 +172,12 @@ export const ProductInformationForm = ({ infoItem, index }: Props) => {
                 </Flex>
               </Flex>
               <ProductAddImageForm
-                updateFilePaths={(event) => updateFilePaths(event, index)}
-                updateFileStores={(event) => updateFileStores(event, index)}
                 limitQuantity={4}
                 hiddenTitle={true}
                 isActive={true}
+                forMainProductThumbs={false}
+                updateFilePaths={(event) => updateFilePaths(event, index)}
+                updateFileStores={(event) => updateFileStores(event, index)}
               />
               <AppInput
                 title={t('content') as string}

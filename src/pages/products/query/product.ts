@@ -121,3 +121,13 @@ export const useUnPublishProductByIdMutation = ({ config }: TProductMutationConf
     mutationFn: (productId: string) => adminApi.unPublishProductById(productId)
   })
 }
+
+export const useUploadInformationImages = ({ config }: TProductMutationConfig = {}) => {
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['product-upload-information-iamges-by-id'] })
+    },
+    ...config,
+    mutationFn: (input: { id: string; inforImages: any }) => productApi.uploadInformationImages(input)
+  })
+}

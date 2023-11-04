@@ -6,6 +6,8 @@ import { ProductInformationForm } from './ProductInformationForm'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { TProductCreateNewInformation } from '../../type'
 import { addProductInfoItem } from '@/reducer/product/action'
+import { useEffect } from 'react'
+
 export const ProductCreateNewForm = () => {
   const { t } = useTranslation()
   const { listInformation, dispatch } = useProductContext()
@@ -22,6 +24,7 @@ export const ProductCreateNewForm = () => {
     }
     dispatch(addProductInfoItem(pureProductInforItem))
   }
+
   return (
     <Paper sx={{ background: 'transparent' }}>
       <Stack>
