@@ -1,39 +1,39 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
-import AuthApi from '@/features/auth'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
-import useConverterStateToApiData from '@/pages/products/composables/useConveterStateToApiData'
-import { camelToSnakeCase } from '@/utils/string-utils'
-import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
-import { useProductUpdateMutation, useUploadProductThumbsMutation } from '../../query/product'
-import { TProductUpdate } from '../../type'
+import useConverterStateToApiDataUpdate from '@/pages/products/composables/useConverterStateToApiDataUpdate'
+import { Anchor, Breadcrumbs, Button, Paper, Portal, Stack } from '@mantine/core'
+import {
+  useProductUpdateMutation,
+  usePublishProductByIdMutation,
+  useUploadProductThumbsMutation
+} from '../../query/product'
+import { ProductType, ProductTypeEnum, TProductUpdate } from '../../type'
 import { useStyles } from './index.styles'
+import { Notifications, notifications } from '@mantine/notifications'
 
-type Props = {
-  type: string
-  subType: string
-}
-
-export const ProductUpdate = ({ type, subType }: Props) => {
+export const ProductUpdate = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
   const productStateData = useProductContext()
+  const { productType, productSubType } = useParams()
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
-  const [tempPhotoStores, setTempPhotoStores] = useState<File[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  // const [productCreateData, setProductCreateData] = useState<TProductCreateNew | undefined>()
+  const [openNotification, setOpenNotification] = useState<boolean>(false)
+  // const container = document.createElement('div')
+  // document.body.appendChild(container)
 
   const items = [
-    { title: t(type), href: `products/${type}`, currentPath: type },
-    { title: t(subType), href: `products/${type}`, currentPath: subType },
+    { title: t(productType ?? ''), href: `products/${productType}`, currentPath: productType },
+    { title: productSubType, href: `products/${productType}`, currentPath: productSubType },
     {
-      title: t('add_product'),
-      href: `products/${type}/${camelToSnakeCase(subType)}/create-new`,
-      currentPath: 'create-new'
+      title: t('update_product'),
+      href: `products/${productType}/${productSubType ?? ''}/update`,
+      currentPath: 'update'
     }
   ].map((item, index) => (
     <Anchor
@@ -45,53 +45,49 @@ export const ProductUpdate = ({ type, subType }: Props) => {
     </Anchor>
   ))
 
-  const {
-    mutate: mutateProductUpdate,
-    data: updatedProduct,
-    isSuccess: isSuccessProductUpdate
-  } = useProductUpdateMutation()
+  const { mutate: mutateProductUpdate, isSuccess: isSuccessProductUpdate } = useProductUpdateMutation()
 
-  const {
-    mutate: mutateProductUploadThumbs,
-    data: dataImageUpload,
-    isSuccess: isSuccessProductUploadThumbs
-  } = useUploadProductThumbsMutation()
+  const { mutate: mutateProductUploadThumbs, isSuccess: isSuccessProductUploadThumbs } =
+    useUploadProductThumbsMutation()
+
+  const { mutate: mutateProductPublishById, isSuccess: isSuccessProductPublishById } = usePublishProductByIdMutation()
 
   const onUpdateProduct = async () => {
-    setLoading(true)
-    setTempPhotoStores(productStateData.tempPhotoThumbs as File[])
-    const input: TProductUpdate = await useConverterStateToApiData(productStateData, {
-      productType: type as any,
-      productSubType: subType
-    })
-    const authApi = new AuthApi()
-    await authApi.loginAdmin({ username: 'admin', password: '1' })
-    setLoading(false)
-    // @ts-ignore
-    mutateProductUpdate(input)
+    // console.log('onUpdateProduct...')
+    setOpenNotification(true)
+    // notifications.show({
+    //   color: 'red',
+    //   title: 'Notification with custom styles',
+    //   message: 'It is red',
+    //   autoClose: true
+    // })
+    // setLoading(true)
+    // mutateProductPublishById(productStateData._id as string)
   }
 
   const checkValidButton = () => {
-    const { productName, auxiliaryName, productPrice, productQuantity } = productStateData
+    const { productName, productPrice, productQuantity } = productStateData
     return !!productName && !!productPrice && !!productQuantity
   }
 
   useEffect(() => {
-    setValidButton(checkValidButton())
-  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
-
-  useEffect(() => {
-    if (isSuccessProductUpdate) {
+    if (isSuccessProductPublishById) {
       const formData = new FormData()
-      if (tempPhotoStores?.length) {
-        for (let i = 0; i < tempPhotoStores.length; i++) {
-          formData.append(`thumb${i + 1}`, tempPhotoStores[i] as any)
+      if (productStateData.tempPhotoThumbs?.length) {
+        for (let i = 0; i < productStateData.tempPhotoThumbs.length; i++) {
+          formData.append(`thumb${i + 1}`, productStateData.tempPhotoThumbs[i] as any)
         }
       }
-      const productId = updatedProduct._id
+      const productId = productStateData._id
       mutateProductUploadThumbs({ id: productId, thumbs: formData })
+      const input: TProductUpdate = useConverterStateToApiDataUpdate(productStateData)
+      mutateProductUpdate({ data: input, productType: (productType ?? ProductTypeEnum.JUICE) as ProductType })
     }
-  }, [isSuccessProductUpdate])
+  }, [isSuccessProductPublishById])
+
+  useEffect(() => {
+    setValidButton(checkValidButton())
+  }, [productStateData.productName, productStateData.productPrice, productStateData.productQuantity])
 
   useEffect(() => {
     if (isSuccessProductUpdate && isSuccessProductUploadThumbs) {
@@ -120,6 +116,13 @@ export const ProductUpdate = ({ type, subType }: Props) => {
           </div>
         </Paper>
       </Stack>
+      {openNotification && (
+        <main style={{ position: 'relative', zIndex: 1 }}>
+          <Portal>
+            <Notifications position='top-center'>asdadadad</Notifications>
+          </Portal>
+        </main>
+      )}
     </Paper>
   )
 }

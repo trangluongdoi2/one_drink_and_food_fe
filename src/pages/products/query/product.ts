@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from 'react-query'
 import { ExtractFnReturnType, MutationConfig, QueryConfig, queryClient } from '@/configs/react-query'
+import { ProductType, TProductCreateNew, TProductUpdate } from '../type'
 import ProductsApi from '../api/product'
-import { TProductCreateNew, TProductUpdate } from '../type'
 import CategoryApi from '../api/category'
+import { AdminApi } from '@/api/admin'
 
 const productApi = new ProductsApi()
 
@@ -42,7 +43,7 @@ export const useAllProductPublishQuery = ({ config }: TProductQueryConfig = {}) 
 }
 
 export const useAllProductByProductTypeAndSubType = ({ config }: TProductQueryConfig = {}, input: any) => {
-  const categoryApi = new CategoryApi();
+  const categoryApi = new CategoryApi()
   return useQuery<ExtractFnReturnType<any>>({
     queryFn: () => {
       const data = categoryApi.findByProductType(input.type)
@@ -65,9 +66,6 @@ export const useProductCreateMutation = ({ config }: TProductMutationConfig = {}
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['category-create'] })
     },
-    // onSettled: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['category-create'] })
-    // },
     ...config,
     mutationFn: (input: TProductCreateNew) => productApi.create(input)
   })
@@ -79,7 +77,8 @@ export const useProductUpdateMutation = ({ config }: TProductMutationConfig = {}
       queryClient.invalidateQueries({ queryKey: ['category-update'] })
     },
     ...config,
-    mutationFn: (input: TProductUpdate) => productApi.update(input)
+    mutationFn: (input: { data: TProductUpdate; productType: ProductType }) =>
+      productApi.update(input.data, input.productType)
   })
 }
 
@@ -98,5 +97,37 @@ export const useRemoveProductThumbsMutation = ({ config }: TProductMutationConfi
     ...config,
     // @ts-ignore
     mutationFn: (input: any) => productApi.removeProductThumbs(input)
+  })
+}
+
+export const usePublishProductByIdMutation = ({ config }: TProductMutationConfig = {}) => {
+  const adminApi = new AdminApi()
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['product-publish-by-id'] })
+    },
+    ...config,
+    mutationFn: (productId: string) => adminApi.publishProductById(productId)
+  })
+}
+
+export const useUnPublishProductByIdMutation = ({ config }: TProductMutationConfig = {}) => {
+  const adminApi = new AdminApi()
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['product-unpublish-by-id'] })
+    },
+    ...config,
+    mutationFn: (productId: string) => adminApi.unPublishProductById(productId)
+  })
+}
+
+export const useUploadInformationImages = ({ config }: TProductMutationConfig = {}) => {
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['product-upload-information-iamges-by-id'] })
+    },
+    ...config,
+    mutationFn: (input: { id: string; inforImages: any }) => productApi.uploadInformationImages(input)
   })
 }

@@ -20,15 +20,19 @@ export const ProductInfoPreview = () => {
           listInformation.map((item: any, index) => (
             <Stack key={index}>
               <Text className={classes.text__title}>{!item.title ? t('information_category') : item.title}</Text>
-              <Flex key={index} columnGap={32} className={classes.container__category}>
+              <Flex key={index} direction={'column'} columnGap={32} className={classes.container__category}>
                 {item.informationItems?.length &&
                   item.informationItems.map((topic: any, childIndex: number) => (
-                    <div key={childIndex}>
-                      {/* <Box className={classes.container__carousel}>
-                        {item?.infoPhotos && (
-                          <AppCarousel slides={item.infoPhotos} options={OPTIONS} enabled={true} hasThumbnail={false} />
-                        )}
-                      </Box> */}
+                    <div key={childIndex} style={{ display: 'flex', marginBottom: '32px' }}>
+                      <Box className={classes.container__carousel}>
+                        <AppCarousel
+                          slides={topic?.filePaths ? topic.filePaths : ['', '', '', '']}
+                          options={OPTIONS}
+                          enabled={true}
+                          hasThumbnail={false}
+                          motionTime={2000}
+                        />
+                      </Box>
                       <Stack spacing={9} sx={{ padding: '32px', flex: '1' }}>
                         <Text className={classes.text__category}>
                           {!topic.topicName ? t('topic_name') : topic.topicName}

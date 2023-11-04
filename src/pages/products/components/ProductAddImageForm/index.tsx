@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GridItem, swap } from 'react-grid-dnd'
-import { ActionIcon, Box, Group, Image, Paper, Text } from '@mantine/core'
+import { ActionIcon, Box, Group, Image, Text } from '@mantine/core'
 import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone'
 import { AddFillIcon, CloseButton, TableRowsIcon } from '@/assets/icon'
 import { DragDropGridHandler } from '@/components/DragDropGridHandler'
 import { DragDropGridConfigs } from '@/components/DragDropGridHandler/type'
 import { useStyles } from './index.styles'
 import { blobToBase64 } from '@/utils/string-utils'
+import { useProductContext } from '@/context/ProductContext/ProductContext'
+import { TProductThumbs } from '../../type'
 
 type Props = {
   limitQuantity: number
   hiddenTitle?: boolean
   isActive?: boolean
+  forMainProductThumbs?: boolean
   options?: Record<string, any>
   updateFilePaths: (data: string[]) => void
   updateFileStores: (data: File[]) => void
@@ -61,6 +64,7 @@ export const ProductAddImageForm = ({
   limitQuantity,
   hiddenTitle = false,
   isActive = true,
+  forMainProductThumbs = true,
   updateFilePaths,
   updateFileStores
 }: Props) => {
@@ -72,6 +76,8 @@ export const ProductAddImageForm = ({
     boxesPerRow: 4,
     totalItems: limitQuantity
   }
+
+  const { productThumbs } = useProductContext()
 
   const [dragDropItems, setDragDropItems] = useState<Array<any>>(Array.from({ length: limitQuantity }, () => ''))
   const [fileStores, setFileStores] = useState<File[] | any>(Array.from({ length: limitQuantity }, () => null))
@@ -113,8 +119,15 @@ export const ProductAddImageForm = ({
     updateFileStores(fileStores)
   }, [dragDropItems, fileStores])
 
+  useEffect(() => {
+    if (productThumbs?.length && forMainProductThumbs) {
+      const urlMap = productThumbs.map((thumb: TProductThumbs) => thumb.url) as string[]
+      setDragDropItems(urlMap)
+    }
+  }, [productThumbs])
+
   return (
-    <Paper className={`${!isActive ? classes.containerDisabled : ''}`}>
+    <Box className={`${!isActive ? classes.containerDisabled : ''}`}>
       {!hiddenTitle && <Text className={classes.title}>{t('add_image')}</Text>}
       <DragDropGridHandler configs={configs} onChange={onChange}>
         {dragDropItems?.length &&
@@ -136,7 +149,6 @@ export const ProductAddImageForm = ({
             </GridItem>
           ))}
       </DragDropGridHandler>
-      <Paper className={classes.imageContainer}></Paper>
-    </Paper>
+    </Box>
   )
 }

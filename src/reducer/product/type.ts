@@ -12,6 +12,7 @@ export interface ProductState extends TProductCreateNew {
 }
 
 export enum ProductType {
+  SET_INIT_PRODUCT_DATA = 'SET_INIT_PRODUCT_DATA',
   SET_PRODUCT_DIRTY = 'SET_PRODUCT_DIRTY',
   SET_PRODUCT_NAME = 'SET_PRODUCT_NAME',
   SET_AUXILIARY_NAME = 'SET_AUXILIARY_NAME',
@@ -33,7 +34,7 @@ export enum ProductType {
   SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
   SET_PRODUCT_ATTRIBUTES = 'SET_PRODUCT_ATTRIBUTES',
   REORDER_PRODUCT_ATTRIBUTES_LIST = 'REORDER_PRODUCT_ATTRIBUTES_LIST',
-  SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
+  // SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
   SET_PRODUCT_MAIN_INGREDIENTS = 'SET_PRODUCT_MAIN_INGREDIENTS',
   SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME',
   SET_MANY_CHOICES = 'SET_MANY_CHOICES',
@@ -43,6 +44,10 @@ export enum ProductType {
   UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO = 'UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO'
 }
 
+export interface InitData {
+  type: ProductType.SET_INIT_PRODUCT_DATA
+  payload: any
+}
 export interface SetProductDirty {
   type: ProductType.SET_PRODUCT_DIRTY
   payload: boolean
@@ -52,7 +57,6 @@ export interface SetProductName {
   type: ProductType.SET_PRODUCT_NAME
   payload: string
 }
-
 
 export interface SetAuxiliaryName {
   type: ProductType.SET_AUXILIARY_NAME
@@ -133,7 +137,8 @@ export interface SetPhotosProductInfo {
   type: ProductType.SET_PHOTOS_PRODUCT_INFO
   payload: {
     data: string[]
-    index: number
+    parentIndex: number
+    childIndex: number
   }
 }
 
@@ -141,7 +146,8 @@ export interface SetPhotosStoreProductInfo {
   type: ProductType.SET_PHOTOS_STORE_PRODUCT_INFO
   payload: {
     data: File[]
-    index: number
+    parentIndex: number
+    childIndex: number
   }
 }
 export interface SetProductQuantity {
@@ -162,11 +168,6 @@ export interface ReorderProductAttributesList {
   type: ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST
   payload: { from: number; to: number }
 }
-export interface SetProductAttributeOption {
-  type: ProductType.SET_PRODUCT_ATTRIBUTE_OPTION
-  payload: any
-}
-
 export interface SetProductContent {
   type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS
   payload: Record<string, any>
@@ -203,6 +204,7 @@ export interface UpdateInfoItemsInProductInfo {
 }
 
 export type ProductTypeAction =
+  | InitData
   | SetProductDirty
   | SetProductName
   | SetAuxiliaryName

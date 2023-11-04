@@ -11,7 +11,8 @@ import { TProductAttributeOption } from '@/pages/products/type'
 export const ProductOverviewPreview = () => {
   const { classes } = useStyles()
   const { t } = useTranslation()
-  const { productName, auxiliaryName, productPrice, isVAT, attributes } = useProductContext()
+  const { productName, auxiliaryName, productPrice, isVAT } = useProductContext()
+  const productStateData = useProductContext()
   const [realPrices, setRealPrices] = useState<number>(productPrice)
   const [countProduct, setCountProduct] = useState<number>(1)
   const [optionsPrice, setOptionsPrice] = useState<number>(0)

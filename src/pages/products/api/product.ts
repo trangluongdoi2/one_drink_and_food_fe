@@ -6,7 +6,7 @@ import {
   PRODUCT_CREATE_URL,
   PRODUCT_DETAIL
 } from '@/configs/urlConfig'
-import { TProductCreateNew, TProductThumbs, TProductUpdate } from '../type'
+import { ProductType, TProductCreateNew, TProductThumbs, TProductUpdate } from '../type'
 
 interface ProductDetail {
   id: string
@@ -28,11 +28,6 @@ export default class ProductsApi extends Api {
     return res.data
   }
 
-  // async getProductDetails(input: ProductDetail) {
-  //   const res = await this.get(PRODUCT_DETAIL, input)
-  //   return res.data
-  // }
-
   async getProductDetails(productId: string) {
     const PRODUCT_DETAIL_URL = `${API_URL}/products/detail/${productId}`
     const res = await this.get(PRODUCT_DETAIL_URL)
@@ -48,9 +43,8 @@ export default class ProductsApi extends Api {
     // const res = await this.get()
   }
 
-  async update(input: TProductUpdate) {
-    // const PRODUCT_UPDATE_URL = `${API_URL}/products/${'juice'}/${input._id}`
-    const PRODUCT_UPDATE_URL = `${API_URL}/products/${'juice'}/${'650039a28ff5743043cad739'}`
+  async update(input: TProductUpdate, productType: ProductType) {
+    const PRODUCT_UPDATE_URL = `${API_URL}/products/${productType}/${input._id}`
     const res = await this.patch(PRODUCT_UPDATE_URL, input)
     return res.data
   }

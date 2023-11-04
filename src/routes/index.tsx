@@ -7,8 +7,7 @@ import RegisterLayout from '@/layout/registerLayout'
 import LoginPage from '@/pages/login'
 import OrderList from '@/pages/order/features/orderList'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
-import { ProductBaseThroughType, ProductCreateNew } from '@/pages/products'
-import { JuiceType, ProductTypeEnum } from '@/pages/products/type'
+import { ProductCreateNew, ProductBaseThroughType } from '@/pages/products'
 import ProductList from '@/pages/products/views/ProductList'
 import RegisterPage from '@/pages/register'
 import ListCustomer from '@/pages/users/features/listCustomer'
@@ -147,8 +146,6 @@ export const router = createBrowserRouter([
           },
           {
             path: '/products',
-            // element: <Navigate to='/products/all' />,
-            // element: <div>Product Alls</div>,
             children: [
               {
                 path: '/products/all',
@@ -159,49 +156,21 @@ export const router = createBrowserRouter([
                 element: <ProductBaseThroughType />
               },
               {
-                path: '/products/:productType/:id',
+                path: '/products/:productType/:productSubType/:id',
                 element: (
                   <ProductContextProvider mode={'update'}>
-                    <ProductUpdate type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
+                    <ProductUpdate />
                   </ProductContextProvider>
-                )
+                ),
               },
               {
-                path: '/products/:productType/:productSubtype/create-new',
+                path: '/products/:productType/:productSubType/create-new',
                 element: (
                   <ProductContextProvider mode={'create-new'}>
-                    <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_GLASS} />
+                    <ProductCreateNew />
                   </ProductContextProvider>
                 )
               }
-              // {
-              //   path: '/products/juice/juice-bottled/create-new',
-              //   element: (
-              //     <ProductContextProvider mode={'create-new'}>
-              //       <ProductCreateNew type={ProductTypeEnum.JUICE} subType={JuiceType.JUICE_BOTTLED} />
-              //     </ProductContextProvider>
-              //   )
-              // },
-              // {
-              //   path: '/products/smoothy',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/yogurt',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/tea',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/coffee',
-              //   element: <ProductAnalytic />
-              // },
-              // {
-              //   path: '/products/other',
-              //   element: <ProductAnalytic />
-              // }
             ]
           },
           {

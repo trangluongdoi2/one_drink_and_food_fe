@@ -10,7 +10,7 @@ import { useStyles } from './index.styles'
 export const ProductImagePreview = () => {
   const { t } = useTranslation()
   const { classes } = useStyles()
-  const { mainFunctions, introduction, photos } = useProductContext()
+  const { mainFunctions, introduction } = useProductContext()
   // const { filePaths, enabled, motionTime } = photos
   const filePaths = useProductContext().photos?.filePaths as string[]
   const enabled = useProductContext().photos?.enabled
@@ -21,7 +21,11 @@ export const ProductImagePreview = () => {
   const [slides, setSlides] = useState<string[]>([])
 
   useEffect(() => {
-    setSlides([...filePaths])
+    if (filePaths?.length) {
+      setSlides([...filePaths])
+    } else {
+      setSlides(['', '', '', '', '', '', '', ''])
+    }
   }, [filePaths])
 
   return (

@@ -1,7 +1,7 @@
 import { EditIconDark, EditIconLight } from '@/assets/icon'
 import { ToggleButon } from '@/components/button/ToggleButton'
 import { AppInput } from '@/components/input'
-import { ActionIcon, Box, Flex, Paper, Stack, Text } from '@mantine/core'
+import { ActionIcon, Box, Flex, Stack, Text } from '@mantine/core'
 import { useClickOutside } from '@mantine/hooks'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -54,10 +54,7 @@ export const ProductMainAttribute = ({
   }
 
   return (
-    <Paper
-      ref={ref}
-      className={isFocused ? `${classes.container} ${classes['container--focused']}` : classes.container}
-    >
+    <Box ref={ref} className={isFocused ? `${classes.container} ${classes['container--focused']}` : classes.container}>
       <Stack>
         <Flex justify={'space-between'} align={'center'}>
           <Flex align={'center'} columnGap={12.5}>
@@ -94,6 +91,6 @@ export const ProductMainAttribute = ({
         </Flex>
         <div className={classes.border}></div>
       </Stack>
-    </Paper>
+    </Box>
   )
 }
