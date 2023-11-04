@@ -76,14 +76,14 @@ export const mantineTheme: MantineThemeOverride = {
           backgroundColor: theme.colors.dark[0]
         }
       })
-    },
-    Paper: {
-      styles: (theme) => ({
-        root: {
-          boxShadow: `1px 1px 10px ${theme.colors.dark[2]},
-           -1px -1px 10px ${theme.colors.dark[2]}`
-        }
-      })
     }
+    // Paper: {
+    //   styles: (theme) => ({
+    //     root: {
+    //       boxShadow: `1px 1px 10px ${theme.colors.dark[2]},
+    //        -1px -1px 10px ${theme.colors.dark[2]}`
+    //     }
+    //   })
+    // }
   }
 }

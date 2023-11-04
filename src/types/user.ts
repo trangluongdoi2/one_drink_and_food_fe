@@ -60,16 +60,12 @@ export type TUser = {
   firstName: string
   lastName: string
   email: string
-  mobilePhoneNumber: string
+  mobilePhoneNumber?: string
   gender?: Gender
-  birth: string
+  birthDay?: string
   referCode: string
   defaultIdHomeAddress: string
   defaultIdCompanyAddress: string
   listAddress?: TAddressList[]
-}
-
-export type TUserForm = {
-  selectedDataRow: TUser
-  dataForm: []
+  avatar?: string
 }

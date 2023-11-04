@@ -1,5 +1,9 @@
+import { TProductAttributeOption, TProductThumbs } from '@/pages/products/type'
+import { TCouponType } from './coupon'
+import { TUser } from './user'
+
 export enum ORDER_STATUS {
-  PAYMENTING = 'paymenting',
+  PAYMENTING = 'pending',
   PREPARING = 'preparing',
   PAID = 'paid',
   CANCEL = 'cancel',
@@ -23,6 +27,46 @@ export interface OrderProps {
   receivedDate: string
 }
 
-export interface TOrderType extends OrderProps {
-  _id: string
+export type TAttributesType = {
+  attributeId: string
+  options: TProductAttributeOption[]
+  value: string
+}
+
+export type TCheckoutOrderType = {
+  totalPrice: number
+  feeShip: number
+  totalDiscount: number
+  totalCheckout: number
+}
+
+export type TItemsType = {
+  productId: string
+  quantity: number
+  attributes: TAttributesType[]
+  amount: number
+  name: string
+  auxiliaryName?: string
+  price: number
+  productThumbs?: TProductThumbs[]
+}
+
+export type TCheckoutType = {
+  items: TItemsType[]
+  discount: TCouponType[]
+  checkoutOrder?: TCheckoutOrderType
+}
+
+export type TShippingType = {
+  receiverName: string
+  receiverAddress: string
+  contactPhoneNumber: string
+  deliveryTime: string
+}
+
+export type TOrder = {
+  user: TUser
+  checkout: TCheckoutType
+  shipping: TShippingType
+  trackingText: string
 }

@@ -43,7 +43,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
       ) : (
         <>
           <Stack>
-            <Image width={250} height={250} radius={10} src={item.productThumbs[0].url} />
+            <Image width={250} height={250} radius={10} src={item.productThumbs[0]?.url} />
           </Stack>
           <Stack className={classes.container_title}>
             <Stack spacing={0}>

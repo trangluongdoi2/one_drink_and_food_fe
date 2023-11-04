@@ -6,7 +6,7 @@ export const defaultUser: TUser = {
   lastName: '',
   email: '',
   mobilePhoneNumber: '',
-  birth: '',
+  birthDay: '',
   gender: Gender.MALE,
   referCode: '',
   defaultIdHomeAddress: '',

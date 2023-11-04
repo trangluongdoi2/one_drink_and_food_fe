@@ -2,14 +2,14 @@ import { DefaultAvatar } from '@/assets/icon'
 import Table from '@/components/table/table'
 import RowInput from '@/components/table/table/rowInput'
 import { TColumnsProps } from '@/components/table/table/type'
-import { TOrderType } from '@/types/order'
-import { prettyDate } from '@/utils/convertDate'
+import { TOrder } from '@/types/order'
+import { getStatus } from '@/utils/getStatus'
 import { Avatar } from '@mantine/core'
 import { FC, useEffect, useState } from 'react'
 import { useOrderFormContext } from '../../form'
 
 interface TOrderTableProps {
-  data: TOrderType[]
+  data: TOrder[]
 }
 
 const OrderTable: FC<TOrderTableProps> = ({ data }) => {
@@ -23,7 +23,7 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
     form.setValues({ dataForm: newArr })
   }
 
-  const handleChangeInput = (key: keyof TOrderType, value: string) => {
+  const handleChangeInput = (key: keyof TOrder, value: string) => {
     form.setValues({ selectedDataRow: { ...selectedDataRow, [key]: value } })
   }
 
@@ -35,9 +35,9 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
       position: 'left',
       render: (data) => (
         <RowInput
-          value={data?.fireBaseId}
-          name='fireBaseId'
-          onChange={(value) => handleChangeInput('fireBaseId', value)}
+          value={data?.trackingText}
+          name='trackingText'
+          onChange={(value) => handleChangeInput('trackingText', value)}
           textStyle={{ fw: 'bolder' }}
         />
       )
@@ -57,23 +57,23 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={prettyDate(data?.recipientName)}
+          value={data?.shipping.receiverName}
           name='recipientName'
-          onChange={(value) => handleChangeInput('recipientName', value)}
+          // onChange={(value) => handleChangeInput('', value)}
         />
       )
     },
     {
       id: 'address',
       title: 'Địa chỉ giao hàng',
-      width: '15%',
+      width: '20%',
       position: 'left',
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={prettyDate(data?.address)}
+          value={data?.shipping.receiveAddress}
           name='address'
-          onChange={(value) => handleChangeInput('address', value)}
+          // onChange={(value) => handleChangeInput('address', value)}
         />
       )
     },
@@ -85,25 +85,18 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
       render: (data, isEdit) => (
         <RowInput
           isEditing={isEdit}
-          value={data?.receivedDate}
+          value={data?.shipping?.deliveryTime}
           name='receivedDate'
-          onChange={(value) => handleChangeInput('receivedDate', value)}
+          // onChange={(value) => handleChangeInput('receivedDate', value)}
         />
       )
     },
     {
       id: 'status',
       title: 'Trạng thái',
-      width: '15%',
+      width: '20%',
       position: 'center',
-      render: (data, isEdit) => (
-        <RowInput
-          isEditing={isEdit}
-          value={data?.status}
-          name='status'
-          onChange={(value) => handleChangeInput('status', value)}
-        />
-      )
+      render: (data, isEdit) => <>{getStatus(data?.status)?.icon}</>
     }
   ]
 
@@ -115,11 +108,11 @@ const OrderTable: FC<TOrderTableProps> = ({ data }) => {
     <Table
       data={data}
       columns={columns}
-      searchKey={'address'}
+      searchKey={'trackingText'}
       selectedRows={selectedRows}
       onSubmitChange={handleSubmitChange}
       onSelectRows={setSelectedRows}
-      onEdit={(value: TOrderType) => form.setValues({ selectedDataRow: value })}
+      onEdit={(value: TOrder) => form.setValues({ selectedDataRow: value })}
     />
   )
 }
