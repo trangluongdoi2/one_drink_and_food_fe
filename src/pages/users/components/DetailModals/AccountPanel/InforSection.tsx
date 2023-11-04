@@ -1,38 +1,18 @@
-import { Divider, Paper, Title, TextInput, Stack, Center, Button, Select } from '@mantine/core'
-import { useStyles } from './index.style'
-import { IconChevronDown } from '@tabler/icons-react'
-import { useUserFormContext } from '@/context/form-context'
 import { CalendarIcon } from '@/assets/icon'
-import { getDateFirebase, parseDateFirebase } from '@/utils/convertDate'
-import { useState } from 'react'
-import { notifications } from '@mantine/notifications'
-import { FirebaseService } from '@/firebase/handler'
+import { genderOptions } from '@/constants/global'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
-
-const genderOption = [
-  {
-    value: 'female',
-    label: 'Nữ'
-  },
-  {
-    value: 'male',
-    label: 'Nam'
-  }
-]
+import { FirebaseService } from '@/firebase/handler'
+import { useCustomerFormContext } from '@/pages/users/services/form'
+import { Center, Divider, Paper, Select, Stack, TextInput, Title } from '@mantine/core'
+import { notifications } from '@mantine/notifications'
+import { IconChevronDown } from '@tabler/icons-react'
+import { useStyles } from './index.style'
 
 const InforSection = () => {
   const { classes } = useStyles()
-  const form = useUserFormContext()
-  const dateFormat = getDateFirebase(form.getInputProps('dob').value)
-  const [newDate, setNewDate] = useState(dateFormat ? JSON.parse(dateFormat) : '')
+  const form = useCustomerFormContext()
+  const { selectedDataRow } = form.values
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    setNewDate(value)
-    form.setValues({
-      dob: parseDateFirebase(value)
-    })
-  }
   const handleError = (errors: typeof form.errors) => {
     if (errors.firstName) {
       notifications.show({ message: 'Tên phải có ít nhất 2 ký tự', color: 'red' })
@@ -74,28 +54,28 @@ const InforSection = () => {
         <Stack spacing={20}>
           <Divider />
           <Stack spacing={15}>
-            <TextInput className={classes.input} {...form.getInputProps('firstName')} />
-            <TextInput className={classes.input} {...form.getInputProps('lastName')} />
-            <TextInput className={classes.input} {...form.getInputProps('email')} />
-            <TextInput className={classes.input} {...form.getInputProps('txtPhone')} />
+            <TextInput className={classes.input} {...form.getInputProps('selectedDataRow.firstName')} />
+            <TextInput className={classes.input} {...form.getInputProps('selectedDataRow.lastName')} />
+            <TextInput className={classes.input} {...form.getInputProps('selectedDataRow.email')} />
+            <TextInput className={classes.input} {...form.getInputProps('selectedDataRow.mobilePhoneNumber')} />
             <Select
               label=''
               nothingFound='No options'
-              data={genderOption}
+              data={genderOptions}
               rightSection={<IconChevronDown color='gray' size={20} />}
               rightSectionWidth={50}
               className={classes.input}
-              {...form.getInputProps('gender')}
+              value={selectedDataRow?.gender}
             />
             <TextInput
               className={classes.input}
-              value={newDate}
-              name='dob'
-              onChange={handleDateChange}
+              value={selectedDataRow?.birthDay}
+              name='birth'
+              disabled
               rightSection={<CalendarIcon />}
               rightSectionWidth={50}
             />
-            <Button
+            {/* <Button
               radius={10}
               size='md'
               color={form.isDirty() ? 'dark.4' : 'dark.1'}
@@ -104,7 +84,7 @@ const InforSection = () => {
               disabled={!form.isDirty()}
             >
               Cập nhật
-            </Button>
+            </Button> */}
           </Stack>
         </Stack>
       </Paper>

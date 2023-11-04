@@ -7,9 +7,9 @@ import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
 import { ActionIcon, Flex, Paper, Stack, Title } from '@mantine/core'
 import { v4 as uuidv4 } from 'uuid'
-import { OrderFormProvider, defaultOrder, useOrderForm } from '../../form'
-import { useGetOrder } from '../../services/hook'
 import OrderTable from '../../components/orderTable'
+import { OrderFormProvider, defaultOrder, useOrderForm } from '../../form'
+import { useGetAllOrders } from '../../services/hook'
 
 const id = uuidv4()
 
@@ -82,9 +82,11 @@ interface OrderListProps {
   query: string
 }
 
-const OrderList = ({ title, query }: OrderListProps) => {
-  const { data, loading } = useGetOrder({ key: 'status', params: query })
-  const { createWithCustomKey, deleteById } = FirebaseService
+const OrderList = ({ title }: OrderListProps) => {
+  const { deleteById } = FirebaseService
+  const { data: orderData, isLoading } = useGetAllOrders()
+
+  console.log({ orderData })
 
   const form = useOrderForm({
     initialValues: {
@@ -94,10 +96,6 @@ const OrderList = ({ title, query }: OrderListProps) => {
   })
   const { selectedRow, dispatch } = useOrderContext()
   const isEmpty = selectedRow.length === 0
-
-  const handleAddItem = async () => {
-    createWithCustomKey(FIREBASE_COLLECTION.ORDERS, mockData, id)
-  }
 
   const openDeleteModal = () =>
     CustomModal({
@@ -121,7 +119,7 @@ const OrderList = ({ title, query }: OrderListProps) => {
     dispatch(setSelectedRow([]))
   }
 
-  if (loading) return <ScreenLoader visible={loading} />
+  if (isLoading) return <ScreenLoader visible={isLoading} />
 
   return (
     <Paper p={40} sx={(theme) => ({ backgroundColor: theme.colors.dark[0] })}>
@@ -138,7 +136,7 @@ const OrderList = ({ title, query }: OrderListProps) => {
         </Flex>
         <OrderFormProvider form={form}>
           <Paper p={40} radius={10} shadow='md'>
-            <OrderTable data={data ?? []} />
+            <OrderTable data={orderData ?? []} />
           </Paper>
         </OrderFormProvider>
       </Stack>

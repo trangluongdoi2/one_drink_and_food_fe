@@ -23,5 +23,17 @@ export const useStyles = createStyles((theme) => ({
     top: 0,
     bottom: 0,
     left: 0
+  },
+  input: {
+    width: '100%',
+    input: {
+      backgroundColor: theme.colors.dark[0],
+      height: 40,
+      borderRadius: 10,
+      '&:focus-within': {
+        borderColor: theme.colors.gray,
+        backgroundColor: theme.colors.dark[1]
+      }
+    }
   }
 }))

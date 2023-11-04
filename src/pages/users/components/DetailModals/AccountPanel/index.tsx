@@ -1,7 +1,7 @@
 import { Grid, Stack } from '@mantine/core'
-import AvatarSection from '../AvatarSection'
-import InforSection from '../InforSection'
-import AddressSection from '../AddressSection'
+import AddressSection from './AddressSection'
+import AvatarSection from './AvatarSection'
+import InforSection from './InforSection'
 
 const AccountPanel = () => {
   return (

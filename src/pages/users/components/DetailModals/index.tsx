@@ -1,13 +1,9 @@
-import { useState } from 'react'
-import { Modal, Paper, Tabs, clsx } from '@mantine/core'
-import { useUserFormContext } from '@/context/form-context'
-import { tabList } from '@/constants/tabList'
 import CustomModal from '@/components/modal'
-import CouponPanel from '../CouponPanel'
-import GiftPanel from '../GiftPanel'
-import AccountPanel from '../AccountPanel'
-import HistoryPanel from '../HistoryPanel'
-import { MemberPanel } from '../MemberPanel'
+import { tabList } from '@/constants/tabList'
+import { Modal, Paper, Tabs, clsx } from '@mantine/core'
+import { useState } from 'react'
+import { useCustomerFormContext } from '../../services/form'
+import AccountPanel from './AccountPanel'
 import { useStyles } from './index.style'
 
 interface DetailModalProps {
@@ -16,7 +12,7 @@ interface DetailModalProps {
 }
 
 const DetailModal = ({ opened, close }: DetailModalProps) => {
-  const form = useUserFormContext()
+  const form = useCustomerFormContext()
   const [activeTab, setActiveTab] = useState<string | null>('account')
   const { classes } = useStyles()
 
@@ -46,7 +42,7 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
       radius={10}
       shadow='md'
     >
-      <Paper px={50} pt={7} pb={50}>
+      <Paper p={50} pt={7}>
         {/* ---------- ACCOUNT TAB ---------- */}
         <Tabs color='dark' radius='md' defaultValue='account' value={activeTab} onTabChange={setActiveTab}>
           <Tabs.List mb={30} position='center'>
@@ -68,24 +64,24 @@ const DetailModal = ({ opened, close }: DetailModalProps) => {
           </Tabs.Panel>
 
           {/* ---------- MEMBER ------------- */}
-          <Tabs.Panel value='member'>
+          {/* <Tabs.Panel value='member'>
             <MemberPanel />
-          </Tabs.Panel>
+          </Tabs.Panel> */}
 
           {/* ---------- HISTORY ------------- */}
-          <Tabs.Panel value='history'>
+          {/* <Tabs.Panel value='history'>
             <HistoryPanel />
-          </Tabs.Panel>
+          </Tabs.Panel> */}
 
           {/* ---------- GIFT ------------- */}
-          <Tabs.Panel value='gift' sx={{ position: 'relative' }}>
+          {/* <Tabs.Panel value='gift' sx={{ position: 'relative' }}>
             <GiftPanel />
-          </Tabs.Panel>
+          </Tabs.Panel> */}
 
           {/* ---------- COUPON ------------- */}
-          <Tabs.Panel value='coupon' sx={{ position: 'relative' }}>
+          {/* <Tabs.Panel value='coupon' sx={{ position: 'relative' }}>
             <CouponPanel />
-          </Tabs.Panel>
+          </Tabs.Panel> */}
         </Tabs>
       </Paper>
     </Modal>

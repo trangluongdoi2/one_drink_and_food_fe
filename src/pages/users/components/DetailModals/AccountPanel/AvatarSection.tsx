@@ -1,9 +1,9 @@
 import { CopyIcon, EditImageIcon, HeartIcon } from '@/assets/icon'
 import oneAva from '@/assets/image/one-ava.png'
 import overlay from '@/assets/image/overlay.png'
-import { useUserFormContext } from '@/context/form-context'
 import { FIREBASE_COLLECTION } from '@/firebase/collection'
 import { FirebaseService } from '@/firebase/handler'
+import { useCustomerFormContext } from '@/pages/users/services/form'
 import {
   ActionIcon,
   BackgroundImage,
@@ -23,17 +23,17 @@ import { useRef, useState } from 'react'
 import { useStyles } from './index.style'
 
 const AvatarSection = () => {
-  const form = useUserFormContext()
+  const { setFieldValue, values, getInputProps } = useCustomerFormContext()
   const { classes } = useStyles()
   const [visible, setVisible] = useState(false)
   const openRef = useRef<() => void>(null)
-  const [image, setImage] = useState(form.getInputProps('avatar').value ?? oneAva)
+  const [image, setImage] = useState(getInputProps('avatar').value ?? oneAva)
 
   const handleOnDrop = async (files: FileWithPath[]) => {
     const imageUrl = URL.createObjectURL(files[0])
     setImage(imageUrl)
     await FirebaseService.uploadImage(files[0], FIREBASE_COLLECTION.USERS, (url: string) => {
-      form.setFieldValue('avatar', url ?? '')
+      setFieldValue('avatar', url ?? '')
     })
   }
 
@@ -48,7 +48,7 @@ const AvatarSection = () => {
           p={0}
           accept={IMAGE_MIME_TYPE}
           onDrop={handleOnDrop}
-          {...form.getInputProps('avatar')}
+          {...getInputProps('avatar')}
         >
           <Group
             onMouseLeave={() => setVisible(false)}
@@ -90,7 +90,7 @@ const AvatarSection = () => {
         </Dropzone>
         <Stack spacing={0} mt={10}>
           <Text fw='bolder' size={20}>
-            Chào {form.getInputProps('lastName').value} !
+            Chào {values.selectedDataRow.lastName} !
           </Text>
           <Flex align='center' gap={3}>
             <Text size='md' sx={{ textAlign: 'center' }}>
@@ -109,7 +109,7 @@ const AvatarSection = () => {
         </Box>
         <Box className={classes.code}>
           <Flex align='center' gap={5}>
-            <CopyButton value='ONE0133' timeout={2000}>
+            <CopyButton value={values.selectedDataRow?.referCode} timeout={2000}>
               {({ copied, copy }) => (
                 <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position='right'>
                   <ActionIcon color={copied ? 'teal' : 'gray'} onClick={copy}>
@@ -119,7 +119,7 @@ const AvatarSection = () => {
               )}
             </CopyButton>
             <Text fw='bolder' size={14}>
-              ONE0133
+              {values.selectedDataRow?.referCode}
             </Text>
           </Flex>
         </Box>

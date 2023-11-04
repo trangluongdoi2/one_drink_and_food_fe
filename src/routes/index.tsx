@@ -4,23 +4,21 @@ import OrderContextProvider from '@/context/OrderContext/OrderContext'
 import ProductContextProvider from '@/context/ProductContext/ProductContext'
 import AuthLayout from '@/layout/authLayout'
 import RegisterLayout from '@/layout/registerLayout'
-import HomePage from '@/pages/home'
 import LoginPage from '@/pages/login'
 import OrderList from '@/pages/order/features/orderList'
 import { MarketAnalytic, ProductAnalytic } from '@/pages/overview'
 import { ProductCreateNew, ProductBaseThroughType } from '@/pages/products'
 import ProductList from '@/pages/products/views/ProductList'
 import RegisterPage from '@/pages/register'
-import AddCustomer from '@/pages/users/features/addCustomer'
 import ListCustomer from '@/pages/users/features/listCustomer'
 import { ORDER_STATUS } from '@/types/order'
 import { MEMBERSHIP } from '@/types/user'
-import { Navigate, createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './protectedRoute'
 
-import { default as AddCoupon, default as AddCouponList } from '@/pages/coupons/features/addCouponList'
-import CouponList from '@/pages/coupons/features/couponList'
 import AddCouponDetail from '@/pages/coupons/features/addCouponDetail'
+import { default as AddCouponList } from '@/pages/coupons/features/addCouponList'
+import CouponList from '@/pages/coupons/features/couponList'
 import { ProductUpdate } from '@/pages/products/views/ProductUpdate'
 
 export const router = createBrowserRouter([
@@ -36,20 +34,8 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            element: <HomePage />,
+            element: null,
             path: ''
-            // children: [Auth
-            //   {
-            //     element: <></>,
-            //     path: `${FOLDERS_PATH}/:folderId`,
-            //     children: [
-            //       {
-            //         element: <></>,
-            //         path: 'note/:noteId'
-            //       }
-            //     ]
-            //   }
-            // ]
           },
           {
             path: '/overview',
@@ -98,11 +84,11 @@ export const router = createBrowserRouter([
                     <ListCustomer membership={MEMBERSHIP.RUBY} />
                   </UserContextProvider>
                 )
-              },
-              {
-                path: '/users/register',
-                element: <AddCustomer />
               }
+              // {
+              //   path: '/users/register',
+              //   element: <AddCustomer />
+              // }
             ]
           },
           {

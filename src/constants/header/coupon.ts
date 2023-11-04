@@ -1,5 +1,4 @@
 import { TCouponType } from '@/types/coupon'
-import { OrderProps } from '@/types/order'
 
 type TCouponHeaderProps = {
   id: keyof TCouponType | string

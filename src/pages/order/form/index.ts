@@ -1,4 +1,4 @@
-import { ORDER_STATUS, TOrderType } from '@/types/order'
+import { ORDER_STATUS } from '@/types/order'
 import { createFormContext } from '@mantine/form'
 
 export const defaultOrder = {
@@ -18,5 +18,3 @@ type TOrderForm = {
 }
 
 export const [OrderFormProvider, useOrderFormContext, useOrderForm] = createFormContext<TOrderForm>()
-
-// export const [CreateOrderFormProvider, useCreateOrderFormContext, useCreateOrderForm] = createFormContext<TOrderType>()

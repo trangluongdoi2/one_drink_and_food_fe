@@ -18,6 +18,7 @@ export type TTableProps = {
   onSelectRows: React.Dispatch<SetStateAction<string[]>>
   onSubmitChange: () => void
   onEdit?: (value: any) => void
+  onRowClick?: (value: any) => void
   loading?: boolean
 }
 
@@ -30,6 +31,7 @@ const Table = ({
   onSelectRows,
   onSubmitChange,
   onEdit,
+  onRowClick,
   loading = false
 }: TTableProps) => {
   const [searchValue, setSearch] = useState('')
@@ -93,6 +95,7 @@ const Table = ({
                 onSelectRows={onSelectRows}
                 onSubmitChange={onSubmitChange}
                 onEdit={onEdit}
+                onRowClick={onRowClick}
               />
             ))
           )}

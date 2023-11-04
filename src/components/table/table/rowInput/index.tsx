@@ -5,7 +5,7 @@ type TRowInputProps = {
   isEditing?: boolean
   name?: string
   value: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
   textStyle?: MantineStyleSystemProps
 }
 const RowInput: FC<TRowInputProps> = ({ isEditing, name, value, onChange, textStyle }) => {
@@ -14,7 +14,7 @@ const RowInput: FC<TRowInputProps> = ({ isEditing, name, value, onChange, textSt
     const { value } = event.target
 
     setInputValue(value)
-    onChange(value)
+    onChange && onChange(value)
   }
   return isEditing ? (
     <TextInput name={name} onChange={handleInputChange} value={inputValue} {...textStyle} />

@@ -1,77 +1,167 @@
-import { SearchTable, TableHeader, TablePagination } from '@/components/table'
-import { userHeader } from '@/constants/header'
-import { useCustomerContext } from '@/context/CustomerContext/CustomerContext'
-import { useGetRowPerPage } from '@/hook/useGetRowPerPage'
-import { CustomerRow } from '@/pages/users/components/CustomerRows'
-import { setSelectedRow } from '@/reducer/customer/action'
-import { SortUserProps, UserProps } from '@/types/user'
-import { sortData } from '@/utils/sortData'
-import { Center, Stack, Text } from '@mantine/core'
-import { useEffect, useState } from 'react'
+import { DefaultAvatar, OneActiveIcon } from '@/assets/icon'
+import Table from '@/components/table/table'
+import RowInput from '@/components/table/table/rowInput'
+import { TColumnsProps } from '@/components/table/table/type'
+import { genderOptions } from '@/constants/global'
+import { TUser } from '@/types/user'
+import { Avatar, MantineTheme, Select } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { IconChevronDown } from '@tabler/icons-react'
+import { FC, useState } from 'react'
+import { useCustomerFormContext } from '../../services/form'
+import DetailModal from '../DetailModals'
+import { Gender } from '@/reducer/customer/type'
 
-interface CustomTableProps {
-  data: UserProps[]
+type TUserTableProps = {
+  data: TUser[]
+  loading?: boolean
 }
 
-const ROW_PER_PAGE = 10
+const UserTable: FC<TUserTableProps> = ({ data, loading = false }) => {
+  const [selectedRows, setSelectedRows] = useState<string[]>([])
+  const [opened, { open, close }] = useDisclosure(false)
+  const form = useCustomerFormContext()
 
-const CustomerTable = ({ data }: CustomTableProps) => {
-  const [search, setSearch] = useState('')
-  const { totalItems, active, onChange, slicedData } = useGetRowPerPage<UserProps>({ data, rowPerPage: ROW_PER_PAGE })
-
-  const [sortedData, setSortedData] = useState(slicedData)
-  const [sortBy, setSortBy] = useState<keyof SortUserProps | null>(null)
-  const [reverseSortDirection, setReverseSortDirection] = useState(false)
-  const { selectedRow } = useCustomerContext()
-
-  const isSelectedAll = selectedRow.length === data.length
-  const allId = data.map((item) => item.fireBaseId)
-
-  const { dispatch } = useCustomerContext()
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget
-    setSearch(value)
-    setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }))
-  }
-  const handleSelectAll = () => {
-    !isSelectedAll ? dispatch(setSelectedRow(allId)) : dispatch(setSelectedRow([]))
+  const handleChangeInput = (key: keyof TUser, value: string) => {
+    form.setValues({ selectedDataRow: { ...form.values.selectedDataRow, [key]: value } })
   }
 
-  useEffect(() => {
-    setSortedData(sortData(slicedData, { sortBy, reversed: reverseSortDirection, search }))
-  }, [reverseSortDirection, search, slicedData, sortBy])
+  const columns: TColumnsProps[] = [
+    {
+      id: 'avatar',
+      title: 'Avatar',
+      width: '10%',
+      position: 'left',
+      render: (data) => (!data.image ? <DefaultAvatar /> : <Avatar src={data.image} radius='lg' />)
+    },
+    {
+      id: 'firstName',
+      title: 'Họ',
+      width: '10%',
+      position: 'left',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data.firstName}
+          name='firstName'
+          onChange={(value) => handleChangeInput('firstName', value)}
+        />
+      )
+    },
+    {
+      id: 'lastName',
+      title: 'Tên',
+      width: '10%',
+      position: 'left',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data.lastName}
+          name='lastName'
+          onChange={(value) => handleChangeInput('lastName', value)}
+        />
+      )
+    },
+    {
+      id: 'email',
+      title: 'Email',
+      width: '25%',
+      position: 'left',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data.email}
+          name='email'
+          onChange={(value) => handleChangeInput('email', value)}
+        />
+      )
+    },
+    {
+      id: 'phone',
+      title: 'Số điện thoại',
+      width: '10%',
+      position: 'left',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data.mobilePhoneNumber}
+          name='mobilePhoneNumber'
+          onChange={(value) => handleChangeInput('mobilePhoneNumber', value)}
+        />
+      )
+    },
+    {
+      id: 'gender',
+      title: 'Giới tính',
+      width: '10%',
+      position: 'center',
+      render: (data, isEdit) =>
+        isEdit ? (
+          <Select
+            data={genderOptions}
+            value={data?.gender ?? 'male'}
+            rightSection={<IconChevronDown color='gray' size={14} />}
+            rightSectionWidth={30}
+            sx={(theme: MantineTheme) => ({
+              width: '90%',
+              input: {
+                backgroundColor: theme.colors.dark[3]
+              }
+            })}
+            onChange={(value: string) => handleChangeInput('gender', value)}
+          />
+        ) : (
+          <RowInput
+            isEditing={isEdit}
+            value={data?.gender === Gender.MALE ? 'Nam' : 'Nữ'}
+            name='gender'
+            onChange={(value: string) => handleChangeInput('gender', value)}
+          />
+        )
+    },
+    {
+      id: 'birth',
+      title: 'Ngày sinh',
+      width: '10%',
+      position: 'center',
+      render: (data, isEdit) => (
+        <RowInput
+          isEditing={isEdit}
+          value={data?.birthDay}
+          name='birth'
+          onChange={(value: string) => handleChangeInput('birthDay', value)}
+        />
+      )
+    },
+    {
+      id: 'member',
+      title: 'Thành viên',
+      width: '10%',
+      position: 'center',
+      render: (data) => (data?.isActive ? <OneActiveIcon /> : <DefaultAvatar />)
+    }
+  ]
 
   return (
     <>
-      <SearchTable
-        search={search}
-        onSelectAll={handleSelectAll}
-        onSearchChange={handleSearchChange}
-        selectedAll={isSelectedAll}
-        placeHolder='Tìm kiếm thông tin khách hàng'
+      <DetailModal opened={opened} close={close} />
+
+      <Table
+        data={data}
+        columns={columns}
+        searchKey={'lastName'}
+        onSubmitChange={() => console.log('submit')}
+        selectedRows={selectedRows}
+        onSelectRows={setSelectedRows}
+        loading={loading}
+        onRowClick={(value: TUser) => {
+          form.setValues({ selectedDataRow: value })
+          open()
+        }}
+        // onEdit={(value: TUser) => form.setValues({ selectedDataRow: value })}
       />
-
-      <Stack spacing={0} mt={15}>
-        <TableHeader headerContent={userHeader} />
-        <Stack spacing={15}>
-          {sortedData && sortedData.length > 0 ? (
-            sortedData.map((row: UserProps) => <CustomerRow row={row} key={row.fireBaseId} selectedRow={selectedRow} />)
-          ) : (
-            <Center sx={{ height: 200 }}>
-              <td colSpan={Object.keys(data[0]).length}>
-                <Text weight={500} align='center'>
-                  Danh sách khách hàng trống
-                </Text>
-              </td>
-            </Center>
-          )}
-        </Stack>
-      </Stack>
-
-      <TablePagination total={totalItems} onChange={onChange} active={active} />
     </>
   )
 }
 
-export default CustomerTable
+export default UserTable
