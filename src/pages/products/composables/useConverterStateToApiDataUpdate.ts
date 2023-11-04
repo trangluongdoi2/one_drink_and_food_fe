@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash'
-import { ProductType, TProductUpdate } from '../type'
+import { ProductType, TProductCreateNewInformation, TProductInformationContent, TProductUpdate } from '../type'
 import { ProductState } from '@/reducer/product/type'
 
 const removeAttributes = [
@@ -15,15 +15,34 @@ const removeAttributes = [
   'dirty'
 ]
 
+export const upInformationsImages = async (data: any) => {
+  return data
+}
+
+export const useConverterListInformationProductionData = (data: TProductCreateNewInformation[]) => {
+  data.forEach((el: TProductCreateNewInformation) => {
+    el.informationItems?.forEach((info: TProductInformationContent) => {
+      // Before delete should save to up information-images
+      delete info.filePaths
+      delete info.fileStores
+    })
+  })
+  return data
+}
+
 export default function useConveterStateToApiDataUpdate(
   input: ProductState | any,
   options?: { productType: ProductType; productSubType: string }
 ): TProductUpdate | any {
-  const cloneInput = cloneDeep(input)
-  console.log(cloneInput, 'cloneInput...')
+  const cloneInput = cloneDeep(input) as TProductUpdate
+  const converterListInformation = useConverterListInformationProductionData(cloneInput.listInformation)
+
   removeAttributes.forEach((attr: string) => {
+    // @ts-ignore
     delete cloneInput[attr]
   })
-  return cloneInput
-
+  return {
+    ...cloneInput,
+    listInformation: converterListInformation
+  }
 }

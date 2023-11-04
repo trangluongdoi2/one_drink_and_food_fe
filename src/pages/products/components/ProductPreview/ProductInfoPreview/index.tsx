@@ -26,7 +26,7 @@ export const ProductInfoPreview = () => {
                     <div key={childIndex} style={{ display: 'flex', marginBottom: '32px' }}>
                       <Box className={classes.container__carousel}>
                         <AppCarousel
-                          slides={topic?.filePath ? topic.filePath : ['', '', '', '']}
+                          slides={topic?.filePaths ? topic.filePaths : ['', '', '', '']}
                           options={OPTIONS}
                           enabled={true}
                           hasThumbnail={false}

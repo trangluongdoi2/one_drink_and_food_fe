@@ -121,7 +121,6 @@ export const ProductAddImageForm = ({
 
   useEffect(() => {
     if (productThumbs?.length && forMainProductThumbs) {
-      console.log('Case 1...')
       const urlMap = productThumbs.map((thumb: TProductThumbs) => thumb.url) as string[]
       setDragDropItems(urlMap)
     }

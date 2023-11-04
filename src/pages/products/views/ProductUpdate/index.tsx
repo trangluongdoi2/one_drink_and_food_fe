@@ -5,7 +5,7 @@ import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
 import useConverterStateToApiDataUpdate from '@/pages/products/composables/useConverterStateToApiDataUpdate'
-import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
+import { Anchor, Breadcrumbs, Button, Paper, Portal, Stack } from '@mantine/core'
 import {
   useProductUpdateMutation,
   usePublishProductByIdMutation,
@@ -13,6 +13,7 @@ import {
 } from '../../query/product'
 import { ProductType, ProductTypeEnum, TProductUpdate } from '../../type'
 import { useStyles } from './index.styles'
+import { Notifications, notifications } from '@mantine/notifications'
 
 export const ProductUpdate = () => {
   const { t } = useTranslation()
@@ -22,6 +23,9 @@ export const ProductUpdate = () => {
   const splitPath = useLocation().pathname.split('/')
   const [validButton, setValidButton] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
+  const [openNotification, setOpenNotification] = useState<boolean>(false)
+  // const container = document.createElement('div')
+  // document.body.appendChild(container)
 
   const items = [
     { title: t(productType ?? ''), href: `products/${productType}`, currentPath: productType },
@@ -49,8 +53,16 @@ export const ProductUpdate = () => {
   const { mutate: mutateProductPublishById, isSuccess: isSuccessProductPublishById } = usePublishProductByIdMutation()
 
   const onUpdateProduct = async () => {
-    setLoading(true)
-    mutateProductPublishById(productStateData._id as string)
+    // console.log('onUpdateProduct...')
+    setOpenNotification(true)
+    // notifications.show({
+    //   color: 'red',
+    //   title: 'Notification with custom styles',
+    //   message: 'It is red',
+    //   autoClose: true
+    // })
+    // setLoading(true)
+    // mutateProductPublishById(productStateData._id as string)
   }
 
   const checkValidButton = () => {
@@ -104,6 +116,13 @@ export const ProductUpdate = () => {
           </div>
         </Paper>
       </Stack>
+      {openNotification && (
+        <main style={{ position: 'relative', zIndex: 1 }}>
+          <Portal>
+            <Notifications position='top-center'>asdadadad</Notifications>
+          </Portal>
+        </main>
+      )}
     </Paper>
   )
 }

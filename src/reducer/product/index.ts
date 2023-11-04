@@ -1,4 +1,3 @@
-import { clone } from '@/utils/utility'
 import { cloneDeep } from 'lodash'
 import { TProductCreateNewAtribute, TProductThumbs } from '@/pages/products/type'
 import { ProductState, ProductType, ProductTypeAction } from './type'
@@ -107,7 +106,7 @@ export const initinalState: ProductState | any = {
   productMainIngredients: 'Ổi',
   productThumbs: pureProductThumbs,
   auxiliaryName: '',
-  mainFunctions: ['s', 's', 's'],
+  mainFunctions: ['Function1', 'Function2', 'Function3'],
   productDescription: 'dsadsadsadsadasd',
   productPrice: 1000,
   productQuantity: 1,
@@ -124,13 +123,13 @@ export const initinalState: ProductState | any = {
       informationItems: [
         {
           text: 'Thông tin 1',
-          filePath: [],
-          fileStore: []
+          filePaths: [],
+          fileStores: []
         },
         {
           text: 'Thông tin 2',
-          filePath: [],
-          fileStore: []
+          filePaths: [],
+          fileStores: []
         }
       ]
     }
@@ -155,14 +154,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
   }
   if (state?.listInformation?.length) {
     listInformation = cloneDeep(state.listInformation)
-    // for (const item of listInformation) {
-    //   state.informationPhotosStates = new Map()
-    //   const data = { filePath: [], file: [] }
-    //   state.informationPhotosStates.set(
-    //     item.title,
-    //     item.informationItems.map(() => data)
-    //   )
-    // }
   }
 
   switch (type) {
@@ -247,7 +238,6 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
         productMainIngredients: payload.data
       }
     case ProductType.SET_PRODUCT_ATTRIBUTES: {
-      console.log(ProductType.SET_PRODUCT_ATTRIBUTES, 'set product attributes..')
       const index = attributes.findIndex((attr: any) => attr.value === payload.attrVal)
       if (index !== -1) {
         attributes[index].options = [...payload.options]
@@ -354,7 +344,7 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     // Todo
     case ProductType.SET_PHOTOS_PRODUCT_INFO: {
       const { parentIndex, childIndex, data } = payload
-      listInformation[parentIndex].informationItems[childIndex].filePath = [...data]
+      listInformation[parentIndex].informationItems[childIndex].filePaths = [...data]
       return {
         ...state,
         dirty: true,
@@ -363,19 +353,14 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
     }
     case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
       const { parentIndex, childIndex, data } = payload
-      listInformation[parentIndex].informationItems[childIndex].fileStore = [...data]
+      listInformation[parentIndex].informationItems[childIndex].fileStores = [...data]
       return {
         ...state,
         dirty: true,
         listInformation: [...listInformation]
       }
-      return {
-        ...state
-      }
     }
-    // default:
-    //   return {
-    //     ...state
-    //   }
+    default:
+      return state
   }
 }

@@ -77,6 +77,8 @@ export interface TProductInformationContent {
   image?: string
   topicName?: string
   text: string
+  filePaths?: string[]
+  fileStores?: File[]
 }
 export interface TProductCreateNewInformation {
   title: string

@@ -7,9 +7,6 @@ import {
 export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
   tempPhotoThumbs?: File[]
-  informationPhotosStates?: Map<string, Array<{ filePaths: string[]; file: File[] }>>
-  // informationPhotosStates?: Map<string, Array>
-  // informationPhotosStates?: Array<
   introduction?: ''
   dirty?: boolean
 }
@@ -37,7 +34,7 @@ export enum ProductType {
   SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
   SET_PRODUCT_ATTRIBUTES = 'SET_PRODUCT_ATTRIBUTES',
   REORDER_PRODUCT_ATTRIBUTES_LIST = 'REORDER_PRODUCT_ATTRIBUTES_LIST',
-  SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
+  // SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
   SET_PRODUCT_MAIN_INGREDIENTS = 'SET_PRODUCT_MAIN_INGREDIENTS',
   SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME',
   SET_MANY_CHOICES = 'SET_MANY_CHOICES',
@@ -171,11 +168,6 @@ export interface ReorderProductAttributesList {
   type: ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST
   payload: { from: number; to: number }
 }
-export interface SetProductAttributeOption {
-  type: ProductType.SET_PRODUCT_ATTRIBUTE_OPTION
-  payload: any
-}
-
 export interface SetProductContent {
   type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS
   payload: Record<string, any>

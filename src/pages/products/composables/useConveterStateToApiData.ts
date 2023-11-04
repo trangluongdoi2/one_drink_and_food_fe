@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash'
-import { ProductType, TProductCreateNew } from '../type'
+import { ProductType, TProductCreateNew, TProductCreateNewInformation, TProductInformationContent } from '../type'
 import { ProductState } from '@/reducer/product/type'
 import CategoryApi from '../api/category'
 
@@ -16,6 +16,17 @@ const removeAttributes = [
   'introduction',
   'dirty'
 ]
+
+export const useConverterListInformationProductionData = (data: TProductCreateNewInformation[]) => {
+  data.forEach((el: TProductCreateNewInformation) => {
+    el.informationItems?.forEach((info: TProductInformationContent) => {
+      // Before delete should save to up information-images
+      delete info.filePaths
+      delete info.fileStores
+    })
+  })
+  return data
+}
 
 export default async function useConveterStateToApiData(
   input: ProductState | any,
