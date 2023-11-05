@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useParams } from 'react-router-dom'
 import { Anchor, Breadcrumbs, Button, Paper, Stack } from '@mantine/core'
+import { notifications } from '@mantine/notifications'
 import { useProductContext } from '@/context/ProductContext/ProductContext'
 import { ProductCreateNewForm } from '@/pages/products/components/ProductCreateNewForm'
 import { ProductPreview } from '@/pages/products/components/ProductPreview'
@@ -11,8 +12,8 @@ import {
   useProductCreateMutation,
   usePublishProductByIdMutation,
   useUploadProductThumbsMutation
-} from '../../query/product'
-import { TProductCreateNew } from '../../type'
+} from '@/pages/products/query/product'
+import { TProductCreateNew } from '@/pages/products/type'
 import { useStyles } from './index.styles'
 
 export const ProductCreateNew = () => {
@@ -99,6 +100,12 @@ export const ProductCreateNew = () => {
   useEffect(() => {
     if (isSuccessProductCreateNew && isSuccessProductPublishById && isSuccessProductUploadThumbs) {
       setLoading(false)
+      notifications.show({
+        color: 'lime',
+        message: t('create_product_success'),
+        style: { backgroundColor: '#12B886' },
+        autoClose: 3000
+      })
     }
   }, [isSuccessProductCreateNew, isSuccessProductPublishById, isSuccessProductUploadThumbs])
 

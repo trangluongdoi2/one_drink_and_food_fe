@@ -109,5 +109,7 @@
     }
   },
   "notEmpty": "Không được trống",
-  "un_valid_value": "Giá trị không được trống"
+  "un_valid_value": "Giá trị không được trống",
+  "update_product_success": "Cập nhật sản phẩm thành công",
+  "create_product_success": "Tạo mới sản phẩn thành công"
 }
