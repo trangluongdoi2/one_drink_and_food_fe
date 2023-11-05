@@ -3,7 +3,7 @@ export const camelToSnakeCase = (str: string) => {
 }
 
 export const snakeCaseToUnderscore = (str: string) => {
-  return camelToSnakeCase(str).replace('-', '_')
+  return camelToSnakeCase(str).replaceAll('-', '_')
 }
 export const snakeCaseToCamel = (str: string) => {
   return str.toLowerCase().replace(/(-\w)/g, (m) => m.toUpperCase().substring(1))

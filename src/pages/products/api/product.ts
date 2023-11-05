@@ -1,12 +1,6 @@
 import Api from '@/api'
-import {
-  API_URL,
-  PRODUCTS_ALL_URL,
-  PRODUCT_ALL_PUBLISH_URL,
-  PRODUCT_CREATE_URL,
-  PRODUCT_DETAIL
-} from '@/configs/urlConfig'
-import { ProductType, TProductCreateNew, TProductThumbs, TProductUpdate } from '../type'
+import { API_URL, PRODUCTS_ALL_URL, PRODUCT_ALL_PUBLISH_URL, PRODUCT_CREATE_URL } from '@/configs/urlConfig'
+import { ProductType, TProductCreateNew, TProductUpdate } from '../type'
 
 interface ProductDetail {
   id: string

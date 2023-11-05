@@ -53,7 +53,7 @@ const useGetProductTypeAndSubtype = (productType: ProductType) => {
     setProductData(initObj)
   }, [])
 
-  return { subTypeArrays, productData }
+  return { subTypeArrays, productData, isFetching }
 }
 
 export default useGetProductTypeAndSubtype

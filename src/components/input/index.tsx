@@ -95,7 +95,7 @@ export const TypeInput = ({
 
   const [isInvalid, setIsInvalid] = useState<boolean>(!!form.errors[field])
 
-  const listCheckValidInput = ['text', 'price']
+  const listCheckValidInput = ['text', 'price', 'productSubType']
 
   const useConvertField = (field: string) => {
     return snakeCaseToUnderscore(field)
@@ -202,7 +202,9 @@ export const AppInput = ({
   }, [focused])
 
   useEffect(() => {
-    form.setFieldValue(field, value)
+    if (value !== undefined) {
+      form.setFieldValue(field, value)
+    }
   }, [value])
 
   return (

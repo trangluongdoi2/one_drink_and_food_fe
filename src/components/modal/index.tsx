@@ -9,6 +9,7 @@ interface CustomModalProps {
   title: string
   content: string
   confirmColor?: { color: string }
+  children?: any
   onCancel?: () => undefined
   onConfirm: () => void
 }
@@ -20,6 +21,7 @@ const CustomModal = ({
   },
   title,
   content,
+  children,
   confirmColor = { color: 'dark' },
   onCancel = () => undefined,
   onConfirm
@@ -27,12 +29,12 @@ const CustomModal = ({
   modals.openConfirmModal({
     title: title,
     centered: true,
-    children: <Text size='sm'>{content}</Text>,
+    children: children ? children : <Text size='sm'>{content}</Text>,
     labels: labels,
     confirmProps: confirmColor,
+    closeOnCancel: true,
     onCancel: onCancel,
-    onConfirm: onConfirm,
-    closeOnCancel: true
+    onConfirm: onConfirm
   })
 }
 
