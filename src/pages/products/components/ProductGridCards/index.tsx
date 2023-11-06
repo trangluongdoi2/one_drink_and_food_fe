@@ -1,4 +1,4 @@
-import { ProductGridProps } from '@/pages/products/type'
+import { ProductGridProps, TProductDetail } from '@/pages/products/type'
 import { Paper } from '@mantine/core'
 import { ProductCard } from '../ProductCard'
 import { ProductPortfolio } from '../ProductPortfolio'
@@ -13,7 +13,7 @@ export const ProductGrid = ({ title, productSubType, data }: ProductGridProps) =
       <Paper className={classes.containerGrid}>
         <ProductCard forNewProduct={true} productSubType={productSubType} />
         {data?.length ? (
-          data.map((item: any, index: number) => (
+          data.map((item: TProductDetail, index: number) => (
             <div key={index}>
               <ProductCard item={item} productSubType={productSubType} />
             </div>

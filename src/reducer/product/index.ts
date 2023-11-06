@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash'
-import { TProductCreateNewAtribute, TProductThumbs } from '@/pages/products/type'
+import { TProductCreateNewAtribute, TProductCreateNewInformation, TProductThumbs } from '@/pages/products/type'
 import { ProductState, ProductType, ProductTypeAction } from './type'
 
 const pureProductAttributes: TProductCreateNewAtribute[] = [
@@ -147,8 +147,8 @@ export const initinalState: ProductState | any = {
 }
 
 export const productReducer = (state: ProductState, { type, payload }: ProductTypeAction) => {
-  let attributes = [] as any
-  let listInformation = [] as any
+  let attributes = [] as TProductCreateNewAtribute[]
+  let listInformation = [] as TProductCreateNewInformation[]
   if (state?.attributes?.length) {
     attributes = cloneDeep(state.attributes)
   }
@@ -341,9 +341,9 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
 
-    // Todo
     case ProductType.SET_PHOTOS_PRODUCT_INFO: {
-      const { parentIndex, childIndex, data } = payload
+      const { data, parentIndex, childIndex } = payload
+      // @ts-ignore
       listInformation[parentIndex].informationItems[childIndex].filePaths = [...data]
       return {
         ...state,
@@ -352,7 +352,8 @@ export const productReducer = (state: ProductState, { type, payload }: ProductTy
       }
     }
     case ProductType.SET_PHOTOS_STORE_PRODUCT_INFO: {
-      const { parentIndex, childIndex, data } = payload
+      const { data, parentIndex, childIndex } = payload
+      // @ts-ignore
       listInformation[parentIndex].informationItems[childIndex].fileStores = [...data]
       return {
         ...state,

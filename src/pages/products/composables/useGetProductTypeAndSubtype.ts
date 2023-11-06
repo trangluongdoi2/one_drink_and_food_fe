@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ProductType } from '../type'
 import { useCategoryGetByProductType } from '../query/category'
 
