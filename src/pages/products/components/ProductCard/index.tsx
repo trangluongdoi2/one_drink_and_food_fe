@@ -26,7 +26,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
   }
 
   const onEditProduct = () => {
-    const productId = item._id as string
+    const productId = item?._id as string
     navigation(`/products/${productType}/${subType}/${productId}`)
   }
 
@@ -44,12 +44,12 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
       ) : (
         <>
           <Stack>
-            <Image width={250} height={250} radius={10} src={item.productThumbs[0]?.url} />
+            <Image width={250} height={250} radius={10} src={item?.productThumbs[0]?.url} />
           </Stack>
           <Stack className={classes.container_title}>
             <Stack spacing={0}>
-              <Text className={classes.container_mainTitle}>{item.productName}</Text>
-              <Text className={classes.container_childTitle}>{item.auxiliaryName}</Text>
+              <Text className={classes.container_mainTitle}>{item?.productName}</Text>
+              <Text className={classes.container_childTitle}>{item?.auxiliaryName}</Text>
             </Stack>
             <ActionIcon onClick={onDeleteProduct}>
               <DeleteIcon />
@@ -57,7 +57,7 @@ export const ProductCard = ({ forNewProduct = false, productSubType, item }: Pro
           </Stack>
           <Stack className={classes.container_price}>
             <Flex align={'flex-end'}>
-              <Text className={classes.price_text}>{item.productPrice}</Text>
+              <Text className={classes.price_text}>{item?.productPrice}</Text>
             </Flex>
             <Button className={classes.price_button} onClick={onEditProduct}>
               {t('edit')}

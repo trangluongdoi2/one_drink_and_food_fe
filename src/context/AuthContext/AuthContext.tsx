@@ -1,11 +1,18 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import AuthApi from '@/features/auth'
 
+type User = {
+  username: string
+  photoURL?: string
+  displayName?: string
+  email?: string
+}
+
 const initialAuthContext = {
   user: {
     username: 'admin',
-    password: '1'
-  }
+    photoURL: ''
+  } as User
 }
 export const AuthContext = createContext(initialAuthContext)
 
@@ -14,13 +21,19 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User>()
 
   const value = useMemo(() => ({ user, setUser }), [user])
 
   const loginAdmin = async () => {
     const authApi = new AuthApi()
-    const data = await authApi.loginAdmin(initialAuthContext.user as any)
+    const input = {
+      username: 'admin',
+      password: '1'
+    }
+    const data = await authApi.loginAdmin(input)
+    const user = { ...data.adminInfo } as User
+    setUser(user)
   }
 
   useEffect(() => {

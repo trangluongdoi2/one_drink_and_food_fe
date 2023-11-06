@@ -7,76 +7,11 @@ import { FirebaseService } from '@/firebase/handler'
 import { setSelectedRow } from '@/reducer/order/action'
 import { ActionIcon, Flex, Paper, Stack, Title } from '@mantine/core'
 import { v4 as uuidv4 } from 'uuid'
-import OrderTable from '../../components/orderTable'
+import OrderTable from '../../components/OrderTable'
 import { OrderFormProvider, defaultOrder, useOrderForm } from '../../form'
 import { useGetAllOrders } from '../../services/hook'
 
 const id = uuidv4()
-
-const mockData = {
-  receivedDate: '07/04/2023',
-  createOn: 'Thu Apr 06 2023 15:34:16 GMT+0700 (Indochina Time)',
-  receivedTime: 'Buổi sáng (8:00-12:00)',
-  paymentMethods: 'Bank',
-  note: '',
-  phone: '1515161461467',
-  recipientName: 'Ngụy Tài ' + id.slice(0, 3),
-  address: 'Nguyễn Thị Thâp, Quận 7, Tân Thuận, TP. Hồ Chí Minh',
-  productList: {
-    totalOrderValue: 90000,
-    productList: [
-      {
-        mlAndPrice: {
-          '350ml': {
-            price: 45000,
-            ml: '350ml'
-          }
-        },
-        totalPrice: 45000,
-        amount: 1,
-        name: 'Cà Phê Đen',
-        id: '0BgoOIh4CkaOHZm7ERB0',
-        optionPicked: {
-          cooldess: 'Ủ Lạnh',
-          moreCombina: '',
-          ice: '100% Đá (Bình Thường)',
-          sugar: '100% Đường (Ngọt Ngây)',
-          size: '350ml',
-          note: ''
-        }
-      },
-      {
-        name: 'Matcha Latte',
-        mlAndPrice: {
-          '350ml': {
-            price: 45000,
-            ml: '350ml'
-          }
-        },
-        amount: 1,
-        optionPicked: {
-          note: '',
-          sugar: '100% Đường (Ngọt Ngây)',
-          size: '350ml',
-          cooldess: 'Ủ Lạnh',
-          moreCombina: '',
-          ice: '100% Đá (Bình Thường)'
-        },
-        totalPrice: 45000,
-        id: '92FUmp7n4n5ZsuosLZms'
-      }
-    ],
-    totalProductList: 2,
-    _persist: {
-      rehydrated: true,
-      version: -1
-    }
-  },
-  fireBaseId: id,
-  status: 'paymenting',
-  termsOfService: true
-}
-
 interface OrderListProps {
   title: string
   query: string

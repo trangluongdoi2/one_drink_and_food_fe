@@ -6,9 +6,10 @@ type LoginAdmin = {
   password: string
 }
 
-type AdminInfo = {
+export type AdminInfo = {
   id: string
   userName: string
+  photoURL?: string
 }
 
 export default class AuthApi extends Api {

@@ -1,6 +1,8 @@
 import {
+  TProductAttributeOption,
   TProductCreateNewAtribute,
   TProductCreateNewInformation,
+  TProductDetail,
   TProductInformationContent
 } from '@/pages/products/type'
 import {
@@ -30,10 +32,12 @@ import {
   AddProductInfoItem,
   RemoveProductInfoItem,
   UpdateInfoItemsInProductInfo,
-  ReorderProductAttributesList
+  ReorderProductAttributesList,
+  SetProductDataInit,
+  SetProductAttribues
 } from './type'
 
-export const setInitProductData = (value: any): any => ({
+export const setInitProductData = (value: TProductDetail): SetProductDataInit => ({
   type: ProductType.SET_INIT_PRODUCT_DATA,
   payload: value
 })
@@ -130,12 +134,18 @@ export const setProductQuantity = (value: number): SetProductQuantity => ({
   payload: value
 })
 
-export const updateProductAttributeOption = (value: any): any => ({
+export const updateProductAttributeOption = (value: {
+  attrVal: string
+  options: TProductAttributeOption[]
+}): SetProductAttribues => ({
   type: ProductType.SET_PRODUCT_ATTRIBUTES,
   payload: value
 })
 
-export const updateProductMainIngredients = (value: any): SetProductMainIngredients => ({
+export const updateProductMainIngredients = (value: {
+  attrVal: string
+  data: string | number
+}): SetProductMainIngredients => ({
   type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS,
   payload: value
 })

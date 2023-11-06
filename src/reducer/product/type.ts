@@ -2,7 +2,9 @@ import {
   TProductCreateNew,
   TProductCreateNewAtribute,
   TProductInformationContent,
-  TProductCreateNewInformation
+  TProductCreateNewInformation,
+  TProductAttributeOption,
+  TProductDetail
 } from '@/pages/products/type'
 export interface ProductState extends TProductCreateNew {
   photos?: { filePaths: string[]; enabled: boolean; motionTime: number | null }
@@ -34,7 +36,6 @@ export enum ProductType {
   SET_ENABLED_PRODUCT_INFO = 'SET_ENABLED_PRODUCT_INFO',
   SET_PRODUCT_ATTRIBUTES = 'SET_PRODUCT_ATTRIBUTES',
   REORDER_PRODUCT_ATTRIBUTES_LIST = 'REORDER_PRODUCT_ATTRIBUTES_LIST',
-  // SET_PRODUCT_ATTRIBUTE_OPTION = 'SET_PRODUCT_ATTRIBUTE_OPTION',
   SET_PRODUCT_MAIN_INGREDIENTS = 'SET_PRODUCT_MAIN_INGREDIENTS',
   SET_PRODUCT_ATTRIBUTE_NAME = 'SET_PRODUCT_ATTRIBUTE_NAME',
   SET_MANY_CHOICES = 'SET_MANY_CHOICES',
@@ -44,9 +45,9 @@ export enum ProductType {
   UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO = 'UPDATE_INFORMATION_ITEMS_IN_PRODUCT_INFO'
 }
 
-export interface InitData {
+export interface SetProductDataInit {
   type: ProductType.SET_INIT_PRODUCT_DATA
-  payload: any
+  payload: TProductDetail
 }
 export interface SetProductDirty {
   type: ProductType.SET_PRODUCT_DIRTY
@@ -157,21 +158,19 @@ export interface SetProductQuantity {
 
 export interface SetProductMainIngredients {
   type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS
-  payload: any
+  payload: { attrVal: string; data: string | number }
 }
+
 export interface SetProductAttribues {
   type: ProductType.SET_PRODUCT_ATTRIBUTES
-  payload: Record<string, any>
+  payload: { attrVal: string; options: TProductAttributeOption[] }
 }
 
 export interface ReorderProductAttributesList {
   type: ProductType.REORDER_PRODUCT_ATTRIBUTES_LIST
   payload: { from: number; to: number }
 }
-export interface SetProductContent {
-  type: ProductType.SET_PRODUCT_MAIN_INGREDIENTS
-  payload: Record<string, any>
-}
+
 
 export interface SetProductAttributeName {
   type: ProductType.SET_PRODUCT_ATTRIBUTE_NAME
@@ -204,7 +203,7 @@ export interface UpdateInfoItemsInProductInfo {
 }
 
 export type ProductTypeAction =
-  | InitData
+  | SetProductDataInit
   | SetProductDirty
   | SetProductName
   | SetAuxiliaryName
@@ -222,7 +221,6 @@ export type ProductTypeAction =
   | SetProductQuantity
   | SetProductAttribues
   | ReorderProductAttributesList
-  | SetProductContent
   | SetProductAttributeName
   | SetProductMainIngredients
   | AddAttributeOption

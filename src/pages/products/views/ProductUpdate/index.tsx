@@ -111,7 +111,6 @@ export const ProductUpdate = () => {
           </div>
         </Paper>
       </Stack>
-      <Notifications position='top-center' />
     </Paper>
   )
 }

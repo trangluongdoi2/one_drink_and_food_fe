@@ -2,7 +2,7 @@ export interface ProductGridProps {
   productType?: string
   productSubType?: string
   title?: string
-  data: any
+  data: TProductDetail[]
 }
 
 export interface ProductOverview {
@@ -15,7 +15,7 @@ export interface ProductCardProps {
   productOverview?: ProductOverview
   productType?: string
   productSubType?: string
-  item?: any
+  item?: TProductDetail
 }
 
 export interface ProductOptionFrameProps {
@@ -107,11 +107,36 @@ export interface TProductCreateNew {
   note: string
 }
 
-// export interface TProductDetail {
-
-// }
+export interface TProductDetail {
+  _id: string
+  productName: string
+  auxiliaryName: string
+  isVAT: string | boolean
+  productMainIngredients: string
+  productThumbs: TProductThumbs[]
+  motionTime: number | null
+  mainFunctions: string[]
+  productDescription: string
+  productPrice: number
+  productQuantity: number
+  productType: ProductType
+  productRatingsAverage: number
+  attributes: TProductCreateNewAtribute[]
+  listInformation: TProductCreateNewInformation[]
+  category: TCategoryDetail
+  note: string
+  productSlug: string
+  createdAt: string
+  updatedAt: string
+}
 
 export type TProductUpdate = TProductCreateNew
+
+export interface TCategoryDetail {
+  _id: string
+  name: string
+  productType: ProductType
+}
 
 export interface TCategoryCreate {
   name: string

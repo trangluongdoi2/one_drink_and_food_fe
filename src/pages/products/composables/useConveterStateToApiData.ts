@@ -1,5 +1,10 @@
 import { cloneDeep } from 'lodash'
-import { ProductType, TProductCreateNew, TProductCreateNewInformation, TProductInformationContent } from '../type'
+import {
+  ProductType,
+  TProductCreateNew,
+  TProductCreateNewInformation,
+  TProductInformationContent
+} from '@/pages/products/type'
 import { ProductState } from '@/reducer/product/type'
 import CategoryApi from '../api/category'
 

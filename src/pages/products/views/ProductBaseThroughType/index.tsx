@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useParams } from 'react-router-dom'
 import { Anchor, Box, Breadcrumbs, Flex, Paper, Skeleton, Stack } from '@mantine/core'

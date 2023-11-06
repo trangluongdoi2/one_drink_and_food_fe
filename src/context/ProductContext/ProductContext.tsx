@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
+import { Box, Flex, Skeleton } from '@mantine/core'
 import { IContextProviderProps } from '@/types/context'
 import { ProductState, ProductTypeAction } from '@/reducer/product/type'
 import { productReducer, initinalState as initialProductState } from '@/reducer/product'
-import { useGetProductDetail } from '@/pages/products/composables/useGetProductDetail'
-import { Box, Flex, Loader, Paper, Skeleton } from '@mantine/core'
 import { setInitProductData } from '@/reducer/product/action'
+import { useGetProductDetail } from '@/pages/products/composables/useGetProductDetail'
 
 const styleLoader = {
   display: 'flex',
@@ -39,6 +39,7 @@ const ProductContextProvider = ({ children, mode }: IContextProviderProps) => {
 
   useEffect(() => {
     if (productDetails && !isFetching) {
+      // @ts-ignore
       dispatch(setInitProductData({ ...productDetails }))
     }
   }, [productDetails, isFetching])
